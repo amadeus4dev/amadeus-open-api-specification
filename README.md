@@ -5,6 +5,9 @@
 
 This repository contains the Open API specification files for the [Amadeus for Developers](https://developers.amadeus.com) Self-Service APIs.
 
+## License
+This code is released under the [MIT License](LICENSE).
+
 ## Help
 Our [developer support team](https://developers.amadeus.com/support) is here
 to help you. You can find us on
