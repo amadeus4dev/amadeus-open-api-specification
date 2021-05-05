@@ -1,0 +1,293 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.1.0",
+    "title": "Airline Code Lookup API",
+    "x-status": "validated",
+    "x-tags": [
+      "#ama-for-dev"
+    ],
+    "x-release-note": {
+      "1.1.0": [
+        "Correct example",
+        "Regroup parameter \"IATACode\" and \"ICAOCode\" under the same name \"airlineCodes\""
+      ],
+      "1.0.0": [
+        "initial version",
+        "List all airlines information (name and code)",
+        "Introduction of search per IATA or ICAO code"
+      ]
+    },
+    "description": "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production, to see what is included in test please refer to our **[data collection](https://github.com/amadeus4dev/data-collection)**."
+  },
+  "host": "test.api.amadeus.com",
+  "basePath": "/v1",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/vnd.amadeus+json"
+  ],
+  "produces": [
+    "application/vnd.amadeus+json"
+  ],
+  "paths": {
+    "/reference-data/airlines": {
+      "get": {
+        "tags": [
+          "airlines"
+        ],
+        "operationId": "getairlines",
+        "summary": "Return airlines information.",
+        "parameters": [
+          {
+            "name": "airlineCodes",
+            "description": "Code of the airline following IATA standard([IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx)) or ICAO standard ([ICAO airlines table codes](https://en.wikipedia.org/wiki/List_of_airline_codes))\n\nSeveral airlines can be selected at once by sending a list separated by a coma (i.e. AF, SWA)\n",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-example": "BA"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/airlines"
+          },
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "default": {
+            "$ref": "#/responses/500"
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "definitions": {
+    "Airline": {
+      "properties": {
+        "type": {
+          "description": "the resource name",
+          "type": "string",
+          "example": "airline"
+        },
+        "iataCode": {
+          "description": "IATA airline code. see [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx)",
+          "type": "string",
+          "example": "WN"
+        },
+        "icaoCode": {
+          "description": "IATA airline code. see [ICAO airlines table codes](https://en.wikipedia.org/wiki/List_of_airline_codes)",
+          "type": "string",
+          "example": "SWA"
+        },
+        "businessName": {
+          "description": "airline business name",
+          "type": "string",
+          "example": "SOUTHWEST AIRLINES TEXAS"
+        },
+        "commonName": {
+          "description": "airline common name",
+          "type": "string",
+          "example": "SW AIRLINES"
+        }
+      }
+    },
+    "Error_400": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 400,
+            "code": 477,
+            "title": "INVALID FORMAT",
+            "detail": "invalid query parameter format",
+            "source": {
+              "parameter": "airport",
+              "example": "CDG"
+            }
+          }
+        ]
+      }
+    },
+    "Error_500": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 500,
+            "code": 141,
+            "title": "SYSTEM ERROR HAS OCCURRED"
+          }
+        ]
+      }
+    },
+    "Issue": {
+      "properties": {
+        "status": {
+          "description": "the HTTP status code applicable to this error",
+          "type": "integer"
+        },
+        "code": {
+          "description": "an application-specific error code",
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "description": "a short summary of the error",
+          "type": "string"
+        },
+        "detail": {
+          "description": "explanation of the error",
+          "type": "string"
+        },
+        "source": {
+          "type": "object",
+          "title": "Issue_Source",
+          "description": "an object containing references to the source of the error",
+          "maxProperties": 1,
+          "properties": {
+            "pointer": {
+              "description": "a JSON Pointer [RFC6901] to the associated entity in the request document",
+              "type": "string"
+            },
+            "parameter": {
+              "description": "a string indicating which URI query parameter caused the issue",
+              "type": "string"
+            },
+            "example": {
+              "description": "a string indicating an example of the right value",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "Collection_Meta": {
+      "title": "Collection_Meta",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "example": 1
+        },
+        "links": {
+          "title": "CollectionLinks",
+          "properties": {
+            "self": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "next": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "previous": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "last": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "first": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "up": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            }
+          },
+          "example": {
+            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "400": {
+      "description": "code    | title                                 \n------- | ------------------------------------- \n  572   | INVALID OPTION  \n",
+      "schema": {
+        "$ref": "#/definitions/Error_400"
+      }
+    },
+    "500": {
+      "description": "Unexpected Error",
+      "schema": {
+        "$ref": "#/definitions/Error_500"
+      }
+    },
+    "airlines": {
+      "description": "Successful Operation",
+      "schema": {
+        "title": "Success Things",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "meta": {
+            "$ref": "#/definitions/Collection_Meta"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Issue"
+            }
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Airline"
+            }
+          }
+        },
+        "example": {
+          "meta": {
+            "count": 1,
+            "links": {
+              "self": "https://test.api.amadeus.com/v1/reference-data/airlines?airlineCodes=BA"
+            }
+          },
+          "data": [
+            {
+              "type": "airline",
+              "iataCode": "BA",
+              "icaoCode": "BAW",
+              "businessName": "BRITISH AIRWAYS",
+              "commonName": "BRITISH A/W"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "x-generatedAt": "2020-07-16T07:57:31.414Z"
+}

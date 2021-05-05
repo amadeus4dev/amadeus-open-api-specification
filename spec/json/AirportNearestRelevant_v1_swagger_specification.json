@@ -1,0 +1,798 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.1.1",
+    "title": "Airport Nearest Relevant",
+    "x-tags": [
+      "#ama-for-dev"
+    ],
+    "x-status": "validated",
+    "x-release-note": {
+      "1.1.1": [
+        "Correct example"
+      ],
+      "1.1.0": [
+        "Add radius parameter"
+      ],
+      "1.0.2": [
+        "AFD-1091 - change from \"traveller\" to \"traveler\""
+      ],
+      "1.0.1": [
+        "Improvement of relevance calculation",
+        "Remove flights and travelers figures",
+        "Flights and Travelers score become integer (PTR 14827552)"
+      ],
+      "1.0": [
+        "Initial Version"
+      ]
+    },
+    "description": "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to generate an access token.\n\nPlease also be aware that our test environment is based on a subset of the production, this API in test only returns a few selected cities. You can find the list in our **[data collection](https://github.com/amadeus4dev/data-collection)**."
+  },
+  "host": "test.api.amadeus.com",
+  "basePath": "/v1",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/vnd.amadeus+json"
+  ],
+  "produces": [
+    "application/vnd.amadeus+json"
+  ],
+  "paths": {
+    "/reference-data/locations/airports": {
+      "get": {
+        "tags": [
+          "location"
+        ],
+        "operationId": "getNearestRelevantAirports",
+        "summary": "Returns a list of relevant airports near to a given point.",
+        "parameters": [
+          {
+            "name": "latitude",
+            "description": "latitude location to be at the center of the search circle",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "format": "double",
+            "x-example": 51.57285
+          },
+          {
+            "name": "longitude",
+            "description": "longitude location to be at the center of the search circle",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "format": "double",
+            "x-example": -0.44161
+          },
+          {
+            "name": "radius",
+            "description": "radius of the search in Kilometer. Can be from 0 to 500, default value is 500 Km.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 500,
+            "default": 500
+          },
+          {
+            "$ref": "#/parameters/pageLimit"
+          },
+          {
+            "$ref": "#/parameters/pageOffset"
+          },
+          {
+            "$ref": "#/parameters/sort"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/nearest-relevant-airports"
+          },
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "default": {
+            "$ref": "#/responses/500"
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "parameters": {
+    "pageLimit": {
+      "name": "page[limit]",
+      "description": "maximum items in one page",
+      "required": false,
+      "in": "query",
+      "type": "integer",
+      "default": 10
+    },
+    "pageOffset": {
+      "name": "page[offset]",
+      "description": "start index of the requested page",
+      "required": false,
+      "in": "query",
+      "type": "integer",
+      "default": 0
+    },
+    "sort": {
+      "description": "defines on which attribute the sorting will be done from the best option to the worst one:\n* **relevance** - Score value calculated based on distance and traffic analytics\n* **distance** - Distance from the location to the geo-code given in API request parameters\n* **analytics.flights.score** - Approximate score for ranking purposes calculated based on estimated number of flights from/to airport in one reference year (last year)\n* **analytics.travelers.score** - Approximate score for ranking purposes calculated based on estimated number of travelers in the airport for one reference year (last year)\n",
+      "name": "sort",
+      "required": false,
+      "in": "query",
+      "type": "string",
+      "default": "relevance",
+      "enum": [
+        "relevance",
+        "distance",
+        "analytics.flights.score",
+        "analytics.travelers.score"
+      ]
+    }
+  },
+  "definitions": {
+    "Location": {
+      "properties": {
+        "type": {
+          "description": "the resource name",
+          "type": "string",
+          "example": "location"
+        },
+        "subType": {
+          "description": "location sub type",
+          "type": "string",
+          "enum": [
+            "AIRPORT",
+            "CITY",
+            "POINT_OF_INTEREST",
+            "DISTRICT"
+          ],
+          "example": "AIRPORT"
+        },
+        "name": {
+          "description": "short name of the location",
+          "type": "string",
+          "example": "Paris CDG"
+        },
+        "detailedName": {
+          "description": "detailed name of the location. For a city location it contains city name and country code. For an airport location it contains city name; country code and airport full name",
+          "type": "string",
+          "example": "Paris/FR: Charles de Gaulle"
+        },
+        "timeZoneOffset": {
+          "description": "timezone offset of the location at the date of the API call (including daylight saving time)",
+          "type": "string",
+          "example": "+01:00"
+        },
+        "iataCode": {
+          "description": "IATA code of the location. ([IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx) here)",
+          "type": "string",
+          "example": "CDG"
+        },
+        "geoCode": {
+          "$ref": "#/definitions/GeoCode"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "distance": {
+          "$ref": "#/definitions/Distance"
+        },
+        "analytics": {
+          "$ref": "#/definitions/Analytics"
+        },
+        "relevance": {
+          "type": "number",
+          "format": "double",
+          "description": "score value calculated based on distance and analytics",
+          "example": 9.6584
+        }
+      }
+    },
+    "Address": {
+      "properties": {
+        "cityName": {
+          "description": "name of the city of the location; equal to name if the location is a city",
+          "type": "string",
+          "example": "Paris"
+        },
+        "cityCode": {
+          "description": "IATA code of the city of the location; equal to IATAcode if the location is a city",
+          "type": "string",
+          "example": "PAR"
+        },
+        "countryName": {
+          "description": "name of the country of the location",
+          "type": "string",
+          "example": "France"
+        },
+        "countryCode": {
+          "description": "code of the country of the location in ISO standard",
+          "type": "string",
+          "example": "FR"
+        },
+        "stateCode": {
+          "description": "code of the state of the location if any",
+          "type": "string",
+          "example": "TO"
+        },
+        "regionCode": {
+          "description": "code of the region of the location in ISO standard",
+          "type": "string",
+          "example": "EUROP"
+        }
+      }
+    },
+    "Distance": {
+      "properties": {
+        "value": {
+          "description": "great-circle distance between two locations. This distance thus do not take into account traffic conditions; international boundaries; mountains; water; or other elements that might make the a nearby location hard to reach.",
+          "type": "integer",
+          "example": 152
+        },
+        "unit": {
+          "description": "unit of the distance",
+          "type": "string",
+          "example": "KM",
+          "enum": [
+            "KM",
+            "MI"
+          ]
+        }
+      }
+    },
+    "GeoCode": {
+      "properties": {
+        "latitude": {
+          "description": "latitude of the location",
+          "type": "number",
+          "format": "double",
+          "example": 43.580418
+        },
+        "longitude": {
+          "description": "longitude of the location",
+          "type": "number",
+          "format": "double",
+          "example": 7.125102
+        }
+      }
+    },
+    "Analytics": {
+      "properties": {
+        "flights": {
+          "$ref": "#/definitions/Flights"
+        },
+        "travelers": {
+          "$ref": "#/definitions/Travelers"
+        }
+      }
+    },
+    "Flights": {
+      "properties": {
+        "score": {
+          "type": "number",
+          "format": "integer",
+          "description": "Approximate score for ranking purposes calculated based on number of flights from / to the airport or city",
+          "example": 56
+        }
+      }
+    },
+    "Travelers": {
+      "properties": {
+        "score": {
+          "type": "number",
+          "format": "integer",
+          "description": "Approximate score for ranking purposes calculated based on number of travelers in the location.",
+          "example": 68
+        }
+      }
+    },
+    "Error_400": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 400,
+            "code": 477,
+            "title": "INVALID FORMAT",
+            "detail": "invalid query parameter format",
+            "source": {
+              "parameter": "airport",
+              "example": "CDG"
+            }
+          }
+        ]
+      }
+    },
+    "Error_500": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 500,
+            "code": 141,
+            "title": "SYSTEM ERROR HAS OCCURRED"
+          }
+        ]
+      }
+    },
+    "Issue": {
+      "properties": {
+        "status": {
+          "description": "the HTTP status code applicable to this error",
+          "type": "integer"
+        },
+        "code": {
+          "description": "an application-specific error code",
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "description": "a short summary of the error",
+          "type": "string"
+        },
+        "detail": {
+          "description": "explanation of the error",
+          "type": "string"
+        },
+        "source": {
+          "type": "object",
+          "title": "Issue_Source",
+          "description": "an object containing references to the source of the error",
+          "maxProperties": 1,
+          "properties": {
+            "pointer": {
+              "description": "a JSON Pointer [RFC6901] to the associated entity in the request document",
+              "type": "string"
+            },
+            "parameter": {
+              "description": "a string indicating which URI query parameter caused the issue",
+              "type": "string"
+            },
+            "example": {
+              "description": "a string indicating an example of the right value",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "Collection_Meta": {
+      "title": "Collection_Meta",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "example": 1
+        },
+        "links": {
+          "title": "CollectionLinks",
+          "properties": {
+            "self": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "next": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "previous": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "last": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "first": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "up": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            }
+          },
+          "example": {
+            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "400": {
+      "description": "code    | title                                 \n------- | ------------------------------------- \n477     | INVALID FORMAT\n572     | INVALID OPTION\n4926    | INVALID DATA RECEIVED               \n32171   | MANDATORY DATA MISSING \t     \n",
+      "schema": {
+        "$ref": "#/definitions/Error_400"
+      }
+    },
+    "500": {
+      "description": "Unexpected Error",
+      "schema": {
+        "$ref": "#/definitions/Error_500"
+      }
+    },
+    "nearest-relevant-airports": {
+      "description": "Successful Operation",
+      "schema": {
+        "title": "Success",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "meta": {
+            "$ref": "#/definitions/Collection_Meta"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Location"
+            }
+          }
+        },
+        "example": {
+          "meta": {
+            "count": 32,
+            "links": {
+              "self": "https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=51.57285&longitude=-0.44161",
+              "next": "https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=51.57285&longitude=-0.44161&page%5Boffset%5D=10",
+              "last": "https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=51.57285&longitude=-0.44161&page%5Boffset%5D=22"
+            }
+          },
+          "data": [
+            {
+              "type": "location",
+              "subType": "AIRPORT",
+              "name": "HEATHROW",
+              "detailedName": "LONDON/GB:HEATHROW",
+              "timeZoneOffset": "+01:00",
+              "iataCode": "LHR",
+              "geoCode": {
+                "latitude": 51.47294,
+                "longitude": -0.45061
+              },
+              "address": {
+                "cityName": "LONDON",
+                "cityCode": "LON",
+                "countryName": "UNITED KINGDOM",
+                "countryCode": "GB",
+                "regionCode": "EUROP"
+              },
+              "distance": {
+                "value": 11,
+                "unit": "KM"
+              },
+              "analytics": {
+                "flights": {
+                  "score": 39
+                },
+                "travelers": {
+                  "score": 45
+                }
+              },
+              "relevance": 350.54587
+            },
+            {
+              "type": "location",
+              "subType": "AIRPORT",
+              "name": "GATWICK",
+              "detailedName": "LONDON/GB:GATWICK",
+              "timeZoneOffset": "+01:00",
+              "iataCode": "LGW",
+              "geoCode": {
+                "latitude": 51.15609,
+                "longitude": -0.17818
+              },
+              "address": {
+                "cityName": "LONDON",
+                "cityCode": "LON",
+                "countryName": "UNITED KINGDOM",
+                "countryCode": "GB",
+                "regionCode": "EUROP"
+              },
+              "distance": {
+                "value": 49,
+                "unit": "KM"
+              },
+              "analytics": {
+                "flights": {
+                  "score": 27
+                },
+                "travelers": {
+                  "score": 27
+                }
+              },
+              "relevance": 53.62667
+            },
+            {
+              "type": "location",
+              "subType": "AIRPORT",
+              "name": "LUTON",
+              "detailedName": "LONDON/GB:LUTON",
+              "timeZoneOffset": "+01:00",
+              "iataCode": "LTN",
+              "geoCode": {
+                "latitude": 51.87472,
+                "longitude": -0.36833
+              },
+              "address": {
+                "cityName": "LONDON",
+                "cityCode": "LON",
+                "countryName": "UNITED KINGDOM",
+                "countryCode": "GB",
+                "regionCode": "EUROP"
+              },
+              "distance": {
+                "value": 33,
+                "unit": "KM"
+              },
+              "analytics": {
+                "flights": {
+                  "score": 11
+                },
+                "travelers": {
+                  "score": 10
+                }
+              },
+              "relevance": 33.10184
+            },
+            {
+              "type": "location",
+              "subType": "AIRPORT",
+              "name": "STANSTED",
+              "detailedName": "LONDON/GB:STANSTED",
+              "timeZoneOffset": "+01:00",
+              "iataCode": "STN",
+              "geoCode": {
+                "latitude": 51.885,
+                "longitude": 0.235
+              },
+              "address": {
+                "cityName": "LONDON",
+                "cityCode": "LON",
+                "countryName": "UNITED KINGDOM",
+                "countryCode": "GB",
+                "regionCode": "EUROP"
+              },
+              "distance": {
+                "value": 58,
+                "unit": "KM"
+              },
+              "analytics": {
+                "flights": {
+                  "score": 16
+                },
+                "travelers": {
+                  "score": 15
+                }
+              },
+              "relevance": 27.50241
+            },
+            {
+              "type": "location",
+              "subType": "AIRPORT",
+              "name": "CITY AIRPORT",
+              "detailedName": "LONDON/GB:CITY AIRPORT",
+              "timeZoneOffset": "+01:00",
+              "iataCode": "LCY",
+              "geoCode": {
+                "latitude": 51.50528,
+                "longitude": 0.05528
+              },
+              "address": {
+                "cityName": "LONDON",
+                "cityCode": "LON",
+                "countryName": "UNITED KINGDOM",
+                "countryCode": "GB",
+                "regionCode": "EUROP"
+              },
+              "distance": {
+                "value": 35,
+                "unit": "KM"
+              },
+              "analytics": {
+                "flights": {
+                  "score": 8
+                },
+                "travelers": {
+                  "score": 4
+                }
+              },
+              "relevance": 21.78754
+            },
+            {
+              "type": "location",
+              "subType": "AIRPORT",
+              "name": "BIRMINGHAM",
+              "detailedName": "BIRMINGHAM/GB:BIRMINGHAM",
+              "timeZoneOffset": "+01:00",
+              "iataCode": "BHX",
+              "geoCode": {
+                "latitude": 52.45386,
+                "longitude": -1.74803
+              },
+              "address": {
+                "cityName": "BIRMINGHAM",
+                "cityCode": "BHX",
+                "countryName": "UNITED KINGDOM",
+                "countryCode": "GB",
+                "regionCode": "EUROP"
+              },
+              "distance": {
+                "value": 132,
+                "unit": "KM"
+              },
+              "analytics": {
+                "flights": {
+                  "score": 10
+                },
+                "travelers": {
+                  "score": 8
+                }
+              },
+              "relevance": 7.73356
+            },
+            {
+              "type": "location",
+              "subType": "AIRPORT",
+              "name": "MANCHESTER AIRPORT",
+              "detailedName": "MANCHESTER/GB:MANCHESTER AIRPO",
+              "timeZoneOffset": "+01:00",
+              "iataCode": "MAN",
+              "geoCode": {
+                "latitude": 53.35374,
+                "longitude": -2.27495
+              },
+              "address": {
+                "cityName": "MANCHESTER",
+                "cityCode": "MAN",
+                "countryName": "UNITED KINGDOM",
+                "countryCode": "GB",
+                "regionCode": "EUROP"
+              },
+              "distance": {
+                "value": 233,
+                "unit": "KM"
+              },
+              "analytics": {
+                "flights": {
+                  "score": 18
+                },
+                "travelers": {
+                  "score": 17
+                }
+              },
+              "relevance": 7.71084
+            },
+            {
+              "type": "location",
+              "subType": "AIRPORT",
+              "name": "SOUTHAMPTON",
+              "detailedName": "SOUTHAMPTON/GB",
+              "timeZoneOffset": "+01:00",
+              "iataCode": "SOU",
+              "geoCode": {
+                "latitude": 50.95026,
+                "longitude": -1.3568
+              },
+              "address": {
+                "cityName": "SOUTHAMPTON",
+                "cityCode": "SOU",
+                "countryName": "UNITED KINGDOM",
+                "countryCode": "GB",
+                "regionCode": "EUROP"
+              },
+              "distance": {
+                "value": 94,
+                "unit": "KM"
+              },
+              "analytics": {
+                "flights": {
+                  "score": 4
+                },
+                "travelers": {
+                  "score": 2
+                }
+              },
+              "relevance": 4.4788
+            },
+            {
+              "type": "location",
+              "subType": "AIRPORT",
+              "name": "BRISTOL",
+              "detailedName": "BRISTOL/GB:BRISTOL",
+              "timeZoneOffset": "+01:00",
+              "iataCode": "BRS",
+              "geoCode": {
+                "latitude": 51.38267,
+                "longitude": -2.71909
+              },
+              "address": {
+                "cityName": "BRISTOL",
+                "cityCode": "BRS",
+                "countryName": "UNITED KINGDOM",
+                "countryCode": "GB",
+                "regionCode": "EUROP"
+              },
+              "distance": {
+                "value": 159,
+                "unit": "KM"
+              },
+              "analytics": {
+                "flights": {
+                  "score": 7
+                },
+                "travelers": {
+                  "score": 5
+                }
+              },
+              "relevance": 4.08617
+            },
+            {
+              "type": "location",
+              "subType": "AIRPORT",
+              "name": "EAST MIDLANDS",
+              "detailedName": "NOTTINGHAM/GB:EAST MIDLANDS",
+              "timeZoneOffset": "+01:00",
+              "iataCode": "EMA",
+              "geoCode": {
+                "latitude": 52.83111,
+                "longitude": -1.32806
+              },
+              "address": {
+                "cityName": "NOTTINGHAM",
+                "cityCode": "NQT",
+                "countryName": "UNITED KINGDOM",
+                "countryCode": "GB",
+                "regionCode": "EUROP"
+              },
+              "distance": {
+                "value": 152,
+                "unit": "KM"
+              },
+              "analytics": {
+                "flights": {
+                  "score": 4
+                },
+                "travelers": {
+                  "score": 3
+                }
+              },
+              "relevance": 2.66099
+            }
+          ]
+        }
+      }
+    }
+  },
+  "x-generatedAt": "2020-07-22T14:53:48.686Z"
+}

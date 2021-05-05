@@ -1,0 +1,284 @@
+swagger: '2.0'
+info:
+  version: 1.0.1
+  title: Flight Busiest Traveling Period
+  x-tags:
+    - '#ama-for-dev'
+  x-status: validated
+  x-release-note:
+    '1.0':
+      - Initial Version
+    1.0.1:
+      - Correct example
+  description: "\nBefore using this API, we recommend you read our\_**[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)**\_for more information on how to generate an access token.\n\nPlease also be aware that our test environment is based on a subset of the production, to see what is included in test please refer to our **[data collection](https://github.com/amadeus4dev/data-collection)**."
+host: test.api.amadeus.com
+basePath: /v1
+schemes:
+  - https
+consumes:
+  - application/vnd.amadeus+json
+produces:
+  - application/vnd.amadeus+json
+paths:
+  /travel/analytics/air-traffic/busiest-period:
+    get:
+      tags:
+        - air-traffic
+      operationId: getAirTraffic
+      summary: Returns a list of air traffic reports.
+      parameters:
+        - name: cityCode
+          description: 'Code for the city following IATA standard. [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx) - e.g. BOS for Boston'
+          in: query
+          required: true
+          type: string
+          pattern: '[A-Za-z]{3}'
+          x-example: MAD
+        - name: period
+          description: |
+            time period (year) of the statistics.
+
+            Year for which the statistic are requested following [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601)
+          in: query
+          required: true
+          type: string
+          x-example: 2017
+        - name: direction
+          description: |
+            Use ARRIVING to have statistics on travelers coming to the city or DEPARTING for statistics on travelers leaving the city.
+
+            By default, statistics are given on travelers ARRIVING the city.
+          in: query
+          required: false
+          default: ARRIVING
+          type: string
+          enum:
+            - ARRIVING
+            - DEPARTING
+          x-example: ARRIVING
+      responses:
+        '200':
+          $ref: '#/responses/air-traffic'
+        '400':
+          $ref: '#/responses/400'
+        default:
+          $ref: '#/responses/500'
+      description: ''
+definitions:
+  Air_Traffic:
+    properties:
+      type:
+        type: string
+        example: air-traffic
+      period:
+        description: 'Time period following [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) standard'
+        type: string
+        example: 2017-01
+      analytics:
+        $ref: '#/definitions/Analytics'
+  Error_400:
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+    required:
+      - errors
+    example:
+      errors:
+        - status: 400
+          code: 477
+          title: INVALID FORMAT
+          detail: invalid query parameter format
+          source:
+            parameter: airport
+            example: CDG
+  Error_500:
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+    required:
+      - errors
+    example:
+      errors:
+        - status: 500
+          code: 141
+          title: SYSTEM ERROR HAS OCCURRED
+  Issue:
+    properties:
+      status:
+        description: the HTTP status code applicable to this error
+        type: integer
+      code:
+        description: an application-specific error code
+        type: integer
+        format: int64
+      title:
+        description: a short summary of the error
+        type: string
+      detail:
+        description: explanation of the error
+        type: string
+      source:
+        type: object
+        title: Issue_Source
+        description: an object containing references to the source of the error
+        maxProperties: 1
+        properties:
+          pointer:
+            description: 'a JSON Pointer [RFC6901] to the associated entity in the request document'
+            type: string
+          parameter:
+            description: a string indicating which URI query parameter caused the issue
+            type: string
+          example:
+            description: a string indicating an example of the right value
+            type: string
+  Collection_Meta:
+    title: Collection_Meta
+    properties:
+      count:
+        type: integer
+        example: 1
+      links:
+        title: CollectionLinks
+        properties:
+          self:
+            type: string
+            format: uri
+            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+          next:
+            type: string
+            format: uri
+            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+          previous:
+            type: string
+            format: uri
+            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+          last:
+            type: string
+            format: uri
+            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+          first:
+            type: string
+            format: uri
+            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+          up:
+            type: string
+            format: uri
+            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+        example:
+          self: 'https://test.api.amadeus.com/v1/area/resources?param=value'
+  Analytics:
+    properties:
+      travelers:
+        $ref: '#/definitions/Travelers'
+  Travelers:
+    properties:
+      score:
+        type: number
+        format: integer
+        description: Approximate score for ranking purposes calculated based on number of travelers in the location.
+        example: 68
+responses:
+  '400':
+    description: |
+      code    | title                                 
+      ------- | ------------------------------------- 
+      477     | INVALID FORMAT
+      572     | INVALID OPTION
+      2781    | INVALID LENGTH
+      4926    | INVALID DATA RECEIVED
+      32171   | MANDATORY DATA MISSING
+    schema:
+      $ref: '#/definitions/Error_400'
+  '500':
+    description: Unexpected Error
+    schema:
+      $ref: '#/definitions/Error_500'
+  air-traffic:
+    description: Successful Operation
+    schema:
+      title: Success
+      required:
+        - data
+      properties:
+        warnings:
+          type: array
+          items:
+            $ref: '#/definitions/Issue'
+        meta:
+          $ref: '#/definitions/Collection_Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/definitions/Air_Traffic'
+      example:
+        meta:
+          count: 12
+          links:
+            self: 'https://test.api.amadeus.com/v1/travel/analytics/air-traffic/busiest-period?cityCode=MAD&direction=ARRIVING&period=2017'
+        data:
+          - type: air-traffic
+            period: 2017-05
+            analytics:
+              travelers:
+                score: 9
+          - type: air-traffic
+            period: 2017-12
+            analytics:
+              travelers:
+                score: 9
+          - type: air-traffic
+            period: 2017-09
+            analytics:
+              travelers:
+                score: 8
+          - type: air-traffic
+            period: 2017-10
+            analytics:
+              travelers:
+                score: 8
+          - type: air-traffic
+            period: 2017-07
+            analytics:
+              travelers:
+                score: 8
+          - type: air-traffic
+            period: 2017-06
+            analytics:
+              travelers:
+                score: 8
+          - type: air-traffic
+            period: 2017-02
+            analytics:
+              travelers:
+                score: 8
+          - type: air-traffic
+            period: 2017-03
+            analytics:
+              travelers:
+                score: 8
+          - type: air-traffic
+            period: 2017-01
+            analytics:
+              travelers:
+                score: 8
+          - type: air-traffic
+            period: 2017-04
+            analytics:
+              travelers:
+                score: 8
+          - type: air-traffic
+            period: 2017-08
+            analytics:
+              travelers:
+                score: 8
+          - type: air-traffic
+            period: 2017-11
+            analytics:
+              travelers:
+                score: 8
+x-generatedAt: '2020-07-23T14:13:35.860Z'

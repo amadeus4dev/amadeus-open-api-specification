@@ -1,0 +1,586 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.0.0",
+    "title": "On-Demand Flight Status",
+    "x-status": "validated",
+    "x-release-note": {
+      "2.0": [
+        "Initial version"
+      ]
+    },
+    "description": "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to generate an access token. \n  \nPlease also be aware that our test environment is based on a subset of the production, to see what is included in test please refer to our **[data collection](https://github.com/amadeus4dev/data-collection)**.\n"
+  },
+  "host": "test.api.amadeus.com",
+  "basePath": "/v2",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/vnd.amadeus+json"
+  ],
+  "produces": [
+    "application/vnd.amadeus+json"
+  ],
+  "paths": {
+    "/schedule/flights": {
+      "get": {
+        "tags": [
+          "flights"
+        ],
+        "operationId": "getFlightsStatus",
+        "summary": "Retrieves a unique flight by search criteria.",
+        "parameters": [
+          {
+            "name": "carrierCode",
+            "in": "query",
+            "description": "2 to 3-character IATA carrier code ([IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx)).\n",
+            "required": true,
+            "type": "string",
+            "x-example": "IB"
+          },
+          {
+            "name": "flightNumber",
+            "in": "query",
+            "description": "1 to 4-digit number of the flight. e.g. 4537",
+            "required": true,
+            "type": "string",
+            "x-example": "532"
+          },
+          {
+            "name": "scheduledDepartureDate",
+            "in": "query",
+            "description": "scheduled departure date of the flight, local to the departure airport, format YYYY-MM-DD.",
+            "x-example": "2021-03-23",
+            "required": true,
+            "type": "string",
+            "format": "date"
+          },
+          {
+            "name": "operationalSuffix",
+            "in": "query",
+            "description": "1-letter operational suffix assigned by the carrier to differentiate flight in case of delay changing the departure date e.g. A\n",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/datedFlights"
+          },
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "default": {
+            "$ref": "#/responses/500"
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "definitions": {
+    "DatedFlight": {
+      "properties": {
+        "type": {
+          "description": "the resource name",
+          "type": "string",
+          "readOnly": true
+        },
+        "scheduledDepartureDate": {
+          "description": "the scheduled departure date",
+          "type": "string",
+          "format": "date",
+          "example": "2018-11-06"
+        },
+        "flightDesignator": {
+          "description": "the flight designator element",
+          "$ref": "#/definitions/FlightDesignator",
+          "example": {
+            "carrierCode": "QF",
+            "flightNumber": 1,
+            "operationalSuffix": "_"
+          }
+        },
+        "flightPoints": {
+          "description": "the flight points of the flight.\nAt least one departure, one arrival\n",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FlightPoint"
+          }
+        },
+        "segments": {
+          "description": "the list of segments of the datedFlight\n- definition of segment: the commercial unit corresponding to the passenger journey traveling between two points with the same flight (same flight designator)\n",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Segment"
+          }
+        },
+        "legs": {
+          "description": "the list of legs of the datedFlight.\n- definition of leg: operation of the aircraft between a departure station and the next arrival station (between take off and landing)\n",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Leg"
+          }
+        }
+      }
+    },
+    "FlightDesignator": {
+      "properties": {
+        "carrierCode": {
+          "description": "2 to 3-character IATA code of the carrier. e.g. 6X",
+          "type": "string"
+        },
+        "flightNumber": {
+          "description": "1 to 4-digit number of the flight e.g. 4537",
+          "type": "integer",
+          "format": "int64"
+        },
+        "operationalSuffix": {
+          "description": "1-letter operational suffix of the flight e.g. A",
+          "type": "string"
+        }
+      }
+    },
+    "FlightPoint": {
+      "properties": {
+        "iataCode": {
+          "description": "3-letter IATA code of the airport. e.g. CDG",
+          "type": "string",
+          "example": "CDG"
+        },
+        "departure": {
+          "description": "the departure information if the flightPoint is a departure for the flight",
+          "$ref": "#/definitions/Departure"
+        },
+        "arrival": {
+          "description": "the arrival information if the flightPoint is an arrival for the flight",
+          "$ref": "#/definitions/Arrival"
+        }
+      }
+    },
+    "Segment": {
+      "properties": {
+        "boardPointIataCode": {
+          "description": "3-letter IATA code of the departure airport. e.g. CDG",
+          "pattern": "[a-zA-Z]{3}",
+          "type": "string",
+          "example": "LHR"
+        },
+        "offPointIataCode": {
+          "description": "3-letter IATA code of the arrival airport. e.g. AMS",
+          "pattern": "[a-zA-Z]{3}",
+          "type": "string",
+          "example": "BKK"
+        },
+        "scheduledSegmentDuration": {
+          "type": "string",
+          "description": "duration of the segment following standard [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Durations)",
+          "example": "PT14H50M"
+        },
+        "partnership": {
+          "$ref": "#/definitions/Partnership"
+        }
+      }
+    },
+    "Partnership": {
+      "properties": {
+        "operatingFlight": {
+          "$ref": "#/definitions/FlightDesignator"
+        }
+      }
+    },
+    "Leg": {
+      "properties": {
+        "boardPointIataCode": {
+          "description": "3-letter IATA code of the departure airport. e.g. LHR",
+          "pattern": "[a-zA-Z]{3}",
+          "type": "string",
+          "example": "LHR"
+        },
+        "offPointIataCode": {
+          "description": "3-letter IATA code of the arrival airport. e.g. BKK",
+          "pattern": "[a-zA-Z]{3}",
+          "type": "string",
+          "example": "BKK"
+        },
+        "aircraftEquipment": {
+          "$ref": "#/definitions/AircraftEquipment"
+        },
+        "scheduledLegDuration": {
+          "type": "string",
+          "description": "duration of the leg following standard [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Durations)",
+          "example": "PT14H50M"
+        }
+      }
+    },
+    "Departure": {
+      "properties": {
+        "terminal": {
+          "description": "the departure terminal of the airport",
+          "$ref": "#/definitions/Terminal"
+        },
+        "gate": {
+          "description": "the departure gate of the airport",
+          "$ref": "#/definitions/Gate"
+        },
+        "timings": {
+          "description": "the list of timings",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Timing"
+          }
+        }
+      }
+    },
+    "Arrival": {
+      "properties": {
+        "terminal": {
+          "description": "the arrival terminal of the airport",
+          "$ref": "#/definitions/Terminal"
+        },
+        "gate": {
+          "description": "the arrival gate of the airport",
+          "$ref": "#/definitions/Gate"
+        },
+        "timings": {
+          "description": "the list of timings",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Timing"
+          }
+        }
+      }
+    },
+    "Terminal": {
+      "properties": {
+        "code": {
+          "description": "the code of the terminal",
+          "type": "string",
+          "example": 1
+        }
+      }
+    },
+    "Gate": {
+      "properties": {
+        "mainGate": {
+          "description": "the main gate number",
+          "type": "string",
+          "example": "10A"
+        }
+      }
+    },
+    "Timing": {
+      "properties": {
+        "qualifier": {
+          "description": "the qualifier of the timing. e.g. STD (stands for Schedule Time Departure)",
+          "type": "string",
+          "example": "STD"
+        },
+        "value": {
+          "type": "string",
+          "format": "date-time",
+          "example": "06:00:00"
+        },
+        "delays": {
+          "description": "delays that might be recorded on a timing",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Delay"
+          }
+        }
+      }
+    },
+    "Delay": {
+      "properties": {
+        "duration": {
+          "description": "the delay recorded for the timing following [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601#Durations)",
+          "type": "string",
+          "example": "PT25M"
+        }
+      }
+    },
+    "AircraftEquipment": {
+      "properties": {
+        "aircraftType": {
+          "description": "the type of aircraft that will operate the leg",
+          "type": "string",
+          "example": 733
+        }
+      }
+    },
+    "Error_400": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 400,
+            "code": 477,
+            "title": "INVALID FORMAT",
+            "detail": "invalid query parameter format",
+            "source": {
+              "parameter": "airport",
+              "example": "CDG"
+            }
+          }
+        ]
+      }
+    },
+    "Error_401": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 401,
+            "code": 20,
+            "title": "RESTRICTED",
+            "detail": "Query unauthorized"
+          }
+        ]
+      }
+    },
+    "Error_500": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 500,
+            "code": 141,
+            "title": "SYSTEM ERROR HAS OCCURRED"
+          }
+        ]
+      }
+    },
+    "Issue": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "the HTTP status code applicable to this error",
+          "type": "integer"
+        },
+        "code": {
+          "description": "an application-specific error code",
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "description": "a short summary of the error",
+          "type": "string"
+        },
+        "detail": {
+          "description": "explanation of the error",
+          "type": "string"
+        },
+        "source": {
+          "type": "object",
+          "title": "Issue_Source",
+          "description": "an object containing references to the source of the error",
+          "maxProperties": 1,
+          "properties": {
+            "pointer": {
+              "description": "a JSON Pointer [RFC6901] to the associated entity in the request document",
+              "type": "string"
+            },
+            "parameter": {
+              "description": "a string indicating which URI query parameter caused the issue",
+              "type": "string"
+            },
+            "example": {
+              "description": "a string indicating an example of the right value",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "Collection_Meta": {
+      "type": "object",
+      "title": "Collection_Meta",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "example": 1
+        },
+        "links": {
+          "type": "object",
+          "title": "CollectionLinks",
+          "properties": {
+            "self": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "next": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "previous": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "last": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "first": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "up": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            }
+          },
+          "example": {
+            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "400": {
+      "description": "code    | title\n------- | -------------------------------------\n477     | INVALID FORMAT\n572     | INVALID OPTION\n2781    | INVALID LENGTH\n4926    | INVALID DATA RECEIVED\n32171   | MANDATORY DATA MISSING\n",
+      "schema": {
+        "$ref": "#/definitions/Error_400"
+      }
+    },
+    "401": {
+      "description": "Unauthorized",
+      "schema": {
+        "$ref": "#/definitions/Error_401"
+      }
+    },
+    "500": {
+      "description": "Unexpected Error",
+      "schema": {
+        "$ref": "#/definitions/Error_500"
+      }
+    },
+    "datedFlights": {
+      "description": "A list of dated flights",
+      "schema": {
+        "title": "Success Flights.",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/DatedFlight"
+            }
+          },
+          "meta": {
+            "$ref": "#/definitions/Collection_Meta"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Issue"
+            }
+          }
+        },
+        "example": {
+          "meta": {
+            "count": 1,
+            "links": {
+              "self": "https://test.api.amadeus.com/v2/schedule/flights?carrierCode=AZ&flightNumber=319&scheduledDepartureDate=2021-03-13"
+            }
+          },
+          "data": [
+            {
+              "type": "DatedFlight",
+              "scheduledDepartureDate": "2021-03-13",
+              "flightDesignator": {
+                "carrierCode": "AZ",
+                "flightNumber": 319
+              },
+              "flightPoints": [
+                {
+                  "iataCode": "CDG",
+                  "departure": {
+                    "timings": [
+                      {
+                        "qualifier": "STD",
+                        "value": "2021-03-13T11:10+01:00"
+                      }
+                    ]
+                  }
+                },
+                {
+                  "iataCode": "FCO",
+                  "arrival": {
+                    "timings": [
+                      {
+                        "qualifier": "STA",
+                        "value": "2021-03-13T13:15+01:00"
+                      }
+                    ]
+                  }
+                }
+              ],
+              "segments": [
+                {
+                  "boardPointIataCode": "CDG",
+                  "offPointIataCode": "FCO",
+                  "scheduledSegmentDuration": "PT2H5M"
+                }
+              ],
+              "legs": [
+                {
+                  "boardPointIataCode": "CDG",
+                  "offPointIataCode": "FCO",
+                  "aircraftEquipment": {
+                    "aircraftType": "32S"
+                  },
+                  "scheduledLegDuration": "PT2H5M"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+  "x-generatedAt": "2020-09-07T09:52:13.997Z"
+}
