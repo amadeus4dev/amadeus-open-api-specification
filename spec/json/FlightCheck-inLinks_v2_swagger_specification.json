@@ -1,0 +1,355 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "2.1.1",
+    "title": "Flight Check-in Links",
+    "x-tags": [
+      "#ama-for-dev"
+    ],
+    "x-status": "validated",
+    "x-release-note": {
+      "2.1.0": [
+        "Change parameter \"airline\" by \"airlineCode\"",
+        "Correct example"
+      ],
+      "2.0": [
+        "Initial Version"
+      ]
+    },
+    "description": "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to generate an access token.\n\nPlease also be aware that our test environment is based on a subset of the production, to see what is included in test please refer to our **[data collection](https://github.com/amadeus4dev/data-collection)**."
+  },
+  "host": "test.api.amadeus.com",
+  "basePath": "/v2",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/vnd.amadeus+json"
+  ],
+  "produces": [
+    "application/vnd.amadeus+json"
+  ],
+  "paths": {
+    "/reference-data/urls/checkin-links": {
+      "get": {
+        "tags": [
+          "checkin-links"
+        ],
+        "operationId": "getCheckinURLs",
+        "summary": "Lists Check-in URLs.",
+        "parameters": [
+          {
+            "name": "airlineCode",
+            "in": "query",
+            "description": "Airline code following IATA or ICAO standard - e.g. 1X; AF or ESY\n\n[IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx)\n\n[ICAO airlines table codes](https://en.wikipedia.org/wiki/List_of_airline_codes)\n",
+            "required": true,
+            "type": "string",
+            "pattern": "([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])",
+            "x-example": "BA"
+          },
+          {
+            "name": "language",
+            "in": "query",
+            "description": "Check-in page language with one of the following patterns 'languageCode' (e.g. EN) or 'languageCode-IATAcountryCode' (e.g. en-GB). \n\nDefault value is **en-GB** (used when required language is not available or when no value is specified).\n",
+            "required": false,
+            "type": "string",
+            "pattern": "[a-zA-Z]{2}([-][a-zA-Z]{2})?"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/checkin-links"
+          },
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "default": {
+            "$ref": "#/responses/500"
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "definitions": {
+    "CheckinLink": {
+      "required": [
+        "type",
+        "id",
+        "href",
+        "channel"
+      ],
+      "properties": {
+        "type": {
+          "description": "the resource name",
+          "type": "string",
+          "example": "checkin-link"
+        },
+        "id": {
+          "type": "string",
+          "description": "identifier of the resource",
+          "example": "1XEN-GBMobile"
+        },
+        "href": {
+          "description": "direct URL to the relevant page",
+          "type": "string",
+          "format": "uri"
+        },
+        "channel": {
+          "description": "indicates the type of channel supported by the URL",
+          "type": "string",
+          "enum": [
+            "Mobile",
+            "Web",
+            "All"
+          ],
+          "example": "Mobile"
+        },
+        "parameters": {
+          "description": "list of URL parameters with descriptive information such as description and/or type and/or format",
+          "additionalProperties": {
+            "$ref": "#/definitions/Parameter"
+          }
+        }
+      }
+    },
+    "Parameter": {
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "description": {
+          "description": "parameter descriptive information",
+          "type": "string",
+          "example": "Passenger last name"
+        },
+        "type": {
+          "description": "type of the parameter",
+          "type": "string",
+          "example": "string"
+        },
+        "format": {
+          "description": "format of the parameter",
+          "type": "string",
+          "example": "([a-zA-Z]|[0-9]){6}"
+        }
+      }
+    },
+    "Error_400": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 400,
+            "code": 477,
+            "title": "INVALID FORMAT",
+            "detail": "invalid query parameter format",
+            "source": {
+              "parameter": "airport",
+              "example": "CDG"
+            }
+          }
+        ]
+      }
+    },
+    "Error_500": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 500,
+            "code": 141,
+            "title": "SYSTEM ERROR HAS OCCURRED"
+          }
+        ]
+      }
+    },
+    "Issue": {
+      "properties": {
+        "status": {
+          "description": "the HTTP status code applicable to this error",
+          "type": "integer"
+        },
+        "code": {
+          "description": "an application-specific error code",
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "description": "a short summary of the error",
+          "type": "string"
+        },
+        "detail": {
+          "description": "explanation of the error",
+          "type": "string"
+        },
+        "source": {
+          "type": "object",
+          "title": "Issue_Source",
+          "description": "an object containing references to the source of the error",
+          "maxProperties": 1,
+          "properties": {
+            "pointer": {
+              "description": "a JSON Pointer [RFC6901] to the associated entity in the request document",
+              "type": "string"
+            },
+            "parameter": {
+              "description": "a string indicating which URI query parameter caused the issue",
+              "type": "string"
+            },
+            "example": {
+              "description": "a string indicating an example of the right value",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "Collection_Meta": {
+      "title": "Collection_Meta",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "example": 1
+        },
+        "links": {
+          "title": "CollectionLinks",
+          "properties": {
+            "self": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "next": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "previous": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "last": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "first": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "up": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            }
+          },
+          "example": {
+            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "400": {
+      "description": "code    | title                                 \n------- | ------------------------------------- \n477     | INVALID FORMAT\n572     | INVALID OPTION\n32171     | MANDATORY DATA MISSING                      \t     \n",
+      "schema": {
+        "$ref": "#/definitions/Error_400"
+      }
+    },
+    "500": {
+      "description": "Unexpected Error",
+      "schema": {
+        "$ref": "#/definitions/Error_500"
+      }
+    },
+    "checkin-links": {
+      "description": "Successful Operation",
+      "schema": {
+        "title": "Success",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Issue"
+            }
+          },
+          "meta": {
+            "$ref": "#/definitions/Collection_Meta"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/CheckinLink"
+            }
+          }
+        },
+        "example": {
+          "warnings": [
+            {
+              "status": 200,
+              "code": 10151,
+              "title": "DEFAULT LANGUAGE USED",
+              "detail": "Language not available for this airline, default language applied",
+              "source": {
+                "parameter": "language"
+              }
+            }
+          ],
+          "meta": {
+            "count": 1,
+            "links": {
+              "self": "http://test.api.amadeus.com/v2/reference-data/urls/checkin-links?airlineCode=BA"
+            }
+          },
+          "data": [
+            {
+              "type": "checkin-link",
+              "id": "BAEN-GBAll",
+              "href": "https://www.britishairways.com/travel/managebooking/public/en_ch?&bookingRef={PNR}&lastname={LAST}",
+              "channel": "All",
+              "parameters": {
+                "LAST": {
+                  "description": "Passenger Last Name",
+                  "type": "string"
+                },
+                "PNR": {
+                  "description": "Record Locator",
+                  "type": "string",
+                  "format": "([a-zA-Z]|[0-9]){6}"
+                }
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "x-generatedAt": "2020-07-23T11:25:45.773Z"
+}

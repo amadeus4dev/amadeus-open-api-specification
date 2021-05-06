@@ -1,0 +1,402 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.4",
+    "title": "Flight Delay Prediction",
+    "x-tags": [
+      "#ama-for-dev"
+    ],
+    "x-status": "validated",
+    "x-release-note": {
+      "1.0.3": [
+        "update examples"
+      ],
+      "1.0.2": [
+        "update examples"
+      ],
+      "1.0.1": [
+        "Add enum values on result"
+      ],
+      "1.0.0": [
+        "Initial Version"
+      ]
+    },
+    "description": "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to generate an access token."
+  },
+  "host": "test.api.amadeus.com",
+  "basePath": "/v1",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/vnd.amadeus+json",
+    "application/json"
+  ],
+  "produces": [
+    "application/vnd.amadeus+json",
+    "application/json"
+  ],
+  "paths": {
+    "/travel/predictions/flight-delay": {
+      "get": {
+        "tags": [
+          "flight-delay-prediction"
+        ],
+        "operationId": "getFlightDelayPrediction",
+        "summary": "Return the delay segment where the flight is likely to lay.",
+        "parameters": [
+          {
+            "name": "originLocationCode",
+            "in": "query",
+            "description": "city/airport [IATA code](http://www.iata.org/publications/Pages/code-search.aspx) from which the traveler is departing, e.g. PAR for Paris",
+            "required": true,
+            "type": "string",
+            "pattern": "[A-Z]{3}",
+            "x-example": "NCE"
+          },
+          {
+            "name": "destinationLocationCode",
+            "in": "query",
+            "description": "city/airport [IATA code](http://www.iata.org/publications/Pages/code-search.aspx) to which the traveler is going, e.g. PAR for Paris",
+            "required": true,
+            "type": "string",
+            "pattern": "[A-Z]{3}",
+            "x-example": "IST"
+          },
+          {
+            "name": "departureDate",
+            "in": "query",
+            "description": "the date on which the traveler will depart from the origin to go to the destination. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2019-12-25",
+            "required": true,
+            "type": "string",
+            "format": "date",
+            "x-example": "2020-08-01"
+          },
+          {
+            "name": "departureTime",
+            "in": "query",
+            "description": "local time relative to originLocationCode on which the traveler will depart from the origin. Time respects ISO 8601 standard. e.g. 13:22:00",
+            "required": true,
+            "type": "string",
+            "format": "date-time",
+            "x-example": "18:20:00"
+          },
+          {
+            "name": "arrivalDate",
+            "in": "query",
+            "description": "the date on which the traveler will arrive to the destination from the origin. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2019-12-25",
+            "required": true,
+            "type": "string",
+            "format": "date",
+            "x-example": "2020-08-01"
+          },
+          {
+            "name": "arrivalTime",
+            "in": "query",
+            "description": "local time relative to destinationLocationCode on which the traveler will arrive to destination. Time respects ISO 8601 standard. e.g. 13:22:00",
+            "required": true,
+            "type": "string",
+            "format": "date-time",
+            "x-example": "22:15:00"
+          },
+          {
+            "name": "aircraftCode",
+            "in": "query",
+            "description": "IATA aircraft code (http://www.flugzeuginfo.net/table_accodes_iata_en.php)",
+            "required": true,
+            "type": "string",
+            "pattern": "[a-zA-Z0-9]{3}",
+            "x-example": 321
+          },
+          {
+            "name": "carrierCode",
+            "in": "query",
+            "required": true,
+            "description": "airline / carrier code",
+            "minLength": 1,
+            "maxLength": 2,
+            "type": "string",
+            "x-example": "TK"
+          },
+          {
+            "name": "flightNumber",
+            "in": "query",
+            "required": true,
+            "description": "flight number as assigned by the carrier",
+            "minLength": 1,
+            "maxLength": 4,
+            "type": "string",
+            "x-example": 1816
+          },
+          {
+            "name": "duration",
+            "required": true,
+            "in": "query",
+            "description": "flight duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M",
+            "type": "string",
+            "x-example": "PT31H10M"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/200"
+          },
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "default": {
+            "$ref": "#/responses/500"
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "definitions": {
+    "Prediction": {
+      "type": "object",
+      "properties": {
+        "data": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Delay_Prediction"
+          }
+        },
+        "meta": {
+          "$ref": "#/definitions/Collection_Meta_Link"
+        }
+      },
+      "example": {
+        "data": [
+          {
+            "id": "TK1816NCEIST20200801",
+            "probability": "0.13336977",
+            "result": "LESS_THAN_30_MINUTES",
+            "subType": "flight-delay",
+            "type": "prediction"
+          },
+          {
+            "id": "TK1816NCEIST20200801",
+            "probability": "0.42023364",
+            "result": "BETWEEN_30_AND_60_MINUTES",
+            "subType": "flight-delay",
+            "type": "prediction"
+          },
+          {
+            "id": "TK1816NCEIST20200801",
+            "probability": "0.34671372",
+            "result": "BETWEEN_60_AND_120_MINUTES",
+            "subType": "flight-delay",
+            "type": "prediction"
+          },
+          {
+            "id": "TK1816NCEIST20200801",
+            "probability": "0.09968289",
+            "result": "OVER_120_MINUTES_OR_CANCELLED",
+            "subType": "flight-delay",
+            "type": "prediction"
+          }
+        ],
+        "meta": {
+          "count": 4,
+          "links": {
+            "self": "https://test.api.amadeus.com/v1/travel/predictions/flight-delay?originLocationCode=NCE&destinationLocationCode=IST&departureDate=2020-08-01&departureTime=18:20:00&arrivalDate=2020-08-01&arrivalTime=22:15:00&aircraftCode=321&carrierCode=TK&flightNumber=1816&duration=PT31H10M"
+          }
+        }
+      }
+    },
+    "Collection_Meta_Link": {
+      "title": "Collection_Meta",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "example": 1
+        },
+        "links": {
+          "title": "CollectionLinks",
+          "properties": {
+            "self": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "next": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "previous": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "last": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "first": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "up": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            }
+          },
+          "example": {
+            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+          }
+        }
+      }
+    },
+    "PredictionResultType": {
+      "description": "forecast description",
+      "type": "string",
+      "enum": [
+        "LESS_THAN_30_MINUTES",
+        "BETWEEN_30_AND_60_MINUTES",
+        "BETWEEN_60_AND_120_MINUTES",
+        "OVER_120_MINUTES_OR_CANCELLED"
+      ],
+      "example": "LESS_THAN_30_MINUTES"
+    },
+    "Delay_Prediction": {
+      "properties": {
+        "type": {
+          "description": "the resource name (`prediction`)",
+          "type": "string"
+        },
+        "subType": {
+          "type": "string",
+          "example": "trip-purpose"
+        },
+        "id": {
+          "description": "item identifier",
+          "type": "string",
+          "readOnly": true
+        },
+        "result": {
+          "$ref": "#/definitions/PredictionResultType"
+        },
+        "probability": {
+          "description": "probability of the forecast (between 0 and 1)",
+          "type": "string"
+        }
+      }
+    },
+    "Error_400": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 400,
+            "code": 477,
+            "title": "INVALID FORMAT",
+            "detail": "invalid query parameter format",
+            "source": {
+              "parameter": "airport",
+              "example": "CDG"
+            }
+          }
+        ]
+      }
+    },
+    "Error_500": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 500,
+            "code": 141,
+            "title": "SYSTEM ERROR HAS OCCURRED"
+          }
+        ]
+      }
+    },
+    "Issue": {
+      "properties": {
+        "status": {
+          "description": "the HTTP status code applicable to this error",
+          "type": "integer"
+        },
+        "code": {
+          "description": "an application-specific error code",
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "description": "a short summary of the error",
+          "type": "string"
+        },
+        "detail": {
+          "description": "explanation of the error",
+          "type": "string"
+        },
+        "source": {
+          "type": "object",
+          "title": "Issue_Source",
+          "description": "an object containing references to the source of the error",
+          "maxProperties": 1,
+          "properties": {
+            "pointer": {
+              "description": "a JSON Pointer [RFC6901] to the associated entity in the request document",
+              "type": "string"
+            },
+            "parameter": {
+              "description": "a string indicating which URI query parameter caused the issue",
+              "type": "string"
+            },
+            "example": {
+              "description": "a string indicating an example of the right value",
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "responses": {
+    "200": {
+      "description": "Success",
+      "schema": {
+        "$ref": "#/definitions/Prediction"
+      }
+    },
+    "400": {
+      "description": "code    | title                                 \n------- | ------------------------------------- \n477     | INVALID FORMAT\n572     | INVALID OPTION\n4926    | INVALID DATA RECEIVED               \n32171   | MANDATORY DATA MISSING \t     \n",
+      "schema": {
+        "$ref": "#/definitions/Error_400"
+      }
+    },
+    "500": {
+      "description": "Unexpected Error",
+      "schema": {
+        "$ref": "#/definitions/Error_500"
+      }
+    }
+  },
+  "x-generatedAt": "2020-07-23T09:48:28.158Z"
+}
