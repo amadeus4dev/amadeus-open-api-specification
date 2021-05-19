@@ -1,0 +1,869 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Safe Place",
+    "x-tags": [
+      "#ama-for-dev"
+    ],
+    "x-status": "validated",
+    "x-release-note": {
+      "1.0": [
+        "Initial Version"
+      ]
+    },
+    "description": "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n  \nPlease also be aware that our test environment is based on a subset of the production, this API in test only returns a few selected cities. You can find the list in our **[data collection](https://github.com/amadeus4dev/data-collection)**."
+  },
+  "host": "test.api.amadeus.com",
+  "basePath": "/v1",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/vnd.amadeus+json"
+  ],
+  "produces": [
+    "application/vnd.amadeus+json"
+  ],
+  "paths": {
+    "/safety/safety-rated-locations": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "operationId": "getSafetyRanking",
+        "summary": "Returns safety rating for a given location and radius.",
+        "parameters": [
+          {
+            "name": "latitude",
+            "description": "Latitude (decimal coordinates)",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "format": "double",
+            "x-example": 41.397158
+          },
+          {
+            "name": "longitude",
+            "description": "Longitude (decimal coordinates)",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "format": "double",
+            "x-example": 2.160873
+          },
+          {
+            "name": "radius",
+            "description": "radius of the search in Kilometer. Can be from 0 to 20, default value is 1 Km.",
+            "in": "query",
+            "required": false,
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 20,
+            "default": 1
+          },
+          {
+            "$ref": "#/parameters/pageLimit"
+          },
+          {
+            "$ref": "#/parameters/pageOffset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/safety-rated-locations"
+          },
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "default": {
+            "$ref": "#/responses/500"
+          }
+        },
+        "description": ""
+      }
+    },
+    "/safety/safety-rated-locations/{safety-rated-locationId}": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/safety-rated-locationId"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Retrieve"
+        ],
+        "operationId": "getLocationSafetyRanking",
+        "summary": "Retieve safety information of a location by its Id.",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/safety-rated-location"
+          },
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "default": {
+            "$ref": "#/responses/500"
+          }
+        },
+        "description": ""
+      }
+    },
+    "/safety/safety-rated-locations/by-square": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "operationId": "getSafetyRankBySquare",
+        "summary": "Returns the safety rating of a given area",
+        "parameters": [
+          {
+            "name": "north",
+            "description": "Latitude north of bounding box (decimal coordinates)",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "format": "double",
+            "x-example": 41.397158
+          },
+          {
+            "name": "west",
+            "description": "Longitude west of bounding box (decimal coordinates)",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "format": "double",
+            "x-example": 2.160873
+          },
+          {
+            "name": "south",
+            "description": "Latitude south of bounding box (decimal coordinates)",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "format": "double",
+            "x-example": 41.394582
+          },
+          {
+            "name": "east",
+            "description": "Longitude east of bounding box (decimal coordinates)",
+            "in": "query",
+            "required": true,
+            "type": "number",
+            "format": "double",
+            "x-example": 2.177181
+          },
+          {
+            "$ref": "#/parameters/pageLimit"
+          },
+          {
+            "$ref": "#/parameters/pageOffset"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/safety-rated-locations"
+          },
+          "400": {
+            "$ref": "#/responses/400"
+          },
+          "default": {
+            "$ref": "#/responses/500"
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "parameters": {
+    "pageLimit": {
+      "name": "page[limit]",
+      "description": "maximum items in one page",
+      "required": false,
+      "in": "query",
+      "type": "integer",
+      "default": 10
+    },
+    "pageOffset": {
+      "name": "page[offset]",
+      "description": "start index of the requested page",
+      "required": false,
+      "in": "query",
+      "type": "integer",
+      "default": 0
+    },
+    "safety-rated-locationId": {
+      "name": "safety-rated-locationId",
+      "description": "identifier of the location",
+      "required": true,
+      "in": "path",
+      "type": "string",
+      "x-example": "Q930402719"
+    }
+  },
+  "definitions": {
+    "SafetyRatedLocation": {
+      "type": "object",
+      "title": "SafetyRatedLocation",
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "safetyScore": {
+              "$ref": "#/definitions/SafetyScore"
+            }
+          }
+        },
+        {
+          "$ref": "#/definitions/Location"
+        }
+      ]
+    },
+    "Location": {
+      "properties": {
+        "id": {
+          "description": "id of the ressource",
+          "type": "string"
+        },
+        "self": {
+          "$ref": "#/definitions/Links"
+        },
+        "type": {
+          "description": "the resource name",
+          "type": "string",
+          "example": "location"
+        },
+        "subType": {
+          "description": "location sub type",
+          "type": "string",
+          "enum": [
+            "AIRPORT",
+            "CITY",
+            "POINT_OF_INTEREST",
+            "DISTRICT"
+          ],
+          "example": "AIRPORT"
+        },
+        "name": {
+          "description": "short name of the location",
+          "type": "string",
+          "example": "Paris CDG"
+        },
+        "geoCode": {
+          "$ref": "#/definitions/GeoCode"
+        }
+      }
+    },
+    "SafetyScore": {
+      "properties": {
+        "women": {
+          "description": "Likelihood of inappropriate behavior against females. Score go from 1 (not likely) to 100 (very likely).",
+          "type": "integer"
+        },
+        "physicalHarm": {
+          "description": "Likelihood of injury due to harmful intent. Score go from 1 (not likely) to 100 (very likely).",
+          "type": "integer"
+        },
+        "theft": {
+          "description": "Likelihood of theft. Score go from 1 (not likely) to 100 (very likely).",
+          "type": "integer"
+        },
+        "politicalFreedom": {
+          "description": "Potential for infringement of political rights or political unrest. Score go from 1 (not likely) to 100 (very likely).",
+          "type": "integer"
+        },
+        "lgbtq": {
+          "description": "Likelihood of harm or discrimination against LGBTQ persons or groups and level of caution required at location. Score go from 1 (not likely) to 100 (very likely).",
+          "type": "integer"
+        },
+        "medical": {
+          "description": "Likelihood of illness or disease, assessment of water and air quality, and access to reliable medical care. Score go from 1 (not likely) to 100 (very likely).",
+          "type": "integer"
+        },
+        "overall": {
+          "description": "An average of the 6 “sub”-categories. Score go from 1 (very safe) to 100 (very dangerous).",
+          "type": "integer"
+        }
+      }
+    },
+    "GeoCode": {
+      "properties": {
+        "latitude": {
+          "description": "latitude of the location",
+          "type": "number",
+          "format": "double",
+          "example": 43.580418
+        },
+        "longitude": {
+          "description": "longitude of the location",
+          "type": "number",
+          "format": "double",
+          "example": 7.125102
+        }
+      }
+    },
+    "Error_400": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 400,
+            "code": 477,
+            "title": "INVALID FORMAT",
+            "detail": "invalid query parameter format",
+            "source": {
+              "parameter": "airport",
+              "example": "CDG"
+            }
+          }
+        ]
+      }
+    },
+    "Error_404": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 404,
+            "code": 1797,
+            "title": "NOT FOUND",
+            "detail": "no response found for this query parameter",
+            "source": {
+              "parameter": "airport"
+            }
+          }
+        ]
+      }
+    },
+    "Error_500": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 500,
+            "code": 141,
+            "title": "SYSTEM ERROR HAS OCCURRED"
+          }
+        ]
+      }
+    },
+    "Issue": {
+      "properties": {
+        "status": {
+          "description": "the HTTP status code applicable to this error",
+          "type": "integer"
+        },
+        "code": {
+          "description": "an application-specific error code",
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "description": "a short summary of the error",
+          "type": "string"
+        },
+        "detail": {
+          "description": "explanation of the error",
+          "type": "string"
+        },
+        "source": {
+          "type": "object",
+          "title": "Issue_Source",
+          "description": "an object containing references to the source of the error",
+          "maxProperties": 1,
+          "properties": {
+            "pointer": {
+              "description": "a JSON Pointer [RFC6901] to the associated entity in the request document",
+              "type": "string"
+            },
+            "parameter": {
+              "description": "a string indicating which URI query parameter caused the issue",
+              "type": "string"
+            },
+            "example": {
+              "description": "a string indicating an example of the right value",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "Collection_Meta": {
+      "title": "Collection_Meta",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "example": 1
+        },
+        "links": {
+          "title": "CollectionLinks",
+          "properties": {
+            "self": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "next": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "previous": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "last": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "first": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "up": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            }
+          },
+          "example": {
+            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+          }
+        }
+      }
+    },
+    "Links": {
+      "required": [
+        "href"
+      ],
+      "properties": {
+        "href": {
+          "type": "string",
+          "format": "uri"
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "GET",
+              "PUT",
+              "DELETE",
+              "POST",
+              "PATCH"
+            ]
+          }
+        },
+        "count": {
+          "type": "integer"
+        }
+      },
+      "example": {
+        "href": "string"
+      }
+    }
+  },
+  "responses": {
+    "400": {
+      "description": "code    | title                                 \n------- | ------------------------------------- \n477     | INVALID FORMAT\n572     | INVALID OPTION\n4926    | INVALID DATA RECEIVED               \n32171   | MANDATORY DATA MISSING \t     \n",
+      "schema": {
+        "$ref": "#/definitions/Error_400"
+      }
+    },
+    "404": {
+      "description": "Not Found",
+      "schema": {
+        "$ref": "#/definitions/Error_404"
+      }
+    },
+    "500": {
+      "description": "Unexpected Error",
+      "schema": {
+        "$ref": "#/definitions/Error_500"
+      }
+    },
+    "safety-rated-locations": {
+      "description": "Successful Operation",
+      "schema": {
+        "title": "Success",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Issue"
+            }
+          },
+          "meta": {
+            "$ref": "#/definitions/Collection_Meta"
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/SafetyRatedLocation"
+            }
+          }
+        },
+        "example": {
+          "meta": {
+            "count": 43,
+            "links": {
+              "self": "https://test.api.amadeus.com/v1/safety/safety-rated-locations?latitude=41.397158&longitude=2.160873&radius=2",
+              "next": "https://test.api.amadeus.com/v1/safety/safety-rated-locations?latitude=41.397158&longitude=2.160873&page%5Boffset%5D=1&radius=2",
+              "last": "https://test.api.amadeus.com/v1/safety/safety-rated-locations?latitude=41.397158&longitude=2.160873&page%5Boffset%5D=4&radius=2",
+              "first": "https://test.api.amadeus.com/v1/safety/safety-rated-locations?latitude=41.397158&longitude=2.160873&page%5Boffset%5D=0&radius=2"
+            }
+          },
+          "data": [
+            {
+              "type": "safety-rated-location",
+              "id": "Q930402719",
+              "self": {
+                "type": "https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402719",
+                "methods": [
+                  "GET"
+                ]
+              },
+              "subType": "CITY",
+              "name": "Barcelona",
+              "geoCode": {
+                "latitude": 41.385064,
+                "longitude": 2.173404
+              },
+              "safetyScores": {
+                "lgbtq": 39,
+                "medical": 0,
+                "overall": 45,
+                "physicalHarm": 36,
+                "politicalFreedom": 50,
+                "theft": 44,
+                "women": 34
+              }
+            },
+            {
+              "type": "safety-rated-location",
+              "id": "Q930402720",
+              "self": {
+                "type": "https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402720",
+                "methods": [
+                  "GET"
+                ]
+              },
+              "subType": "DISTRICT",
+              "name": "Antiga Esquerra de l'Eixample (Barcelona)",
+              "geoCode": {
+                "latitude": 41.3885573,
+                "longitude": 2.1573033
+              },
+              "safetyScores": {
+                "lgbtq": 37,
+                "medical": 0,
+                "overall": 44,
+                "physicalHarm": 34,
+                "politicalFreedom": 50,
+                "theft": 42,
+                "women": 33
+              }
+            },
+            {
+              "type": "safety-rated-location",
+              "id": "Q930402721",
+              "self": {
+                "type": "https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402721",
+                "methods": [
+                  "GET"
+                ]
+              },
+              "subType": "DISTRICT",
+              "name": "Baix Guinardó (Barcelona)",
+              "geoCode": {
+                "latitude": 41.412131,
+                "longitude": 2.1683571
+              },
+              "safetyScores": {
+                "lgbtq": 37,
+                "medical": 0,
+                "overall": 44,
+                "physicalHarm": 34,
+                "politicalFreedom": 50,
+                "theft": 42,
+                "women": 33
+              }
+            },
+            {
+              "type": "safety-rated-location",
+              "id": "Q930402722",
+              "self": {
+                "type": "https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402722",
+                "methods": [
+                  "GET"
+                ]
+              },
+              "subType": "DISTRICT",
+              "name": "Barceloneta (Barcelona)",
+              "geoCode": {
+                "latitude": 41.380894,
+                "longitude": 2.189385
+              },
+              "safetyScores": {
+                "lgbtq": 42,
+                "medical": 0,
+                "overall": 47,
+                "physicalHarm": 39,
+                "politicalFreedom": 50,
+                "theft": 49,
+                "women": 34
+              }
+            },
+            {
+              "type": "safety-rated-location",
+              "id": "Q930402724",
+              "self": {
+                "type": "https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402724",
+                "methods": [
+                  "GET"
+                ]
+              },
+              "subType": "DISTRICT",
+              "name": "Can Baró (Barcelona)",
+              "geoCode": {
+                "latitude": 41.4172284,
+                "longitude": 2.163444
+              },
+              "safetyScores": {
+                "lgbtq": 37,
+                "medical": 0,
+                "overall": 44,
+                "physicalHarm": 34,
+                "politicalFreedom": 50,
+                "theft": 42,
+                "women": 33
+              }
+            },
+            {
+              "type": "safety-rated-location",
+              "id": "Q930402731",
+              "self": {
+                "type": "https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402731",
+                "methods": [
+                  "GET"
+                ]
+              },
+              "subType": "DISTRICT",
+              "name": "El Born (Barcelona)",
+              "geoCode": {
+                "latitude": 41.384728,
+                "longitude": 2.18286
+              },
+              "safetyScores": {
+                "lgbtq": 42,
+                "medical": 0,
+                "overall": 47,
+                "physicalHarm": 39,
+                "politicalFreedom": 50,
+                "theft": 49,
+                "women": 34
+              }
+            },
+            {
+              "type": "safety-rated-location",
+              "id": "Q930402732",
+              "self": {
+                "type": "https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402732",
+                "methods": [
+                  "GET"
+                ]
+              },
+              "subType": "DISTRICT",
+              "name": "El Camp de l'Arpa del Clot (Barcelona)",
+              "geoCode": {
+                "latitude": 41.4118532,
+                "longitude": 2.1830997
+              },
+              "safetyScores": {
+                "lgbtq": 37,
+                "medical": 0,
+                "overall": 45,
+                "physicalHarm": 35,
+                "politicalFreedom": 50,
+                "theft": 43,
+                "women": 33
+              }
+            },
+            {
+              "type": "safety-rated-location",
+              "id": "Q930402733",
+              "self": {
+                "type": "https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402733",
+                "methods": [
+                  "GET"
+                ]
+              },
+              "subType": "DISTRICT",
+              "name": "El Camp d'en Grassot i Gràcia Nova (Barcelona)",
+              "geoCode": {
+                "latitude": 41.4046685,
+                "longitude": 2.1659005
+              },
+              "safetyScores": {
+                "lgbtq": 37,
+                "medical": 0,
+                "overall": 44,
+                "physicalHarm": 34,
+                "politicalFreedom": 50,
+                "theft": 42,
+                "women": 33
+              }
+            },
+            {
+              "type": "safety-rated-location",
+              "id": "Q930402734",
+              "self": {
+                "type": "https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402734",
+                "methods": [
+                  "GET"
+                ]
+              },
+              "subType": "DISTRICT",
+              "name": "El Carmel (Barcelona)",
+              "geoCode": {
+                "latitude": 41.422371,
+                "longitude": 2.1560753
+              },
+              "safetyScores": {
+                "lgbtq": 37,
+                "medical": 0,
+                "overall": 44,
+                "physicalHarm": 34,
+                "politicalFreedom": 50,
+                "theft": 42,
+                "women": 33
+              }
+            },
+            {
+              "type": "safety-rated-location",
+              "id": "Q930402735",
+              "self": {
+                "type": "https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402735",
+                "methods": [
+                  "GET"
+                ]
+              },
+              "subType": "DISTRICT",
+              "name": "El Clot (Barcelona)",
+              "geoCode": {
+                "latitude": 41.4097037,
+                "longitude": 2.1892366
+              },
+              "safetyScores": {
+                "lgbtq": 37,
+                "medical": 0,
+                "overall": 45,
+                "physicalHarm": 35,
+                "politicalFreedom": 50,
+                "theft": 43,
+                "women": 33
+              }
+            }
+          ]
+        }
+      }
+    },
+    "safety-rated-location": {
+      "description": "Successful Operation",
+      "schema": {
+        "title": "Success",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Issue"
+            }
+          },
+          "meta": {
+            "$ref": "#/definitions/Collection_Meta"
+          },
+          "data": {
+            "$ref": "#/definitions/SafetyRatedLocation"
+          }
+        },
+        "example": {
+          "meta": {
+            "links": {
+              "self": "https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402719"
+            }
+          },
+          "data": [
+            {
+              "type": "safety-rated-location",
+              "id": "Q930402719",
+              "self": {
+                "type": "https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402719",
+                "methods": [
+                  "GET"
+                ]
+              },
+              "subType": "CITY",
+              "name": "Barcelona",
+              "geoCode": {
+                "latitude": 41.385064,
+                "longitude": 2.173404
+              },
+              "safetyScores": {
+                "lgbtq": 39,
+                "medical": 0,
+                "overall": 45,
+                "physicalHarm": 36,
+                "politicalFreedom": 50,
+                "theft": 44,
+                "women": 34
+              }
+            }
+          ]
+        }
+      }
+    }
+  },
+  "x-generatedAt": "2020-07-20T14:39:03.265Z"
+}
