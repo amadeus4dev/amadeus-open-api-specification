@@ -1,0 +1,593 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Tours and Activities",
+    "x-status": "validated",
+    "x-tags": [
+      "#ama-for-dev"
+    ],
+    "x-release-note": {
+      "1.0": [
+        "First version"
+      ]
+    },
+    "description": "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to generate an access token. \n  \nPlease also be aware that our test environment is based on a subset of the production, this API in test only returns a few selected cities. You can find the list in our **[data collection](https://github.com/amadeus4dev/data-collection)**."
+  },
+  "host": "test.api.amadeus.com",
+  "basePath": "/v1",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/vnd.amadeus+json"
+  ],
+  "produces": [
+    "application/vnd.amadeus+json"
+  ],
+  "paths": {
+    "/shopping/activities": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "operationId": "ListActivities",
+        "summary": "Returns Activities around a given location",
+        "parameters": [
+          {
+            "type": "number",
+            "in": "query",
+            "name": "latitude",
+            "description": "Latitude (decimal coordinates)",
+            "required": true,
+            "x-example": 41.397158
+          },
+          {
+            "type": "number",
+            "in": "query",
+            "required": true,
+            "name": "longitude",
+            "description": "Longitude (decimal coordinates)",
+            "x-example": 2.160873
+          },
+          {
+            "type": "integer",
+            "default": 1,
+            "in": "query",
+            "name": "radius",
+            "description": "radius of the search in Kilometer. Can be from 0 to 20, default value is 1 Km."
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/activities"
+          },
+          "400": {
+            "$ref": "#/responses/400_Search"
+          },
+          "default": {
+            "$ref": "#/responses/500"
+          }
+        },
+        "description": ""
+      }
+    },
+    "/shopping/activities/by-square": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "operationId": "ListActivitiesBySquare",
+        "summary": "Returns Activities around a given location",
+        "parameters": [
+          {
+            "type": "number",
+            "in": "query",
+            "name": "north",
+            "required": true,
+            "description": "Latitude north of bounding box (decimal coordinates)",
+            "x-example": 41.397158
+          },
+          {
+            "type": "number",
+            "in": "query",
+            "name": "west",
+            "description": "Longitude west of bounding box (decimal coordinates)",
+            "required": true,
+            "x-example": 2.160873
+          },
+          {
+            "type": "number",
+            "in": "query",
+            "required": true,
+            "name": "south",
+            "description": "Latitude south of bounding box (decimal coordinates)",
+            "x-example": 41.394582
+          },
+          {
+            "type": "number",
+            "in": "query",
+            "required": true,
+            "name": "east",
+            "description": "Longitude east of bounding box (decimal coordinates)",
+            "x-example": 2.177181
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/activities"
+          },
+          "400": {
+            "$ref": "#/responses/400_Search"
+          },
+          "default": {
+            "$ref": "#/responses/500"
+          }
+        },
+        "description": ""
+      }
+    },
+    "/shopping/activities/{activityId}": {
+      "parameters": [
+        {
+          "$ref": "#/parameters/activityId"
+        }
+      ],
+      "get": {
+        "tags": [
+          "Retrieve"
+        ],
+        "operationId": "GETActivity",
+        "summary": "Retrieve one activity by its id",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/activity"
+          },
+          "400": {
+            "$ref": "#/responses/400_Retreive"
+          },
+          "404": {
+            "$ref": "#/responses/404"
+          },
+          "default": {
+            "$ref": "#/responses/500"
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "parameters": {
+    "activityId": {
+      "name": "activityId",
+      "required": true,
+      "in": "path",
+      "type": "string",
+      "x-example": "23642"
+    }
+  },
+  "definitions": {
+    "Activity": {
+      "type": "object",
+      "title": "Activity",
+      "description": "Activity description",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "the ressource name",
+          "readOnly": true
+        },
+        "id": {
+          "type": "string",
+          "description": "unique id of the ressource",
+          "readOnly": true
+        },
+        "self": {
+          "$ref": "#/definitions/Link"
+        },
+        "name": {
+          "type": "string",
+          "description": "activity name"
+        },
+        "shortDescription": {
+          "type": "string",
+          "description": "short description of the activity"
+        },
+        "description": {
+          "type": "string",
+          "description": "full description of the activity"
+        },
+        "geoCode": {
+          "$ref": "#/definitions/GeoCode"
+        },
+        "rating": {
+          "type": "string",
+          "description": "rating of the activity"
+        },
+        "price": {
+          "$ref": "#/definitions/ElementaryPrice"
+        },
+        "pictures": {
+          "type": "array",
+          "description": "link to picture related to the activity",
+          "items": {
+            "type": "string"
+          }
+        },
+        "bookingLink": {
+          "type": "string",
+          "description": "url to book the activity"
+        },
+        "minimumDuration": {
+          "type": "string",
+          "description": "Minimum recommended duration for the activity"
+        }
+      }
+    },
+    "GeoCode": {
+      "type": "object",
+      "description": "geo position",
+      "properties": {
+        "latitude": {
+          "description": "latitude of the location",
+          "type": "number",
+          "format": "double",
+          "example": 43.580418
+        },
+        "longitude": {
+          "description": "longitude of the location",
+          "type": "number",
+          "format": "double",
+          "example": 7.125102
+        }
+      }
+    },
+    "ElementaryPrice": {
+      "description": "elementaryPrice",
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "string",
+          "description": "Amount of the fare. could be alpha numeric. Ex- 500.20 or 514.13A, 'A'signifies additional collection."
+        },
+        "currencyCode": {
+          "type": "string",
+          "description": "Currency type of the fare."
+        }
+      }
+    },
+    "Link": {
+      "type": "object",
+      "properties": {
+        "href": {
+          "type": "string",
+          "format": "uri"
+        },
+        "methods": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "GET",
+              "PUT",
+              "DELETE",
+              "POST",
+              "PATCH"
+            ]
+          }
+        }
+      },
+      "example": {
+        "href": "string"
+      }
+    },
+    "Issue": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "description": "the HTTP status code applicable to this error",
+          "type": "integer"
+        },
+        "code": {
+          "description": "an application-specific error code",
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "description": "a short summary of the error",
+          "type": "string"
+        },
+        "detail": {
+          "description": "explanation of the error",
+          "type": "string"
+        },
+        "source": {
+          "type": "object",
+          "title": "Issue_Source",
+          "description": "an object containing references to the source of the error",
+          "maxProperties": 1,
+          "properties": {
+            "pointer": {
+              "description": "a JSON Pointer [RFC6901] to the associated entity in the request document",
+              "type": "string"
+            },
+            "parameter": {
+              "description": "a string indicating which URI query parameter caused the issue",
+              "type": "string"
+            },
+            "example": {
+              "description": "a string indicating an example of the right value",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "Collection_Meta": {
+      "type": "object",
+      "title": "Collection_Meta",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "example": 1
+        },
+        "links": {
+          "type": "object",
+          "title": "CollectionLinks",
+          "properties": {
+            "self": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "next": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "previous": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "last": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "first": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            },
+            "up": {
+              "type": "string",
+              "format": "uri",
+              "example": "https://test.api.amadeus.com/v1/area/resources?..."
+            }
+          },
+          "example": {
+            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+          }
+        }
+      }
+    },
+    "Error_400": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 400,
+            "code": 477,
+            "title": "INVALID FORMAT",
+            "detail": "invalid query parameter format",
+            "source": {
+              "parameter": "airport",
+              "example": "CDG"
+            }
+          }
+        ]
+      }
+    },
+    "Error_404": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 404,
+            "code": 1797,
+            "title": "NOT FOUND",
+            "detail": "no response found for this query parameter",
+            "source": {
+              "parameter": "airport"
+            }
+          }
+        ]
+      }
+    },
+    "Error_500": {
+      "type": "object",
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 500,
+            "code": 141,
+            "title": "SYSTEM ERROR HAS OCCURRED"
+          }
+        ]
+      }
+    }
+  },
+  "responses": {
+    "404": {
+      "description": "Not Found",
+      "schema": {
+        "$ref": "#/definitions/Error_404"
+      }
+    },
+    "500": {
+      "description": "Unexpected Error",
+      "schema": {
+        "$ref": "#/definitions/Error_500"
+      }
+    },
+    "activities": {
+      "description": "Successful Operation",
+      "schema": {
+        "title": "Successful Search",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "meta": {
+            "$ref": "#/definitions/Collection_Meta"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Issue"
+            }
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Activity"
+            }
+          }
+        },
+        "example": {
+          "meta": {
+            "count": "1",
+            "self": "https://test.api.amadeus.com/v1/shopping/activities?longitude=-3.69170868&latitude=40.41436995&radius=1"
+          },
+          "data": [
+            {
+              "id": "23642",
+              "type": "activity",
+              "self": {
+                "href": "https://test.api.amadeus.com/v1/shopping/activities/23642",
+                "methods": [
+                  "GET"
+                ]
+              },
+              "name": "Skip-the-line tickets to the Prado Museum",
+              "shortDescription": "Book your tickets for the Prado Museum in Madrid, discover masterpieces by Velázquez, Goya, Mantegna, Raphael, Tintoretto and access all temporary exhibitions.",
+              "geoCode": {
+                "latitude": "40.414000",
+                "longitude": "-3.691000"
+              },
+              "rating": "4.500000",
+              "pictures": [
+                "https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500"
+              ],
+              "bookingLink": "https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36",
+              "price": {
+                "currencyCode": "EUR",
+                "amount": "16.00"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "activity": {
+      "description": "Successful Operation",
+      "schema": {
+        "title": "Successful Search",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "meta": {
+            "$ref": "#/definitions/Collection_Meta"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Issue"
+            }
+          },
+          "data": {
+            "$ref": "#/definitions/Activity"
+          }
+        },
+        "example": {
+          "meta": {
+            "self": "https://test.api.amadeus.com/v1/shopping/activities/23642"
+          },
+          "data": {
+            "id": "23642",
+            "type": "activity",
+            "self": {
+              "href": "https://test.api.amadeus.com/v1/shopping/activities/23642",
+              "methods": [
+                "GET"
+              ]
+            },
+            "name": "Skip-the-line tickets to the Prado Museum",
+            "shortDescription": "Book your tickets for the Prado Museum in Madrid, discover masterpieces by Velázquez, Goya, Mantegna, Raphael, Tintoretto and access all temporary exhibitions.",
+            "geoCode": {
+              "latitude": "40.414000",
+              "longitude": "-3.691000"
+            },
+            "rating": "4.500000",
+            "pictures": [
+              "https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500"
+            ],
+            "bookingLink": "https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36",
+            "price": {
+              "currencyCode": "EUR",
+              "amount": "16.00"
+            }
+          }
+        }
+      }
+    },
+    "400_Retreive": {
+      "description": "Code   | Title\n-------|----------------\n572    | INVALID OPTION\t     \n",
+      "schema": {
+        "$ref": "#/definitions/Error_400"
+      }
+    },
+    "400_Search": {
+      "description": "Code   | Title\n-------|----------------\n477    | INVALID FORMAT\n572    | INVALID OPTION\n4926   | INVALID DATA RECEIVED\n32171  | MANDATORY DATA MISSING\t     \n",
+      "schema": {
+        "$ref": "#/definitions/Error_400"
+      }
+    }
+  },
+  "x-generatedAt": "2020-09-02T09:57:40.390Z"
+}

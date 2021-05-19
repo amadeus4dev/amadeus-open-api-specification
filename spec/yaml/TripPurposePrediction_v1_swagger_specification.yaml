@@ -1,0 +1,213 @@
+swagger: '2.0'
+info:
+  version: 1.1.2
+  title: Trip Purpose Prediction
+  x-tags:
+    - '#ama-for-dev'
+  x-status: pending
+  x-release-note:
+    '1.1':
+      - Remove self section from data
+      - Add defaults to meta
+      - Change result into an enum
+    '1.0':
+      - Initial Version
+  description: "\nBefore using this API, we recommend you read our\_**[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)**\_for more information on how to generate an access token."
+host: test.api.amadeus.com
+basePath: /v1
+schemes:
+  - https
+consumes:
+  - application/vnd.amadeus+json
+produces:
+  - application/vnd.amadeus+json
+paths:
+  /travel/predictions/trip-purpose:
+    get:
+      tags:
+        - trip-purpose-prediction
+      operationId: getTripPurposePrediction
+      summary: Returns the forecast purpose of a trip
+      parameters:
+        - name: originLocationCode
+          in: query
+          description: 'city/airport [IATA code](http://www.iata.org/publications/Pages/code-search.aspx) from which the traveler will depart, e.g. BOS for Boston'
+          required: true
+          type: string
+          pattern: '[A-Z]{3}'
+          x-example: NYC
+        - name: destinationLocationCode
+          in: query
+          description: 'city/airport [IATA code](http://www.iata.org/publications/Pages/code-search.aspx) to which the traveler is going, e.g. PAR for Paris'
+          required: true
+          type: string
+          pattern: '[A-Z]{3}'
+          x-example: MAD
+        - name: departureDate
+          in: query
+          description: 'the date on which the traveler will depart from the origin to go to the destination. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2017-12-25'
+          required: true
+          type: string
+          x-example: '2020-12-01'
+        - name: returnDate
+          in: query
+          description: 'the date on which the traveler will depart from the destination to return to the origin. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2018-02-28'
+          required: true
+          type: string
+          x-example: '2020-12-12'
+        - name: searchDate
+          in: query
+          description: 'the date on which the traveler is performing the search. If this parameter is not specified, current date will be used. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2018-02-28'
+          required: false
+          type: string
+      responses:
+        '200':
+          $ref: '#/responses/200'
+        '400':
+          $ref: '#/responses/400'
+        default:
+          $ref: '#/responses/500'
+      description: ''
+definitions:
+  Prediction:
+    type: object
+    properties:
+      data:
+        $ref: '#/definitions/Purpose_Prediction'
+      meta:
+        $ref: '#/definitions/Meta'
+    example:
+      data:
+        id: NYCMAD20201201
+        probability: '0.9984415'
+        result: LEISURE
+        subType: trip-purpose
+        type: prediction
+      meta:
+        defaults:
+          searchDate: '2020-07-23'
+        links:
+          self: 'https://test.api.amadeus.com/v1/travel/predictions/trip-purpose?originLocationCode=NYC&destinationLocationCode=MAD&departureDate=2020-12-01&returnDate=2020-12-12&searchDate=2020-07-23'
+  Meta:
+    type: object
+    properties:
+      links:
+        $ref: '#/definitions/Links'
+      defaults:
+        $ref: '#/definitions/Defaults'
+  Purpose_Prediction:
+    properties:
+      type:
+        description: the resource name (`prediction`)
+        type: string
+      subType:
+        type: string
+        example: trip-purpose
+      id:
+        description: item identifier
+        type: string
+        readOnly: true
+      result:
+        $ref: '#/definitions/PredictionResultType'
+      probability:
+        description: probability of the forecast (between 0 and 1)
+        type: string
+  PredictionResultType:
+    description: forecast description
+    type: string
+    enum:
+      - BUSINESS
+      - LEISURE
+    example: BUSINESS
+  Links:
+    properties:
+      self:
+        type: string
+        format: uri
+      related:
+        type: string
+        format: uri
+      type:
+        type: string
+  Defaults:
+    description: the query parameters for which default values were used are returned here
+    type: object
+    properties:
+      searchDate:
+        description: the date on which the traveler is performing the search.
+        type: string
+        example: '2019-06-11'
+  Error_400:
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+    required:
+      - errors
+    example:
+      errors:
+        - status: 400
+          code: 477
+          title: INVALID FORMAT
+          detail: invalid query parameter format
+          source:
+            parameter: airport
+            example: CDG
+  Error_500:
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+    required:
+      - errors
+    example:
+      errors:
+        - status: 500
+          code: 141
+          title: SYSTEM ERROR HAS OCCURRED
+  Issue:
+    properties:
+      status:
+        description: the HTTP status code applicable to this error
+        type: integer
+      code:
+        description: an application-specific error code
+        type: integer
+        format: int64
+      title:
+        description: a short summary of the error
+        type: string
+      detail:
+        description: explanation of the error
+        type: string
+      source:
+        type: object
+        title: Issue_Source
+        description: an object containing references to the source of the error
+        maxProperties: 1
+        properties:
+          pointer:
+            description: 'a JSON Pointer [RFC6901] to the associated entity in the request document'
+            type: string
+          parameter:
+            description: a string indicating which URI query parameter caused the issue
+            type: string
+          example:
+            description: a string indicating an example of the right value
+            type: string
+responses:
+  '200':
+    description: Success
+    schema:
+      $ref: '#/definitions/Prediction'
+  '400':
+    description: "code    | title                                 \n------- | ------------------------------------- \n477     | INVALID FORMAT\n572     | INVALID OPTION\n4926    | INVALID DATA RECEIVED               \n32171   | MANDATORY DATA MISSING \t     \n"
+    schema:
+      $ref: '#/definitions/Error_400'
+  '500':
+    description: Unexpected Error
+    schema:
+      $ref: '#/definitions/Error_500'
+x-generatedAt: '2020-07-23T08:01:18.792Z'

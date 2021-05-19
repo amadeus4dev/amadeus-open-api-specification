@@ -1,0 +1,228 @@
+swagger: '2.0'
+info:
+  version: 2.2.0
+  title: Get Media Files
+  x-tags:
+    - '#ama-for-dev'
+  x-status: validated
+  x-release-note:
+    2.2.0:
+      - add new end-point for AI Generated Photos
+    2.1.0:
+      - change parameter cityCode by cityCodes
+    2.0.0:
+      - Migration to Amadeus V1.2 standard
+      - Creation of GET Files by city code
+      - Add format criteria
+  description: |-
+
+    Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to generate an access token.
+host: test.api.amadeus.com
+basePath: /v2
+schemes:
+  - https
+consumes:
+  - application/vnd.amadeus+json
+produces:
+  - application/vnd.amadeus+json
+paths:
+  /media/files/generated-photos:
+    get:
+      tags:
+        - files
+      operationId: generateFile
+      summary: Generate a landscape picture
+      parameters:
+        - name: category
+          description: select the type of landscape to be generated
+          in: query
+          required: true
+          type: string
+          enum:
+            - MOUNTAIN
+            - BEACH
+          x-example: MOUNTAIN
+      responses:
+        '200':
+          $ref: '#/responses/generatedfile'
+        '400':
+          $ref: '#/responses/400'
+        default:
+          $ref: '#/responses/500'
+      description: ''
+definitions:
+  File:
+    allOf:
+      - $ref: '#/definitions/Resource'
+      - properties:
+          owner:
+            type: string
+          attachmentUri:
+            type: string
+            format: uri
+          description:
+            type: string
+          fileKbSize:
+            type: integer
+          mediaMetadata:
+            title: File_MediaMetadata
+            properties:
+              application:
+                type: string
+              caption:
+                type: string
+              hint:
+                type: string
+              dimensions:
+                type: object
+                title: File_MediaMetadata_Dimensions
+                properties:
+                  height:
+                    type: integer
+                  width:
+                    type: integer
+                  UOM:
+                    type: string
+              mediaSource:
+                title: File_MediaSource
+                properties:
+                  code:
+                    type: string
+                  version:
+                    type: string
+                  filename:
+                    type: string
+                  symbology:
+                    type: string
+                  copyright:
+                    type: string
+          expirationDateTime:
+            type: string
+            description: |
+              expiration time of the attachment uri when applicable
+              Dates and time are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DDTHH:MMZ format, e.g. 2019-11-25T22:12Z
+  Resource:
+    properties:
+      type:
+        type: string
+      id:
+        type: string
+      self:
+        $ref: '#/definitions/Links'
+  Links:
+    required:
+      - href
+    properties:
+      href:
+        type: string
+        format: uri
+      methods:
+        type: array
+        items:
+          type: string
+          enum:
+            - GET
+            - PUT
+            - DELETE
+            - POST
+            - PATCH
+      count:
+        type: integer
+    example:
+      href: string
+  Error_400:
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+    required:
+      - errors
+    example:
+      errors:
+        - status: 400
+          code: 477
+          title: INVALID FORMAT
+          detail: invalid query parameter format
+          source:
+            parameter: airport
+            example: CDG
+  Error_500:
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+    required:
+      - errors
+    example:
+      errors:
+        - status: 500
+          code: 141
+          title: SYSTEM ERROR HAS OCCURRED
+  Issue:
+    properties:
+      status:
+        description: the HTTP status code applicable to this error
+        type: integer
+      code:
+        description: an application-specific error code
+        type: integer
+        format: int64
+      title:
+        description: a short summary of the error
+        type: string
+      detail:
+        description: explanation of the error
+        type: string
+      source:
+        type: object
+        title: Issue_Source
+        description: an object containing references to the source of the error
+        maxProperties: 1
+        properties:
+          pointer:
+            description: 'a JSON Pointer [RFC6901] to the associated entity in the request document'
+            type: string
+          parameter:
+            description: a string indicating which URI query parameter caused the issue
+            type: string
+          example:
+            description: a string indicating an example of the right value
+            type: string
+responses:
+  '400':
+    description: "code    | title                                 \n------- | ------------------------------------- \n  477   | INVALID FORMAT\n  572   | INVALID OPTION \n 4926   | INVALID DATA RECEIVED                       \n32171   | MANDATORY DATA MISSING \t     \n"
+    schema:
+      $ref: '#/definitions/Error_400'
+  '500':
+    description: Unexpected Error
+    schema:
+      $ref: '#/definitions/Error_500'
+  generatedfile:
+    description: Successful Operation
+    schema:
+      title: Success File
+      required:
+        - data
+      properties:
+        warnings:
+          type: array
+          items:
+            $ref: '#/definitions/Issue'
+        data:
+          $ref: '#/definitions/File'
+      example:
+        data:
+          type: file
+          owner: 1A
+          attachmentUri: 'http://pdt.content.amadeus.com/citypictures/2615_DFL.jpeg'
+          description: mountain landscape
+          fileKbSize: 200
+          expirationDateTime: '2019-11-25T22:12Z'
+          mediaMetadata:
+            dimensions:
+              height: 512
+              width: 512
+              UOM: Pixels
+x-generatedAt: '2020-07-22T10:20:37.985Z'
