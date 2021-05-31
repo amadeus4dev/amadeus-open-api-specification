@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.4.0",
+    "version": "1.5.0",
     "title": "Flight Create Orders",
     "x-tags": [
       "#quick-connect",
@@ -11,6 +11,9 @@
     ],
     "x-status": "validated",
     "x-release-note": {
+      "1.5.0": [
+        "Add new General Remark enum \"TOUR_CODE\""
+      ],
       "1.4.0": [
         "Add new Gender enum \"UNSPECIFIED\" and \"UNDISCLOSED\"",
         "Add EasyPay credit card brand - **not available in self-service**"
@@ -2167,7 +2170,8 @@
         "BACKOFFICE",
         "FULFILLMENT",
         "ITINERARY",
-        "TICKETING_MISCELLANEOUS"
+        "TICKETING_MISCELLANEOUS",
+        "TOUR_CODE"
       ],
       "example": "GENERAL_MISCELLANEOUS"
     },
@@ -3144,5 +3148,5 @@
       }
     }
   },
-  "x-generatedAt": "2020-11-06T18:25:45.413Z"
+  "x-generatedAt": "2021-05-03T13:13:05.285Z"
 }
