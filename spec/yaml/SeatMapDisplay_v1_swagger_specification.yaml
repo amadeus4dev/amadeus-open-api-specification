@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.6.0
+  version: 1.7.0
   title: Seatmap Display
   x-status: validated
   x-tags:
@@ -8,6 +8,8 @@ info:
     - '#mobile-services'
     - '#ama-for-dev'
   x-release-note:
+    '1.7':
+      - Add new ENUM value for Power Amenity
     '1.6':
       - Add Medias in seat amenity to carry rich content
       - Add field for number of seats available
@@ -16,7 +18,7 @@ info:
       - Document warnings and new error codes
       - Document new premium seat characteristic (1A_AQC_PREMIUM_SEAT)
     '1.4':
-      - 'Add the Operating flight in the response for codeshare awareness, aligned with flight offer'
+      - Add the Operating flight in the response for codeshare awareness, aligned with flight offer
     '1.3':
       - Add support of Light Ticketing Carrier (LTC) and Extended Air Choice (EAC) as flight offer source - **not available in self-service**
     '1.2':
@@ -244,7 +246,7 @@ parameters:
     x-example: MlpZVkFMfFdBVFNPTnwyMDE1LTExLTAy
   oldOrderId:
     name: flight-orderId
-    description: 'DEPRECATED identifier of the order , kept for backward compatibility'
+    description: DEPRECATED identifier of the order , kept for backward compatibility
     required: false
     in: query
     type: string
@@ -283,11 +285,11 @@ definitions:
         $ref: '#/definitions/OperatingFlight'
       duration:
         type: string
-        description: 'stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M'
+        description: stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M
         example: PT2H10M
       stops:
         type: array
-        description: 'information regarding the different stops composing the flight segment. E.g. technical stop, change of gauge...'
+        description: information regarding the different stops composing the flight segment. E.g. technical stop, change of gauge...
         items:
           $ref: '#/definitions/FlightStop'
   FlightEndPoint:
@@ -303,7 +305,7 @@ definitions:
         type: string
         example: T2
       at:
-        description: 'local date and time in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm±hh:mm format, e.g. 2017-02-10T20:40:00+02:00'
+        description: local date and time in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm±hh:mm format, e.g. 2017-02-10T20:40:00+02:00
         type: string
         format: date-time
         example: '2017-10-23T20:00:00+02:00'
@@ -319,15 +321,15 @@ definitions:
         $ref: '#/definitions/AircraftEquipment'
       duration:
         type: string
-        description: 'stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M'
+        description: stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M
         example: PT2H10M
       arrivalAt:
-        description: 'arrival at the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm±hh:mm format, e.g. 2017-02-10T20:40:00+02:00'
+        description: arrival at the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm±hh:mm format, e.g. 2017-02-10T20:40:00+02:00
         type: string
         format: date-time
         example: '2017-10-23T20:00:00+02:00'
       departureAt:
-        description: 'departure from the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm±hh:mm format, e.g. 2017-02-10T20:40:00+02:00'
+        description: departure from the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm±hh:mm format, e.g. 2017-02-10T20:40:00+02:00
         type: string
         format: date-time
         example: '2017-10-23T20:00:00+02:00'
@@ -379,27 +381,27 @@ definitions:
       source:
         $ref: '#/definitions/FlightOfferSource'
       instantTicketingRequired:
-        description: 'If true, inform that a ticketing will be required at booking step.'
+        description: If true, inform that a ticketing will be required at booking step.
         type: boolean
         example: false
       disablePricing:
-        description: 'BOOK step ONLY - If true, allows to book a PNR without pricing. Only for the source "GDS"'
+        description: BOOK step ONLY - If true, allows to book a PNR without pricing. Only for the source "GDS"
         type: boolean
         example: false
       nonHomogeneous:
-        description: 'If true, upon completion of the booking, this pricing solution is expected to yield multiple records (a record contains booking information confirmed and stored, typically a Passenger Name Record (PNR), in the provider GDS or system)'
+        description: If true, upon completion of the booking, this pricing solution is expected to yield multiple records (a record contains booking information confirmed and stored, typically a Passenger Name Record (PNR), in the provider GDS or system)
         type: boolean
         example: false
       oneWay:
-        description: 'If true, the flight offer fulfills only one originDestination and has to be combined with other oneWays to complete the whole journey.'
+        description: If true, the flight offer fulfills only one originDestination and has to be combined with other oneWays to complete the whole journey.
         type: boolean
         example: false
       paymentCardRequired:
-        description: 'If true, a payment card is mandatory to book this flight offer'
+        description: If true, a payment card is mandatory to book this flight offer
         type: boolean
         example: false
       lastTicketingDate:
-        description: 'If booked on the same day as the search (with respect to timezone), this flight offer is guaranteed to be thereafter valid for ticketing until this date (included). Unspecified when it does not make sense for this flight offer (e.g. no control over ticketing once booked). YYYY-MM-DD format, e.g. 2019-06-07'
+        description: If booked on the same day as the search (with respect to timezone), this flight offer is guaranteed to be thereafter valid for ticketing until this date (included). Unspecified when it does not make sense for this flight offer (e.g. no control over ticketing once booked). YYYY-MM-DD format, e.g. 2019-06-07
         type: string
         example: '2018-06-19T00:00:00.000Z'
       numberOfBookableSeats:
@@ -417,7 +419,7 @@ definitions:
           type: object
           properties:
             duration:
-              description: 'duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M for a duration of 2h10m'
+              description: duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M for a duration of 2h10m
               type: string
               example: PT2H10M
             segments:
@@ -447,19 +449,19 @@ definitions:
               - '123456'
           includedCheckedBagsOnly:
             type: boolean
-            description: 'If true, returns the flight-offers with included checked bags only'
+            description: If true, returns the flight-offers with included checked bags only
             example: true
           refundableFare:
             type: boolean
-            description: 'If true, returns the flight-offers with refundable fares only'
+            description: If true, returns the flight-offers with refundable fares only
             example: true
           noRestrictionFare:
             type: boolean
-            description: 'If true, returns the flight-offers with no restriction fares only'
+            description: If true, returns the flight-offers with no restriction fares only
             example: true
           noPenaltyFare:
             type: boolean
-            description: 'If true, returns the flight-offers with no penalty fares only'
+            description: If true, returns the flight-offers with no penalty fares only
             example: true
       validatingAirlineCodes:
         description: This option ensures that the system will only consider these airlines.
@@ -494,7 +496,7 @@ definitions:
               $ref: '#/definitions/TravelerType'
             associatedAdultId:
               type: string
-              description: 'if type="HELD_INFANT", corresponds to the adult traveler''s id who will share the seat'
+              description: if type="HELD_INFANT", corresponds to the adult traveler's id who will share the seat
             price:
               description: price detail of the traveler
               $ref: '#/definitions/Price'
@@ -515,7 +517,7 @@ definitions:
                   cabin:
                     $ref: '#/definitions/TravelClass'
                   fareBasis:
-                    description: 'Fare basis specifying the rules of a fare. Usually, though not always, is composed of the booking class code followed by a set of letters and digits representing other characteristics of the ticket, such as refundability, minimum stay requirements, discounts or special promotional elements.'
+                    description: Fare basis specifying the rules of a fare. Usually, though not always, is composed of the booking class code followed by a set of letters and digits representing other characteristics of the ticket, such as refundability, minimum stay requirements, discounts or special promotional elements.
                     type: string
                     example: ANNNNF4K
                     pattern: '[[A-Z0-9]{1,18}'
@@ -524,7 +526,7 @@ definitions:
                     type: string
                     example: LIGHTONE
                   class:
-                    description: 'The code of the booking class, a.k.a. class of service or Reservations/Booking Designator (RBD)'
+                    description: The code of the booking class, a.k.a. class of service or Reservations/Booking Designator (RBD)
                     type: string
                     example: A
                     pattern: '[A-Z]{1}'
@@ -611,7 +613,7 @@ definitions:
       - type: object
         properties:
           margin:
-            description: 'BOOK step ONLY - The price margin percentage (plus or minus) that the booking can tolerate. When set to 0, then no price magin is tolerated.'
+            description: BOOK step ONLY - The price margin percentage (plus or minus) that the booking can tolerate. When set to 0, then no price magin is tolerated.
             type: string
             example: '1.00'
           grandTotal:
@@ -680,7 +682,7 @@ definitions:
       - STUDENT
     example: ADULT
   TravelClass:
-    description: 'quality of service offered in the cabin where the seat is located in this flight. Economy, premium economy, business or first class'
+    description: quality of service offered in the cabin where the seat is located in this flight. Economy, premium economy, business or first class
     type: string
     enum:
       - ECONOMY
@@ -689,7 +691,7 @@ definitions:
       - FIRST
     example: PREMIUM_ECONOMY
   SliceDiceIndicator:
-    description: 'slice and Dice indicator, such as Local Availability, Sub OnD(Origin and Destination) 1 Availability and Sub OnD 2 Availability'
+    description: slice and Dice indicator, such as Local Availability, Sub OnD(Origin and Destination) 1 Availability and Sub OnD 2 Availability
     type: string
     enum:
       - LOCAL_AVAILABILITY
@@ -719,7 +721,7 @@ definitions:
     properties:
       amount:
         type: string
-        description: 'Amount of the fare. could be alpha numeric. Ex- 500.20 or 514.13A, ''A''signifies additional collection.'
+        description: Amount of the fare. could be alpha numeric. Ex- 500.20 or 514.13A, 'A'signifies additional collection.
       currencyCode:
         type: string
         description: Currency type of the fare.
@@ -904,7 +906,7 @@ definitions:
     description: deck information
     properties:
       deckType:
-        description: 'A deck is a level on an aircraft. The deck location of the cabin (current possible values are upper or main) The main deck, where passengers are seated on a passenger flight. Upper deck is above the main deck where more passengers are seated.'
+        description: A deck is a level on an aircraft. The deck location of the cabin (current possible values are upper or main) The main deck, where passengers are seated on a passenger flight. Upper deck is above the main deck where more passengers are seated.
         type: string
         enum:
           - UPPER
@@ -957,7 +959,7 @@ definitions:
     type: object
     properties:
       code:
-        description: 'Facility code, as described in the facility dictionary'
+        description: Facility code, as described in the facility dictionary
         type: string
       column:
         type: string
@@ -965,7 +967,7 @@ definitions:
         type: string
       position:
         type: string
-        description: 'Position is either front, rear or seat (in case the facility takes the place of a seat)'
+        description: Position is either front, rear or seat (in case the facility takes the place of a seat)
         enum:
           - FRONT
           - REAR
@@ -980,7 +982,7 @@ definitions:
         type: string
         example: ECO
       number:
-        description: 'Concatenation of the row id and the column id, for example 12B'
+        description: Concatenation of the row id and the column id, for example 12B
         type: string
         example: 12B
       characteristicsCodes:
@@ -1081,6 +1083,7 @@ definitions:
               - PLUG
               - USB_PORT
               - ADAPTOR
+              - PLUG_OR_USB_PORT
   AircraftCabinAmenities_Food:
     allOf:
       - $ref: '#/definitions/Amenity'
@@ -1128,7 +1131,7 @@ definitions:
         type: boolean
   Amenity_Seat:
     type: object
-    description: 'Characteristics for a group of seat, such as Distance from one seat to the another in front or behind it or width space'
+    description: Characteristics for a group of seat, such as Distance from one seat to the another in front or behind it or width space
     properties:
       legSpace:
         description: Space between 2 seats
@@ -1165,14 +1168,14 @@ definitions:
       href:
         type: string
         format: uri
-        example: 'http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/69810B23CB8644A18AF760DC66BE41A6'
+        example: http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/69810B23CB8644A18AF760DC66BE41A6
         description: |
           href to display the original media.
       description:
         $ref: '#/definitions/QualifiedFreeText'
       mediaType:
         type: string
-        description: 'media type as per IANA (https://www.iana.org/assignments/media-types/media-types.xhtml)'
+        description: media type as per IANA (https://www.iana.org/assignments/media-types/media-types.xhtml)
         enum:
           - application
           - audio
@@ -1186,7 +1189,7 @@ definitions:
           - video
         example: image
     title: Media
-    description: 'Media is a digital content like image, video with associated text and description, several scales and some metadata can be provided also.'
+    description: Media is a digital content like image, video with associated text and description, several scales and some metadata can be provided also.
   LocationEntry:
     required:
       - key
@@ -1323,7 +1326,7 @@ definitions:
         pattern: '[a-zA-Z]{2}'
       issuanceLocation:
         type: string
-        description: 'A more precise information concerning the place where the document has been issued, when available. It may be a country, a state, a city or any other type of location. e.g. New-York'
+        description: A more precise information concerning the place where the document has been issued, when available. It may be a country, a state, a city or any other type of location. e.g. New-York
       nationality:
         type: string
         description: '[ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the nationality appearing on the document'
@@ -1474,7 +1477,7 @@ definitions:
         description: Last name.
         type: string
       middleName:
-        description: 'Middle name(s), for example "Lee" in "John Lee Smith".'
+        description: Middle name(s), for example "Lee" in "John Lee Smith".
         type: string
   Phone:
     type: object
@@ -1499,7 +1502,7 @@ definitions:
         pattern: '[A-Z]{2}'
       countryCallingCode:
         type: string
-        description: 'Country calling code of the phone number, as defined by the International Communication Union. Examples - "1" for US, "371" for Latvia.'
+        description: Country calling code of the phone number, as defined by the International Communication Union. Examples - "1" for US, "371" for Latvia.
         pattern: '[0-9+]{2,5}'
       areaCode:
         type: string
@@ -1517,7 +1520,7 @@ definitions:
         description: String containing the full phone number - applicable only when a structured phone (i.e. countryCallingCode + number) is not provided
   PhoneDeviceType:
     type: string
-    description: 'Type of the device (Landline, Mobile or Fax)'
+    description: Type of the device (Landline, Mobile or Fax)
     enum:
       - MOBILE
       - LANDLINE
@@ -1535,7 +1538,7 @@ definitions:
           - OTHER
       lines:
         type: array
-        description: 'Line 1 = Street address, Line 2 = Apartment, suite, unit, building, floor, etc'
+        description: Line 1 = Street address, Line 2 = Apartment, suite, unit, building, floor, etc
         items:
           type: string
       postalCode:
@@ -1543,7 +1546,7 @@ definitions:
         description: 'Example: 74130'
       countryCode:
         type: string
-        description: 'country code [ISO 3166-1 country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)'
+        description: country code [ISO 3166-1 country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
         pattern: '[a-zA-Z]{2}'
       cityName:
         type: string
@@ -1551,7 +1554,7 @@ definitions:
         pattern: '[a-zA-Z -]{1,35}'
       stateCode:
         type: string
-        description: 'State code - two character standard [ISO 3166-2 state code](https://en.wikipedia.org/wiki/ISO_3166-2)'
+        description: State code - two character standard [ISO 3166-2 state code](https://en.wikipedia.org/wiki/ISO_3166-2)
         pattern: '[a-zA-Z0-9]{1,2}'
       stateName:
         type: string
@@ -1561,7 +1564,7 @@ definitions:
         description: E.g. BP 220
       text:
         type: string
-        description: 'Field containing a full unformatted address. Only applicable when the fields lines, postalCode, countryCode, cityName are not filled.'
+        description: Field containing a full unformatted address. Only applicable when the fields lines, postalCode, countryCode, cityName are not filled.
   Error_400:
     type: object
     properties:
@@ -1634,7 +1637,7 @@ definitions:
         maxProperties: 1
         properties:
           pointer:
-            description: 'a JSON Pointer [RFC6901] to the associated entity in the request document'
+            description: a JSON Pointer [RFC6901] to the associated entity in the request document
             type: string
           parameter:
             description: a string indicating which URI query parameter caused the issue
@@ -1656,29 +1659,29 @@ definitions:
           self:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           next:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           previous:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           last:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           first:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           up:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
         example:
-          self: 'https://test.api.amadeus.com/v1/area/resources?param=value'
+          self: https://test.api.amadeus.com/v1/area/resources?param=value
   Link:
     type: object
     required:
@@ -1703,7 +1706,7 @@ definitions:
       href: string
   QualifiedFreeText:
     type: object
-    description: 'Specific type to convey a list of string for specific information type ( via qualifier) in specific character set, or language'
+    description: Specific type to convey a list of string for specific information type ( via qualifier) in specific character set, or language
     title: QualifiedFreeText
     properties:
       text:
@@ -3781,11 +3784,11 @@ responses:
                 medias:
                   - title: Lookout points
                     description:
-                      text: 'With 30% bigger windows on our 787 Dreamliner, you''ll feel like you have a window seat no matter where you''re sitting'
+                      text: With 30% bigger windows on our 787 Dreamliner, you'll feel like you have a window seat no matter where you're sitting
                       lang: EN
-                    href: 'http://pdt.content.amadeus.com/AncillaryServicesMedia/9203_DFL.gif'
+                    href: http://pdt.content.amadeus.com/AncillaryServicesMedia/9203_DFL.gif
                     mediaType: image
-                  - href: 'http://pdt.content.amadeus.com/AncillaryServicesMedia/9204_DFL.gif'
+                  - href: http://pdt.content.amadeus.com/AncillaryServicesMedia/9204_DFL.gif
                     mediaType: image
               wifi:
                 isChargeable: false
@@ -3814,7 +3817,7 @@ responses:
             GN: Galley
           seatCharacteristic:
             '1': Restricted seat - General
-            '9': 'Center seat (not window ,not aisle)'
+            '9': Center seat (not window ,not aisle)
             A: Aisle seat
             RS: Right side of aircraft
             CH: Chargeable seat

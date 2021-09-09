@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.6.0",
+    "version": "1.7.0",
     "title": "Seatmap Display",
     "x-status": "validated",
     "x-tags": [
@@ -10,6 +10,9 @@
       "#ama-for-dev"
     ],
     "x-release-note": {
+      "1.7": [
+        "Add new ENUM value for Power Amenity"
+      ],
       "1.6": [
         "Add Medias in seat amenity to carry rich content",
         "Add field for number of seats available",
@@ -1460,7 +1463,8 @@
               "enum": [
                 "PLUG",
                 "USB_PORT",
-                "ADAPTOR"
+                "ADAPTOR",
+                "PLUG_OR_USB_PORT"
               ]
             }
           }
