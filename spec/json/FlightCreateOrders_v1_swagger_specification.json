@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.5.1",
+    "version": "1.5.2",
     "title": "Flight Create Orders",
     "x-tags": [
       "#quick-connect",
@@ -1998,8 +1998,7 @@
         },
         "delay": {
           "description": "Delay before applying automatic process if no issuance in days",
-          "type": "string",
-          "example": "2D"
+          "type": "string"
         },
         "dateTime": {
           "description": "Exact date to apply automatic process if no issuance. YYYY-MM-DD format, e.g. 2019-06-07",
@@ -2066,8 +2065,7 @@
           "properties": {
             "delay": {
               "description": "Delay before applying process in days",
-              "type": "string",
-              "example": "2D"
+              "type": "string"
             },
             "officeId": {
               "description": "Office into which the process must be triggered.",

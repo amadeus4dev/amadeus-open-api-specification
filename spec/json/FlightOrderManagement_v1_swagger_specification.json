@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.5.0",
+    "version": "1.5.1",
     "title": "Flight Order Management",
     "x-tags": [
       "#quick-connect",
@@ -31,7 +31,7 @@
         "Initial version"
       ]
     },
-    "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production, if you are not returning any results try with big cities/airports like LON (London) or NYC (New-York)."
+    "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production, if you are not returning any results try with big cities/airports like LON (London) or NYC (New-York)."
   },
   "host": "test.api.amadeus.com",
   "basePath": "/v1",
@@ -1578,8 +1578,7 @@
         },
         "delay": {
           "description": "Delay before applying automatic process if no issuance in days",
-          "type": "string",
-          "example": "2D"
+          "type": "string"
         },
         "dateTime": {
           "description": "Exact date to apply automatic process if no issuance. YYYY-MM-DD format, e.g. 2019-06-07",
@@ -1646,8 +1645,7 @@
           "properties": {
             "delay": {
               "description": "Delay before applying process in days",
-              "type": "string",
-              "example": "2D"
+              "type": "string"
             },
             "officeId": {
               "description": "Office into which the process must be triggered.",
@@ -2750,7 +2748,7 @@
       "required": true,
       "in": "path",
       "type": "string",
-      "x-example": "MlpZVkFMfFdBVFNPTnwyMDE1LTExLTAy"
+      "x-example": "eJzTd9f3s4gKC%2FMEAAt8Ans%3D"
     }
   },
   "x-generatedAt": "2020-11-06T17:41:31.499Z"
