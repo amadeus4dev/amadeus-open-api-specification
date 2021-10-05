@@ -1,0 +1,718 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York).",
+    "version": "1.0.1",
+    "title": "Hotel Name Autocomplete"
+  },
+  "host": "test.api.amadeus.com",
+  "basePath": "/v1",
+  "schemes": [
+    "https"
+  ],
+  "paths": {
+    "/reference-data/locations/hotel": {
+      "get": {
+        "tags": [
+          "Search"
+        ],
+        "summary": "Returns a list of hotels matching a given keyword.",
+        "description": "",
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "keyword",
+            "in": "query",
+            "description": "Location query keyword - (3 chars minimum)",
+            "required": true,
+            "type": "string",
+            "pattern": "^[A-Za-z0-9 *'-]{3,40}$",
+            "minLength": 3,
+            "maxLength": 40,
+            "x-example":"PAR"
+          },
+          {
+            "name": "subType",
+            "in": "query",
+            "description": "Category of search",
+            "required": true,
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "HOTEL_LEISURE",
+                "HOTEL_GDS"
+              ]
+            },
+            "collectionFormat": "multi"
+          },
+          {
+            "name": "countryCode",
+            "in": "query",
+            "description": "The country in which you search the subType. Country Code in [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format",
+            "type": "string",
+            "pattern": "[A-Za-z]{2}$",
+            "minLength": 2,
+            "maxLength": 2,
+            "x-example":"FR"
+          },
+          {
+            "name": "lang",
+            "in": "query",
+            "description": "The language in which you want the results in following [ISO 639-1](https://fr.wikipedia.org/wiki/Liste_des_codes_ISO_639-1). \n\nIf the language entered is not available then the results will be shown in the default language, English.",
+            "required": false,
+            "type": "string",
+            "pattern": "[A-Za-z]{2}$",
+            "minLength": 2,
+            "maxLength": 2,
+            "default": "EN"
+          },
+          {
+            "name": "max",
+            "in": "query",
+            "description": "The number of results requested from 1 to 20",
+            "required": false,
+            "type": "integer",
+            "default": 20
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Search Operation",
+            "schema": {
+              "required": [
+                "data"
+              ],
+              "properties": {
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "id": {
+                        "type": "number",
+                        "description": "ID of the resource.",
+                        "minimum": 1,
+                        "maximum": 10
+                      },
+                      "type": {
+                        "type": "string",
+                        "description": "Type of resource or the resource name."
+                      },
+                      "name": {
+                        "type": "string",
+                        "description": "Name of the location (Hotel Name)",
+                        "minLength": 1,
+                        "maxLength": 80,
+                        "pattern": "^[A-Za-z0-9 - * '.]+"
+                      },
+                      "iataCode": {
+                        "type": "string",
+                        "description": "[IATA codes](http://www.iata.org/publications/Pages/code-search.aspx) associated with the location.",
+                        "minLength": 3,
+                        "maxLength": 3,
+                        "pattern": "^[A-Z]+"
+                      },
+                      "hotelIds": {
+                        "type": "array",
+                        "description": "HotelIDs associated with the location only if it's a hotel. For leisure property dupes ID are listed as well. ",
+                        "uniqueItems": true,
+                        "maxItems": 10,
+                        "minItems": 1,
+                        "items": {
+                          "type": "string"
+                        }
+                      },
+                      "subType": {
+                        "type": "string",
+                        "description": "The category of the location or Point of reference (HOTEL_LEISURE,HOTEL_GDS).",
+                        "enum": [
+                          "HOTEL_GDS",
+                          "HOTEL_LEISURE"
+                        ]
+                      },
+                      "address": {
+                        "type": "object",
+                        "description": "Address of the location containing Cityname, Statecode and countrycode respectively.",
+                        "properties": {
+                          "cityName": {
+                            "type": "string",
+                            "description": "The name of the city to which the location belongs to.",
+                            "minLength": 1,
+                            "maxLength": 105,
+                            "pattern": "^[A-Za-z0-9 - ]+"
+                          },
+                          "stateCode": {
+                            "type": "string",
+                            "description": "The statecode to which the location belongs to.",
+                            "minLength": 2,
+                            "maxLength": 2,
+                            "pattern": "^[A-Z]+"
+                          },
+                          "countryCode": {
+                            "type": "string",
+                            "description": "The countrycode to which the location belongs to.",
+                            "minLength": 2,
+                            "maxLength": 2,
+                            "pattern": "^[A-Z]+"
+                          }
+                        },
+                        "required": [
+                          "cityName",
+                          "countryCode"
+                        ]
+                      },
+                      "geoCode": {
+                        "type": "object",
+                        "description": "Geocode of the location containing latitude and longitude respectively.",
+                        "properties": {
+                          "latitude": {
+                            "type": "number",
+                            "format": "double",
+                            "description": "Latitude of the location on Earth."
+                          },
+                          "longitude": {
+                            "type": "number",
+                            "format": "double",
+                            "description": "Longitude of the location on Earth."
+                          }
+                        },
+                        "required": [
+                          "latitude",
+                          "longitude"
+                        ]
+                      },
+                      "relevance": {
+                        "type": "integer",
+                        "description": "A no. between 1-100. The higher the number better is the relevant search for that location."
+                      }
+                    },
+                    "required": [
+                      "id",
+                      "type",
+                      "name",
+                      "iataCode",
+                      "hotelIds",
+                      "subType"
+                    ]
+                  }
+                }
+              },
+              "title": "Success",
+              "example": {
+                "data": [
+                  {
+                    "id": 4630140,
+                    "name": "DE PARIS SAINT GEORGES EX KYRIAD PARIS",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 74,
+                    "type": "location",
+                    "hotelIds": [
+                      "CTPARB08"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.88081,
+                      "longitude": 2.33541
+                    }
+                  },
+                  {
+                    "id": 4629897,
+                    "name": "DE PARIS OPERA EX DE PARIS MAUBEUGE",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 74,
+                    "type": "location",
+                    "hotelIds": [
+                      "CTPARATH"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.87877,
+                      "longitude": 2.34593
+                    }
+                  },
+                  {
+                    "id": 4629762,
+                    "name": "LE PARISIS PARIS TOUR EIFFEL EX RAMADA",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 74,
+                    "type": "location",
+                    "hotelIds": [
+                      "CTPARAPQ"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.8496,
+                      "longitude": 2.29553
+                    }
+                  },
+                  {
+                    "id": 4316057,
+                    "name": "COMFORT HOTEL PARIS LAFAYETTE PARIS",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 74,
+                    "type": "location",
+                    "hotelIds": [
+                      "HVPARBHU"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.87646,
+                      "longitude": 2.34884
+                    }
+                  },
+                  {
+                    "id": 4629509,
+                    "name": "CAMPANILE PARIS 15 EX CAMPANILE PARIS",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 74,
+                    "type": "location",
+                    "hotelIds": [
+                      "CTPARAIP"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.85,
+                      "longitude": 2.2884
+                    }
+                  },
+                  {
+                    "id": 4343671,
+                    "name": "THE ORIGINALS PARIS GARE DE L EST PARISI",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 74,
+                    "type": "location",
+                    "hotelIds": [
+                      "TVPARAB7"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.8766,
+                      "longitude": 2.35422
+                    }
+                  },
+                  {
+                    "id": 4315654,
+                    "name": "CITADINES OPERA PARIS PARIS",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 74,
+                    "type": "location",
+                    "hotelIds": [
+                      "HVPARAPG"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.87146,
+                      "longitude": 2.33834
+                    }
+                  },
+                  {
+                    "id": 4601316,
+                    "name": "THE ORIGINALS PARIS GARE DE L EST PARISI",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 74,
+                    "type": "location",
+                    "hotelIds": [
+                      "SJPARALM"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.87661,
+                      "longitude": 2.35417
+                    }
+                  },
+                  {
+                    "id": 4905890,
+                    "name": "LE PARISIS PARIS TOUR EIFFEL",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 74,
+                    "type": "location",
+                    "hotelIds": [
+                      "ADPAR093"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.84972,
+                      "longitude": 2.29565
+                    }
+                  },
+                  {
+                    "id": 4630373,
+                    "name": "HOTEL R DE PARIS EX DU CASINO PARIS",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 74,
+                    "type": "location",
+                    "hotelIds": [
+                      "CTPARB6P"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.88004,
+                      "longitude": 2.32894
+                    }
+                  },
+                  {
+                    "id": 4930258,
+                    "name": "LE PARISIS PARIS TOUR EIFFEL",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 74,
+                    "type": "location",
+                    "hotelIds": [
+                      "XDPARAYA"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.84972,
+                      "longitude": 2.29565
+                    }
+                  },
+                  {
+                    "id": 4930306,
+                    "name": "THE ORIGINALS CITY HOTEL PARISIANA PARIS",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 72,
+                    "type": "location",
+                    "hotelIds": [
+                      "XDPARAZM"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.87663,
+                      "longitude": 2.35418
+                    }
+                  },
+                  {
+                    "id": 2330480,
+                    "name": "HOTEL PARADIS PARIS",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 71,
+                    "type": "location",
+                    "hotelIds": [
+                      "DGPARACN"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.8738,
+                      "longitude": 2.34993
+                    }
+                  },
+                  {
+                    "id": 4630331,
+                    "name": "MIDNIGHT HOTEL PARIS EX ARIS NORD",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 71,
+                    "type": "location",
+                    "hotelIds": [
+                      "CTPARB5J"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.8774,
+                      "longitude": 2.35609
+                    }
+                  },
+                  {
+                    "id": 4309354,
+                    "name": "HOTEL DE PARIS",
+                    "iataCode": "MOW",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 70,
+                    "type": "location",
+                    "hotelIds": [
+                      "BKMOWB4L"
+                    ],
+                    "address": {
+                      "cityName": "THE HAGUE",
+                      "countryCode": "AU"
+                    },
+                    "geoCode": {
+                      "latitude": 55.76364,
+                      "longitude": 37.60079
+                    }
+                  },
+                  {
+                    "id": 4313435,
+                    "name": "PULLMAN PARIS TOUR EIFFEL HOTEL",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 70,
+                    "type": "location",
+                    "hotelIds": [
+                      "EYPARCQV"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.85598,
+                      "longitude": 2.29321
+                    }
+                  },
+                  {
+                    "id": 4313453,
+                    "name": "MERCURE PARIS CHAMPS ELYSEES",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 70,
+                    "type": "location",
+                    "hotelIds": [
+                      "EYPARCRN"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.86811,
+                      "longitude": 2.29095
+                    }
+                  },
+                  {
+                    "id": 4448070,
+                    "name": "THE WESTIN PARIS VENDOME",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 70,
+                    "type": "location",
+                    "hotelIds": [
+                      "ASPARADC"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.86561,
+                      "longitude": 2.32785
+                    }
+                  },
+                  {
+                    "id": 2356646,
+                    "name": "B B HOTEL PARIS PORTE DE LA VILLETTE",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 70,
+                    "type": "location",
+                    "hotelIds": [
+                      "GUPARBQV"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.901,
+                      "longitude": 2.387
+                    }
+                  },
+                  {
+                    "id": 4313461,
+                    "name": "TIVOLI HOTEL PARIS",
+                    "iataCode": "PAR",
+                    "subType": "HOTEL_LEISURE",
+                    "relevance": 70,
+                    "type": "location",
+                    "hotelIds": [
+                      "EYPARCRV"
+                    ],
+                    "address": {
+                      "cityName": "PARIS",
+                      "countryCode": "FR"
+                    },
+                    "geoCode": {
+                      "latitude": 48.87622,
+                      "longitude": 2.29592
+                    }
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "code    | title                                 \n------- | ------------------------------------- \n477     | NOT FOUND \n1797    | INVALID FORMAT\n572     | INVALID LENGTH\n32171   | MANDATORY DATA MISSING \t     \n",
+            "schema": {
+              "example": {
+                "errors": [
+                  {
+                  "status": 400,
+                  "code": 572,
+                  "title": "INVALID FORMAT",
+                  "detail": "invalid query parameter format"
+                }
+                ]
+              },
+              "type": "object",
+              "properties": {
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "status": {
+                        "type": "integer",
+                        "description": "the HTTP status code applicable to this error"
+                      },
+                      "code": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "an application-specific error code"
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "a short summary of the error"
+                      },
+                      "detail": {
+                        "type": "string",
+                        "description": "explanation of the error"
+                      },
+                      "source": {
+                        "type": "object",
+                        "properties": {
+                          "pointer": {
+                            "type": "string",
+                            "description": "a JSON Pointer [RFC6901] to the associated entity in the request document"
+                          },
+                          "parameter": {
+                            "type": "string",
+                            "description": "a string indicating which URI query parameter caused the issue"
+                          },
+                          "example": {
+                            "type": "string",
+                            "description": "a string indicating an example of the right value"
+                          }
+                        },
+                        "description": "an object containing references to the source of the error"
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "errors"
+              ]
+            }
+          },
+          "500": {
+            "description": "Unexpected Error",
+            "schema": {
+              "required": [
+                "errors"
+              ],
+              "properties": {
+                "errors": {
+                  "type": "array",
+                  "items": {
+                    "properties": {
+                      "status": {
+                        "type": "integer",
+                        "description": "the HTTP status code applicable to this error"
+                      },
+                      "code": {
+                        "type": "integer",
+                        "format": "int64",
+                        "description": "an application-specific error code"
+                      },
+                      "title": {
+                        "type": "string",
+                        "description": "a short summary of the error"
+                      },
+                      "detail": {
+                        "type": "string",
+                        "description": "explanation of the error"
+                      },
+                      "source": {
+                        "type": "object",
+                        "properties": {
+                          "pointer": {
+                            "type": "string",
+                            "description": "a JSON Pointer [RFC6901] to the associated entity in the request document"
+                          },
+                          "parameter": {
+                            "type": "string",
+                            "description": "a string indicating which URI query parameter caused the issue"
+                          },
+                          "example": {
+                            "type": "string",
+                            "description": "a string indicating an example of the right value"
+                          }
+                        },
+                        "description": "an object containing references to the source of the error"
+                      }
+                    }
+                  }
+                }
+              },
+              "example": {
+                "errors": [
+                  {
+                  "status": 500,
+                  "code": 141,
+                  "title": "SYSTEM ERROR HAS OCCURRED"
+                }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
