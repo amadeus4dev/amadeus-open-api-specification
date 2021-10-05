@@ -75,19 +75,6 @@
             "description": "Check-out date of the stay (hotel local date). Format YYYY-MM-DD. The lowest accepted value is checkInDate+1. If not present, it will default to checkInDate +1."
           },
           {
-            "name": "childAges",
-            "in": "query",
-            "required": false,
-            "type": "array",
-            "minItems": 0,
-            "maxItems": 9,
-            "uniqueItems": false,
-            "items": {
-              "type": "string"
-            },
-            "description": "Comma separated list of ages of each child at the time of check-out from the hotel. If several children have the same age, their ages should be repeated in the list."
-          },
-          {
             "name": "countryOfResidence",
             "in": "query",
             "required": false,
