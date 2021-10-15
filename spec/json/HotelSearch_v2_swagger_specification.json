@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Hotel Search API",
-    "version": "2.1.0",
+    "version": "2.1.1",
     "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to generate an access token.\n\nPlease also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York).",
     "x-tags": [
       "#mobile-services"
@@ -67,9 +67,6 @@
           },
           {
             "$ref": "#/parameters/chains"
-          },
-          {
-            "$ref": "#/parameters/rateCodes"
           },
           {
             "$ref": "#/parameters/amenities"
@@ -148,9 +145,6 @@
           },
           {
             "$ref": "#/parameters/adults"
-          },
-          {
-            "$ref": "#/parameters/rateCodes"
           },
           {
             "$ref": "#/parameters/roomQuantity"
@@ -475,20 +469,6 @@
       "maximum": 9,
       "default": 2,
       "description": "number of adult guests (1-9) per room"
-    },
-    "rateCodes": {
-      "name": "rateCodes",
-      "in": "query",
-      "required": false,
-      "type": "array",
-      "minItems": 0,
-      "maxItems": 8,
-      "items": {
-        "type": "string",
-        "pattern": "^[A-Z0-9]{3}$"
-      },
-      "collectionFormat": "csv",
-      "description": "Special Rate (comma separated list of Amadeus 3 chars Codes): Public Rate (PRO...), Qualified Rate (GOV...) or Corporate Rate (IBM...).\n\nWhen a Corporate Rate is entered, Amadeus performs a check to verify which chains have authorized the caller to view the rate, only authorized chains will be queried for availability.\n\nWarning: The availability response can also contain Public rates.\n\nExample Rates: \n* GOV - Government Rate\n* AAA - AAA Rate\n* MIL - Military/Veteran Rate\n* SNR - Senior Rate\n* PRO - Promotional Code\n* COR - Corporate Code\n\n"
     },
     "roomQuantity": {
       "name": "roomQuantity",

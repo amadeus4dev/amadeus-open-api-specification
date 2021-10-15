@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "3.0",
+    "version": "3.0.1",
     "title": "Hotel Search API",
     "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York)."
   },
@@ -94,14 +94,6 @@
             "exclusiveMaximum": false,
             "exclusiveMinimum": false,
             "description": "Number of rooms requested (1-9)."
-          },
-          {
-            "name": "rateCodes",
-            "in": "query",
-            "required": false,
-            "type": "string",
-            "pattern": "^[A-Z0-9]{3}$",
-            "description": "Special rates (comma separated list of Amadeus 3 chars codes): Public Rate (PRO...), Qualified Rate (GOV...) or Corporate Rate (IBM...). When a corporate rate is entered, Amadeus performs a check to verify which chains are authorized to view the rate, only authorized chains will be queried for availability. Warning: The availability response can also contain public rates. Example Rates: * GOV - Government rate * AAA - AAA rate * MIL - Military/veteran rate * SNR - Senior rate * PRO - Promotional rate.        * COR - Corporate Code"
           },
           {
             "name": "priceRange",
