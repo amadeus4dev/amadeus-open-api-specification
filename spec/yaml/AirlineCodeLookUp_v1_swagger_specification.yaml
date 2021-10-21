@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.1.0
+  version: 1.1.1
   title: Airline Code Lookup API
   x-status: validated
   x-tags:
@@ -13,7 +13,7 @@ info:
       - initial version
       - List all airlines information (name and code)
       - Introduction of search per IATA or ICAO code
-  description: "\nBefore using this API, we recommend you read our\_**[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)**\_for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production, to see what is included in test please refer to our **[data collection](https://github.com/amadeus4dev/data-collection)**."
+  description: "\nBefore using this API, we recommend you read our\_**[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)**\_for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production, to see what is included in test please refer to our **[data collection](https://github.com/amadeus4dev/data-collection)**."
 host: test.api.amadeus.com
 basePath: /v1
 schemes:

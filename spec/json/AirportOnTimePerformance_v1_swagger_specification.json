@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.2",
+    "version": "1.0.3",
     "title": "Airport On-Time Performance",
     "x-tags": [
       "#ama-for-dev"
@@ -12,7 +12,7 @@
         "Initial Version"
       ]
     },
-    "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to generate an access token."
+    "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token."
   },
   "host": "test.api.amadeus.com",
   "basePath": "/v1",
