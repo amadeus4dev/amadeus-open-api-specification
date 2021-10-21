@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-      "version": "2.2.0",
+      "version": "2.2.1",
       "title": "Get Media Files",
       "x-tags": [
         "#ama-for-dev"
@@ -20,7 +20,7 @@
           "Add format criteria"
         ]
       },
-      "description": "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to generate an access token."
+      "description": "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token."
     },
     "host": "test.api.amadeus.com",
     "basePath": "/v2",

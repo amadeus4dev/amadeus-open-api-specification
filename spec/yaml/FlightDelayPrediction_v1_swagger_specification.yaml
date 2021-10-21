@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.4
+  version: 1.0.5
   title: Flight Delay Prediction
   x-tags:
     - '#ama-for-dev'
@@ -14,7 +14,7 @@ info:
       - Add enum values on result
     1.0.0:
       - Initial Version
-  description: "\nBefore using this API, we recommend you read our\_**[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)**\_for more information on how to generate an access token."
+  description: "\nBefore using this API, we recommend you read our\_**[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)**\_for more information on how to generate an access token."
 host: test.api.amadeus.com
 basePath: /v1
 schemes:

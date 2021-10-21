@@ -1,8 +1,8 @@
 openapi: 3.0.0
 info:
   title: Travel Restrictions
-  version: '1.0'
-  description: 'Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to generate an access token.'
+  version: '1.0.1'
+  description: 'Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token.'
 servers:
   - url: 'https://test.api.amadeus.com/v1'
 paths:
