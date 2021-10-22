@@ -33,7 +33,8 @@ paths:
           minItems: 1
           maxItems: 20
           uniqueItems: false
-          x-example: HLLON101
+          x-example: 
+            - HLLON101
           items:
             type: string
           description: Amadeus property codes on 8 chars. Mandatory parameter for a search by predefined list of hotels.
