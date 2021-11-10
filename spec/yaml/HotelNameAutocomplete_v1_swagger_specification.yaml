@@ -31,7 +31,9 @@ paths:
           x-example: PARI
         - name: subType
           in: query
-          description: Category of search
+          description: |-
+            Category of search - To enter several values, repeat the query parameter 
+            Use HOTEL_LEISURE to target aggregators or HOTEL_GDS to target directly the chains
           required: true
           type: array
           items:
