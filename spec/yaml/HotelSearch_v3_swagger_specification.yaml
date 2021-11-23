@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '3.0.1'
+  version: '3.0.2'
   title: Hotel Search API
   description: |-
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
@@ -132,11 +132,6 @@ paths:
           default: true
           type: boolean
           description: Used to return only the cheapest offer per hotel or all available offers.
-        - name: pageOffset
-          in: query
-          required: false
-          type: string
-          description: Used to specify the next scrolling window if all offers could not be returned in the current response. Use the next link in the response to have it automatically added.
         - name: lang
           in: query
           required: false
