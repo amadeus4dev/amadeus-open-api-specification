@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production, this API in test only offers 24 hotels; 10 in London and 14 in New-York. You can find the list in our **[data collection](https://github.com/amadeus4dev/data-collection)**.\n",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "title": "Hotel Ratings"
   },
   "host": "test.api.amadeus.com",
@@ -34,7 +34,7 @@
             "in": "query",
             "description": "Comma-separated list of Amadeus Hotel Ids (max. 3) . Amadeus Hotel Ids are found in the Hotel Search response (parameter name is 'hotelId').",
             "required": true,
-            "x-example": "TELONMFS",
+            "x-example": ["TELONMFS"],
             "type": "array",
             "maxItems": 100,
             "minItems": 1,
