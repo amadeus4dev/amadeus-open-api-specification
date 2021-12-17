@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.2.1
+  version: 1.2.2
   title: Airport & City Search
   x-status: validated
   x-tags:
@@ -54,11 +54,14 @@ paths:
           collectionFormat: csv
           x-example: CITY
         - name: keyword
-          description: keyword that should represent the start of a word in a city or airport name or code
+          description: |-
+            keyword that should represent the start of a word in a city or airport name or code. 
+            Supported charaters are: A-Za-z0-9./:-'()"
           in: query
           required: true
           type: string
           x-example: MUC
+          pattern: A-Za-z0-9./:-'()"
         - name: countryCode
           description: 'Country code of the location using [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code format (e.g. US).'
           in: query
@@ -533,4 +536,3 @@ responses:
       572     | INVALID OPTION    
     schema:
       $ref: '#/definitions/Error_400'
-x-generatedAt: '2020-07-24T09:50:53.074Z'
