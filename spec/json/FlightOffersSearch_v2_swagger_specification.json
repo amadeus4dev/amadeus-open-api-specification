@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2.5.0",
+    "version": "2.5.1",
     "title": "Flight Offers Search",
     "x-tags": [
       "#online-retail",
@@ -1170,7 +1170,7 @@
           }
         },
         "validatingAirlineCodes": {
-          "description": "This option ensures that the system will only consider these airlines.",
+          "description": "This option ensures that the system will only consider offers with these airlines as validating carrier.",
           "type": "array",
           "minItems": 1,
           "maxItems": 9,
