@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.7.1
+  version: 1.7.2
   title: Seatmap Display
   x-status: validated
   x-tags:
@@ -1128,6 +1128,7 @@ definitions:
     title: Amenity
     properties:
       isChargeable:
+        description: Specify if the traveler will need to pay extra in-flight to get the amenity
         type: boolean
   Amenity_Seat:
     type: object
