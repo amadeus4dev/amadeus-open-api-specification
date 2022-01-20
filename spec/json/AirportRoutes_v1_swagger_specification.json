@@ -1,0 +1,342 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Airport Routes",
+    "version": "1.0.0",
+    "description": "Before using the API you will need to get an access token. Please read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to get your token."
+  },
+  "servers": [
+    {
+      "url": "https://test.api.amadeus.com/v1"
+    }
+  ],
+  "paths": {
+    "/airport/direct-destinations": {
+      "get": {
+        "summary": "get airport direct routes",
+        "tags": [
+          "direct-destinations"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "warnings": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/warnings"
+                      }
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/locations"
+                      }
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/meta"
+                    }
+                  }
+                },
+                "examples": {
+                  "Successful Reply": {
+                    "value": {
+                      "data": [
+                        {
+                          "type": "location",
+                          "subtype": "city",
+                          "name": "Bangalore",
+                          "iataCode": "BLR"
+                        },
+                        {
+                          "type": "location",
+                          "subtype": "city",
+                          "name": "Paris",
+                          "iataCode": "PAR"
+                        }
+                      ],
+                      "meta": {
+                        "count": "2",
+                        "sort": "iataCode",
+                        "links": {
+                          "self": "https://test.api.amadeus.com/v1/airport/direct-destination?departureAirportCode=NCE&max=2"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request\n\ncode    | title                                 \n------- | ------------------------------------- \n572     | INVALID OPTION                         \n32171   | MANDATORY DATA MISSING \n477     | INVALID FORMAT                        ",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/errors"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "example-error 400": {
+                    "value": {
+                      "errors": [
+                        {
+                          "status": 400,
+                          "code": 32171,
+                          "title": "MANDATORY DATA MISSING",
+                          "detail": "Missing mandatory query parameter 'departureAirportCode"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\ncode    | title                                 \n------- | ------------------------------------- \n141     | SYSTEM ERROR HAS OCCURRED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/errors"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "example-error 500": {
+                    "value": {
+                      "errors": [
+                        {
+                          "status": 500,
+                          "code": 141,
+                          "title": "SYSTEM ERROR HAS OCCURRED"
+                        }
+                      ]
+                    }
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "description": "The Error Definition",
+                        "title": "Error",
+                        "properties": {
+                          "status": {
+                            "type": "integer",
+                            "description": "The [HTTP status code](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) of this response. This is present only in terminal errors which cause an unsuccessful response. In the case of multiple errors, they must all have the same status."
+                          },
+                          "code": {
+                            "type": "integer",
+                            "description": "A machine-readable error code from the Amadeus Canned Messages table, that will enable the API Consumers code to handle this type of error"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized"
+                          },
+                          "detail": {
+                            "type": "string",
+                            "description": "An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized."
+                          },
+                          "source": {
+                            "type": "object",
+                            "title": "Error_Source",
+                            "properties": {
+                              "parameter": {
+                                "type": "string",
+                                "description": "The key of the URI path or query parameter that caused the error"
+                              },
+                              "pointer": {
+                                "type": "string",
+                                "description": "A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error"
+                              },
+                              "example": {
+                                "type": "string",
+                                "description": "A sample input to guide the user when resolving this issue"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "operationId": "airport/ direct-destinations",
+        "parameters": [
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "departureAirportCode",
+            "description": "Departure Airport code following [IATA standard](http://www.iata.org/publications/Pages/code-search.aspx)",
+            "required": true,
+            "example": "BLR"
+          },
+          {
+            "schema": {
+              "type": "number"
+            },
+            "in": "query",
+            "name": "max",
+            "description": "Maximum number of destination in the response."
+          }
+        ],
+        "description": ""
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "locations": {
+        "title": "destination",
+        "type": "object",
+        "description": "Description of a particular point or place in physical space",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "type of API result \"location\""
+          },
+          "subtype": {
+            "type": "string",
+            "description": "Location sub-type (e.g. airport, port, rail-station, restaurant, atm...)"
+          },
+          "name": {
+            "type": "string",
+            "description": "Label associated to the location (e.g. Eiffel Tower, Madison Square)",
+            "example": "\"Eiffel Tower\""
+          },
+          "iataCode": {
+            "type": "string",
+            "description": "IATA location code",
+            "example": "\"PAR\""
+          }
+        }
+      },
+      "meta": {
+        "title": "meta",
+        "type": "object",
+        "description": "Meta information about the returned object(s) in \"data\"",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "description": "Total number of object(s) retrieved",
+            "format": "int64"
+          },
+          "links": {
+            "type": "object",
+            "description": "Links related to the returned object(s)",
+            "properties": {
+              "self": {
+                "type": "string",
+                "description": "Link to the same page.",
+                "format": "uri"
+              }
+            }
+          }
+        }
+      },
+      "warnings": {
+        "title": "warning",
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "A machine-readable error code from the Canned Messages table, that will enable the API Consumers code to handle this type of error"
+          },
+          "title": {
+            "type": "string",
+            "description": "An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized"
+          },
+          "detail": {
+            "type": "string",
+            "description": "An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized."
+          },
+          "source": {
+            "type": "object",
+            "description": "The Warning Source Definition",
+            "properties": {
+              "parameter": {
+                "type": "string",
+                "description": "The key of the URI path or query parameter that caused the error"
+              },
+              "pointer": {
+                "type": "string",
+                "description": "A JSON Pointer RFC6901 to the associated entity in the request body that caused this error"
+              },
+              "example": {
+                "type": "string",
+                "description": "A sample input to guide the user when resolving this issue"
+              }
+            }
+          }
+        }
+      },
+      "errors": {
+        "title": "Error",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "The [HTTP status code](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) of this response. This is present only in terminal errors which cause an unsuccessful response. In the case of multiple errors, they must all have the same status."
+          },
+          "code": {
+            "type": "integer",
+            "description": "A machine-readable error code from the Amadeus Canned Messages table, that will enable the API Consumers code to handle this type of error"
+          },
+          "title": {
+            "type": "string",
+            "description": "An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized"
+          },
+          "detail": {
+            "type": "string",
+            "description": "An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized."
+          },
+          "source": {
+            "type": "object",
+            "title": "Error_Source",
+            "properties": {
+              "parameter": {
+                "type": "string",
+                "description": "The key of the URI path or query parameter that caused the error"
+              },
+              "pointer": {
+                "type": "string",
+                "description": "A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error"
+              },
+              "example": {
+                "type": "string",
+                "description": "A sample input to guide the user when resolving this issue"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
