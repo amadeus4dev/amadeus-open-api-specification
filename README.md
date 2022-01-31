@@ -9,9 +9,8 @@ This repository contains the [OpenAPI specification](https://swagger.io/specific
 This code is released under the [MIT License](LICENSE).
 
 ## Help
-Our [developer support team](https://developers.amadeus.com/support) is here
-to help you. You can find us on
-[StackOverflow](https://stackoverflow.com/questions/tagged/amadeus) and
-[email](mailto:developers@amadeus.com).
+You can find us on
+[StackOverflow](https://stackoverflow.com/questions/tagged/amadeus) or join our developer community on
+[Discord](https://discord.gg/cVrFBqx).
 
 [support]: http://developers.amadeus.com/support
