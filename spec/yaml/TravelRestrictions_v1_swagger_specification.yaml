@@ -102,12 +102,12 @@ paths:
                           diseaseTesting:
                             when: Before travel
                             requirement: Mandatory
-                            text: <p>All passengers on inbound international flights – including US citizens and fully vaccinated people – must present a negative COVID-19 test result </p>
+                            text: <p>All passengers on inbound international flights - including US citizens and fully vaccinated people - must present a negative COVID-19 test result </p>
                             rules: 'https://www.cdc.gov/coronavirus/2019-ncov/travelers/testing-international-air-travelers.html#:~:text=On%20January%2012%2C%202021%2C%20CDC,airline%20before%20boarding%20the%20flight.'
                             isRequired: 'Yes'
                             date: '2021-05-05'
                           tracingApplication:
-                            text: '<p>There is no national contact tracing app. Local authorities have developed or are developing optional platforms through Apple’s Exposure Notification API in multiple states, including Alabama, Arizona, California, Colorado, Delaware, Maryland, Michigan, Nevada, New York, North Carolina, North Dakota, Oregon, Pennsylvania, South Carolina, Virginia Washington and Wyoming, the District of Columbia, and territories, including Guam and Puerto Rico.</p>'
+                            text: '<p>There is no national contact tracing app. Local authorities have developed or are developing optional platforms through Apple's Exposure Notification API in multiple states, including Alabama, Arizona, California, Colorado, Delaware, Maryland, Michigan, Nevada, New York, North Carolina, North Dakota, Oregon, Pennsylvania, South Carolina, Virginia Washington and Wyoming, the District of Columbia, and territories, including Guam and Puerto Rico.</p>'
                             isRequired: 'No'
                             date: '2021-05-05'
                           quarantineModality:
@@ -270,7 +270,7 @@ components:
                 Website information
             isBanned:
               type: string
-              description: "Yes\_Recommended\_Partial\_No; 'Yes' indicates all travellers are banned from leaving; 'Recommended' indicates that travellers should not leave, but are mostly free to do so; 'Partial' indicates that some travellers may leave, but others are prevented; 'No' indicates all travellers are free to leave"
+              description: "Yes/ Recommended Partial/ No; 'Yes' indicates all travellers are banned from leaving; 'Recommended' indicates that travellers should not leave, but are mostly free to do so; 'Partial' indicates that some travellers may leave, but others are prevented; 'No' indicates all travellers are free to leave"
       title: Exit Restriction
       description: ''
     Entry:
@@ -324,7 +324,7 @@ components:
                     description: 'Area Type example country,city,region'
             borderBan:
               type: array
-              description: "Open/\_Partially Open/\_Closed"
+              description: "Open/Partially Open/Closed"
               items:
                 type: object
                 properties:
@@ -435,19 +435,19 @@ components:
                 eg https://corona.fo/quarantine.
             testType:
               type: string
-              description: "PCR\_Antigen\_Nucleic acid amplification test (NAAT). The types of Covid-19 tests accepted; more than one type can be selected"
+              description: "PCR/Antigen/Nucleic acid amplification test (NAAT). The types of Covid-19 tests accepted; more than one type can be selected"
             minimumAge:
               type: number
               description: 'Minimum age, in years, that is required to take a Covid-19 test. Under this age, no test is required'
             validityPeriod:
               type: object
               properties:
-                "delay\_":
+                "delay":
                   type: string
-                  description: 'The validity peroid in hours or no if days as per ISP 8061 for test results '
+                  description: 'The validity period in hours or no if days as per ISP 8061 for test results '
                 referenceDateType:
                   type: string
-                  description: "Arrival\_Departure; Test validity time is measured from arrival at destination or departure from origin. If blank, indicates this is not specified"
+                  description: "Arrival/Departure; Test validity time is measured from arrival at destination or departure from origin. If blank, indicates this is not specified"
       description: ''
     DeclarationDocuments:
       title: Declaration Documents
@@ -768,7 +768,7 @@ components:
               description: Webpage of vaccination regulations
             acceptedCertificates:
               type: array
-              description: "List of accepted certificates.\_Not Specified\_Paper Certificate\_and/or the name of the app"
+              description: "List of accepted certificates. Not Specified/Paper Certificate and/or the name of the app"
               items:
                 type: string
             qualifiedVaccines:
@@ -778,7 +778,7 @@ components:
                 type: string
             policy:
               type: string
-              description: "Yes\_No; 'Yes' indicates fully vaccinated travellers are exempt from some requirements or restrictions"
+              description: "Yes/No; 'Yes' indicates fully vaccinated travellers are exempt from some requirements or restrictions"
             exemptions:
               type: string
               description: Entry Ban Testing Documents App Quarantine Masks Exit Domestic Restrictions; indicates what exemptions fully vaccinated travellers qualify for. Details on the exemptions are found in the 'text' section.

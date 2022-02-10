@@ -1,7 +1,7 @@
 {
     "swagger": "2.0",
     "info": {
-      "version": "2.2.1",
+      "version": "2.2.2",
       "title": "Get Media Files",
       "x-tags": [
         "#ama-for-dev"
@@ -39,6 +39,7 @@
           "tags": [
             "files"
           ],
+          "deprecated": true,
           "operationId": "generateFile",
           "summary": "Generate a landscape picture",
           "parameters": [

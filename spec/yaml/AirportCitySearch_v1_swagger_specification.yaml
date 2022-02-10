@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.2.2
+  version: 1.2.3
   title: Airport & City Search
   x-status: validated
   x-tags:
@@ -61,7 +61,7 @@ paths:
           required: true
           type: string
           x-example: MUC
-          pattern: A-Za-z0-9./:-'()"
+          pattern: '[A-Za-z0-9./:()''"-]'
         - name: countryCode
           description: 'Country code of the location using [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code format (e.g. US).'
           in: query
