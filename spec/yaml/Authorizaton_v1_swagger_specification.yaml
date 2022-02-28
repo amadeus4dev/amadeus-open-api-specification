@@ -1,0 +1,127 @@
+openapi: 3.0.0
+info:
+  description: |
+    Amadeus for Developers uses OAuth2 to authenticate access requests. OAuth2 generates an access token which grants the client permission to access a protected resource. The method to acquire a token is called grant. There are different types of OAuth2 grants. Amadeus for Developers uses the Client Credentials Grant.
+      https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262
+  title: Amadeus OAuth2 Login
+  version: 1.0.0
+servers:
+  - url: https://test.api.amadeus.com/v1
+paths:
+  /security/oauth2/token:
+    post:
+      description: |-
+        The token endpoint is used by the client to obtain an access token by presenting its authorization grant.
+        To learn more about this endpoint please refer to the specification at https://tools.ietf.org/html/rfc6749#section-3.2
+      tags:
+        - OAuth2 Access Token
+      summary: The OAuth 2.0 token endpoint
+      operationId: oauth2Token
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                  example: client_credentials
+                client_id:
+                  type: string
+                client_secret:
+                  type: string  
+              required:
+                - grant_type
+                - client_id
+                - client_secret
+      responses:
+        '200':
+          description: oauth2TokenResponse
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmadeusOAuth2Token'
+        '401':
+          description: genericError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: genericError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    AmadeusOAuth2Token:
+      description: The token response
+      type: object
+      properties:
+        type:
+          description: The access token issued by the authorization server.
+          type: string
+        username:
+          description: The user who requested the access_token
+          type: string
+        application_name:
+          description: The application which is requested the access_token
+          type: string
+        client_id:
+          description: The client_id is a public identifier for apps
+          type: string
+        token_type:
+          description: token_type is a parameter in Access Token generate call to Authorization server, which essentially represents how an access_token will be generated and presented for resource access calls
+          type: string
+        access_token:
+          description: Access tokens are a String which applications use to make API requests on behalf of a user.
+          type: string
+        expires_in:
+          description: The lifetime in seconds of the access token
+          type: integer
+          format: int64
+        state:
+          description: The state
+          type: string  
+        scope:
+          description: Scope is a mechanism in OAuth 2.0 to limit an application's access to a user's account
+          type: string           
+      example:
+        "type": "amadeusOAuth2Token"
+        "username": "myuser@mydomain.com"
+        "application_name": "My Application"
+        "client_id": "Hs0sNkpTXeu0t2Hw2rLITofK8QELGdfsf"
+        "token_type": "Bearer"
+        "access_token": "f8XgboI1oKyNw7w23bnnAbFANidfgC"
+        "expires_in": 1799
+        "state": "approved"
+        "scope": ""
+    ErrorResponse:
+      description: Error responses are sent when an error (e.g. unauthorized, bad request, ...) occurred.
+      type: object
+      title: ErrorResponse
+      required:
+        - error
+        - error_description
+        - code
+        - title
+      properties:
+        error:
+          description: Name is the error name.
+          type: string
+        error_description:
+          description: A small description about the error
+          type: string
+        code:
+          description: Debug contains debug information.
+          type: integer
+          format: int64
+        title:
+          description: Debug contains debug information. This is usually not available and has to be enabled.
+          type: string  
+      example:
+        "error": "invalid_client"
+        "error_description": "Client credentials are invalid"
+        "code": 38187
+        "title": "Invalid parameters"
