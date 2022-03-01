@@ -29,7 +29,7 @@ paths:
                 client_id:
                   type: string
                 client_secret:
-                  type: string  
+                  type: string
               required:
                 - grant_type
                 - client_id
@@ -48,6 +48,33 @@ paths:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
         '500':
+          description: genericError
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /security/oauth2/token/{access_token}:
+    get:
+      description: |-
+        Get token information
+      tags:
+        - OAuth2 Access Token
+      summary: The OAuth 2.0 token info endpoint
+      operationId: getOauth2TokenInfo
+      parameters:
+        - in: path
+          name: access_token
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: oauth2TokenResponse
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AmadeusOAuth2Token'
+        '404':
           description: genericError
           content:
             application/json:
@@ -83,10 +110,10 @@ components:
           format: int64
         state:
           description: The state
-          type: string  
+          type: string
         scope:
           description: Scope is a mechanism in OAuth 2.0 to limit an application's access to a user's account
-          type: string           
+          type: string
       example:
         "type": "amadeusOAuth2Token"
         "username": "myuser@mydomain.com"
@@ -119,7 +146,7 @@ components:
           format: int64
         title:
           description: Debug contains debug information. This is usually not available and has to be enabled.
-          type: string  
+          type: string
       example:
         "error": "invalid_client"
         "error_description": "Client credentials are invalid"
