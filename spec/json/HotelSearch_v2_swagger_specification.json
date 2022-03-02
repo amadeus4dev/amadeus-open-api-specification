@@ -884,10 +884,10 @@
           "description": "check-out date of the stay (hotel local date). Format YYYY-MM-DD\n\nThe lowest accepted value is `checkInDate`+1. \n\n"
         },
         "roomQuantity": {
-          "type": "integer",
-          "minimum": 1,
-          "maximum": 9,
-          "example": 1,
+          "type": "string",
+          "minimum": 1, #to be updated
+          "maximum": 9, #to be updated
+          "example": "1",
           "description": "number of rooms (1-9)"
         },
         "rateCode": {
