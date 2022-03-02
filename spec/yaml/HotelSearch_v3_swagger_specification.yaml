@@ -368,11 +368,11 @@ definitions:
         format: date
       roomQuantity:
         description: number of rooms (1-9)
-        example: 1
-        type: integer
+        example: "1"
+        type: string
         minimum: 1
         maximum: 9
-        format: int32
+        format: int32 #to be updated 
       rateCode:
         description: |-
           Special Rate - Provider Response Code (3 chars)
