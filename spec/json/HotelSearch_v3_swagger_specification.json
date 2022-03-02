@@ -455,11 +455,11 @@
         },
         "roomQuantity": {
           "description": "number of rooms (1-9)",
-          "example": 1,
-          "type": "integer",
-          "minimum": 1.0,
-          "maximum": 9.0,
-          "format": "int32"
+          "example": "1",
+          "type": "string",
+          "minimum": 1.0, #to be updated
+          "maximum": 9.0, #to be updated
+          "format": "int32" #to be updated
         },
         "rateCode": {
           "description": "Special Rate - Provider Response Code (3 chars)\nExamples\n\n  * RAC - Rack\n\n  * BAR - Best Available Rate\n\n  * PRO - Promotional\n\n  * COR - Corporate\n\n  * GOV - Government (qualified)\n\n  * AAA - AAA (qualified)\n\n  * BNB - Bed and Breakfast\n\n  * PKG - Package\n\n  * TVL - Travel Industry\n\n  * SPC - Special Promo Rate\n\n  * WKD - Weekend\n\n  * CON - Convention\n\n  * SNR - Senior (Europe) (qualified)\n\n  * ARP - AARP - American Association of Retired People (50+) (qualified)\n\n  * SRS - Senior (qualified)\n\n  * ROR - Room Only Rate (no breakfast)\n\n  * FAM - Family\n\n  * DAY - Day rate",
