@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: '3.0.2'
+  version: 3.0.3
   title: Hotel Search API
   description: |-
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
@@ -33,7 +33,7 @@ paths:
           minItems: 1
           maxItems: 20
           uniqueItems: false
-          x-example: 
+          x-example:
             - HLLON101
           items:
             type: string
@@ -368,11 +368,8 @@ definitions:
         format: date
       roomQuantity:
         description: number of rooms (1-9)
-        example: "1"
+        example: '1'
         type: string
-        minimum: 1
-        maximum: 9
-        format: int32 #to be updated 
       rateCode:
         description: |-
           Special Rate - Provider Response Code (3 chars)
