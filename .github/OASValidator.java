@@ -181,7 +181,6 @@ public class OASValidator {
         //Assert
         if(specCounter != specValidatedCounter) {
             System.out.println("Review the OAS files provided, the validation failed.");
-            //new RuntimeException("The validation process failed");
             System.exit(-1);
         } else {
             System.out.println("Every OAS files was validated successfully.");
