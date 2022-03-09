@@ -1,4 +1,5 @@
 [![Discord](https://img.shields.io/discord/696822960023011329?label=&logo=discord&logoColor=ffffff&color=7389D8&labelColor=6A7EC2)](https://discord.gg/cVrFBqx)
+[![Java CI](https://github.com/amadeus4dev/amadeus-open-api-specification/actions/workflows/build.yml/badge.svg)](https://github.com/amadeus4dev/amadeus-open-api-specification/actions/workflows/build.yml)
 
 # Amadeus OpenAPI Specification
 
