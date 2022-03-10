@@ -1,10 +1,13 @@
 openapi: 3.0.0
 info:
   title: Travel Restrictions
-  version: '1.0.1'
-  description: 'Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token.'
+  version: 1.0.1
+  description: >-
+    Before using this API, we recommend you read our **[Authorization
+    Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)**
+    for more information on how to generate an access token.
 servers:
-  - url: 'https://test.api.amadeus.com/v1'
+  - url: https://test.api.amadeus.com/v1
 paths:
   /duty-of-care/diseases/covid19-area-report:
     parameters: []
@@ -20,14 +23,18 @@ paths:
           example: US
           name: countryCode
           required: true
-          description: '[ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) Alpha-2 code. e.g. "US" United States of America.'
+          description: >-
+            [ISO 3166](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) Alpha-2
+            code. e.g. "US" United States of America.
         - schema:
             type: string
             minLength: 3
             maxLength: 3
           in: query
           name: cityCode
-          description: '[IATA code](http://www.iata.org/publications/Pages/code-search.aspx) for city metropolitan area.'
+          description: >-
+            [IATA code](http://www.iata.org/publications/Pages/code-search.aspx)
+            for city metropolitan area.
       responses:
         '200':
           description: Successful Reply
@@ -58,77 +65,159 @@ paths:
                           geoCode:
                             latitude: '37.0902'
                             longitude: '95.7129'
-                        summary: <p>Authorities imposed international travel restrictions from late February 2020</p>
+                        summary: >-
+                          <p>Authorities imposed international travel
+                          restrictions from late February 2020</p>
                         diseaseRiskLevel: High
                         diseaseInfection:
                           rate: '176.02'
                           level: Extreme
                           date: '2021-04-25'
-                          infectionMapLink: 'https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html'
+                          infectionMapLink: >-
+                            https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html
                         diseaseCases:
                           confirmed: 32940846
                           deaths: 585970
                           recovered: 0
                           active: 32354876
                           date: '2021-05-06'
-                        hotspots: '<p>Minnesota, Michigan, Pennsylvania, New Jersey, Delaware, New York, Connecticut, Rhode Island, New Hampshire, Vermont, Massachusetts</p>'
+                        hotspots: >-
+                          <p>Minnesota, Michigan, Pennsylvania, New Jersey,
+                          Delaware, New York, Connecticut, Rhode Island, New
+                          Hampshire, Vermont, Massachusetts</p>
                         dataSources:
-                          governmentSiteLink: 'https://www.cdc.gov/coronavirus/2019-ncov/index.html'
-                          healthDepartmentSiteLink: 'https://www.helsenorge.no/en/coronavirus/'
+                          governmentSiteLink: https://www.cdc.gov/coronavirus/2019-ncov/index.html
+                          healthDepartmentSiteLink: https://www.helsenorge.no/en/coronavirus/
                         areaRestrictions:
-                          - text: '<p>A nightly nationwide curfew is in effect from 21:00-06:00 local time until further notice.</p>'
+                          - text: >-
+                              <p>A nightly nationwide curfew is in effect from
+                              21:00-06:00 local time until further notice.</p>
                             date: '2021-05-02'
                             restrictionType: Lockdown
                         areaAccessRestrictions:
                           transportation:
-                            text: '<p>American Airlines, United Airlines, Delta Air Lines and other major carriers have suspended most flights to China, Hong Kong, Macau, the UK, continental Europe and Latin America. Officials partially lifted a ban on flights by Air China, China Eastern Airlines, China Southern Airlines, and Xiamen Airlines after Chinese authorities allowed United and Delta airlines to operate one round-trip between the two countries.</p>'
+                            text: >-
+                              <p>American Airlines, United Airlines, Delta Air
+                              Lines and other major carriers have suspended most
+                              flights to China, Hong Kong, Macau, the UK,
+                              continental Europe and Latin America. Officials
+                              partially lifted a ban on flights by Air China,
+                              China Eastern Airlines, China Southern Airlines,
+                              and Xiamen Airlines after Chinese authorities
+                              allowed United and Delta airlines to operate one
+                              round-trip between the two countries.</p>
                             isBanned: Partial
                             throughDate: indef
                             date: '2021-04-25'
                             transportationType: Air
                           declarartionDocumentations:
-                            text: <p>Arriving travellers must complete a passenger locator form within 24 hours of arrival.</p>
+                            text: >-
+                              <p>Arriving travellers must complete a passenger
+                              locator form within 24 hours of arrival.</p>
                             documentRequired: 'Yes'
-                            travelDocumentLink: 'https://travel.state.gov/content/travel/en/traveladvisories/ea/covid-19-information.html'
-                            healthDocumentLink: 'https://travel.state.gov/content/travel/en/traveladvisories/ea/covid-19-information.html'
+                            travelDocumentLink: >-
+                              https://travel.state.gov/content/travel/en/traveladvisories/ea/covid-19-information.html
+                            healthDocumentLink: >-
+                              https://travel.state.gov/content/travel/en/traveladvisories/ea/covid-19-information.html
                             date: '2021-05-03'
                           entry:
-                            text: '<p>Travellers arriving from or transiting through India, South Africa, China, Iran, Brazil, Ireland, the United Kingdom and the European Schengen Area countries of Austria, Belgium, Czech Republic, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Iceland, Italy, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Netherlands, Norway, Poland, Portugal, Slovakia, Slovenia, Spain, Sweden, Switzerland, Monaco, San Marin and Vatican City within 14 days of their planned arrival in the US are barred from entry.</p>'
-                            exemptions: 'https://travel.state.gov/content/travel/en/News/visas-news/presidential-proclamation-coronavirus.html'
+                            text: >-
+                              <p>Travellers arriving from or transiting through
+                              India, South Africa, China, Iran, Brazil, Ireland,
+                              the United Kingdom and the European Schengen Area
+                              countries of Austria, Belgium, Czech Republic,
+                              Denmark, Estonia, Finland, France, Germany,
+                              Greece, Hungary, Iceland, Italy, Latvia,
+                              Liechtenstein, Lithuania, Luxembourg, Malta,
+                              Netherlands, Norway, Poland, Portugal, Slovakia,
+                              Slovenia, Spain, Sweden, Switzerland, Monaco, San
+                              Marin and Vatican City within 14 days of their
+                              planned arrival in the US are barred from
+                              entry.</p>
+                            exemptions: >-
+                              https://travel.state.gov/content/travel/en/News/visas-news/presidential-proclamation-coronavirus.html
                             ban: Partial
                             throughDate: indef
-                            rules: 'https://www.cdc.gov/coronavirus/2019-ncov/travelers/from-other-countries.html'
+                            rules: >-
+                              https://www.cdc.gov/coronavirus/2019-ncov/travelers/from-other-countries.html
                             date: '2021-04-26'
                           diseaseTesting:
                             when: Before travel
                             requirement: Mandatory
-                            text: <p>All passengers on inbound international flights - including US citizens and fully vaccinated people - must present a negative COVID-19 test result </p>
-                            rules: 'https://www.cdc.gov/coronavirus/2019-ncov/travelers/testing-international-air-travelers.html#:~:text=On%20January%2012%2C%202021%2C%20CDC,airline%20before%20boarding%20the%20flight.'
+                            text: >-
+                              <p>All passengers on inbound international flights
+                              - including US citizens and fully vaccinated
+                              people - must present a negative COVID-19 test
+                              result </p>
+                            rules: >-
+                              https://www.cdc.gov/coronavirus/2019-ncov/travelers/testing-international-air-travelers.html#:~:text=On%20January%2012%2C%202021%2C%20CDC,airline%20before%20boarding%20the%20flight.
                             isRequired: 'Yes'
                             date: '2021-05-05'
                           tracingApplication:
-                            text: '<p>There is no national contact tracing app. Local authorities have developed or are developing optional platforms through Apple's Exposure Notification API in multiple states, including Alabama, Arizona, California, Colorado, Delaware, Maryland, Michigan, Nevada, New York, North Carolina, North Dakota, Oregon, Pennsylvania, South Carolina, Virginia Washington and Wyoming, the District of Columbia, and territories, including Guam and Puerto Rico.</p>'
+                            text: >-
+                              <p>There is no national contact tracing app. Local
+                              authorities have developed or are developing
+                              optional platforms through Apple's Exposure
+                              Notification API in multiple states, including
+                              Alabama, Arizona, California, Colorado, Delaware,
+                              Maryland, Michigan, Nevada, New York, North
+                              Carolina, North Dakota, Oregon, Pennsylvania,
+                              South Carolina, Virginia Washington and Wyoming,
+                              the District of Columbia, and territories,
+                              including Guam and Puerto Rico.</p>
                             isRequired: 'No'
                             date: '2021-05-05'
                           quarantineModality:
-                            text: '<p>International travellers are not required to quarantine upon arrival. However, the CDC recommends that travellers stay home and self-quarantine for 7 days after arrival. Travellers should take a test again 3-5 days after arrival; if a test is not available or results are delayed, travellers are recommended to stay home and self-quarantine for a total of 10 days after travelling.</p>'
-                            rules: 'https://travel.state.gov/content/travel/en/traveladvisories/ea/covid-19-information.html'
+                            text: >-
+                              <p>International travellers are not required to
+                              quarantine upon arrival. However, the CDC
+                              recommends that travellers stay home and
+                              self-quarantine for 7 days after arrival.
+                              Travellers should take a test again 3-5 days after
+                              arrival; if a test is not available or results are
+                              delayed, travellers are recommended to stay home
+                              and self-quarantine for a total of 10 days after
+                              travelling.</p>
+                            rules: >-
+                              https://travel.state.gov/content/travel/en/traveladvisories/ea/covid-19-information.html
                             eligiblePerson: None
                             date: '2021-05-05'
                           masks:
-                            isRequired: 'Yes, conditional'
-                            text: '<p>Some states and territories require residents to wear masks while out in public. Violators may be subject to fines and be denied entry to businesses and use of public transport. Most states and territories have voluntary measures or measures restricted to specific venues and municipalities.</p> <p>Enforcement varies widely and is not consistently enforced below the federal level. Masks must be worn in federal government buildings as well as on inter-state transport, including at airports and onboard flights, trains, planes, intercity buses and ferries until at least 13 September.</p>'
+                            isRequired: Yes, conditional
+                            text: >-
+                              <p>Some states and territories require residents
+                              to wear masks while out in public. Violators may
+                              be subject to fines and be denied entry to
+                              businesses and use of public transport. Most
+                              states and territories have voluntary measures or
+                              measures restricted to specific venues and
+                              municipalities.</p> <p>Enforcement varies widely
+                              and is not consistently enforced below the federal
+                              level. Masks must be worn in federal government
+                              buildings as well as on inter-state transport,
+                              including at airports and onboard flights, trains,
+                              planes, intercity buses and ferries until at least
+                              13 September.</p>
                             date: '2021-05-05'
                           exit:
                             isAllowed: 'No'
-                            text: <p>There are no exit restrictions though international travel is strongly discouraged.</p>
-                            rules: 'https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html/'
+                            text: >-
+                              <p>There are no exit restrictions though
+                              international travel is strongly discouraged.</p>
+                            rules: >-
+                              https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html/
                             date: '2021-05-05'
                           otherRestrictions:
-                            text: '<p>Effective 23 April-20 May, a state of exception will be imposed in NYC</p>'
+                            text: >-
+                              <p>Effective 23 April-20 May, a state of exception
+                              will be imposed in NYC</p>
                             date: '2021-05-05'
                         areaPolicy:
-                          text: '<p>Limited federal policies for quarantine, testing and masking are in effect nationwide. Most policy decisions are implemented at the state, county and municipal level.</p>'
+                          text: >-
+                            <p>Limited federal policies for quarantine, testing
+                            and masking are in effect nationwide. Most policy
+                            decisions are implemented at the state, county and
+                            municipal level.</p>
                           status: Distancing
                           startDate: '2021-04-23'
                           endDate: indef
@@ -141,12 +230,15 @@ paths:
                               geoCode:
                                 latitude: '29.75894'
                                 longitude: '-95.3676'
-                            summary: <p>Authorities were quick to impose curfew measures from mid-March 2020 .</p>
+                            summary: >-
+                              <p>Authorities were quick to impose curfew
+                              measures from mid-March 2020 .</p>
                             diseaseRiskLevel: High
                     meta:
                       language: EN
                       links:
-                        self: 'https://api.amadeus.net/v1/duty-of-care/disease/covid19-area-report?countryCode=US&cityCode=HOU&language=EN'
+                        self: >-
+                          https://api.amadeus.net/v1/duty-of-care/disease/covid19-area-report?countryCode=US&cityCode=HOU&language=EN
         '400':
           description: |+
             Bad Request
@@ -170,29 +262,53 @@ paths:
                       properties:
                         status:
                           type: integer
-                          description: 'The [HTTP status code](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) of this response. This is present only in terminal errors which cause an unsuccessful response. In the case of multiple errors, they must all have the same status.'
+                          description: >-
+                            The [HTTP status
+                            code](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml)
+                            of this response. This is present only in terminal
+                            errors which cause an unsuccessful response. In the
+                            case of multiple errors, they must all have the same
+                            status.
                         code:
                           type: integer
-                          description: 'A machine-readable error code from the Amadeus Canned Messages table, that will enable the API Consumers code to handle this type of error'
+                          description: >-
+                            A machine-readable error code from the Amadeus
+                            Canned Messages table, that will enable the API
+                            Consumers code to handle this type of error
                         title:
                           type: string
-                          description: 'An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized'
+                          description: >-
+                            An error title from the Canned Messages table with a
+                            1:1 correspondence to the error code. This may be
+                            localized
                         detail:
                           type: string
-                          description: 'An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized.'
+                          description: >-
+                            An easy-to-read explanation specific to this
+                            occurrence of the problem. It should give the API
+                            consumer an idea of what went wrong and how to
+                            recover from it. Like the title, this field’s value
+                            can be localized.
                         source:
                           type: object
                           title: Error_Source
                           properties:
                             parameter:
                               type: string
-                              description: The key of the URI path or query parameter that caused the error
+                              description: >-
+                                The key of the URI path or query parameter that
+                                caused the error
                             pointer:
                               type: string
-                              description: 'A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error'
+                              description: >-
+                                A JSON Pointer [RFC6901] to the associated
+                                entity in the request body that caused this
+                                error
                             example:
                               type: string
-                              description: A sample input to guide the user when resolving this issue
+                              description: >-
+                                A sample input to guide the user when resolving
+                                this issue
               examples:
                 example-400:
                   value:
@@ -200,7 +316,9 @@ paths:
                       - status: 400
                         code: 32171
                         title: MANDATORY DATA MISSING
-                        detail: 'CONTENT IS MISSING IN THE GIVEN REQUEST, PLEASE CHECK AND RESEND YOUR REQUEST'
+                        detail: >-
+                          CONTENT IS MISSING IN THE GIVEN REQUEST, PLEASE CHECK
+                          AND RESEND YOUR REQUEST
         '500':
           description: |-
             Internal Server Error
@@ -216,7 +334,8 @@ paths:
                   errors:
                     type: array
                     items:
-                      $ref: '#/paths/~1duty-of-care~1diseases~1covid19-area-report/get/responses/400/content/application~1json/schema/properties/errors/items'
+                      $ref: >-
+                        #/paths/~1duty-of-care~1diseases~1covid19-area-report/get/responses/400/content/application~1json/schema/properties/errors/items
               examples:
                 example-500:
                   value:
@@ -238,7 +357,8 @@ paths:
                   errors:
                     type: array
                     items:
-                      $ref: '#/paths/~1duty-of-care~1diseases~1covid19-area-report/get/responses/400/content/application~1json/schema/properties/errors/items'
+                      $ref: >-
+                        #/paths/~1duty-of-care~1diseases~1covid19-area-report/get/responses/400/content/application~1json/schema/properties/errors/items
               examples:
                 example-501:
                   value:
@@ -258,8 +378,10 @@ components:
           properties:
             specialRequirements:
               type: string
-              description: |-
-                Exit country Document is requried or not for International travel 
+              description: >-
+                Exit country Document is requried or not for International
+                travel 
+
 
                 eg Yes/No
             rulesLink:
@@ -270,7 +392,12 @@ components:
                 Website information
             isBanned:
               type: string
-              description: "Yes/ Recommended Partial/ No; 'Yes' indicates all travellers are banned from leaving; 'Recommended' indicates that travellers should not leave, but are mostly free to do so; 'Partial' indicates that some travellers may leave, but others are prevented; 'No' indicates all travellers are free to leave"
+              description: >-
+                Yes/ Recommended Partial/ No; 'Yes' indicates all travellers are
+                banned from leaving; 'Recommended' indicates that travellers
+                should not leave, but are mostly free to do so; 'Partial'
+                indicates that some travellers may leave, but others are
+                prevented; 'No' indicates all travellers are free to leave
       title: Exit Restriction
       description: ''
     Entry:
@@ -281,10 +408,14 @@ components:
           properties:
             ban:
               type: string
-              description: Indicates if entry for all or some types of people is banned. "Yes" includes situations that are equivalent to a ban
+              description: >-
+                Indicates if entry for all or some types of people is banned.
+                "Yes" includes situations that are equivalent to a ban
             throughDate:
               type: string
-              description: Latest end date for entry ban. Date in YYYY-MM-DD format OR "indefinite" OR blank
+              description: >-
+                Latest end date for entry ban. Date in YYYY-MM-DD format OR
+                "indefinite" OR blank
             rules:
               type: string
               description: Rules implied with specific to borders
@@ -293,7 +424,10 @@ components:
               description: Rules implied with specific to borders
             bannedArea:
               type: array
-              description: 'Countries/territories from where travellers are generally banned from entry due to covid-19 rules. If no travellers are banned based on origin, this will be blank. Uses ISO 3166 country codes'
+              description: >-
+                Countries/territories from where travellers are generally banned
+                from entry due to covid-19 rules. If no travellers are banned
+                based on origin, this will be blank. Uses ISO 3166 country codes
               items:
                 title: Area
                 description: ''
@@ -301,7 +435,9 @@ components:
                 properties:
                   'name ':
                     type: string
-                    description: 'Label associated to the location (e.g. Eiffel Tower, Madison Square)'
+                    description: >-
+                      Label associated to the location (e.g. Eiffel Tower,
+                      Madison Square)
                     example: '"Eiffel Tower"'
                   iataCode:
                     type: string
@@ -309,22 +445,34 @@ components:
                     example: '"PAR"'
                   geoCode:
                     type: object
-                    description: Geographic coordinates describing the position of any location on the surface of Earth
+                    description: >-
+                      Geographic coordinates describing the position of any
+                      location on the surface of Earth
                     properties:
                       latitude:
                         type: string
-                        description: 'Latitude of the position expressed in decimal degrees (WSG 84), e.g. 6.244203. A positive value denotes northern hemisphere or the equator, and a negative value denotes southern hemisphere. The number of digits to represent the precision of the coordinate.'
+                        description: >-
+                          Latitude of the position expressed in decimal degrees
+                          (WSG 84), e.g. 6.244203. A positive value denotes
+                          northern hemisphere or the equator, and a negative
+                          value denotes southern hemisphere. The number of
+                          digits to represent the precision of the coordinate.
                         example: '48.85837'
                       longitude:
                         type: string
-                        description: 'Longitude of the position expressed in decimal degrees (WSG 84), e.g. -75.581211. A positive value denotes east longitude or the prime meridian, and a negative value denotes west longitude. The number of digits to represent the precision of the coordinate.'
+                        description: >-
+                          Longitude of the position expressed in decimal degrees
+                          (WSG 84), e.g. -75.581211. A positive value denotes
+                          east longitude or the prime meridian, and a negative
+                          value denotes west longitude. The number of digits to
+                          represent the precision of the coordinate.
                         example: '2.294481'
                   areaType:
                     type: string
-                    description: 'Area Type example country,city,region'
+                    description: Area Type example country,city,region
             borderBan:
               type: array
-              description: "Open/Partially Open/Closed"
+              description: Open/Partially Open/Closed
               items:
                 type: object
                 properties:
@@ -375,9 +523,12 @@ components:
               description: |-
                 Mandatory On Quarantine on Arrival 
 
-                eg Websites 
+                eg Websites
             quarantineOnArrivalAreas:
-              description: 'Countries/territories from where travellers are generally required to quarantine on arrival. If no travellers are required to quarantine, this will be blank. Uses ISO 3166 country codes'
+              description: >-
+                Countries/territories from where travellers are generally
+                required to quarantine on arrival. If no travellers are required
+                to quarantine, this will be blank. Uses ISO 3166 country codes
               type: array
               items:
                 $ref: '#/components/schemas/Entry/allOf/1/properties/bannedArea/items'
@@ -417,10 +568,12 @@ components:
                 eg , Yes,No, "Yes, conditional".
             when:
               type: string
-              description: |-
+              description: >-
                 When testing is to be done 
 
-                eg "Upon arrival","Before travel, Upon arrival, After arrival" details.
+
+                eg "Upon arrival","Before travel, Upon arrival, After arrival"
+                details.
             requirement:
               type: string
               description: |-
@@ -435,19 +588,28 @@ components:
                 eg https://corona.fo/quarantine.
             testType:
               type: string
-              description: "PCR/Antigen/Nucleic acid amplification test (NAAT). The types of Covid-19 tests accepted; more than one type can be selected"
+              description: >-
+                PCR/Antigen/Nucleic acid amplification test (NAAT). The types of
+                Covid-19 tests accepted; more than one type can be selected
             minimumAge:
               type: number
-              description: 'Minimum age, in years, that is required to take a Covid-19 test. Under this age, no test is required'
+              description: >-
+                Minimum age, in years, that is required to take a Covid-19 test.
+                Under this age, no test is required
             validityPeriod:
               type: object
               properties:
-                "delay":
+                delay:
                   type: string
-                  description: 'The validity period in hours or no if days as per ISP 8061 for test results '
+                  description: >-
+                    The validity period in hours or no if days as per ISP 8061
+                    for test results
                 referenceDateType:
                   type: string
-                  description: "Arrival/Departure; Test validity time is measured from arrival at destination or departure from origin. If blank, indicates this is not specified"
+                  description: >-
+                    Arrival/Departure; Test validity time is measured from
+                    arrival at destination or departure from origin. If blank,
+                    indicates this is not specified
       description: ''
     DeclarationDocuments:
       title: Declaration Documents
@@ -491,8 +653,9 @@ components:
               description: '"Yes" or "No". Indicates if transpotation are allow or not. '
             throughDate:
               type: string
-              description: |
-                Latest end date for flight ban. Date in YYYY-MM-DD format OR "indefinite" OR blank
+              description: >
+                Latest end date for flight ban. Date in YYYY-MM-DD format OR
+                "indefinite" OR blank
     AreaAccessRestriction:
       title: Area Access Restriction
       type: object
@@ -526,15 +689,19 @@ components:
           properties:
             status:
               type: string
-              description: |-
-                Current level of regional movement control. Can be de jure or de facto control. "Lockdown" | "Curfew" | "Distancing" | "None" | "Partial Measures" | "Opening" |
+              description: >-
+                Current level of regional movement control. Can be de jure or de
+                facto control. "Lockdown" | "Curfew" | "Distancing" | "None" |
+                "Partial Measures" | "Opening" |
+
                 "Closing" | "Open"
             startDate:
               type: string
             endDate:
               type: string
-              description: |
-                Latest end date for current control measures. Date in YYYY-MM-DD format OR "indefinite" OR blank
+              description: >
+                Latest end date for current control measures. Date in YYYY-MM-DD
+                format OR "indefinite" OR blank
             referenceLink:
               type: string
               description: Webpage for national Covid-19 policy
@@ -545,7 +712,9 @@ components:
           properties:
             restrictionType:
               type: string
-              description: 'Restriction type like ENUM:Lockdown,Curfew,other,DomasticTravel,Additional Section'
+              description: >-
+                Restriction type like
+                ENUM:Lockdown,Curfew,other,DomasticTravel,Additional Section
             title:
               type: string
       title: Area Restriction
@@ -579,13 +748,17 @@ components:
       properties:
         date:
           type: string
-          description: 'day of report in YYYY-MM-DD format,it will tell the date when this given information last updated'
+          description: >-
+            day of report in YYYY-MM-DD format,it will tell the date when this
+            given information last updated
         level:
           type: string
-          description: Infection risk level. "Extreme" | "High" | "Medium" | "Moderate" | "Low"
+          description: >-
+            Infection risk level. "Extreme" | "High" | "Medium" | "Moderate" |
+            "Low"
         rate:
           type: number
-          description: 'cases reported in 14 days per 100,000'
+          description: cases reported in 14 days per 100,000
         infectionMapLink:
           type: string
           description: Disease Infection_map
@@ -633,8 +806,9 @@ components:
           description: Summary
         diseaseRiskLevel:
           type: string
-          description: |
-            Country`s risk level. "Extreme" | "High" | "Medium" | "Moderate" | "Low"
+          description: >
+            Country`s risk level. "Extreme" | "High" | "Medium" | "Moderate" |
+            "Low"
         diseaseInfection:
           $ref: '#/components/schemas/DiseaseInfection'
         diseaseCases:
@@ -667,7 +841,7 @@ components:
       properties:
         'name ':
           type: string
-          description: 'Label associated to the location (e.g. Eiffel Tower, Madison Square)'
+          description: Label associated to the location (e.g. Eiffel Tower, Madison Square)
           example: Paris
         iataCode:
           type: string
@@ -675,20 +849,31 @@ components:
           example: '"PAR"'
         geoCode:
           type: object
-          description: Geographic coordinates describing the position of any location on the surface of Earth
+          description: >-
+            Geographic coordinates describing the position of any location on
+            the surface of Earth
           title: GeoCode
           properties:
             latitude:
               type: number
-              description: 'Latitude of the position expressed in decimal degrees (WSG 84), e.g. 6.244203. A positive value denotes northern hemisphere or the equator, and a negative value denotes southern hemisphere. The number of digits to represent the precision of the coordinate.'
+              description: >-
+                Latitude of the position expressed in decimal degrees (WSG 84),
+                e.g. 6.244203. A positive value denotes northern hemisphere or
+                the equator, and a negative value denotes southern hemisphere.
+                The number of digits to represent the precision of the
+                coordinate.
               example: '48.85837'
             longitude:
               type: number
-              description: 'Longitude of the position expressed in decimal degrees (WSG 84), e.g. -75.581211. A positive value denotes east longitude or the prime meridian, and a negative value denotes west longitude. The number of digits to represent the precision of the coordinate.'
+              description: >-
+                Longitude of the position expressed in decimal degrees (WSG 84),
+                e.g. -75.581211. A positive value denotes east longitude or the
+                prime meridian, and a negative value denotes west longitude. The
+                number of digits to represent the precision of the coordinate.
               example: '2.294481'
         areaType:
           type: string
-          description: 'Area Type example country,city,region'
+          description: Area Type example country,city,region
     Link:
       type: object
       properties:
@@ -703,20 +888,31 @@ components:
             type: string
         rel:
           type: string
-          description: 'Expose the type of relation between the current entity and the describe entity : https://www.iana.org/assignments/link-relations/link-relations.xhtml'
+          description: >-
+            Expose the type of relation between the current entity and the
+            describe entity :
+            https://www.iana.org/assignments/link-relations/link-relations.xhtml
     warnings:
       title: warnings
       type: object
       properties:
         code:
           type: integer
-          description: 'A machine-readable error code from the Canned Messages table, that will enable the API Consumers code to handle this type of error'
+          description: >-
+            A machine-readable error code from the Canned Messages table, that
+            will enable the API Consumers code to handle this type of error
         title:
           type: string
-          description: 'An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized'
+          description: >-
+            An error title from the Canned Messages table with a 1:1
+            correspondence to the error code. This may be localized
         detail:
           type: string
-          description: 'An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized.'
+          description: >-
+            An easy-to-read explanation specific to this occurrence of the
+            problem. It should give the API consumer an idea of what went wrong
+            and how to recover from it. Like the title, this field’s value can
+            be localized.
         source:
           type: object
           description: The Warning Source Definition
@@ -726,7 +922,9 @@ components:
               description: The key of the URI path or query parameter that caused the error
             pointer:
               type: string
-              description: A JSON Pointer RFC6901 to the associated entity in the request body that caused this error
+              description: >-
+                A JSON Pointer RFC6901 to the associated entity in the request
+                body that caused this error
             example:
               type: string
               description: A sample input to guide the user when resolving this issue
@@ -751,10 +949,14 @@ components:
           properties:
             vaccinationDoseStatus:
               type: string
-              description: 'Status of Vaccination dose status ,example one dose, fully vaccinated'
+              description: >-
+                Status of Vaccination dose status ,example one dose, fully
+                vaccinated
             percentage:
               type: number
-              description: Percent of population vaccinated based on the vaccination dose status
+              description: >-
+                Percent of population vaccinated based on the vaccination dose
+                status
         - $ref: '#/components/schemas/DatedInformation'
     diseaseVaccination:
       title: diseaseVaccination
@@ -768,7 +970,9 @@ components:
               description: Webpage of vaccination regulations
             acceptedCertificates:
               type: array
-              description: "List of accepted certificates. Not Specified/Paper Certificate and/or the name of the app"
+              description: >-
+                List of accepted certificates. Not Specified/Paper Certificate
+                and/or the name of the app
               items:
                 type: string
             qualifiedVaccines:
@@ -778,13 +982,21 @@ components:
                 type: string
             policy:
               type: string
-              description: "Yes/No; 'Yes' indicates fully vaccinated travellers are exempt from some requirements or restrictions"
+              description: >-
+                Yes/No; 'Yes' indicates fully vaccinated travellers are exempt
+                from some requirements or restrictions
             exemptions:
               type: string
-              description: Entry Ban Testing Documents App Quarantine Masks Exit Domestic Restrictions; indicates what exemptions fully vaccinated travellers qualify for. Details on the exemptions are found in the 'text' section.
+              description: >-
+                Entry Ban Testing Documents App Quarantine Masks Exit Domestic
+                Restrictions; indicates what exemptions fully vaccinated
+                travellers qualify for. Details on the exemptions are found in
+                the 'text' section.
             details:
               type: string
-              description: Text explanation of the policies and exemptions for vaccinated travellers
+              description: >-
+                Text explanation of the policies and exemptions for vaccinated
+                travellers
         - title: Dated Information
           type: object
           description: Confirmed information at a given date
