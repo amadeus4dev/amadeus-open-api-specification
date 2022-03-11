@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Hotel Search API
-  version: 2.1.2
+  version: 2.1.3
   description: |-
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token.
 
@@ -88,7 +88,7 @@ paths:
           $ref: '#/responses/Error404Response'
         '500':
           $ref: '#/responses/Error500Response'
-  '/shopping/hotel-offers/{offerId}':
+  /shopping/hotel-offers/{offerId}:
     get:
       summary: VIEW ROOM DETAILS.
       tags:
@@ -116,7 +116,7 @@ parameters:
     in: query
     required: false
     type: string
-    pattern: '^[A-Za-z]{3}$'
+    pattern: ^[A-Za-z]{3}$
     minLength: 3
     maxLength: 3
     x-example: PAR
@@ -167,7 +167,7 @@ parameters:
     type: array
     items:
       type: string
-      pattern: '^[A-Z0-9]{8}$'
+      pattern: ^[A-Z0-9]{8}$
     minItems: 0
     maxItems: 9999
     description: |
@@ -181,7 +181,7 @@ parameters:
     in: query
     required: true
     type: string
-    pattern: '^[A-Z0-9]{8}$'
+    pattern: ^[A-Z0-9]{8}$
     x-example: BGMILBGB
     description: |
       Amadeus Property Code (8 chars)
@@ -227,7 +227,7 @@ parameters:
     maxItems: 99
     items:
       type: string
-      pattern: '^[A-Z0-9a-z]{2}$'
+      pattern: ^[A-Z0-9a-z]{2}$
     description: |
       Chain (EM...) or Brand (SB...) or Merchant (AD...) (comma separated list of Amadeus 2 chars Codes)
 
@@ -352,7 +352,7 @@ parameters:
       - NONE
     default: FULL_ALL_IMAGES
   pageLimit:
-    name: 'page[limit]'
+    name: page[limit]
     in: query
     required: false
     type: integer
@@ -360,7 +360,7 @@ parameters:
     maximum: 96
     description: maximum number of hotels to return in each response
   pageOffset:
-    name: 'page[offset]'
+    name: page[offset]
     in: query
     required: false
     type: string
@@ -377,11 +377,11 @@ parameters:
       ISO language code (https://www.iso.org/iso-639-language-codes.html)
     required: false
     type: string
-    pattern: '^[a-zA-Z0-9-]{2,5}$'
+    pattern: ^[a-zA-Z0-9-]{2,5}$
   includeClosed:
     name: includeClosed
     in: query
-    description: 'show All properties (include Sold Out) or Available only. For Sold Out properties, please check availability on other dates. To be used with `sort` DISTANCE or NONE'
+    description: show All properties (include Sold Out) or Available only. For Sold Out properties, please check availability on other dates. To be used with `sort` DISTANCE or NONE
     required: false
     type: boolean
     default: false
@@ -444,7 +444,7 @@ parameters:
     in: query
     required: false
     type: string
-    pattern: '^[A-Z]{3}$'
+    pattern: ^[A-Z]{3}$
     description: |+
       use this parameter to request a specific currency. ISO currency code (http://www.iso.org/iso/home/standards/currency_codes.htm).
 
@@ -521,7 +521,7 @@ parameters:
     type: string
     x-example: NRPQNQBOJM
     description: offer id to request. Please note that an offer id has a limited lifetime and will expire
-    pattern: '^[A-Z0-9]*$'
+    pattern: ^[A-Z0-9]*$
 definitions:
   HotelOffers:
     title: Hotel Offers
@@ -559,19 +559,19 @@ definitions:
         example: hotel
       hotelId:
         type: string
-        pattern: '^[A-Z0-9]{8}$'
+        pattern: ^[A-Z0-9]{8}$
         example: ADPAR001
         description: |
           Amadeus Property Code (8 chars)
       chainCode:
         type: string
-        pattern: '^[A-Z]{2}$'
+        pattern: ^[A-Z]{2}$
         example: AD
         description: |
           Brand (RT...) or Merchant (AD...) (Amadeus 2 chars Code)
       brandCode:
         type: string
-        pattern: '^[A-Z]{2}$'
+        pattern: ^[A-Z]{2}$
         example: RT
         description: |+
           Brand (RT...) (Amadeus 2 chars Code). Small Properties distributed by Merchants may not have a Brand.
@@ -591,7 +591,7 @@ definitions:
         description: Hotel Name
       rating:
         type: string
-        pattern: '^[1-5]$'
+        pattern: ^[1-5]$
         example: '5'
         description: Hotel Stars (1-5)
         enum:
@@ -620,7 +620,7 @@ definitions:
           $ref: '#/definitions/File'
       cityCode:
         type: string
-        pattern: '^[A-Z]{3}$'
+        pattern: ^[A-Z]{3}$
         example: PAR
         description: 'Warning: The IATA city code associated to the hotel (not necessary the real Hotel City)'
       latitude:
@@ -656,7 +656,7 @@ definitions:
       uri:
         type: string
         format: uri
-        example: 'http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/69810B23CB8644A18AF760DC66BE41A6'
+        example: http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/69810B23CB8644A18AF760DC66BE41A6
         description: |
           href to display the image
       category:
@@ -720,9 +720,9 @@ definitions:
         description: City Name
       countryCode:
         type: string
-        pattern: '^[A-Z]{2}$'
+        pattern: ^[A-Z]{2}$
         example: FR
-        description: 'ISO 3166-1 defines codes for the names of countries, dependent territories, and special areas of geographical interest'
+        description: ISO 3166-1 defines codes for the names of countries, dependent territories, and special areas of geographical interest
       stateCode:
         type: string
         description: ISO 3166-2 defines codes for identifying the principal subdivisions (e.g. provinces or states) of all countries coded in ISO 3166-1
@@ -773,7 +773,7 @@ definitions:
           - hotel-offer
       id:
         type: string
-        pattern: '^[A-Z0-9]*$'
+        pattern: ^[A-Z0-9]*$
         minLength: 2
         maxLength: 100
         example: 63A93695B58821ABB0EC2B33FE9FAB24D72BF34B1BD7D707293763D8D9378FC3
@@ -797,11 +797,9 @@ definitions:
           The lowest accepted value is `checkInDate`+1. 
 
       roomQuantity:
-        type: integer
-        minimum: 1
-        maximum: 9
-        example: 1
-        description: number of rooms (1-9)
+        type: string
+        example: '1'
+        description: number of rooms (from 1 to 9)
       rateCode:
         type: string
         description: |
@@ -825,7 +823,7 @@ definitions:
           * ROR - Room Only Rate (no breakfast)
           * FAM - Family
           * DAY - Day rate
-        pattern: '^[A-Z0-9*]{3}$'
+        pattern: ^[A-Z0-9*]{3}$
         minLength: 3
         maxLength: 3
         example: RAC
@@ -881,16 +879,16 @@ definitions:
         description: A self link to the object. Use this to refresh the Offer price
         type: string
         format: uri
-        example: 'https://test.api.amadeus.com/v2/shopping/hotel-offers/63A93695B58821ABB0EC2B33FE9FAB24D72BF34B1BD7D707293763D8D9378FC3'
+        example: https://test.api.amadeus.com/v2/shopping/hotel-offers/63A93695B58821ABB0EC2B33FE9FAB24D72BF34B1BD7D707293763D8D9378FC3
   RateFamily:
     description: The estimated rate code family of the offer. Grouping various rate plan codes that belongs to the same family and indicates the type of the rate
     properties:
       code:
-        description: 'The estimated rate family (PRO,FAM,GOV)'
+        description: The estimated rate family (PRO,FAM,GOV)
         type: string
         pattern: '[A-Z0-9]{3}'
       type:
-        description: 'The type of the rate (public=P, negotiated=N, conditional=C)'
+        description: The type of the rate (public=P, negotiated=N, conditional=C)
         type: string
         pattern: '[PNC]'
   Commission:
@@ -919,7 +917,7 @@ definitions:
 
           For more detail look at the [hotel guide](http://www.amadeus.com/pk/documents/aco/pk/en/Amadeus_%20Hotels.pdf)
         type: string
-        pattern: '^[A-Z0-9*]{3}$'
+        pattern: ^[A-Z0-9*]{3}$
       typeEstimated:
         $ref: '#/definitions/EstimatedRoomType'
       description:
@@ -940,7 +938,7 @@ definitions:
           type: integer
           minimum: 0
           maximum: 20
-        description: 'Comma separated list of ages of each child at the time of check-out from the hotel. If several children have the same age, the ages will be repeated.'
+        description: Comma separated list of ages of each child at the time of check-out from the hotel. If several children have the same age, the ages will be repeated.
   HotelPrice:
     type: object
     description: price information
@@ -987,7 +985,7 @@ definitions:
         $ref: '#/definitions/CheckInOutPolicy'
   EstimatedRoomType:
     type: object
-    description: 'estimated room category, bed type and number of beds in the room. This information has been parsed from the room description, and is thus only provided for informational purposes'
+    description: estimated room category, bed type and number of beds in the room. This information has been parsed from the room description, and is thus only provided for informational purposes
     properties:
       category:
         description: Category code
@@ -1018,7 +1016,7 @@ definitions:
       acceptedPayments:
         $ref: '#/definitions/PaymentPolicy'
   DepositPolicy:
-    description: 'the deposit/prepay policy information applicable to the offer. It includes accepted payments, deadline and the amount due'
+    description: the deposit/prepay policy information applicable to the offer. It includes accepted payments, deadline and the amount due
     type: object
     properties:
       amount:
@@ -1089,13 +1087,13 @@ definitions:
       checkIn:
         type: string
         example: '13:00:00'
-        description: 'Check-in From time limit in ISO-8601 format [http://www.w3.org/TR/xmlschema-2/#time]'
+        description: Check-in From time limit in ISO-8601 format [http://www.w3.org/TR/xmlschema-2/#time]
       checkInDescription:
         $ref: '#/definitions/TextWithLanguageType'
       checkOut:
         type: string
         example: '11:00:00'
-        description: 'Check-out Until time limit in ISO-8601 format [http://www.w3.org/TR/xmlschema-2/#time]'
+        description: Check-out Until time limit in ISO-8601 format [http://www.w3.org/TR/xmlschema-2/#time]
       checkOutDescription:
         $ref: '#/definitions/TextWithLanguageType'
   HotelTax:
@@ -1150,7 +1148,7 @@ definitions:
         pattern: ^\\d+(\\.\\d+)?$
   PriceVariation:
     title: Price variation
-    description: 'Some prices may vary during a stay, thus here you can see the daily price per period of the stay'
+    description: Some prices may vary during a stay, thus here you can see the daily price per period of the stay
     type: object
     properties:
       startDate:
@@ -1185,7 +1183,7 @@ definitions:
         description: Accepted Payment Card Types for the `method` CREDIT_CARD
         items:
           type: string
-          pattern: '^[A-Z]{2}$'
+          pattern: ^[A-Z]{2}$
           minLength: 2
           maxLength: 2
           example: VI
@@ -1244,7 +1242,7 @@ definitions:
       lang:
         type: string
         pattern: '[a-zA-Z0-9-]{2,5}'
-        description: 'Language code of the text ISO language code (https://www.iso.org/iso-639-language-codes.html)'
+        description: Language code of the text ISO language code (https://www.iso.org/iso-639-language-codes.html)
       text:
         type: string
         description: Text description
@@ -1363,13 +1361,13 @@ definitions:
       $ref: '#/definitions/Warning'
 responses:
   MultiHotelsOffers:
-    description: 'An array of hotel offers, ie. hotels with their attributes plus available offers for each returned hotel.'
+    description: An array of hotel offers, ie. hotels with their attributes plus available offers for each returned hotel.
     schema:
       type: object
       properties:
         data:
           type: array
-          description: 'The list of the hotels matching the search criteria, and the available offers for each hotel.'
+          description: The list of the hotels matching the search criteria, and the available offers for each hotel.
           items:
             $ref: '#/definitions/HotelOffers'
         meta:
@@ -1441,7 +1439,7 @@ responses:
                 - TELEVISION
                 - WI-FI_IN_ROOM
               media:
-                - uri: 'http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/69810B23CB8644A18AF760DC66BE41A6'
+                - uri: http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/69810B23CB8644A18AF760DC66BE41A6
                   category: EXTERIOR
             available: true
             offers:
@@ -1472,7 +1470,7 @@ responses:
                       - startDate: '2019-01-22'
                         endDate: '2019-01-23'
                         base: '114.99'
-            self: 'https://test.api.amadeus.com/v2/shopping/hotel-offers/by-hotel?hotelId=EAMIAMAP&adults=1&paymentPolicy=NONE&view=FULL'
+            self: https://test.api.amadeus.com/v2/shopping/hotel-offers/by-hotel?hotelId=EAMIAMAP&adults=1&paymentPolicy=NONE&view=FULL
           - type: hotel-offers
             hotel:
               type: hotel
@@ -1498,7 +1496,7 @@ responses:
                 phone: 33-1-47273330
               description:
                 lang: en
-                text: 'The best western au trocadero is located in one of the most elegant district of paris, facing the trocadero, the eiffel tower and champ de mars. You will enjoy the friendly setting.'
+                text: The best western au trocadero is located in one of the most elegant district of paris, facing the trocadero, the eiffel tower and champ de mars. You will enjoy the friendly setting.
               amenities:
                 - BAR
                 - ICE_MACHINES
@@ -1527,7 +1525,7 @@ responses:
                 - SMOKE_DETECTOR
                 - VIDEO_SURVEIL
               media:
-                - uri: 'http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/D231E485EDCB4AB1B61F3032404474D1'
+                - uri: http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/D231E485EDCB4AB1B61F3032404474D1
                   category: EXTERIOR
             available: true
             offers:
@@ -1557,10 +1555,10 @@ responses:
                       - startDate: '2019-01-22'
                         endDate: '2019-01-23'
                         base: '150.00'
-            self: 'https://test.api.amadeus.com/v2/shopping/hotel-offers/by-hotel?hotelId=BWPAR261&adults=1&paymentPolicy=NONE&view=FULL'
+            self: https://test.api.amadeus.com/v2/shopping/hotel-offers/by-hotel?hotelId=BWPAR261&adults=1&paymentPolicy=NONE&view=FULL
         meta:
           links:
-            next: 'https://test.api.amadeus.com/v2/shopping/hotel-offers?adults=1&bestRateOnly=true&cityCode=PAR&includeClosed=false&paymentPolicy=NONE&radius=5&radiusUnit=KM&sort=PRICE&view=FULL&page[offset]=05G15W3U2NWG_96'
+            next: https://test.api.amadeus.com/v2/shopping/hotel-offers?adults=1&bestRateOnly=true&cityCode=PAR&includeClosed=false&paymentPolicy=NONE&radius=5&radiusUnit=KM&sort=PRICE&view=FULL&page[offset]=05G15W3U2NWG_96
   SingleHotelOffers:
     description: A single hotel with available offers.
     schema:
@@ -1624,11 +1622,11 @@ responses:
               - SAFE_DEP_BOX
               - FITNESS_CENTER
             media:
-              - uri: 'http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/B6AA0C7920214C49AAFBCFFF32A15300'
+              - uri: http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/B6AA0C7920214C49AAFBCFFF32A15300
                 category: EXTERIOR
-              - uri: 'http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/0B9245555964410B97E958128EB3DE52'
+              - uri: http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/0B9245555964410B97E958128EB3DE52
                 category: LOBBY
-              - uri: 'http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/DDFD5AD22B134110BCDBE64186FE860A'
+              - uri: http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/DDFD5AD22B134110BCDBE64186FE860A
                 category: SUITE
           available: true
           offers:
@@ -1654,7 +1652,7 @@ responses:
               price:
                 currency: EUR
                 total: '857.00'
-              self: 'https://test.api.amadeus.com/v2/shopping/hotel-offers/8BB1F89D377409FEFACB3E73654A5D765CD812920802E5976BFBB060BAF23AD7'
+              self: https://test.api.amadeus.com/v2/shopping/hotel-offers/8BB1F89D377409FEFACB3E73654A5D765CD812920802E5976BFBB060BAF23AD7
             - id: 2E5650829E01B8BD88085B597266F15EF03E6E23BC8DB1A470A6D03F8E2BA1A8
               rateCode: RAC
               rateFamilyEstimated:
@@ -1675,7 +1673,7 @@ responses:
               price:
                 currency: EUR
                 total: '912.00'
-              self: 'https://test.api.amadeus.com/v2/shopping/hotel-offers/2E5650829E01B8BD88085B597266F15EF03E6E23BC8DB1A470A6D03F8E2BA1A8'
+              self: https://test.api.amadeus.com/v2/shopping/hotel-offers/2E5650829E01B8BD88085B597266F15EF03E6E23BC8DB1A470A6D03F8E2BA1A8
   Error400Response:
     description: |
       code    | title 
