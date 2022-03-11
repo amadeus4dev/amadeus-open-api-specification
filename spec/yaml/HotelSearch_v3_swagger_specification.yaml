@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 3.0.3
+  version: 3.0.4
   title: Hotel Search API
   description: |-
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
@@ -34,7 +34,7 @@ paths:
           maxItems: 20
           uniqueItems: false
           x-example:
-            - HLLON101
+            - EDLONDER
           items:
             type: string
           description: Amadeus property codes on 8 chars. Mandatory parameter for a search by predefined list of hotels.

@@ -16,6 +16,7 @@ paths:
       tags:
         - Search
       summary: Returns a list of hotels matching a given keyword.
+      operationId: gethotels
       description: ''
       produces:
         - application/json
