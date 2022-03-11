@@ -37,6 +37,7 @@
           "Booking"
         ],
         "description": "",
+        "summary": "Create Orders associated to the Hotel Offers",
         "operationId": "createBooking",
         "parameters": [
           {
