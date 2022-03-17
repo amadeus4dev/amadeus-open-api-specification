@@ -13,6 +13,15 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
+      - name: OAS YAML -> JSON Converter
+        shell: bash
+        run: |
+          curl -Ls https://sh.jbang.dev | bash -s - app setup
+          ~/.jbang/bin/jbang .github/OASConverter.java amadeus-open-api-specification/spec
+      - uses: stefanzweifel/git-auto-commit-action@v4.7.2
+        with:
+          commit_message: Regenerating OAS JSON files
+          branch: ${{ github.head_ref }}
       - name: OAS Validation
         shell: bash
         run: |
