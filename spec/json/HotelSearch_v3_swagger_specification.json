@@ -38,7 +38,9 @@
             "minItems": 1,
             "maxItems": 20,
             "uniqueItems": false,
-            "x-example":["EDLONDER"],
+            "x-example": [
+              "EDLONDER"
+            ],
             "items": {
               "type": "string"
             },
@@ -50,8 +52,8 @@
             "required": true,
             "type": "integer",
             "format": "int32",
-            "minimum": 1.0,
-            "maximum": 9.0,
+            "minimum": 1,
+            "maximum": 9,
             "exclusiveMaximum": false,
             "exclusiveMinimum": false,
             "description": "Number of adult guests (1-9) per room.",
@@ -63,8 +65,8 @@
             "required": false,
             "type": "string",
             "format": "date",
-            "description": "Check-in date of the stay (hotel local date). Format YYYY-MM-DD. The lowest accepted value is the present date (no dates in the past). If not present, the default value will be today's date in the GMT time zone.",
-            "x-example":"2022-06-20"
+            "description": "Check-in date of the stay (hotel local date). Format YYYY-MM-DD. The lowest accepted value is the present date (no dates in the past). If not present, the default value will be today\u0027s date in the GMT time zone.",
+            "x-example": "2022-06-20"
           },
           {
             "name": "checkOutDate",
@@ -89,8 +91,8 @@
             "default": 1,
             "type": "integer",
             "format": "int32",
-            "minimum": 1.0,
-            "maximum": 9.0,
+            "minimum": 1,
+            "maximum": 9,
             "exclusiveMaximum": false,
             "exclusiveMinimum": false,
             "description": "Number of rooms requested (1-9)."
@@ -135,7 +137,7 @@
               "ALL_INCLUSIVE"
             ],
             "type": "string",
-            "description": "Filter response based on available meals:\n        * ROOM_ONLY = Room Only\n        * BREAKFAST = Breakfast\n        * HALF_BOARD = Diner & Breakfast (only for Aggregators)\n        * FULL_BOARD = Full Board (only for Aggregators)\n        * ALL_INCLUSIVE = All Inclusive (only for Aggregators)"
+            "description": "Filter response based on available meals:\n        * ROOM_ONLY \u003d Room Only\n        * BREAKFAST \u003d Breakfast\n        * HALF_BOARD \u003d Diner \u0026 Breakfast (only for Aggregators)\n        * FULL_BOARD \u003d Full Board (only for Aggregators)\n        * ALL_INCLUSIVE \u003d All Inclusive (only for Aggregators)"
           },
           {
             "name": "includeClosed",
@@ -299,90 +301,90 @@
         }
       },
       "example": {
-          "data": [
-            {
-              "type": "hotel-offers",
-              "hotel": {
-                "type": "hotel",
-                "hotelId": "HLLON101",
-                "chainCode": "HL",
-                "dupeId": "700027723",
-                "name": "THE TRAFALGAR",
-                "cityCode": "LON",
-                "latitude": 51.50729,
-                "longitude": -0.12889
-              },
-              "available": true,
-              "offers": [
-                {
-                  "id": "1BCMABM7A8",
-                  "checkInDate": "2021-11-20",
-                  "checkOutDate": "2021-11-21",
-                  "rateCode": "RAC",
-                  "rateFamilyEstimated": {
-                    "code": "PRO",
-                    "type": "P"
+        "data": [
+          {
+            "type": "hotel-offers",
+            "hotel": {
+              "type": "hotel",
+              "hotelId": "HLLON101",
+              "chainCode": "HL",
+              "dupeId": "700027723",
+              "name": "THE TRAFALGAR",
+              "cityCode": "LON",
+              "latitude": 51.50729,
+              "longitude": -0.12889
+            },
+            "available": true,
+            "offers": [
+              {
+                "id": "1BCMABM7A8",
+                "checkInDate": "2021-11-20",
+                "checkOutDate": "2021-11-21",
+                "rateCode": "RAC",
+                "rateFamilyEstimated": {
+                  "code": "PRO",
+                  "type": "P"
+                },
+                "commission": {
+                  "percentage": "8.00"
+                },
+                "room": {
+                  "type": "M1K",
+                  "typeEstimated": {
+                    "category": "STANDARD_ROOM",
+                    "beds": 1,
+                    "bedType": "KING"
                   },
-                  "commission": {
-                    "percentage": "8.00"
-                  },
-                  "room": {
-                    "type": "M1K",
-                    "typeEstimated": {
-                      "category": "STANDARD_ROOM",
-                      "beds": 1,
-                      "bedType": "KING"
+                  "description": {
+                    "text": "ADVANCE PURCHASE\nTRAFALGAR KING ROOM\nCOMP WIFI/COFFEE-TEA FACILITIES/USB PORT",
+                    "lang": "EN"
+                  }
+                },
+                "guests": {
+                  "adults": 1
+                },
+                "price": {
+                  "currency": "GBP",
+                  "base": "300.00",
+                  "total": "300.00",
+                  "taxes": [
+                    {
+                      "code": "TOTAL_TAX",
+                      "amount": "0.00",
+                      "currency": "GBP",
+                      "included": true
+                    }
+                  ],
+                  "variations": {
+                    "average": {
+                      "base": "305.50"
                     },
+                    "changes": [
+                      {
+                        "startDate": "2021-11-20",
+                        "endDate": "2021-11-21",
+                        "total": "300.00"
+                      }
+                    ]
+                  }
+                },
+                "policies": {
+                  "paymentType": "deposit",
+                  "cancellation": {
+                    "type": "FULL_STAY",
                     "description": {
-                      "text": "ADVANCE PURCHASE\nTRAFALGAR KING ROOM\nCOMP WIFI/COFFEE-TEA FACILITIES/USB PORT",
+                      "text": "Non refundable rate",
                       "lang": "EN"
                     }
-                  },
-                  "guests": {
-                    "adults": 1
-                  },
-                  "price": {
-                    "currency": "GBP",
-                    "base": "300.00",
-                    "total": "300.00",
-                    "taxes": [
-                      {
-                        "code": "TOTAL_TAX",
-                        "amount": "0.00",
-                        "currency": "GBP",
-                        "included": true
-                      }
-                    ],
-                    "variations": {
-                      "average": {
-                        "base": "305.50"
-                      },
-                      "changes": [
-                        {
-                          "startDate": "2021-11-20",
-                          "endDate": "2021-11-21",
-                          "total": "300.00"
-                        }
-                      ]
-                    }
-                  },
-                  "policies": {
-                    "paymentType": "deposit",
-                    "cancellation": {
-                      "type": "FULL_STAY",
-                      "description": {
-                        "text": "Non refundable rate",
-                        "lang": "EN"
-                      }
-                    }
-                  },
-                  "self": "https://test.api.amadeus.com/v3/shopping/hotel-offers/1BCMABM7A8"
-                }
-              ],
-              "self": "https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=HLLON101&adults=1&checkInDate=2021-11-20&paymentPolicy=NONE&roomQuantity=1"
-            }
-          ]
-        }
+                  }
+                },
+                "self": "https://test.api.amadeus.com/v3/shopping/hotel-offers/1BCMABM7A8"
+              }
+            ],
+            "self": "https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds\u003dHLLON101\u0026adults\u003d1\u0026checkInDate\u003d2021-11-20\u0026paymentPolicy\u003dNONE\u0026roomQuantity\u003d1"
+          }
+        ]
+      }
     },
     "Hotel": {
       "title": "Hotel",
@@ -600,7 +602,7 @@
         "numberOfNights": {
           "description": "Number of nights due as fee in case of cancellation.",
           "type": "integer",
-          "minimum": 0.0,
+          "minimum": 0,
           "format": "int32"
         },
         "percentage": {
@@ -723,8 +725,8 @@
           "description": "number of adult guests (1-9) per room",
           "example": 2,
           "type": "integer",
-          "minimum": 1.0,
-          "maximum": 9.0,
+          "minimum": 1,
+          "maximum": 9,
           "format": "int32"
         },
         "childAges": {
@@ -732,12 +734,12 @@
           "type": "array",
           "items": {
             "type": "integer",
-            "minimum": 0.0,
-            "maximum": 20.0,
+            "minimum": 0,
+            "maximum": 20,
             "format": "int32"
           },
-          "minimum": 0.0,
-          "maximum": 20.0
+          "minimum": 0,
+          "maximum": 20
         }
       }
     },
@@ -766,11 +768,11 @@
           "type": "string"
         },
         "sellingTotal": {
-          "description": "sellingTotal = Total + margins + markup + totalFees - discounts",
+          "description": "sellingTotal \u003d Total + margins + markup + totalFees - discounts",
           "type": "string"
         },
         "total": {
-          "description": "total = base + totalTaxes",
+          "description": "total \u003d base + totalTaxes",
           "type": "string"
         },
         "base": {
@@ -868,11 +870,11 @@
           "type": "string"
         },
         "sellingTotal": {
-          "description": "sellingTotal = Total + margins + markup + totalFees - discounts",
+          "description": "sellingTotal \u003d Total + margins + markup + totalFees - discounts",
           "type": "string"
         },
         "total": {
-          "description": "total = base + totalTaxes",
+          "description": "total \u003d base + totalTaxes",
           "type": "string"
         },
         "base": {
@@ -918,7 +920,7 @@
           "pattern": "[A-Z0-9]{3}"
         },
         "type": {
-          "description": "The type of the rate (public=P, negotiated=N, conditional=C)",
+          "description": "The type of the rate (public\u003dP, negotiated\u003dN, conditional\u003dC)",
           "type": "string",
           "pattern": "[PNC]"
         }
@@ -994,11 +996,11 @@
           "type": "string"
         },
         "sellingTotal": {
-          "description": "sellingTotal = Total + margins + markup + totalFees - discounts",
+          "description": "sellingTotal \u003d Total + margins + markup + totalFees - discounts",
           "type": "string"
         },
         "total": {
-          "description": "total = base + totalTaxes",
+          "description": "total \u003d base + totalTaxes",
           "type": "string"
         },
         "base": {

@@ -63,7 +63,7 @@
                         "count": "2",
                         "sort": "iataCode",
                         "links": {
-                          "self": "https://test.api.amadeus.com/v1/airport/direct-destination?departureAirportCode=NCE&max=2"
+                          "self": "https://test.api.amadeus.com/v1/airport/direct-destination?departureAirportCode\u003dNCE\u0026max\u003d2"
                         }
                       }
                     }
@@ -95,7 +95,7 @@
                           "status": 400,
                           "code": 32171,
                           "title": "MANDATORY DATA MISSING",
-                          "detail": "Missing mandatory query parameter 'departureAirportCode"
+                          "detail": "Missing mandatory query parameter \u0027departureAirportCode"
                         }
                       ]
                     }

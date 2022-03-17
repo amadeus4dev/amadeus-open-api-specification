@@ -232,7 +232,7 @@
             }
           },
           "example": {
-            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+            "self": "https://test.api.amadeus.com/v1/area/resources?param\u003dvalue"
           }
         }
       }
@@ -296,7 +296,7 @@
           "meta": {
             "count": 12,
             "links": {
-              "self": "https://test.api.amadeus.com/v1/travel/analytics/air-traffic/busiest-period?cityCode=MAD&direction=ARRIVING&period=2017"
+              "self": "https://test.api.amadeus.com/v1/travel/analytics/air-traffic/busiest-period?cityCode\u003dMAD\u0026direction\u003dARRIVING\u0026period\u003d2017"
             }
           },
           "data": [

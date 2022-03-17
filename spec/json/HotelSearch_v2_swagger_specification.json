@@ -11,8 +11,7 @@
   },
   "host": "test.api.amadeus.com",
   "basePath": "/v2",
-  "securityDefinitions": {
-  },
+  "securityDefinitions": {},
   "schemes": [
     "https"
   ],
@@ -316,7 +315,7 @@
         "type": "string",
         "pattern": "^[A-Z0-9a-z]{2}$"
       },
-      "description": "Chain (EM...) or Brand (SB...) or Merchant (AD...) (comma separated list of Amadeus 2 chars Codes)\n\nExample Chains:\n* EM = Marriott\n* EH = Hilton\n* HY = Hyatt\n* 6C = IHG\n* WR = Wyndham\n* RT = Accor\n* BW = Best Western\n* EC = Choice\n* CW = Radisson\n\nExample Merchants:\n* AD = Value Hotels    \n* HV = HRS\n"
+      "description": "Chain (EM...) or Brand (SB...) or Merchant (AD...) (comma separated list of Amadeus 2 chars Codes)\n\nExample Chains:\n* EM \u003d Marriott\n* EH \u003d Hilton\n* HY \u003d Hyatt\n* 6C \u003d IHG\n* WR \u003d Wyndham\n* RT \u003d Accor\n* BW \u003d Best Western\n* EC \u003d Choice\n* CW \u003d Radisson\n\nExample Merchants:\n* AD \u003d Value Hotels    \n* HV \u003d HRS\n"
     },
     "amenities": {
       "name": "amenities",
@@ -450,7 +449,7 @@
       "required": false,
       "type": "string",
       "format": "date",
-      "description": "check-in date of the stay (hotel local date). Format YYYY-MM-DD\n\nThe lowest accepted value is the present date (no dates in the past). \nIf not present, the default value will be today's date in the GMT timezone.\n\n"
+      "description": "check-in date of the stay (hotel local date). Format YYYY-MM-DD\n\nThe lowest accepted value is the present date (no dates in the past). \nIf not present, the default value will be today\u0027s date in the GMT timezone.\n\n"
     },
     "checkOutDate": {
       "name": "checkOutDate",
@@ -520,7 +519,7 @@
         "FULL_BOARD",
         "ALL_INCLUSIVE"
       ],
-      "description": "filter response based on available meals\n* ROOM_ONLY = RO / Room Only\n* BREAKFAST = BB / Bed & Breakfast\n* HALF_BOARD = DBB / Diner & Bed & Breakfast (only for Aggregators)\n* FULL_BOARD = FB / Full Board (only for Aggregators)\n* ALL_INCLUSIVE = AI / All Inclusive (only for Aggregators)\n"
+      "description": "filter response based on available meals\n* ROOM_ONLY \u003d RO / Room Only\n* BREAKFAST \u003d BB / Bed \u0026 Breakfast\n* HALF_BOARD \u003d DBB / Diner \u0026 Bed \u0026 Breakfast (only for Aggregators)\n* FULL_BOARD \u003d FB / Full Board (only for Aggregators)\n* ALL_INCLUSIVE \u003d AI / All Inclusive (only for Aggregators)\n"
     },
     "bestRateOnly": {
       "name": "bestRateOnly",
@@ -533,7 +532,7 @@
     "sort": {
       "name": "sort",
       "in": "query",
-      "description": "sort by:\n* distance from city center (or reference point)\n* lowest price first (warning: all hotels may not be returned)\n\n Sort by price cannot be used with cacheControl=NO_CACHE",
+      "description": "sort by:\n* distance from city center (or reference point)\n* lowest price first (warning: all hotels may not be returned)\n\n Sort by price cannot be used with cacheControl\u003dNO_CACHE",
       "required": false,
       "type": "string",
       "enum": [
@@ -966,7 +965,7 @@
           "pattern": "[A-Z0-9]{3}"
         },
         "type": {
-          "description": "The type of the rate (public=P, negotiated=N, conditional=C)",
+          "description": "The type of the rate (public\u003dP, negotiated\u003dN, conditional\u003dC)",
           "type": "string",
           "pattern": "[PNC]"
         }
@@ -1242,7 +1241,7 @@
           "description": "Amount of the tax"
         },
         "code": {
-          "description": "The tax code which identifies the tax.\n  Examples:\n  1=BED_TAX\n  2=CITY_TAX\n",
+          "description": "The tax code which identifies the tax.\n  Examples:\n  1\u003dBED_TAX\n  2\u003dCITY_TAX\n",
           "type": "string"
         },
         "percentage": {
@@ -1399,7 +1398,7 @@
       "type": "object",
       "properties": {
         "currencyConversionLookupRates": {
-          "description": "- Used to convey rate conversions the requested currency differs from the currency returned by a hotel\n- origin_amount = reverse_rate x target_amount\n- target_amount = rate x origin_amount\n- Example:\n        currencyConversionLookupRates: {\n          USD: {\n                rate: \"0.80\",\n                targetDecimalPlaces: 2,\n                target: EUR\n            },\n            GBP: {\n                rate: \"1.14\",\n                targetDecimalPlaces: 2,\n                target: EUR\n            }\n        }\n",
+          "description": "- Used to convey rate conversions the requested currency differs from the currency returned by a hotel\n- origin_amount \u003d reverse_rate x target_amount\n- target_amount \u003d rate x origin_amount\n- Example:\n        currencyConversionLookupRates: {\n          USD: {\n                rate: \"0.80\",\n                targetDecimalPlaces: 2,\n                target: EUR\n            },\n            GBP: {\n                rate: \"1.14\",\n                targetDecimalPlaces: 2,\n                target: EUR\n            }\n        }\n",
           "type": "object",
           "additionalProperties": {
             "$ref": "#/definitions/CurrencyConversionRate"
@@ -1408,7 +1407,7 @@
       }
     },
     "CurrencyConversionRate": {
-      "description": "conversion from provider's currency to requested currency",
+      "description": "conversion from provider\u0027s currency to requested currency",
       "type": "object",
       "properties": {
         "rate": {
@@ -1463,7 +1462,7 @@
         "detail": {
           "type": "string",
           "description": "[String] An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field value can be localized.",
-          "example": "The targeted resource doesn't exist"
+          "example": "The targeted resource doesn\u0027t exist"
         },
         "status": {
           "type": "integer",
@@ -1493,7 +1492,7 @@
         "detail": {
           "type": "string",
           "description": "[String] An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field value can be localized.",
-          "example": "The targeted resource doesn't exist"
+          "example": "The targeted resource doesn\u0027t exist"
         }
       }
     },
@@ -1526,239 +1525,239 @@
           },
           "warnings": {
             "$ref": "#/definitions/Warnings"
-        }
-    },
-    "example": {
-      "data": [
-        {
-          "type": "hotel-offers",
-          "hotel": {
-            "type": "hotel",
-            "hotelId": "EAMIAMAP",
-            "chainCode": "EA",
-            "dupeId": "700107767",
-            "name": "CONCORDE OPERA PARIS OPERA PARIS",
-            "rating": "2",
-            "cityCode": "PAR",
-            "latitude": 48.85693,
-            "longitude": 2.3412,
-            "hotelDistance": {
-              "distance": 0.4,
-              "distanceUnit": "KM"
-            },
-            "address": {
-              "lines": [
-                "LEFISTON STREET"
-              ],
-              "cityName": "PARIS",
-              "countryCode": "FR"
-            },
-            "contact": {
-              "phone": "1-305-436-1811",
-              "fax": "1-305-436-1864"
-            },
-            "amenities": [
-              "HANDICAP_FAC",
-              "ACC_BATHS",
-              "ACC_WASHBASIN",
-              "ACC_BATH_CTRLS",
-              "ACC_LIGHT_SW",
-              "ACC_ELEVATORS",
-              "ACC_TOILETS",
-              "SERV_DOGS_ALWD",
-              "DIS_PARKG",
-              "HANDRAIL_BTHRM",
-              "ADAPTED_PHONES",
-              "ADAPT_RM_DOORS",
-              "ACC_RM_WCHAIR",
-              "TV_SUB/CAPTION",
-              "ACC_WCHAIR",
-              "HANDRAIL_BTHRM",
-              "EXT_ROOM_ENTRY",
-              "EMERG_LIGHTING",
-              "EXTINGUISHERS",
-              "FIRE_SAFETY",
-              "RESTRIC_RM_ACC",
-              "SMOKE_DETECTOR",
-              "SPRINKLERS",
-              "KIDS_WELCOME",
-              "ELEVATOR",
-              "INT_HOTSPOTS",
-              "FREE_INTERNET",
-              "LAUNDRY_SVC",
-              "NO_PORN_FILMS",
-              "PARKING",
-              "PETS_ALLOWED",
-              "SWIMMING_POOL",
-              "AIR_CONDITIONING",
-              "KITCHEN",
-              "NONSMOKING_RMS",
-              "TELEVISION",
-              "WI-FI_IN_ROOM"
-            ],
-            "media": [
-              {
-                "uri": "http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/69810B23CB8644A18AF760DC66BE41A6",
-                "category": "EXTERIOR"
-              }
-            ]
-          },
-          "available": true,
-          "offers": [
+          }
+        },
+        "example": {
+          "data": [
             {
-              "id": "ECF8AD653801C3A81B3D04BAEF0D85AF182E8FB2115B0FAD144D49FAD108C60D",
-              "rateCode": "RAC",
-              "room": {
-                "type": "A0C",
-                "typeEstimated": {
-                  "category": "ACCESSIBLE_ROOM",
-                  "beds": 1,
-                  "bedType": "QUEEN"
+              "type": "hotel-offers",
+              "hotel": {
+                "type": "hotel",
+                "hotelId": "EAMIAMAP",
+                "chainCode": "EA",
+                "dupeId": "700107767",
+                "name": "CONCORDE OPERA PARIS OPERA PARIS",
+                "rating": "2",
+                "cityCode": "PAR",
+                "latitude": 48.85693,
+                "longitude": 2.3412,
+                "hotelDistance": {
+                  "distance": 0.4,
+                  "distanceUnit": "KM"
+                },
+                "address": {
+                  "lines": [
+                    "LEFISTON STREET"
+                  ],
+                  "cityName": "PARIS",
+                  "countryCode": "FR"
+                },
+                "contact": {
+                  "phone": "1-305-436-1811",
+                  "fax": "1-305-436-1864"
+                },
+                "amenities": [
+                  "HANDICAP_FAC",
+                  "ACC_BATHS",
+                  "ACC_WASHBASIN",
+                  "ACC_BATH_CTRLS",
+                  "ACC_LIGHT_SW",
+                  "ACC_ELEVATORS",
+                  "ACC_TOILETS",
+                  "SERV_DOGS_ALWD",
+                  "DIS_PARKG",
+                  "HANDRAIL_BTHRM",
+                  "ADAPTED_PHONES",
+                  "ADAPT_RM_DOORS",
+                  "ACC_RM_WCHAIR",
+                  "TV_SUB/CAPTION",
+                  "ACC_WCHAIR",
+                  "HANDRAIL_BTHRM",
+                  "EXT_ROOM_ENTRY",
+                  "EMERG_LIGHTING",
+                  "EXTINGUISHERS",
+                  "FIRE_SAFETY",
+                  "RESTRIC_RM_ACC",
+                  "SMOKE_DETECTOR",
+                  "SPRINKLERS",
+                  "KIDS_WELCOME",
+                  "ELEVATOR",
+                  "INT_HOTSPOTS",
+                  "FREE_INTERNET",
+                  "LAUNDRY_SVC",
+                  "NO_PORN_FILMS",
+                  "PARKING",
+                  "PETS_ALLOWED",
+                  "SWIMMING_POOL",
+                  "AIR_CONDITIONING",
+                  "KITCHEN",
+                  "NONSMOKING_RMS",
+                  "TELEVISION",
+                  "WI-FI_IN_ROOM"
+                ],
+                "media": [
+                  {
+                    "uri": "http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/69810B23CB8644A18AF760DC66BE41A6",
+                    "category": "EXTERIOR"
+                  }
+                ]
+              },
+              "available": true,
+              "offers": [
+                {
+                  "id": "ECF8AD653801C3A81B3D04BAEF0D85AF182E8FB2115B0FAD144D49FAD108C60D",
+                  "rateCode": "RAC",
+                  "room": {
+                    "type": "A0C",
+                    "typeEstimated": {
+                      "category": "ACCESSIBLE_ROOM",
+                      "beds": 1,
+                      "bedType": "QUEEN"
+                    },
+                    "description": {
+                      "lang": "EN",
+                      "text": "NIGHTLY VALUE RATE\nSTANDARD STUDIO 1 QUEEN NONSMKNG ACCESSIBLE\nFREE WIFI"
+                    }
+                  },
+                  "guests": {
+                    "adults": 1
+                  },
+                  "price": {
+                    "currency": "USD",
+                    "base": "114.99",
+                    "total": "129.94",
+                    "variations": {
+                      "average": {
+                        "base": "114.99"
+                      },
+                      "changes": [
+                        {
+                          "startDate": "2019-01-22",
+                          "endDate": "2019-01-23",
+                          "base": "114.99"
+                        }
+                      ]
+                    }
+                  }
+                }
+              ],
+              "self": "https://test.api.amadeus.com/v2/shopping/hotel-offers/by-hotel?hotelId\u003dEAMIAMAP\u0026adults\u003d1\u0026paymentPolicy\u003dNONE\u0026view\u003dFULL"
+            },
+            {
+              "type": "hotel-offers",
+              "hotel": {
+                "type": "hotel",
+                "hotelId": "BWPAR261",
+                "chainCode": "BW",
+                "dupeId": "700019804",
+                "name": "BEST WESTERN AU TROCADERO",
+                "rating": "3",
+                "cityCode": "PAR",
+                "latitude": 48.85326,
+                "longitude": 2.33855,
+                "hotelDistance": {
+                  "distance": 0.5,
+                  "distanceUnit": "KM"
+                },
+                "address": {
+                  "lines": [
+                    "3 AVENUE RAYMOND-POINCARE "
+                  ],
+                  "postalCode": "FR75116",
+                  "cityName": "PARIS",
+                  "countryCode": "FR"
+                },
+                "contact": {
+                  "fax": "33-1-47278085",
+                  "phone": "33-1-47273330"
                 },
                 "description": {
-                  "lang": "EN",
-                  "text": "NIGHTLY VALUE RATE\nSTANDARD STUDIO 1 QUEEN NONSMKNG ACCESSIBLE\nFREE WIFI"
-                }
+                  "lang": "en",
+                  "text": "The best western au trocadero is located in one of the most elegant district of paris, facing the trocadero, the eiffel tower and champ de mars. You will enjoy the friendly setting."
+                },
+                "amenities": [
+                  "BAR",
+                  "ICE_MACHINES",
+                  "RESTAURANT",
+                  "ACC_BATHS",
+                  "ACC_TOILETS",
+                  "HANDRAIL_BTHRM",
+                  "ACC_RM_WCHAIR",
+                  "BABY-SITTING",
+                  "KIDS_WELCOME",
+                  "ELEVATOR",
+                  "WIFI",
+                  "LAUNDRY_SVC",
+                  "LOUNGE",
+                  "AIR_CONDITIONING",
+                  "HAIR_DRYER",
+                  "MINIBAR",
+                  "NONSMOKING_RMS",
+                  "ROOM_SERVICE",
+                  "TELEVISION",
+                  "WI-FI_IN_ROOM",
+                  "EXT_ROOM_ENTRY",
+                  "EMERG_LIGHTING",
+                  "EXTINGUISHERS",
+                  "FIRE_SAFETY",
+                  "SMOKE_DETECTOR",
+                  "VIDEO_SURVEIL"
+                ],
+                "media": [
+                  {
+                    "uri": "http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/D231E485EDCB4AB1B61F3032404474D1",
+                    "category": "EXTERIOR"
+                  }
+                ]
               },
-              "guests": {
-                "adults": 1
-              },
-              "price": {
-                "currency": "USD",
-                "base": "114.99",
-                "total": "129.94",
-                "variations": {
-                  "average": {
-                    "base": "114.99"
+              "available": true,
+              "offers": [
+                {
+                  "id": "7D158B52F8A4EED40A30AA8D96E957EC26C3AC381099486510BA1E32F468FA35",
+                  "rateCode": "RAC",
+                  "rateFamilyEstimated": {
+                    "code": "BAR",
+                    "type": "P"
                   },
-                  "changes": [
-                    {
-                      "startDate": "2019-01-22",
-                      "endDate": "2019-01-23",
-                      "base": "114.99"
+                  "room": {
+                    "type": "A2T",
+                    "description": {
+                      "lang": "EN",
+                      "text": "FLEXIBLE RATE*BEST LEAST RESTRICTIVE RATE\n2 SINGLE BEDS,CONFORT RM,GRABBR,RAMP ACCESS,\nWHEELCHAIR"
                     }
-                  ]
+                  },
+                  "guests": {
+                    "adults": 1
+                  },
+                  "price": {
+                    "currency": "EUR",
+                    "base": "150.00",
+                    "total": "151.65",
+                    "variations": {
+                      "average": {
+                        "base": "150.00"
+                      },
+                      "changes": [
+                        {
+                          "startDate": "2019-01-22",
+                          "endDate": "2019-01-23",
+                          "base": "150.00"
+                        }
+                      ]
+                    }
+                  }
                 }
-              }
-            }
-          ],
-          "self": "https://test.api.amadeus.com/v2/shopping/hotel-offers/by-hotel?hotelId=EAMIAMAP&adults=1&paymentPolicy=NONE&view=FULL"
-        },
-        {
-          "type": "hotel-offers",
-          "hotel": {
-            "type": "hotel",
-            "hotelId": "BWPAR261",
-            "chainCode": "BW",
-            "dupeId": "700019804",
-            "name": "BEST WESTERN AU TROCADERO",
-            "rating": "3",
-            "cityCode": "PAR",
-            "latitude": 48.85326,
-            "longitude": 2.33855,
-            "hotelDistance": {
-              "distance": 0.5,
-              "distanceUnit": "KM"
-            },
-            "address": {
-              "lines": [
-                "3 AVENUE RAYMOND-POINCARE "
               ],
-              "postalCode": "FR75116",
-              "cityName": "PARIS",
-              "countryCode": "FR"
-            },
-            "contact": {
-              "fax": "33-1-47278085",
-              "phone": "33-1-47273330"
-            },
-            "description": {
-              "lang": "en",
-              "text": "The best western au trocadero is located in one of the most elegant district of paris, facing the trocadero, the eiffel tower and champ de mars. You will enjoy the friendly setting."
-            },
-            "amenities": [
-              "BAR",
-              "ICE_MACHINES",
-              "RESTAURANT",
-              "ACC_BATHS",
-              "ACC_TOILETS",
-              "HANDRAIL_BTHRM",
-              "ACC_RM_WCHAIR",
-              "BABY-SITTING",
-              "KIDS_WELCOME",
-              "ELEVATOR",
-              "WIFI",
-              "LAUNDRY_SVC",
-              "LOUNGE",
-              "AIR_CONDITIONING",
-              "HAIR_DRYER",
-              "MINIBAR",
-              "NONSMOKING_RMS",
-              "ROOM_SERVICE",
-              "TELEVISION",
-              "WI-FI_IN_ROOM",
-              "EXT_ROOM_ENTRY",
-              "EMERG_LIGHTING",
-              "EXTINGUISHERS",
-              "FIRE_SAFETY",
-              "SMOKE_DETECTOR",
-              "VIDEO_SURVEIL"
-            ],
-            "media": [
-              {
-                "uri": "http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/D231E485EDCB4AB1B61F3032404474D1",
-                "category": "EXTERIOR"
-              }
-            ]
-          },
-          "available": true,
-          "offers": [
-            {
-              "id": "7D158B52F8A4EED40A30AA8D96E957EC26C3AC381099486510BA1E32F468FA35",
-              "rateCode": "RAC",
-              "rateFamilyEstimated": {
-                "code": "BAR",
-                "type": "P"
-              },
-              "room": {
-                "type": "A2T",
-                "description": {
-                  "lang": "EN",
-                  "text": "FLEXIBLE RATE*BEST LEAST RESTRICTIVE RATE\n2 SINGLE BEDS,CONFORT RM,GRABBR,RAMP ACCESS,\nWHEELCHAIR"
-                }
-              },
-              "guests": {
-                "adults": 1
-              },
-              "price": {
-                "currency": "EUR",
-                "base": "150.00",
-                "total": "151.65",
-                "variations": {
-                  "average": {
-                    "base": "150.00"
-                  },
-                  "changes": [
-                    {
-                      "startDate": "2019-01-22",
-                      "endDate": "2019-01-23",
-                      "base": "150.00"
-                    }
-                  ]
-                }
-              }
+              "self": "https://test.api.amadeus.com/v2/shopping/hotel-offers/by-hotel?hotelId\u003dBWPAR261\u0026adults\u003d1\u0026paymentPolicy\u003dNONE\u0026view\u003dFULL"
             }
           ],
-          "self": "https://test.api.amadeus.com/v2/shopping/hotel-offers/by-hotel?hotelId=BWPAR261&adults=1&paymentPolicy=NONE&view=FULL"
-        }
-      ],
-      "meta": {
-        "links": {
-          "next": "https://test.api.amadeus.com/v2/shopping/hotel-offers?adults=1&bestRateOnly=true&cityCode=PAR&includeClosed=false&paymentPolicy=NONE&radius=5&radiusUnit=KM&sort=PRICE&view=FULL&page[offset]=05G15W3U2NWG_96"
+          "meta": {
+            "links": {
+              "next": "https://test.api.amadeus.com/v2/shopping/hotel-offers?adults\u003d1\u0026bestRateOnly\u003dtrue\u0026cityCode\u003dPAR\u0026includeClosed\u003dfalse\u0026paymentPolicy\u003dNONE\u0026radius\u003d5\u0026radiusUnit\u003dKM\u0026sort\u003dPRICE\u0026view\u003dFULL\u0026page[offset]\u003d05G15W3U2NWG_96"
+            }
+          }
         }
       }
-    }
-  }            
     },
     "SingleHotelOffers": {
       "description": "A single hotel with available offers.",
@@ -1776,133 +1775,133 @@
           },
           "warnings": {
             "$ref": "#/definitions/Warnings"
-        }
-    },
-    "example": {
-      "data": {
-        "type": "hotel-offers",
-        "hotel": {
-          "type": "hotel",
-          "hotelId": "BGMILBGB",
-          "chainCode": "BG",
-          "dupeId": "700025106",
-          "name": "BULGARI HOTELS RESORTS MILANO",
-          "rating": "5",
-          "cityCode": "MIL",
-          "latitude": 45.47253,
-          "longitude": 9.18805,
-          "address": {
-            "lines": [
-              "VIA PRIVATA FRATELLI GABBA 7B"
-            ],
-            "postalCode": "20121",
-            "cityName": "MILAN",
-            "countryCode": "IT"
-          },
-          "contact": {
-            "phone": "39-02-8058051",
-            "fax": "39-02-805805222"
-          },
-          "amenities": [
-            "CONVENTION_CTR",
-            "MEETING_ROOMS",
-            "ICE_MACHINES",
-            "RESTAURANT",
-            "HANDICAP_FAC",
-            "ACC_TOILETS",
-            "DIS_PARKG",
-            "BABY-SITTING",
-            "BEAUTY_PARLOUR",
-            "CAR_RENTAL",
-            "ELEVATOR",
-            "EXCHANGE_FAC",
-            "WIFI",
-            "LAUNDRY_SVC",
-            "SPA",
-            "VALET_PARKING",
-            "HAIRDRESSER",
-            "SWIMMING_POOL",
-            "AIR_CONDITIONING",
-            "HAIR_DRYER",
-            "MINIBAR",
-            "MOVIE_CHANNELS",
-            "ROOM_SERVICE",
-            "TELEVISION",
-            "SAFE_DEP_BOX",
-            "FITNESS_CENTER"
-          ],
-          "media": [
-            {
-              "uri": "http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/B6AA0C7920214C49AAFBCFFF32A15300",
-              "category": "EXTERIOR"
-            },
-            {
-              "uri": "http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/0B9245555964410B97E958128EB3DE52",
-              "category": "LOBBY"
-            },
-            {
-              "uri": "http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/DDFD5AD22B134110BCDBE64186FE860A",
-              "category": "SUITE"
-            }
-          ]
-        },
-        "available": true,
-        "offers": [
-          {
-            "id": "8BB1F89D377409FEFACB3E73654A5D765CD812920802E5976BFBB060BAF23AD7",
-            "rateCode": "RAC",
-            "rateFamilyEstimated": {
-              "code": "RAC",
-              "type": "P"
-            },
-            "room": {
-              "type": "REG",
-              "typeEstimated": {
-                "category": "SUPERIOR_ROOM",
-                "beds": 1,
-                "bedType": "KING"
-              },
-              "description": {
-                "lang": "EN",
-                "text": "Regular Rate\nSuperior Room garden or patio view, large bathr\noom, 1 King, 35sqm/377sqft, Wireless internet,"
-              }
-            },
-            "guests": {
-              "adults": 2
-            },
-            "price": {
-              "currency": "EUR",
-              "total": "857.00"
-            },
-            "self": "https://test.api.amadeus.com/v2/shopping/hotel-offers/8BB1F89D377409FEFACB3E73654A5D765CD812920802E5976BFBB060BAF23AD7"
-          },
-          {
-            "id": "2E5650829E01B8BD88085B597266F15EF03E6E23BC8DB1A470A6D03F8E2BA1A8",
-            "rateCode": "RAC",
-            "rateFamilyEstimated": {
-              "code": "RAC",
-              "type": "P"
-            },
-            "room": {
-              "type": "REG",
-              "typeEstimated": {
-                "category": "DELUXE_ROOM"
-              },
-              "description": {
-                "lang": "EN",
-                "text": "Regular Rate\nDeluxe Room garden or patio view, walk-in close\nt, large bathroom, 1 King or 2 Queen, 40sqm/430"
-              }
-            },
-            "guests": {
-              "adults": 2
-            },
-            "price": {
-              "currency": "EUR",
-              "total": "912.00"
-            },
-            "self": "https://test.api.amadeus.com/v2/shopping/hotel-offers/2E5650829E01B8BD88085B597266F15EF03E6E23BC8DB1A470A6D03F8E2BA1A8"
           }
-        ]
+        },
+        "example": {
+          "data": {
+            "type": "hotel-offers",
+            "hotel": {
+              "type": "hotel",
+              "hotelId": "BGMILBGB",
+              "chainCode": "BG",
+              "dupeId": "700025106",
+              "name": "BULGARI HOTELS RESORTS MILANO",
+              "rating": "5",
+              "cityCode": "MIL",
+              "latitude": 45.47253,
+              "longitude": 9.18805,
+              "address": {
+                "lines": [
+                  "VIA PRIVATA FRATELLI GABBA 7B"
+                ],
+                "postalCode": "20121",
+                "cityName": "MILAN",
+                "countryCode": "IT"
+              },
+              "contact": {
+                "phone": "39-02-8058051",
+                "fax": "39-02-805805222"
+              },
+              "amenities": [
+                "CONVENTION_CTR",
+                "MEETING_ROOMS",
+                "ICE_MACHINES",
+                "RESTAURANT",
+                "HANDICAP_FAC",
+                "ACC_TOILETS",
+                "DIS_PARKG",
+                "BABY-SITTING",
+                "BEAUTY_PARLOUR",
+                "CAR_RENTAL",
+                "ELEVATOR",
+                "EXCHANGE_FAC",
+                "WIFI",
+                "LAUNDRY_SVC",
+                "SPA",
+                "VALET_PARKING",
+                "HAIRDRESSER",
+                "SWIMMING_POOL",
+                "AIR_CONDITIONING",
+                "HAIR_DRYER",
+                "MINIBAR",
+                "MOVIE_CHANNELS",
+                "ROOM_SERVICE",
+                "TELEVISION",
+                "SAFE_DEP_BOX",
+                "FITNESS_CENTER"
+              ],
+              "media": [
+                {
+                  "uri": "http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/B6AA0C7920214C49AAFBCFFF32A15300",
+                  "category": "EXTERIOR"
+                },
+                {
+                  "uri": "http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/0B9245555964410B97E958128EB3DE52",
+                  "category": "LOBBY"
+                },
+                {
+                  "uri": "http://pdt.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/DDFD5AD22B134110BCDBE64186FE860A",
+                  "category": "SUITE"
+                }
+              ]
+            },
+            "available": true,
+            "offers": [
+              {
+                "id": "8BB1F89D377409FEFACB3E73654A5D765CD812920802E5976BFBB060BAF23AD7",
+                "rateCode": "RAC",
+                "rateFamilyEstimated": {
+                  "code": "RAC",
+                  "type": "P"
+                },
+                "room": {
+                  "type": "REG",
+                  "typeEstimated": {
+                    "category": "SUPERIOR_ROOM",
+                    "beds": 1,
+                    "bedType": "KING"
+                  },
+                  "description": {
+                    "lang": "EN",
+                    "text": "Regular Rate\nSuperior Room garden or patio view, large bathr\noom, 1 King, 35sqm/377sqft, Wireless internet,"
+                  }
+                },
+                "guests": {
+                  "adults": 2
+                },
+                "price": {
+                  "currency": "EUR",
+                  "total": "857.00"
+                },
+                "self": "https://test.api.amadeus.com/v2/shopping/hotel-offers/8BB1F89D377409FEFACB3E73654A5D765CD812920802E5976BFBB060BAF23AD7"
+              },
+              {
+                "id": "2E5650829E01B8BD88085B597266F15EF03E6E23BC8DB1A470A6D03F8E2BA1A8",
+                "rateCode": "RAC",
+                "rateFamilyEstimated": {
+                  "code": "RAC",
+                  "type": "P"
+                },
+                "room": {
+                  "type": "REG",
+                  "typeEstimated": {
+                    "category": "DELUXE_ROOM"
+                  },
+                  "description": {
+                    "lang": "EN",
+                    "text": "Regular Rate\nDeluxe Room garden or patio view, walk-in close\nt, large bathroom, 1 King or 2 Queen, 40sqm/430"
+                  }
+                },
+                "guests": {
+                  "adults": 2
+                },
+                "price": {
+                  "currency": "EUR",
+                  "total": "912.00"
+                },
+                "self": "https://test.api.amadeus.com/v2/shopping/hotel-offers/2E5650829E01B8BD88085B597266F15EF03E6E23BC8DB1A470A6D03F8E2BA1A8"
+              }
+            ]
           }
         }
       }

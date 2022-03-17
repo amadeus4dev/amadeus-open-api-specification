@@ -422,7 +422,7 @@
             }
           },
           "example": {
-            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+            "self": "https://test.api.amadeus.com/v1/area/resources?param\u003dvalue"
           }
         }
       }
@@ -463,9 +463,9 @@
           "meta": {
             "count": 32,
             "links": {
-              "self": "https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=51.57285&longitude=-0.44161",
-              "next": "https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=51.57285&longitude=-0.44161&page%5Boffset%5D=10",
-              "last": "https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude=51.57285&longitude=-0.44161&page%5Boffset%5D=22"
+              "self": "https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude\u003d51.57285\u0026longitude\u003d-0.44161",
+              "next": "https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude\u003d51.57285\u0026longitude\u003d-0.44161\u0026page%5Boffset%5D\u003d10",
+              "last": "https://test.api.amadeus.com/v1/reference-data/locations/airports?latitude\u003d51.57285\u0026longitude\u003d-0.44161\u0026page%5Boffset%5D\u003d22"
             }
           },
           "data": [

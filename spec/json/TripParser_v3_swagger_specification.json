@@ -368,7 +368,7 @@
           },
           "lines": {
             "type": "array",
-            "description": "Line 1 = Street address, Line 2 = Apartment, suite, unit, building, floor, etc",
+            "description": "Line 1 \u003d Street address, Line 2 \u003d Apartment, suite, unit, building, floor, etc",
             "items": {
               "type": "string"
             }
@@ -541,7 +541,7 @@
           },
           "total": {
             "type": "string",
-            "description": "Total = base + totalTaxes +"
+            "description": "Total \u003d base + totalTaxes +"
           },
           "base": {
             "type": "string"
@@ -785,7 +785,7 @@
           },
           "dateOfBirth": {
             "type": "string",
-            "description": "The individual's date of birth.",
+            "description": "The individual\u0027s date of birth.",
             "example": "1978-10-05"
           },
           "age": {
@@ -847,7 +847,7 @@
         "properties": {
           "number": {
             "type": "string",
-            "description": "Seat number corresponding to the concatenation of the seatmap row and the column information, for example 12B'"
+            "description": "Seat number corresponding to the concatenation of the seatmap row and the column information, for example 12B\u0027"
           },
           "cabin": {
             "type": "string",

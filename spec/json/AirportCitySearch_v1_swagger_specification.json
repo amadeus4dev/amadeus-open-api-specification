@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "version": "1.2.3",
-    "title": "Airport & City Search",
+    "title": "Airport \u0026 City Search",
     "x-status": "validated",
     "x-tags": [
       "#ama-for-dev"
@@ -66,12 +66,12 @@
           },
           {
             "name": "keyword",
-            "description": "keyword that should represent the start of a word in a city or airport name or code. \n Supported charaters are: A-Za-z0-9./:-'()\"",
+            "description": "keyword that should represent the start of a word in a city or airport name or code. \nSupported charaters are: A-Za-z0-9./:-\u0027()\"",
             "in": "query",
             "required": true,
             "type": "string",
             "x-example": "MUC",
-            "pattern": "[A-Za-z0-9./:()'\"-]"
+            "pattern": "[A-Za-z0-9./:()\u0027\"-]"
           },
           {
             "name": "countryCode",
@@ -525,7 +525,7 @@
             }
           },
           "example": {
-            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+            "self": "https://test.api.amadeus.com/v1/area/resources?param\u003dvalue"
           }
         }
       }
@@ -602,7 +602,7 @@
           "meta": {
             "count": 2,
             "links": {
-              "self": "https://test.api.amadeus.com/v1/reference-data/locations?subType=CITY,AIRPORT&keyword=MUC&countryCode=DE"
+              "self": "https://test.api.amadeus.com/v1/reference-data/locations?subType\u003dCITY,AIRPORT\u0026keyword\u003dMUC\u0026countryCode\u003dDE"
             }
           },
           "data": [
@@ -733,6 +733,5 @@
         "$ref": "#/definitions/Error_400"
       }
     }
-  },
-  "x-generatedAt": "2020-07-24T09:50:53.074Z"
+  }
 }

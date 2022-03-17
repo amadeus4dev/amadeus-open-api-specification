@@ -912,7 +912,7 @@
               },
               "associatedAdultId": {
                 "type": "string",
-                "description": "if type=\"HELD_INFANT\", corresponds to the adult traveler's id who will share the seat"
+                "description": "if type\u003d\"HELD_INFANT\", corresponds to the adult traveler\u0027s id who will share the seat"
               },
               "price": {
                 "description": "price detail of the traveler",
@@ -1110,7 +1110,7 @@
     },
     "TravelerType": {
       "type": "string",
-      "description": "traveler type\nage restrictions : CHILD < 12y, HELD_INFANT < 2y, SEATED_INFANT < 2y, SENIOR >=60y\n",
+      "description": "traveler type\nage restrictions : CHILD \u003c 12y, HELD_INFANT \u003c 2y, SEATED_INFANT \u003c 2y, SENIOR \u003e\u003d60y\n",
       "enum": [
         "ADULT",
         "CHILD",

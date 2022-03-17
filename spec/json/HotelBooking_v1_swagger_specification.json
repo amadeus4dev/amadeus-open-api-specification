@@ -11,8 +11,7 @@
   },
   "host": "test.api.amadeus.com",
   "basePath": "/v1",
-  "securityDefinitions": {
-  },
+  "securityDefinitions": {},
   "schemes": [
     "https"
   ],
@@ -237,7 +236,7 @@
         "detail": {
           "type": "string",
           "description": "[String] An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field value can be localized.",
-          "example": "The targeted resource doesn't exist"
+          "example": "The targeted resource doesn\u0027t exist"
         },
         "status": {
           "type": "integer",
@@ -267,7 +266,7 @@
         "detail": {
           "type": "string",
           "description": "[String] An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field value can be localized.",
-          "example": "The targeted resource doesn't exist"
+          "example": "The targeted resource doesn\u0027t exist"
         }
       }
     },

@@ -89,7 +89,7 @@
         },
         "meta": {
           "links": {
-            "self": "https://test.api.amadeus.com/v1/airport/predictions/on-time?airportCode=JFK&date=2020-12-01"
+            "self": "https://test.api.amadeus.com/v1/airport/predictions/on-time?airportCode\u003dJFK\u0026date\u003d2020-12-01"
           }
         }
       }

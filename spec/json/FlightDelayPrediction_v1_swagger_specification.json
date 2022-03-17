@@ -200,7 +200,7 @@
         "meta": {
           "count": 4,
           "links": {
-            "self": "https://test.api.amadeus.com/v1/travel/predictions/flight-delay?originLocationCode=NCE&destinationLocationCode=IST&departureDate=2020-08-01&departureTime=18:20:00&arrivalDate=2020-08-01&arrivalTime=22:15:00&aircraftCode=321&carrierCode=TK&flightNumber=1816&duration=PT31H10M"
+            "self": "https://test.api.amadeus.com/v1/travel/predictions/flight-delay?originLocationCode\u003dNCE\u0026destinationLocationCode\u003dIST\u0026departureDate\u003d2020-08-01\u0026departureTime\u003d18:20:00\u0026arrivalDate\u003d2020-08-01\u0026arrivalTime\u003d22:15:00\u0026aircraftCode\u003d321\u0026carrierCode\u003dTK\u0026flightNumber\u003d1816\u0026duration\u003dPT31H10M"
           }
         }
       }
@@ -247,7 +247,7 @@
             }
           },
           "example": {
-            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+            "self": "https://test.api.amadeus.com/v1/area/resources?param\u003dvalue"
           }
         }
       }

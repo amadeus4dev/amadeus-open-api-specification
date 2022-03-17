@@ -111,7 +111,7 @@
       "default": 0
     },
     "sort": {
-      "description": "defines on which attribute the sorting will be done:\n* analytics.flights.score - sort destinations by flights score (decreasing)\n* analytics.travelers.score - sort destination by traveler's score (decreasing)\n",
+      "description": "defines on which attribute the sorting will be done:\n* analytics.flights.score - sort destinations by flights score (decreasing)\n* analytics.travelers.score - sort destination by traveler\u0027s score (decreasing)\n",
       "name": "sort",
       "required": false,
       "in": "query",
@@ -282,7 +282,7 @@
             }
           },
           "example": {
-            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+            "self": "https://test.api.amadeus.com/v1/area/resources?param\u003dvalue"
           }
         }
       }
@@ -359,7 +359,7 @@
           "meta": {
             "count": 10,
             "links": {
-              "self": "https://test.api.amadeus.com/v1/travel/analytics/air-traffic/booked?originCityCode=MAD&page%5Blimit%5D=10&page%5Boffset%5D=0&period=2017-08"
+              "self": "https://test.api.amadeus.com/v1/travel/analytics/air-traffic/booked?originCityCode\u003dMAD\u0026page%5Blimit%5D\u003d10\u0026page%5Boffset%5D\u003d0\u0026period\u003d2017-08"
             }
           },
           "data": [

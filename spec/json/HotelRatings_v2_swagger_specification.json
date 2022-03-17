@@ -32,9 +32,11 @@
           {
             "name": "hotelIds",
             "in": "query",
-            "description": "Comma-separated list of Amadeus Hotel Ids (max. 3) . Amadeus Hotel Ids are found in the Hotel Search response (parameter name is 'hotelId').",
+            "description": "Comma-separated list of Amadeus Hotel Ids (max. 3) . Amadeus Hotel Ids are found in the Hotel Search response (parameter name is \u0027hotelId\u0027).",
             "required": true,
-            "x-example": ["TELONMFS"],
+            "x-example": [
+              "TELONMFS"
+            ],
             "type": "array",
             "maxItems": 100,
             "minItems": 1,
@@ -67,7 +69,7 @@
         "hotelId": {
           "type": "string",
           "example": "BBLONBTL",
-          "description": "Amadeus Hotel Ids are found in the Hotel Search response (parameter name is 'hotelId')"
+          "description": "Amadeus Hotel Ids are found in the Hotel Search response (parameter name is \u0027hotelId\u0027)"
         },
         "type": {
           "type": "string",
@@ -179,7 +181,7 @@
         }
       },
       "example": {
-        "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+        "self": "https://test.api.amadeus.com/v1/area/resources?param\u003dvalue"
       }
     },
     "WarningNotFound": {
@@ -425,7 +427,7 @@
           "meta": {
             "count": 1,
             "links": {
-              "self": "https://test.api.amadeus.com/v2/e-reputation/hotel-sentiments?hotelIds=ADNYCCTB,TELONMFS,XXXYYY01"
+              "self": "https://test.api.amadeus.com/v2/e-reputation/hotel-sentiments?hotelIds\u003dADNYCCTB,TELONMFS,XXXYYY01"
             }
           },
           "warnings": [

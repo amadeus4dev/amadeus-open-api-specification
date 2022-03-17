@@ -248,7 +248,7 @@
       "properties": {
         "amount": {
           "type": "string",
-          "description": "Amount of the fare. could be alpha numeric. Ex- 500.20 or 514.13A, 'A'signifies additional collection."
+          "description": "Amount of the fare. could be alpha numeric. Ex- 500.20 or 514.13A, \u0027A\u0027signifies additional collection."
         },
         "currencyCode": {
           "type": "string",
@@ -367,7 +367,7 @@
             }
           },
           "example": {
-            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+            "self": "https://test.api.amadeus.com/v1/area/resources?param\u003dvalue"
           }
         }
       }
@@ -491,7 +491,7 @@
         "example": {
           "meta": {
             "count": "1",
-            "self": "https://test.api.amadeus.com/v1/shopping/activities?longitude=-3.69170868&latitude=40.41436995&radius=1"
+            "self": "https://test.api.amadeus.com/v1/shopping/activities?longitude\u003d-3.69170868\u0026latitude\u003d40.41436995\u0026radius\u003d1"
           },
           "data": [
             {
@@ -511,9 +511,9 @@
               },
               "rating": "4.500000",
               "pictures": [
-                "https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500"
+                "https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w\u003d500"
               ],
-              "bookingLink": "https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36",
+              "bookingLink": "https://b2c.mla.cloud/c/QCejqyor?c\u003d2WxbgL36",
               "price": {
                 "currencyCode": "EUR",
                 "amount": "16.00"
@@ -565,9 +565,9 @@
             },
             "rating": "4.500000",
             "pictures": [
-              "https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w=500"
+              "https://images.musement.com/cover/0001/07/prado-museum-tickets_header-6456.jpeg?w\u003d500"
             ],
-            "bookingLink": "https://b2c.mla.cloud/c/QCejqyor?c=2WxbgL36",
+            "bookingLink": "https://b2c.mla.cloud/c/QCejqyor?c\u003d2WxbgL36",
             "price": {
               "currencyCode": "EUR",
               "amount": "16.00"

@@ -675,7 +675,7 @@
             }
           },
           "example": {
-            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+            "self": "https://test.api.amadeus.com/v1/area/resources?param\u003dvalue"
           }
         }
       }
@@ -1185,7 +1185,7 @@
               },
               "associatedAdultId": {
                 "type": "string",
-                "description": "if type=\"HELD_INFANT\", corresponds to the adult traveler's id who will share the seat"
+                "description": "if type\u003d\"HELD_INFANT\", corresponds to the adult traveler\u0027s id who will share the seat"
               },
               "price": {
                 "description": "price detail of the traveler",
@@ -1325,7 +1325,7 @@
     },
     "TravelerType": {
       "type": "string",
-      "description": "traveler type\nage restrictions : CHILD < 12y, HELD_INFANT < 2y, SEATED_INFANT < 2y, SENIOR >=60y\n",
+      "description": "traveler type\nage restrictions : CHILD \u003c 12y, HELD_INFANT \u003c 2y, SEATED_INFANT \u003c 2y, SENIOR \u003e\u003d60y\n",
       "enum": [
         "ADULT",
         "CHILD",
@@ -1434,7 +1434,7 @@
       "properties": {
         "amount": {
           "type": "string",
-          "description": "Amount of the fare. could be alpha numeric. Ex- 500.20 or 514.13A, 'A'signifies additional collection."
+          "description": "Amount of the fare. could be alpha numeric. Ex- 500.20 or 514.13A, \u0027A\u0027signifies additional collection."
         },
         "currencyCode": {
           "type": "string",
@@ -1592,7 +1592,7 @@
         },
         "documents": {
           "type": "array",
-          "description": "Advanced Passenger Information - regulatory identity documents - SSR DOCS & DOCO elements",
+          "description": "Advanced Passenger Information - regulatory identity documents - SSR DOCS \u0026 DOCO elements",
           "items": {
             "$ref": "#/definitions/IdentityDocument"
           }
@@ -1861,7 +1861,7 @@
       ]
     },
     "ContactPurpose": {
-      "description": "the purpose for which this contact is to be used.\n - STANDARD for standard use, comunication, advertissement etc...\n - INVOICE for your invoice contact, usually its your billing adress. it's mandatory in france when you buy online\n - STANDARD_WITHOUT_TRANSMISSION is standard contact that are not share with third party outside of Amadeus",
+      "description": "the purpose for which this contact is to be used.\n - STANDARD for standard use, comunication, advertissement etc...\n - INVOICE for your invoice contact, usually its your billing adress. it\u0027s mandatory in france when you buy online\n - STANDARD_WITHOUT_TRANSMISSION is standard contact that are not share with third party outside of Amadeus",
       "type": "string",
       "enum": [
         "STANDARD",
@@ -1959,7 +1959,7 @@
       "properties": {
         "lines": {
           "type": "array",
-          "description": "Line 1 = Street address, Line 2 = Apartment, suite, unit, building, floor, etc \nEach line is limited to 35 characters",
+          "description": "Line 1 \u003d Street address, Line 2 \u003d Apartment, suite, unit, building, floor, etc \nEach line is limited to 35 characters",
           "items": {
             "type": "string"
           }

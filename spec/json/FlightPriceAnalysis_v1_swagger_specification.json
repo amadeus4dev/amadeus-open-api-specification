@@ -110,7 +110,7 @@
                       "meta": {
                         "count": 1,
                         "links": {
-                          "self": "https://test.api.amadeus.com/v1/analytics/itinerary-price-metrics?originIataCode=MAD&destinationIataCode=CDG&departureDate=2021-03-21&currencyCode=EUR&oneWay=false"
+                          "self": "https://test.api.amadeus.com/v1/analytics/itinerary-price-metrics?originIataCode\u003dMAD\u0026destinationIataCode\u003dCDG\u0026departureDate\u003d2021-03-21\u0026currencyCode\u003dEUR\u0026oneWay\u003dfalse"
                         }
                       },
                       "data": [

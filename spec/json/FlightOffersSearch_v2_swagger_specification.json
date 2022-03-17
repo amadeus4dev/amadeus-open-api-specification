@@ -387,7 +387,7 @@
             }
           },
           "example": {
-            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+            "self": "https://test.api.amadeus.com/v1/area/resources?param\u003dvalue"
           }
         }
       }
@@ -869,7 +869,7 @@
         },
         "associatedAdultId": {
           "type": "string",
-          "description": "if type=\"HELD_INFANT\", corresponds to the adult travelers's id who will share the seat"
+          "description": "if type\u003d\"HELD_INFANT\", corresponds to the adult travelers\u0027s id who will share the seat"
         }
       },
       "required": [
@@ -1209,7 +1209,7 @@
               },
               "associatedAdultId": {
                 "type": "string",
-                "description": "if type=\"HELD_INFANT\", corresponds to the adult traveler's id who will share the seat"
+                "description": "if type\u003d\"HELD_INFANT\", corresponds to the adult traveler\u0027s id who will share the seat"
               },
               "price": {
                 "description": "price detail of the traveler",
@@ -1349,7 +1349,7 @@
     },
     "TravelerType": {
       "type": "string",
-      "description": "traveler type\nage restrictions : CHILD < 12y, HELD_INFANT < 2y, SEATED_INFANT < 2y, SENIOR >=60y\n",
+      "description": "traveler type\nage restrictions : CHILD \u003c 12y, HELD_INFANT \u003c 2y, SEATED_INFANT \u003c 2y, SENIOR \u003e\u003d60y\n",
       "enum": [
         "ADULT",
         "CHILD",
@@ -1516,7 +1516,7 @@
         },
         "travelers": {
           "title": "travelers",
-          "description":"travelers in the trip. \n\n Maximum number of passengers older than 2 yo (CHILD, ADULT, YOUGHT): 9.\n Each adult can travel with one INFANT so maximum total number of passengers: 18",
+          "description": "travelers in the trip. \n\n Maximum number of passengers older than 2 yo (CHILD, ADULT, YOUGHT): 9.\n Each adult can travel with one INFANT so maximum total number of passengers: 18",
           "type": "array",
           "minItems": 1,
           "maxItems": 18,
@@ -1662,504 +1662,504 @@
         },
         "example": {
           "meta": {
-              "count": 2
+            "count": 2
           },
           "data": [
-              {
-                  "type": "flight-offer",
-                  "id": "1",
-                  "source": "GDS",
-                  "instantTicketingRequired": false,
-                  "nonHomogeneous": false,
-                  "oneWay": false,
-                  "lastTicketingDate": "2021-03-08",
-                  "numberOfBookableSeats": 5,
-                  "itineraries": [
-                      {
-                          "duration": "PT30H15M",
-                          "segments": [
-                              {
-                                  "departure": {
-                                      "iataCode": "BOS",
-                                      "terminal": "A",
-                                      "at": "2021-11-01T21:00:00"
-                                  },
-                                  "arrival": {
-                                      "iataCode": "LGA",
-                                      "terminal": "0",
-                                      "at": "2021-11-01T22:24:00"
-                                  },
-                                  "carrierCode": "DL",
-                                  "number": "5628",
-                                  "aircraft": {
-                                      "code": "E75"
-                                  },
-                                  "duration": "PT1H24M",
-                                  "id": "1",
-                                  "numberOfStops": 0,
-                                  "blacklistedInEU": false
-                              },
-                              {
-                                  "departure": {
-                                      "iataCode": "JFK",
-                                      "terminal": "4",
-                                      "at": "2021-11-02T19:30:00"
-                                  },
-                                  "arrival": {
-                                      "iataCode": "MAD",
-                                      "terminal": "1",
-                                      "at": "2021-11-03T08:15:00"
-                                  },
-                                  "carrierCode": "DL",
-                                  "number": "126",
-                                  "aircraft": {
-                                      "code": "76W"
-                                  },
-                                  "operating": {
-                                      "carrierCode": "DL"
-                                  },
-                                  "duration": "PT7H45M",
-                                  "id": "2",
-                                  "numberOfStops": 0,
-                                  "blacklistedInEU": false
-                              }
-                          ]
+            {
+              "type": "flight-offer",
+              "id": "1",
+              "source": "GDS",
+              "instantTicketingRequired": false,
+              "nonHomogeneous": false,
+              "oneWay": false,
+              "lastTicketingDate": "2021-03-08",
+              "numberOfBookableSeats": 5,
+              "itineraries": [
+                {
+                  "duration": "PT30H15M",
+                  "segments": [
+                    {
+                      "departure": {
+                        "iataCode": "BOS",
+                        "terminal": "A",
+                        "at": "2021-11-01T21:00:00"
                       },
-                      {
-                          "duration": "PT22H19M",
-                          "segments": [
-                              {
-                                  "departure": {
-                                      "iataCode": "MAD",
-                                      "terminal": "1",
-                                      "at": "2021-11-05T20:25:00"
-                                  },
-                                  "arrival": {
-                                      "iataCode": "AMS",
-                                      "at": "2021-11-05T23:00:00"
-                                  },
-                                  "carrierCode": "KL",
-                                  "number": "1706",
-                                  "aircraft": {
-                                      "code": "73J"
-                                  },
-                                  "operating": {
-                                      "carrierCode": "KL"
-                                  },
-                                  "duration": "PT2H35M",
-                                  "id": "5",
-                                  "numberOfStops": 0,
-                                  "blacklistedInEU": false
-                              },
-                              {
-                                  "departure": {
-                                      "iataCode": "AMS",
-                                      "at": "2021-11-06T10:45:00"
-                                  },
-                                  "arrival": {
-                                      "iataCode": "BOS",
-                                      "terminal": "E",
-                                      "at": "2021-11-06T13:44:00"
-                                  },
-                                  "carrierCode": "KL",
-                                  "number": "6017",
-                                  "aircraft": {
-                                      "code": "333"
-                                  },
-                                  "operating": {
-                                      "carrierCode": "DL"
-                                  },
-                                  "duration": "PT7H59M",
-                                  "id": "6",
-                                  "numberOfStops": 0,
-                                  "blacklistedInEU": false
-                              }
-                          ]
-                      }
-                  ],
-                  "price": {
-                      "currency": "USD",
-                      "total": "4825.40",
-                      "base": "2772.00",
-                      "fees": [
-                          {
-                              "amount": "0.00",
-                              "type": "SUPPLIER"
-                          },
-                          {
-                              "amount": "0.00",
-                              "type": "TICKETING"
-                          }
-                      ],
-                      "grandTotal": "4825.40"
-                  },
-                  "pricingOptions": {
-                      "fareType": [
-                          "PUBLISHED"
-                      ],
-                      "includedCheckedBagsOnly": false
-                  },
-                  "validatingAirlineCodes": [
-                      "DL"
-                  ],
-                  "travelerPricings": [
-                      {
-                          "travelerId": "1",
-                          "fareOption": "STANDARD",
-                          "travelerType": "ADULT",
-                          "price": {
-                              "currency": "USD",
-                              "total": "2412.70",
-                              "base": "1386.00"
-                          },
-                          "fareDetailsBySegment": [
-                              {
-                                  "segmentId": "1",
-                                  "cabin": "FIRST",
-                                  "fareBasis": "ZN1JV0D2",
-                                  "class": "Z",
-                                  "includedCheckedBags": {
-                                      "quantity": 2
-                                  }
-                              },
-                              {
-                                  "segmentId": "2",
-                                  "cabin": "BUSINESS",
-                                  "fareBasis": "ZN1JV0D2",
-                                  "brandedFare": "DLONEBIZ",
-                                  "class": "Z",
-                                  "includedCheckedBags": {
-                                      "quantity": 2
-                                  }
-                              },
-                              {
-                                  "segmentId": "5",
-                                  "cabin": "ECONOMY",
-                                  "fareBasis": "TL2J51M3",
-                                  "class": "L",
-                                  "includedCheckedBags": {
-                                      "quantity": 1
-                                  }
-                              },
-                              {
-                                  "segmentId": "6",
-                                  "cabin": "ECONOMY",
-                                  "fareBasis": "TL2J51M3",
-                                  "brandedFare": "STANDARD",
-                                  "class": "T",
-                                  "includedCheckedBags": {
-                                      "quantity": 1
-                                  }
-                              }
-                          ]
+                      "arrival": {
+                        "iataCode": "LGA",
+                        "terminal": "0",
+                        "at": "2021-11-01T22:24:00"
                       },
-                      {
-                          "travelerId": "2",
-                          "fareOption": "STANDARD",
-                          "travelerType": "CHILD",
-                          "price": {
-                              "currency": "USD",
-                              "total": "2412.70",
-                              "base": "1386.00"
-                          },
-                          "fareDetailsBySegment": [
-                              {
-                                  "segmentId": "1",
-                                  "cabin": "FIRST",
-                                  "fareBasis": "ZN1JV0D2",
-                                  "class": "Z"
-                              },
-                              {
-                                  "segmentId": "2",
-                                  "cabin": "BUSINESS",
-                                  "fareBasis": "ZN1JV0D2",
-                                  "brandedFare": "DLONEBIZ",
-                                  "class": "Z"
-                              },
-                              {
-                                  "segmentId": "5",
-                                  "cabin": "ECONOMY",
-                                  "fareBasis": "TL2J51M3",
-                                  "class": "L"
-                              },
-                              {
-                                  "segmentId": "6",
-                                  "cabin": "ECONOMY",
-                                  "fareBasis": "TL2J51M3",
-                                  "brandedFare": "STANDARD",
-                                  "class": "T"
-                              }
-                          ]
-                      }
+                      "carrierCode": "DL",
+                      "number": "5628",
+                      "aircraft": {
+                        "code": "E75"
+                      },
+                      "duration": "PT1H24M",
+                      "id": "1",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                    },
+                    {
+                      "departure": {
+                        "iataCode": "JFK",
+                        "terminal": "4",
+                        "at": "2021-11-02T19:30:00"
+                      },
+                      "arrival": {
+                        "iataCode": "MAD",
+                        "terminal": "1",
+                        "at": "2021-11-03T08:15:00"
+                      },
+                      "carrierCode": "DL",
+                      "number": "126",
+                      "aircraft": {
+                        "code": "76W"
+                      },
+                      "operating": {
+                        "carrierCode": "DL"
+                      },
+                      "duration": "PT7H45M",
+                      "id": "2",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                    }
                   ]
+                },
+                {
+                  "duration": "PT22H19M",
+                  "segments": [
+                    {
+                      "departure": {
+                        "iataCode": "MAD",
+                        "terminal": "1",
+                        "at": "2021-11-05T20:25:00"
+                      },
+                      "arrival": {
+                        "iataCode": "AMS",
+                        "at": "2021-11-05T23:00:00"
+                      },
+                      "carrierCode": "KL",
+                      "number": "1706",
+                      "aircraft": {
+                        "code": "73J"
+                      },
+                      "operating": {
+                        "carrierCode": "KL"
+                      },
+                      "duration": "PT2H35M",
+                      "id": "5",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                    },
+                    {
+                      "departure": {
+                        "iataCode": "AMS",
+                        "at": "2021-11-06T10:45:00"
+                      },
+                      "arrival": {
+                        "iataCode": "BOS",
+                        "terminal": "E",
+                        "at": "2021-11-06T13:44:00"
+                      },
+                      "carrierCode": "KL",
+                      "number": "6017",
+                      "aircraft": {
+                        "code": "333"
+                      },
+                      "operating": {
+                        "carrierCode": "DL"
+                      },
+                      "duration": "PT7H59M",
+                      "id": "6",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                    }
+                  ]
+                }
+              ],
+              "price": {
+                "currency": "USD",
+                "total": "4825.40",
+                "base": "2772.00",
+                "fees": [
+                  {
+                    "amount": "0.00",
+                    "type": "SUPPLIER"
+                  },
+                  {
+                    "amount": "0.00",
+                    "type": "TICKETING"
+                  }
+                ],
+                "grandTotal": "4825.40"
               },
-              {
-                  "type": "flight-offer",
-                  "id": "2",
-                  "source": "GDS",
-                  "instantTicketingRequired": false,
-                  "nonHomogeneous": false,
-                  "oneWay": false,
-                  "lastTicketingDate": "2021-03-08",
-                  "numberOfBookableSeats": 5,
-                  "itineraries": [
-                      {
-                          "duration": "PT31H15M",
-                          "segments": [
-                              {
-                                  "departure": {
-                                      "iataCode": "BOS",
-                                      "terminal": "A",
-                                      "at": "2021-11-01T20:00:00"
-                                  },
-                                  "arrival": {
-                                      "iataCode": "LGA",
-                                      "terminal": "0",
-                                      "at": "2021-11-01T21:33:00"
-                                  },
-                                  "carrierCode": "DL",
-                                  "number": "5827",
-                                  "aircraft": {
-                                      "code": "E75"
-                                  },
-                                  "duration": "PT1H33M",
-                                  "id": "3",
-                                  "numberOfStops": 0,
-                                  "blacklistedInEU": false
-                              },
-                              {
-                                  "departure": {
-                                      "iataCode": "JFK",
-                                      "terminal": "4",
-                                      "at": "2021-11-02T19:30:00"
-                                  },
-                                  "arrival": {
-                                      "iataCode": "MAD",
-                                      "terminal": "1",
-                                      "at": "2021-11-03T08:15:00"
-                                  },
-                                  "carrierCode": "DL",
-                                  "number": "126",
-                                  "aircraft": {
-                                      "code": "76W"
-                                  },
-                                  "operating": {
-                                      "carrierCode": "DL"
-                                  },
-                                  "duration": "PT7H45M",
-                                  "id": "4",
-                                  "numberOfStops": 0,
-                                  "blacklistedInEU": false
-                              }
-                          ]
-                      },
-                      {
-                          "duration": "PT22H19M",
-                          "segments": [
-                              {
-                                  "departure": {
-                                      "iataCode": "MAD",
-                                      "terminal": "1",
-                                      "at": "2021-11-05T20:25:00"
-                                  },
-                                  "arrival": {
-                                      "iataCode": "AMS",
-                                      "at": "2021-11-05T23:00:00"
-                                  },
-                                  "carrierCode": "KL",
-                                  "number": "1706",
-                                  "aircraft": {
-                                      "code": "73J"
-                                  },
-                                  "operating": {
-                                      "carrierCode": "KL"
-                                  },
-                                  "duration": "PT2H35M",
-                                  "id": "5",
-                                  "numberOfStops": 0,
-                                  "blacklistedInEU": false
-                              },
-                              {
-                                  "departure": {
-                                      "iataCode": "AMS",
-                                      "at": "2021-11-06T10:45:00"
-                                  },
-                                  "arrival": {
-                                      "iataCode": "BOS",
-                                      "terminal": "E",
-                                      "at": "2021-11-06T13:44:00"
-                                  },
-                                  "carrierCode": "KL",
-                                  "number": "6017",
-                                  "aircraft": {
-                                      "code": "333"
-                                  },
-                                  "operating": {
-                                      "carrierCode": "DL"
-                                  },
-                                  "duration": "PT7H59M",
-                                  "id": "6",
-                                  "numberOfStops": 0,
-                                  "blacklistedInEU": false
-                              }
-                          ]
-                      }
-                  ],
+              "pricingOptions": {
+                "fareType": [
+                  "PUBLISHED"
+                ],
+                "includedCheckedBagsOnly": false
+              },
+              "validatingAirlineCodes": [
+                "DL"
+              ],
+              "travelerPricings": [
+                {
+                  "travelerId": "1",
+                  "fareOption": "STANDARD",
+                  "travelerType": "ADULT",
                   "price": {
-                      "currency": "USD",
-                      "total": "4825.40",
-                      "base": "2772.00",
-                      "fees": [
-                          {
-                              "amount": "0.00",
-                              "type": "SUPPLIER"
-                          },
-                          {
-                              "amount": "0.00",
-                              "type": "TICKETING"
-                          }
-                      ],
-                      "grandTotal": "4825.40"
+                    "currency": "USD",
+                    "total": "2412.70",
+                    "base": "1386.00"
                   },
-                  "pricingOptions": {
-                      "fareType": [
-                          "PUBLISHED"
-                      ],
-                      "includedCheckedBagsOnly": false
-                  },
-                  "validatingAirlineCodes": [
-                      "DL"
-                  ],
-                  "travelerPricings": [
-                      {
-                          "travelerId": "1",
-                          "fareOption": "STANDARD",
-                          "travelerType": "ADULT",
-                          "price": {
-                              "currency": "USD",
-                              "total": "2412.70",
-                              "base": "1386.00"
-                          },
-                          "fareDetailsBySegment": [
-                              {
-                                  "segmentId": "3",
-                                  "cabin": "FIRST",
-                                  "fareBasis": "ZN1JV0D2",
-                                  "class": "Z",
-                                  "includedCheckedBags": {
-                                      "quantity": 2
-                                  }
-                              },
-                              {
-                                  "segmentId": "4",
-                                  "cabin": "BUSINESS",
-                                  "fareBasis": "ZN1JV0D2",
-                                  "brandedFare": "DLONEBIZ",
-                                  "class": "Z",
-                                  "includedCheckedBags": {
-                                      "quantity": 2
-                                  }
-                              },
-                              {
-                                  "segmentId": "5",
-                                  "cabin": "ECONOMY",
-                                  "fareBasis": "TL2J51M3",
-                                  "class": "L",
-                                  "includedCheckedBags": {
-                                      "quantity": 1
-                                  }
-                              },
-                              {
-                                  "segmentId": "6",
-                                  "cabin": "ECONOMY",
-                                  "fareBasis": "TL2J51M3",
-                                  "brandedFare": "STANDARD",
-                                  "class": "T",
-                                  "includedCheckedBags": {
-                                      "quantity": 1
-                                  }
-                              }
-                          ]
-                      },
-                      {
-                          "travelerId": "2",
-                          "fareOption": "STANDARD",
-                          "travelerType": "CHILD",
-                          "price": {
-                              "currency": "USD",
-                              "total": "2412.70",
-                              "base": "1386.00"
-                          },
-                          "fareDetailsBySegment": [
-                              {
-                                  "segmentId": "3",
-                                  "cabin": "FIRST",
-                                  "fareBasis": "ZN1JV0D2",
-                                  "class": "Z"
-                              },
-                              {
-                                  "segmentId": "4",
-                                  "cabin": "BUSINESS",
-                                  "fareBasis": "ZN1JV0D2",
-                                  "brandedFare": "DLONEBIZ",
-                                  "class": "Z"
-                              },
-                              {
-                                  "segmentId": "5",
-                                  "cabin": "ECONOMY",
-                                  "fareBasis": "TL2J51M3",
-                                  "class": "L"
-                              },
-                              {
-                                  "segmentId": "6",
-                                  "cabin": "ECONOMY",
-                                  "fareBasis": "TL2J51M3",
-                                  "brandedFare": "STANDARD",
-                                  "class": "T"
-                              }
-                          ]
+                  "fareDetailsBySegment": [
+                    {
+                      "segmentId": "1",
+                      "cabin": "FIRST",
+                      "fareBasis": "ZN1JV0D2",
+                      "class": "Z",
+                      "includedCheckedBags": {
+                        "quantity": 2
                       }
+                    },
+                    {
+                      "segmentId": "2",
+                      "cabin": "BUSINESS",
+                      "fareBasis": "ZN1JV0D2",
+                      "brandedFare": "DLONEBIZ",
+                      "class": "Z",
+                      "includedCheckedBags": {
+                        "quantity": 2
+                      }
+                    },
+                    {
+                      "segmentId": "5",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "TL2J51M3",
+                      "class": "L",
+                      "includedCheckedBags": {
+                        "quantity": 1
+                      }
+                    },
+                    {
+                      "segmentId": "6",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "TL2J51M3",
+                      "brandedFare": "STANDARD",
+                      "class": "T",
+                      "includedCheckedBags": {
+                        "quantity": 1
+                      }
+                    }
                   ]
-              }
+                },
+                {
+                  "travelerId": "2",
+                  "fareOption": "STANDARD",
+                  "travelerType": "CHILD",
+                  "price": {
+                    "currency": "USD",
+                    "total": "2412.70",
+                    "base": "1386.00"
+                  },
+                  "fareDetailsBySegment": [
+                    {
+                      "segmentId": "1",
+                      "cabin": "FIRST",
+                      "fareBasis": "ZN1JV0D2",
+                      "class": "Z"
+                    },
+                    {
+                      "segmentId": "2",
+                      "cabin": "BUSINESS",
+                      "fareBasis": "ZN1JV0D2",
+                      "brandedFare": "DLONEBIZ",
+                      "class": "Z"
+                    },
+                    {
+                      "segmentId": "5",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "TL2J51M3",
+                      "class": "L"
+                    },
+                    {
+                      "segmentId": "6",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "TL2J51M3",
+                      "brandedFare": "STANDARD",
+                      "class": "T"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "flight-offer",
+              "id": "2",
+              "source": "GDS",
+              "instantTicketingRequired": false,
+              "nonHomogeneous": false,
+              "oneWay": false,
+              "lastTicketingDate": "2021-03-08",
+              "numberOfBookableSeats": 5,
+              "itineraries": [
+                {
+                  "duration": "PT31H15M",
+                  "segments": [
+                    {
+                      "departure": {
+                        "iataCode": "BOS",
+                        "terminal": "A",
+                        "at": "2021-11-01T20:00:00"
+                      },
+                      "arrival": {
+                        "iataCode": "LGA",
+                        "terminal": "0",
+                        "at": "2021-11-01T21:33:00"
+                      },
+                      "carrierCode": "DL",
+                      "number": "5827",
+                      "aircraft": {
+                        "code": "E75"
+                      },
+                      "duration": "PT1H33M",
+                      "id": "3",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                    },
+                    {
+                      "departure": {
+                        "iataCode": "JFK",
+                        "terminal": "4",
+                        "at": "2021-11-02T19:30:00"
+                      },
+                      "arrival": {
+                        "iataCode": "MAD",
+                        "terminal": "1",
+                        "at": "2021-11-03T08:15:00"
+                      },
+                      "carrierCode": "DL",
+                      "number": "126",
+                      "aircraft": {
+                        "code": "76W"
+                      },
+                      "operating": {
+                        "carrierCode": "DL"
+                      },
+                      "duration": "PT7H45M",
+                      "id": "4",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                    }
+                  ]
+                },
+                {
+                  "duration": "PT22H19M",
+                  "segments": [
+                    {
+                      "departure": {
+                        "iataCode": "MAD",
+                        "terminal": "1",
+                        "at": "2021-11-05T20:25:00"
+                      },
+                      "arrival": {
+                        "iataCode": "AMS",
+                        "at": "2021-11-05T23:00:00"
+                      },
+                      "carrierCode": "KL",
+                      "number": "1706",
+                      "aircraft": {
+                        "code": "73J"
+                      },
+                      "operating": {
+                        "carrierCode": "KL"
+                      },
+                      "duration": "PT2H35M",
+                      "id": "5",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                    },
+                    {
+                      "departure": {
+                        "iataCode": "AMS",
+                        "at": "2021-11-06T10:45:00"
+                      },
+                      "arrival": {
+                        "iataCode": "BOS",
+                        "terminal": "E",
+                        "at": "2021-11-06T13:44:00"
+                      },
+                      "carrierCode": "KL",
+                      "number": "6017",
+                      "aircraft": {
+                        "code": "333"
+                      },
+                      "operating": {
+                        "carrierCode": "DL"
+                      },
+                      "duration": "PT7H59M",
+                      "id": "6",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                    }
+                  ]
+                }
+              ],
+              "price": {
+                "currency": "USD",
+                "total": "4825.40",
+                "base": "2772.00",
+                "fees": [
+                  {
+                    "amount": "0.00",
+                    "type": "SUPPLIER"
+                  },
+                  {
+                    "amount": "0.00",
+                    "type": "TICKETING"
+                  }
+                ],
+                "grandTotal": "4825.40"
+              },
+              "pricingOptions": {
+                "fareType": [
+                  "PUBLISHED"
+                ],
+                "includedCheckedBagsOnly": false
+              },
+              "validatingAirlineCodes": [
+                "DL"
+              ],
+              "travelerPricings": [
+                {
+                  "travelerId": "1",
+                  "fareOption": "STANDARD",
+                  "travelerType": "ADULT",
+                  "price": {
+                    "currency": "USD",
+                    "total": "2412.70",
+                    "base": "1386.00"
+                  },
+                  "fareDetailsBySegment": [
+                    {
+                      "segmentId": "3",
+                      "cabin": "FIRST",
+                      "fareBasis": "ZN1JV0D2",
+                      "class": "Z",
+                      "includedCheckedBags": {
+                        "quantity": 2
+                      }
+                    },
+                    {
+                      "segmentId": "4",
+                      "cabin": "BUSINESS",
+                      "fareBasis": "ZN1JV0D2",
+                      "brandedFare": "DLONEBIZ",
+                      "class": "Z",
+                      "includedCheckedBags": {
+                        "quantity": 2
+                      }
+                    },
+                    {
+                      "segmentId": "5",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "TL2J51M3",
+                      "class": "L",
+                      "includedCheckedBags": {
+                        "quantity": 1
+                      }
+                    },
+                    {
+                      "segmentId": "6",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "TL2J51M3",
+                      "brandedFare": "STANDARD",
+                      "class": "T",
+                      "includedCheckedBags": {
+                        "quantity": 1
+                      }
+                    }
+                  ]
+                },
+                {
+                  "travelerId": "2",
+                  "fareOption": "STANDARD",
+                  "travelerType": "CHILD",
+                  "price": {
+                    "currency": "USD",
+                    "total": "2412.70",
+                    "base": "1386.00"
+                  },
+                  "fareDetailsBySegment": [
+                    {
+                      "segmentId": "3",
+                      "cabin": "FIRST",
+                      "fareBasis": "ZN1JV0D2",
+                      "class": "Z"
+                    },
+                    {
+                      "segmentId": "4",
+                      "cabin": "BUSINESS",
+                      "fareBasis": "ZN1JV0D2",
+                      "brandedFare": "DLONEBIZ",
+                      "class": "Z"
+                    },
+                    {
+                      "segmentId": "5",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "TL2J51M3",
+                      "class": "L"
+                    },
+                    {
+                      "segmentId": "6",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "TL2J51M3",
+                      "brandedFare": "STANDARD",
+                      "class": "T"
+                    }
+                  ]
+                }
+              ]
+            }
           ],
           "dictionaries": {
-              "locations": {
-                  "MAD": {
-                      "cityCode": "MAD",
-                      "countryCode": "ES"
-                  },
-                  "LGA": {
-                      "cityCode": "NYC",
-                      "countryCode": "US"
-                  },
-                  "BOS": {
-                      "cityCode": "BOS",
-                      "countryCode": "US"
-                  },
-                  "AMS": {
-                      "cityCode": "AMS",
-                      "countryCode": "NL"
-                  },
-                  "JFK": {
-                      "cityCode": "NYC",
-                      "countryCode": "US"
-                  }
+            "locations": {
+              "MAD": {
+                "cityCode": "MAD",
+                "countryCode": "ES"
               },
-              "aircraft": {
-                  "E75": "EMBRAER 175",
-                  "333": "AIRBUS A330-300",
-                  "76W": "BOEING 767-300 (WINGLETS)",
-                  "73J": "BOEING 737-900"
+              "LGA": {
+                "cityCode": "NYC",
+                "countryCode": "US"
               },
-              "currencies": {
-                  "USD": "US DOLLAR"
+              "BOS": {
+                "cityCode": "BOS",
+                "countryCode": "US"
               },
-              "carriers": {
-                  "KL": "KLM ROYAL DUTCH AIRLINES",
-                  "DL": "DELTA AIR LINES"
+              "AMS": {
+                "cityCode": "AMS",
+                "countryCode": "NL"
+              },
+              "JFK": {
+                "cityCode": "NYC",
+                "countryCode": "US"
               }
+            },
+            "aircraft": {
+              "333": "AIRBUS A330-300",
+              "E75": "EMBRAER 175",
+              "76W": "BOEING 767-300 (WINGLETS)",
+              "73J": "BOEING 737-900"
+            },
+            "currencies": {
+              "USD": "US DOLLAR"
+            },
+            "carriers": {
+              "KL": "KLM ROYAL DUTCH AIRLINES",
+              "DL": "DELTA AIR LINES"
+            }
           }
-      }
+        }
       }
     },
     "GETAirOffersReply": {
@@ -2191,287 +2191,287 @@
         },
         "example": {
           "meta": {
-              "count": 2,
-              "links": {
-                  "self": "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SYD&destinationLocationCode=BKK&departureDate=2021-11-01&adults=1&max=2"
-              }
+            "count": 2,
+            "links": {
+              "self": "https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode\u003dSYD\u0026destinationLocationCode\u003dBKK\u0026departureDate\u003d2021-11-01\u0026adults\u003d1\u0026max\u003d2"
+            }
           },
           "data": [
-              {
-                  "type": "flight-offer",
-                  "id": "1",
-                  "source": "GDS",
-                  "instantTicketingRequired": false,
-                  "nonHomogeneous": false,
-                  "oneWay": false,
-                  "lastTicketingDate": "2021-11-01",
-                  "numberOfBookableSeats": 9,
-                  "itineraries": [
-                      {
-                          "duration": "PT14H15M",
-                          "segments": [
-                              {
-                                  "departure": {
-                                      "iataCode": "SYD",
-                                      "terminal": "1",
-                                      "at": "2021-11-01T11:35:00"
-                                  },
-                                  "arrival": {
-                                      "iataCode": "MNL",
-                                      "terminal": "2",
-                                      "at": "2021-11-01T16:50:00"
-                                  },
-                                  "carrierCode": "PR",
-                                  "number": "212",
-                                  "aircraft": {
-                                      "code": "333"
-                                  },
-                                  "operating": {
-                                      "carrierCode": "PR"
-                                  },
-                                  "duration": "PT8H15M",
-                                  "id": "1",
-                                  "numberOfStops": 0,
-                                  "blacklistedInEU": false
-                              },
-                              {
-                                  "departure": {
-                                      "iataCode": "MNL",
-                                      "terminal": "1",
-                                      "at": "2021-11-01T19:20:00"
-                                  },
-                                  "arrival": {
-                                      "iataCode": "BKK",
-                                      "at": "2021-11-01T21:50:00"
-                                  },
-                                  "carrierCode": "PR",
-                                  "number": "732",
-                                  "aircraft": {
-                                      "code": "320"
-                                  },
-                                  "operating": {
-                                      "carrierCode": "PR"
-                                  },
-                                  "duration": "PT3H30M",
-                                  "id": "2",
-                                  "numberOfStops": 0,
-                                  "blacklistedInEU": false
-                              }
-                          ]
-                      }
-                  ],
-                  "price": {
-                      "currency": "EUR",
-                      "total": "355.34",
-                      "base": "255.00",
-                      "fees": [
-                          {
-                              "amount": "0.00",
-                              "type": "SUPPLIER"
-                          },
-                          {
-                              "amount": "0.00",
-                              "type": "TICKETING"
-                          }
-                      ],
-                      "grandTotal": "355.34"
-                  },
-                  "pricingOptions": {
-                      "fareType": [
-                          "PUBLISHED"
-                      ],
-                      "includedCheckedBagsOnly": true
-                  },
-                  "validatingAirlineCodes": [
-                      "PR"
-                  ],
-                  "travelerPricings": [
-                      {
-                          "travelerId": "1",
-                          "fareOption": "STANDARD",
-                          "travelerType": "ADULT",
-                          "price": {
-                              "currency": "EUR",
-                              "total": "355.34",
-                              "base": "255.00"
-                          },
-                          "fareDetailsBySegment": [
-                              {
-                                  "segmentId": "1",
-                                  "cabin": "ECONOMY",
-                                  "fareBasis": "EOBAU",
-                                  "class": "E",
-                                  "includedCheckedBags": {
-                                      "weight": 25,
-                                      "weightUnit": "KG"
-                                  }
-                              },
-                              {
-                                  "segmentId": "2",
-                                  "cabin": "ECONOMY",
-                                  "fareBasis": "EOBAU",
-                                  "class": "E",
-                                  "includedCheckedBags": {
-                                      "weight": 25,
-                                      "weightUnit": "KG"
-                                  }
-                              }
-                          ]
-                      }
+            {
+              "type": "flight-offer",
+              "id": "1",
+              "source": "GDS",
+              "instantTicketingRequired": false,
+              "nonHomogeneous": false,
+              "oneWay": false,
+              "lastTicketingDate": "2021-11-01",
+              "numberOfBookableSeats": 9,
+              "itineraries": [
+                {
+                  "duration": "PT14H15M",
+                  "segments": [
+                    {
+                      "departure": {
+                        "iataCode": "SYD",
+                        "terminal": "1",
+                        "at": "2021-11-01T11:35:00"
+                      },
+                      "arrival": {
+                        "iataCode": "MNL",
+                        "terminal": "2",
+                        "at": "2021-11-01T16:50:00"
+                      },
+                      "carrierCode": "PR",
+                      "number": "212",
+                      "aircraft": {
+                        "code": "333"
+                      },
+                      "operating": {
+                        "carrierCode": "PR"
+                      },
+                      "duration": "PT8H15M",
+                      "id": "1",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                    },
+                    {
+                      "departure": {
+                        "iataCode": "MNL",
+                        "terminal": "1",
+                        "at": "2021-11-01T19:20:00"
+                      },
+                      "arrival": {
+                        "iataCode": "BKK",
+                        "at": "2021-11-01T21:50:00"
+                      },
+                      "carrierCode": "PR",
+                      "number": "732",
+                      "aircraft": {
+                        "code": "320"
+                      },
+                      "operating": {
+                        "carrierCode": "PR"
+                      },
+                      "duration": "PT3H30M",
+                      "id": "2",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                    }
                   ]
+                }
+              ],
+              "price": {
+                "currency": "EUR",
+                "total": "355.34",
+                "base": "255.00",
+                "fees": [
+                  {
+                    "amount": "0.00",
+                    "type": "SUPPLIER"
+                  },
+                  {
+                    "amount": "0.00",
+                    "type": "TICKETING"
+                  }
+                ],
+                "grandTotal": "355.34"
               },
-              {
-                  "type": "flight-offer",
-                  "id": "2",
-                  "source": "GDS",
-                  "instantTicketingRequired": false,
-                  "nonHomogeneous": false,
-                  "oneWay": false,
-                  "lastTicketingDate": "2021-11-01",
-                  "numberOfBookableSeats": 9,
-                  "itineraries": [
-                      {
-                          "duration": "PT16H35M",
-                          "segments": [
-                              {
-                                  "departure": {
-                                      "iataCode": "SYD",
-                                      "terminal": "1",
-                                      "at": "2021-11-01T11:35:00"
-                                  },
-                                  "arrival": {
-                                      "iataCode": "MNL",
-                                      "terminal": "2",
-                                      "at": "2021-11-01T16:50:00"
-                                  },
-                                  "carrierCode": "PR",
-                                  "number": "212",
-                                  "aircraft": {
-                                      "code": "333"
-                                  },
-                                  "operating": {
-                                      "carrierCode": "PR"
-                                  },
-                                  "duration": "PT8H15M",
-                                  "id": "3",
-                                  "numberOfStops": 0,
-                                  "blacklistedInEU": false
-                              },
-                              {
-                                  "departure": {
-                                      "iataCode": "MNL",
-                                      "terminal": "1",
-                                      "at": "2021-11-01T21:40:00"
-                                  },
-                                  "arrival": {
-                                      "iataCode": "BKK",
-                                      "at": "2021-11-02T00:10:00"
-                                  },
-                                  "carrierCode": "PR",
-                                  "number": "740",
-                                  "aircraft": {
-                                      "code": "321"
-                                  },
-                                  "operating": {
-                                      "carrierCode": "PR"
-                                  },
-                                  "duration": "PT3H30M",
-                                  "id": "4",
-                                  "numberOfStops": 0,
-                                  "blacklistedInEU": false
-                              }
-                          ]
-                      }
-                  ],
+              "pricingOptions": {
+                "fareType": [
+                  "PUBLISHED"
+                ],
+                "includedCheckedBagsOnly": true
+              },
+              "validatingAirlineCodes": [
+                "PR"
+              ],
+              "travelerPricings": [
+                {
+                  "travelerId": "1",
+                  "fareOption": "STANDARD",
+                  "travelerType": "ADULT",
                   "price": {
-                      "currency": "EUR",
-                      "total": "355.34",
-                      "base": "255.00",
-                      "fees": [
-                          {
-                              "amount": "0.00",
-                              "type": "SUPPLIER"
-                          },
-                          {
-                              "amount": "0.00",
-                              "type": "TICKETING"
-                          }
-                      ],
-                      "grandTotal": "355.34"
+                    "currency": "EUR",
+                    "total": "355.34",
+                    "base": "255.00"
                   },
-                  "pricingOptions": {
-                      "fareType": [
-                          "PUBLISHED"
-                      ],
-                      "includedCheckedBagsOnly": true
-                  },
-                  "validatingAirlineCodes": [
-                      "PR"
-                  ],
-                  "travelerPricings": [
-                      {
-                          "travelerId": "1",
-                          "fareOption": "STANDARD",
-                          "travelerType": "ADULT",
-                          "price": {
-                              "currency": "EUR",
-                              "total": "355.34",
-                              "base": "255.00"
-                          },
-                          "fareDetailsBySegment": [
-                              {
-                                  "segmentId": "3",
-                                  "cabin": "ECONOMY",
-                                  "fareBasis": "EOBAU",
-                                  "class": "E",
-                                  "includedCheckedBags": {
-                                      "weight": 25,
-                                      "weightUnit": "KG"
-                                  }
-                              },
-                              {
-                                  "segmentId": "4",
-                                  "cabin": "ECONOMY",
-                                  "fareBasis": "EOBAU",
-                                  "class": "E",
-                                  "includedCheckedBags": {
-                                      "weight": 25,
-                                      "weightUnit": "KG"
-                                  }
-                              }
-                          ]
+                  "fareDetailsBySegment": [
+                    {
+                      "segmentId": "1",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "EOBAU",
+                      "class": "E",
+                      "includedCheckedBags": {
+                        "weight": 25,
+                        "weightUnit": "KG"
                       }
+                    },
+                    {
+                      "segmentId": "2",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "EOBAU",
+                      "class": "E",
+                      "includedCheckedBags": {
+                        "weight": 25,
+                        "weightUnit": "KG"
+                      }
+                    }
                   ]
-              }
+                }
+              ]
+            },
+            {
+              "type": "flight-offer",
+              "id": "2",
+              "source": "GDS",
+              "instantTicketingRequired": false,
+              "nonHomogeneous": false,
+              "oneWay": false,
+              "lastTicketingDate": "2021-11-01",
+              "numberOfBookableSeats": 9,
+              "itineraries": [
+                {
+                  "duration": "PT16H35M",
+                  "segments": [
+                    {
+                      "departure": {
+                        "iataCode": "SYD",
+                        "terminal": "1",
+                        "at": "2021-11-01T11:35:00"
+                      },
+                      "arrival": {
+                        "iataCode": "MNL",
+                        "terminal": "2",
+                        "at": "2021-11-01T16:50:00"
+                      },
+                      "carrierCode": "PR",
+                      "number": "212",
+                      "aircraft": {
+                        "code": "333"
+                      },
+                      "operating": {
+                        "carrierCode": "PR"
+                      },
+                      "duration": "PT8H15M",
+                      "id": "3",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                    },
+                    {
+                      "departure": {
+                        "iataCode": "MNL",
+                        "terminal": "1",
+                        "at": "2021-11-01T21:40:00"
+                      },
+                      "arrival": {
+                        "iataCode": "BKK",
+                        "at": "2021-11-02T00:10:00"
+                      },
+                      "carrierCode": "PR",
+                      "number": "740",
+                      "aircraft": {
+                        "code": "321"
+                      },
+                      "operating": {
+                        "carrierCode": "PR"
+                      },
+                      "duration": "PT3H30M",
+                      "id": "4",
+                      "numberOfStops": 0,
+                      "blacklistedInEU": false
+                    }
+                  ]
+                }
+              ],
+              "price": {
+                "currency": "EUR",
+                "total": "355.34",
+                "base": "255.00",
+                "fees": [
+                  {
+                    "amount": "0.00",
+                    "type": "SUPPLIER"
+                  },
+                  {
+                    "amount": "0.00",
+                    "type": "TICKETING"
+                  }
+                ],
+                "grandTotal": "355.34"
+              },
+              "pricingOptions": {
+                "fareType": [
+                  "PUBLISHED"
+                ],
+                "includedCheckedBagsOnly": true
+              },
+              "validatingAirlineCodes": [
+                "PR"
+              ],
+              "travelerPricings": [
+                {
+                  "travelerId": "1",
+                  "fareOption": "STANDARD",
+                  "travelerType": "ADULT",
+                  "price": {
+                    "currency": "EUR",
+                    "total": "355.34",
+                    "base": "255.00"
+                  },
+                  "fareDetailsBySegment": [
+                    {
+                      "segmentId": "3",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "EOBAU",
+                      "class": "E",
+                      "includedCheckedBags": {
+                        "weight": 25,
+                        "weightUnit": "KG"
+                      }
+                    },
+                    {
+                      "segmentId": "4",
+                      "cabin": "ECONOMY",
+                      "fareBasis": "EOBAU",
+                      "class": "E",
+                      "includedCheckedBags": {
+                        "weight": 25,
+                        "weightUnit": "KG"
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
           ],
           "dictionaries": {
-              "locations": {
-                  "BKK": {
-                      "cityCode": "BKK",
-                      "countryCode": "TH"
-                  },
-                  "MNL": {
-                      "cityCode": "MNL",
-                      "countryCode": "PH"
-                  },
-                  "SYD": {
-                      "cityCode": "SYD",
-                      "countryCode": "AU"
-                  }
+            "locations": {
+              "BKK": {
+                "cityCode": "BKK",
+                "countryCode": "TH"
               },
-              "aircraft": {
-                  "320": "AIRBUS A320",
-                  "321": "AIRBUS A321",
-                  "333": "AIRBUS A330-300"
+              "MNL": {
+                "cityCode": "MNL",
+                "countryCode": "PH"
               },
-              "currencies": {
-                  "EUR": "EURO"
-              },
-              "carriers": {
-                  "PR": "PHILIPPINE AIRLINES"
+              "SYD": {
+                "cityCode": "SYD",
+                "countryCode": "AU"
               }
+            },
+            "aircraft": {
+              "320": "AIRBUS A320",
+              "321": "AIRBUS A321",
+              "333": "AIRBUS A330-300"
+            },
+            "currencies": {
+              "EUR": "EURO"
+            },
+            "carriers": {
+              "PR": "PHILIPPINE AIRLINES"
+            }
           }
-      }
+        }
       }
     },
     "400_Search": {

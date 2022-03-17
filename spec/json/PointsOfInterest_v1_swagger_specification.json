@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.1.1",
+    "version": "1.1.2",
     "title": "Points of Interest",
     "x-tags": [
       "#ama-for-dev"
@@ -478,7 +478,7 @@
             }
           },
           "example": {
-            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+            "self": "https://test.api.amadeus.com/v1/area/resources?param\u003dvalue"
           }
         }
       }
@@ -618,7 +618,7 @@
                 "latitude": 41.38827,
                 "longitude": 2.161604
               },
-              "name": "Brunch & Cake",
+              "name": "Brunch \u0026 Cake",
               "category": "RESTAURANT",
               "rank": 30,
               "tags": [
@@ -828,11 +828,11 @@
           "meta": {
             "count": 120,
             "links": {
-              "self": "https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude=41.397158&longitude=2.160873",
-              "next": "https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude=41.397158&longitude=2.160873&page[offset]=10&page[limit]=10",
-              "last": "https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude=41.397158&longitude=2.160873&page[offset]=120&page[limit]=10",
-              "first": "https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude=41.397158&longitude=2.160873&page[offset]=0&page[limit]=10",
-              "up": "https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude=41.397158&longitude=2.160873"
+              "self": "https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude\u003d41.397158\u0026longitude\u003d2.160873",
+              "next": "https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude\u003d41.397158\u0026longitude\u003d2.160873\u0026page[offset]\u003d10\u0026page[limit]\u003d10",
+              "last": "https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude\u003d41.397158\u0026longitude\u003d2.160873\u0026page[offset]\u003d120\u0026page[limit]\u003d10",
+              "first": "https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude\u003d41.397158\u0026longitude\u003d2.160873\u0026page[offset]\u003d0\u0026page[limit]\u003d10",
+              "up": "https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude\u003d41.397158\u0026longitude\u003d2.160873"
             }
           }
         }

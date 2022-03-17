@@ -127,7 +127,7 @@
                       "meta": {
                         "count": 3,
                         "links": {
-                          "self": "https://test.api.amadeus.com/v1/location/analytics/category-rated-areas?latitude=41.397158&longitude=2.160873"
+                          "self": "https://test.api.amadeus.com/v1/location/analytics/category-rated-areas?latitude\u003d41.397158\u0026longitude\u003d2.160873"
                         }
                       },
                       "data": [
@@ -355,9 +355,7 @@
           "category-rated-areas"
         ]
       },
-      "parameters": [
-
-      ]
+      "parameters": []
     }
   },
   "components": {

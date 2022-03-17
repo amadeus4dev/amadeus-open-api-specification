@@ -120,7 +120,7 @@
             "searchDate": "2020-07-23"
           },
           "links": {
-            "self": "https://test.api.amadeus.com/v1/travel/predictions/trip-purpose?originLocationCode=NYC&destinationLocationCode=MAD&departureDate=2020-12-01&returnDate=2020-12-12&searchDate=2020-07-23"
+            "self": "https://test.api.amadeus.com/v1/travel/predictions/trip-purpose?originLocationCode\u003dNYC\u0026destinationLocationCode\u003dMAD\u0026departureDate\u003d2020-12-01\u0026returnDate\u003d2020-12-12\u0026searchDate\u003d2020-07-23"
           }
         }
       }

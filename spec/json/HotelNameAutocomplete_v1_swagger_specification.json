@@ -29,15 +29,15 @@
             "description": "Location query keyword",
             "required": true,
             "type": "string",
-            "pattern": "^[A-Za-z0-9 *'-]{4,40}$",
+            "pattern": "^[A-Za-z0-9 *\u0027-]{4,40}$",
             "minLength": 4,
             "maxLength": 40,
-            "x-example":"PARI"
+            "x-example": "PARI"
           },
           {
             "name": "subType",
             "in": "query",
-            "description": "Category of search - To enter several values, repeat the query parameter \n Use HOTEL_LEISURE to target aggregators or HOTEL_GDS to target directly the chains",
+            "description": "Category of search - To enter several values, repeat the query parameter \nUse HOTEL_LEISURE to target aggregators or HOTEL_GDS to target directly the chains",
             "required": true,
             "type": "array",
             "items": {
@@ -57,7 +57,7 @@
             "pattern": "[A-Za-z]{2}$",
             "minLength": 2,
             "maxLength": 2,
-            "x-example":"FR"
+            "x-example": "FR"
           },
           {
             "name": "lang",
@@ -107,7 +107,7 @@
                         "description": "Name of the location (Hotel Name)",
                         "minLength": 1,
                         "maxLength": 80,
-                        "pattern": "^[A-Za-z0-9 - * '.]+"
+                        "pattern": "^[A-Za-z0-9 - * \u0027.]+"
                       },
                       "iataCode": {
                         "type": "string",
@@ -118,7 +118,7 @@
                       },
                       "hotelIds": {
                         "type": "array",
-                        "description": "HotelIDs associated with the location only if it's a hotel. For leisure property dupes ID are listed as well. ",
+                        "description": "HotelIDs associated with the location only if it\u0027s a hotel. For leisure property dupes ID are listed as well. ",
                         "uniqueItems": true,
                         "maxItems": 10,
                         "minItems": 1,
@@ -594,11 +594,11 @@
               "example": {
                 "errors": [
                   {
-                  "status": 400,
-                  "code": 572,
-                  "title": "INVALID FORMAT",
-                  "detail": "invalid query parameter format"
-                }
+                    "status": 400,
+                    "code": 572,
+                    "title": "INVALID FORMAT",
+                    "detail": "invalid query parameter format"
+                  }
                 ]
               },
               "type": "object",
@@ -704,10 +704,10 @@
               "example": {
                 "errors": [
                   {
-                  "status": 500,
-                  "code": 141,
-                  "title": "SYSTEM ERROR HAS OCCURRED"
-                }
+                    "status": 500,
+                    "code": 141,
+                    "title": "SYSTEM ERROR HAS OCCURRED"
+                  }
                 ]
               }
             }

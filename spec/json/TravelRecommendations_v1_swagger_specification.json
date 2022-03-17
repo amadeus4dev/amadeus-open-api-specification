@@ -131,7 +131,7 @@
                     "value": {
                       "meta": {
                         "links": {
-                          "self": "https://test.api.amadeus.com/v1/reference-data/recommended-locations?cityCodes=LON&travelerCountryCode=FR"
+                          "self": "https://test.api.amadeus.com/v1/reference-data/recommended-locations?cityCodes\u003dLON\u0026travelerCountryCode\u003dFR"
                         },
                         "count": 2
                       },

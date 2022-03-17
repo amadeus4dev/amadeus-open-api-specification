@@ -50,7 +50,7 @@
           {
             "name": "language",
             "in": "query",
-            "description": "Check-in page language with one of the following patterns 'languageCode' (e.g. EN) or 'languageCode-IATAcountryCode' (e.g. en-GB). \n\nDefault value is **en-GB** (used when required language is not available or when no value is specified).\n",
+            "description": "Check-in page language with one of the following patterns \u0027languageCode\u0027 (e.g. EN) or \u0027languageCode-IATAcountryCode\u0027 (e.g. en-GB). \n\nDefault value is **en-GB** (used when required language is not available or when no value is specified).\n",
             "required": false,
             "type": "string",
             "pattern": "[a-zA-Z]{2}([-][a-zA-Z]{2})?"
@@ -267,7 +267,7 @@
             }
           },
           "example": {
-            "self": "https://test.api.amadeus.com/v1/area/resources?param=value"
+            "self": "https://test.api.amadeus.com/v1/area/resources?param\u003dvalue"
           }
         }
       }
@@ -325,14 +325,14 @@
           "meta": {
             "count": 1,
             "links": {
-              "self": "http://test.api.amadeus.com/v2/reference-data/urls/checkin-links?airlineCode=BA"
+              "self": "http://test.api.amadeus.com/v2/reference-data/urls/checkin-links?airlineCode\u003dBA"
             }
           },
           "data": [
             {
               "type": "checkin-link",
               "id": "BAEN-GBAll",
-              "href": "https://www.britishairways.com/travel/managebooking/public/en_ch?&bookingRef={PNR}&lastname={LAST}",
+              "href": "https://www.britishairways.com/travel/managebooking/public/en_ch?\u0026bookingRef\u003d{PNR}\u0026lastname\u003d{LAST}",
               "channel": "All",
               "parameters": {
                 "LAST": {
