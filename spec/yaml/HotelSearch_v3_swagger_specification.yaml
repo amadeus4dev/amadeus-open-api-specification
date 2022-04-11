@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 3.0.4
+  version: 3.0.5
   title: Hotel Search API
   description: |-
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
@@ -34,7 +34,7 @@ paths:
           maxItems: 20
           uniqueItems: false
           x-example:
-            - EDLONDER
+            - MCLONGHM
           items:
             type: string
           description: Amadeus property codes on 8 chars. Mandatory parameter for a search by predefined list of hotels.
@@ -55,7 +55,7 @@ paths:
           type: string
           format: date
           description: Check-in date of the stay (hotel local date). Format YYYY-MM-DD. The lowest accepted value is the present date (no dates in the past). If not present, the default value will be today's date in the GMT time zone.
-          x-example: '2022-06-20'
+          x-example: '2022-11-22'
         - name: checkOutDate
           in: query
           required: false
