@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 2.5.1
+  version: 2.5.2
   title: Flight Offers Search
   x-tags:
     - '#online-retail'
@@ -83,7 +83,7 @@ paths:
           required: true
           type: string
           format: date
-          x-example: '2021-11-01'
+          x-example: '2022-11-01'
         - name: returnDate
           in: query
           description: 'the date on which the traveler will depart from the destination to return to the origin. If this parameter is not specified, only one-way itineraries are found. If this parameter is specified, only round-trip itineraries are found. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2018-02-28'
@@ -1172,13 +1172,13 @@ definitions:
           originLocationCode: RIO
           destinationLocationCode: MAD
           departureDateTimeRange:
-            date: '2021-11-01'
+            date: '2022-11-01'
             time: '10:00:00'
         - id: '2'
           originLocationCode: MAD
           destinationLocationCode: RIO
           departureDateTimeRange:
-            date: '2021-11-05'
+            date: '2022-11-05'
             time: '17:00:00'
       travelers:
         - id: '1'
@@ -1257,343 +1257,362 @@ responses:
             instantTicketingRequired: false
             nonHomogeneous: false
             oneWay: false
-            lastTicketingDate: '2021-03-08'
-            numberOfBookableSeats: 5
+            lastTicketingDate: '2022-11-01'
+            numberOfBookableSeats: 9
             itineraries:
-              - duration: PT30H15M
-                segments:
-                  - departure:
-                      iataCode: BOS
-                      terminal: A
-                      at: '2021-11-01T21:00:00'
-                    arrival:
-                      iataCode: LGA
-                      terminal: '0'
-                      at: '2021-11-01T22:24:00'
-                    carrierCode: DL
-                    number: '5628'
-                    aircraft:
-                      code: E75
-                    duration: PT1H24M
-                    id: '1'
-                    numberOfStops: 0
-                    blacklistedInEU: false
-                  - departure:
-                      iataCode: JFK
-                      terminal: '4'
-                      at: '2021-11-02T19:30:00'
-                    arrival:
-                      iataCode: MAD
-                      terminal: '1'
-                      at: '2021-11-03T08:15:00'
-                    carrierCode: DL
-                    number: '126'
-                    aircraft:
-                      code: 76W
-                    operating:
-                      carrierCode: DL
-                    duration: PT7H45M
-                    id: '2'
-                    numberOfStops: 0
-                    blacklistedInEU: false
-              - duration: PT22H19M
-                segments:
-                  - departure:
-                      iataCode: MAD
-                      terminal: '1'
-                      at: '2021-11-05T20:25:00'
-                    arrival:
-                      iataCode: AMS
-                      at: '2021-11-05T23:00:00'
-                    carrierCode: KL
-                    number: '1706'
-                    aircraft:
-                      code: 73J
-                    operating:
-                      carrierCode: KL
-                    duration: PT2H35M
-                    id: '5'
-                    numberOfStops: 0
-                    blacklistedInEU: false
-                  - departure:
-                      iataCode: AMS
-                      at: '2021-11-06T10:45:00'
-                    arrival:
-                      iataCode: BOS
-                      terminal: E
-                      at: '2021-11-06T13:44:00'
-                    carrierCode: KL
-                    number: '6017'
-                    aircraft:
-                      code: '333'
-                    operating:
-                      carrierCode: DL
-                    duration: PT7H59M
-                    id: '6'
-                    numberOfStops: 0
-                    blacklistedInEU: false
+            - duration: PT14H15M
+              segments:
+              - departure:
+                  iataCode: SYD
+                  terminal: '1'
+                  at: '2022-11-01T11:35:00'
+                arrival:
+                  iataCode: MNL
+                  terminal: '2'
+                  at: '2022-11-01T16:50:00'
+                carrierCode: PR
+                number: '212'
+                aircraft:
+                  code: '333'
+                operating:
+                  carrierCode: PR
+                duration: PT8H15M
+                id: '1'
+                numberOfStops: 0
+                blacklistedInEU: false
+              - departure:
+                  iataCode: MNL
+                  terminal: '1'
+                  at: '2022-11-01T19:20:00'
+                arrival:
+                  iataCode: BKK
+                  at: '2022-11-01T21:50:00'
+                carrierCode: PR
+                number: '732'
+                aircraft:
+                  code: '321'
+                operating:
+                  carrierCode: PR
+                duration: PT3H30M
+                id: '2'
+                numberOfStops: 0
+                blacklistedInEU: false
+            - duration: PT16H15M
+              segments:
+              - departure:
+                  iataCode: BKK
+                  at: '2022-11-05T13:30:00'
+                arrival:
+                  iataCode: MNL
+                  terminal: '2'
+                  at: '2022-11-05T18:00:00'
+                carrierCode: PR
+                number: '731'
+                aircraft:
+                  code: '333'
+                operating:
+                  carrierCode: PR
+                duration: PT3H30M
+                id: '3'
+                numberOfStops: 0
+                blacklistedInEU: false
+              - departure:
+                  iataCode: MNL
+                  terminal: '1'
+                  at: '2022-11-05T22:10:00'
+                arrival:
+                  iataCode: SYD
+                  terminal: '1'
+                  at: '2022-11-06T09:45:00'
+                carrierCode: PR
+                number: '211'
+                aircraft:
+                  code: '333'
+                operating:
+                  carrierCode: PR
+                duration: PT8H35M
+                id: '4'
+                numberOfStops: 0
+                blacklistedInEU: false
             price:
-              currency: USD
-              total: '4825.40'
-              base: '2772.00'
+              currency: EUR
+              total: '1279.54'
+              base: '844.00'
               fees:
-                - amount: '0.00'
-                  type: SUPPLIER
-                - amount: '0.00'
-                  type: TICKETING
-              grandTotal: '4825.40'
+              - amount: '0.00'
+                type: SUPPLIER
+              - amount: '0.00'
+                type: TICKETING
+              grandTotal: '1279.54'
             pricingOptions:
               fareType:
-                - PUBLISHED
-              includedCheckedBagsOnly: false
+              - PUBLISHED
+              includedCheckedBagsOnly: true
             validatingAirlineCodes:
-              - DL
+            - PR
             travelerPricings:
-              - travelerId: '1'
-                fareOption: STANDARD
-                travelerType: ADULT
-                price:
-                  currency: USD
-                  total: '2412.70'
-                  base: '1386.00'
-                fareDetailsBySegment:
-                  - segmentId: '1'
-                    cabin: FIRST
-                    fareBasis: ZN1JV0D2
-                    class: Z
-                    includedCheckedBags:
-                      quantity: 2
-                  - segmentId: '2'
-                    cabin: BUSINESS
-                    fareBasis: ZN1JV0D2
-                    brandedFare: DLONEBIZ
-                    class: Z
-                    includedCheckedBags:
-                      quantity: 2
-                  - segmentId: '5'
-                    cabin: ECONOMY
-                    fareBasis: TL2J51M3
-                    class: L
-                    includedCheckedBags:
-                      quantity: 1
-                  - segmentId: '6'
-                    cabin: ECONOMY
-                    fareBasis: TL2J51M3
-                    brandedFare: STANDARD
-                    class: T
-                    includedCheckedBags:
-                      quantity: 1
-              - travelerId: '2'
-                fareOption: STANDARD
-                travelerType: CHILD
-                price:
-                  currency: USD
-                  total: '2412.70'
-                  base: '1386.00'
-                fareDetailsBySegment:
-                  - segmentId: '1'
-                    cabin: FIRST
-                    fareBasis: ZN1JV0D2
-                    class: Z
-                  - segmentId: '2'
-                    cabin: BUSINESS
-                    fareBasis: ZN1JV0D2
-                    brandedFare: DLONEBIZ
-                    class: Z
-                  - segmentId: '5'
-                    cabin: ECONOMY
-                    fareBasis: TL2J51M3
-                    class: L
-                  - segmentId: '6'
-                    cabin: ECONOMY
-                    fareBasis: TL2J51M3
-                    brandedFare: STANDARD
-                    class: T
+            - travelerId: '1'
+              fareOption: STANDARD
+              travelerType: ADULT
+              price:
+                currency: EUR
+                total: '639.77'
+                base: '422.00'
+              fareDetailsBySegment:
+              - segmentId: '1'
+                cabin: ECONOMY
+                fareBasis: TBAU
+                class: T
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+              - segmentId: '2'
+                cabin: ECONOMY
+                fareBasis: TBAU
+                class: T
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+              - segmentId: '3'
+                cabin: ECONOMY
+                fareBasis: KBAU
+                class: K
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+              - segmentId: '4'
+                cabin: ECONOMY
+                fareBasis: KBAU
+                class: K
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+            - travelerId: '2'
+              fareOption: STANDARD
+              travelerType: ADULT
+              price:
+                currency: EUR
+                total: '639.77'
+                base: '422.00'
+              fareDetailsBySegment:
+              - segmentId: '1'
+                cabin: ECONOMY
+                fareBasis: TBAU
+                class: T
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+              - segmentId: '2'
+                cabin: ECONOMY
+                fareBasis: TBAU
+                class: T
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+              - segmentId: '3'
+                cabin: ECONOMY
+                fareBasis: KBAU
+                class: K
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+              - segmentId: '4'
+                cabin: ECONOMY
+                fareBasis: KBAU
+                class: K
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
           - type: flight-offer
             id: '2'
             source: GDS
             instantTicketingRequired: false
             nonHomogeneous: false
             oneWay: false
-            lastTicketingDate: '2021-03-08'
-            numberOfBookableSeats: 5
+            lastTicketingDate: '2022-11-01'
+            numberOfBookableSeats: 9
             itineraries:
-              - duration: PT31H15M
-                segments:
-                  - departure:
-                      iataCode: BOS
-                      terminal: A
-                      at: '2021-11-01T20:00:00'
-                    arrival:
-                      iataCode: LGA
-                      terminal: '0'
-                      at: '2021-11-01T21:33:00'
-                    carrierCode: DL
-                    number: '5827'
-                    aircraft:
-                      code: E75
-                    duration: PT1H33M
-                    id: '3'
-                    numberOfStops: 0
-                    blacklistedInEU: false
-                  - departure:
-                      iataCode: JFK
-                      terminal: '4'
-                      at: '2021-11-02T19:30:00'
-                    arrival:
-                      iataCode: MAD
-                      terminal: '1'
-                      at: '2021-11-03T08:15:00'
-                    carrierCode: DL
-                    number: '126'
-                    aircraft:
-                      code: 76W
-                    operating:
-                      carrierCode: DL
-                    duration: PT7H45M
-                    id: '4'
-                    numberOfStops: 0
-                    blacklistedInEU: false
-              - duration: PT22H19M
-                segments:
-                  - departure:
-                      iataCode: MAD
-                      terminal: '1'
-                      at: '2021-11-05T20:25:00'
-                    arrival:
-                      iataCode: AMS
-                      at: '2021-11-05T23:00:00'
-                    carrierCode: KL
-                    number: '1706'
-                    aircraft:
-                      code: 73J
-                    operating:
-                      carrierCode: KL
-                    duration: PT2H35M
-                    id: '5'
-                    numberOfStops: 0
-                    blacklistedInEU: false
-                  - departure:
-                      iataCode: AMS
-                      at: '2021-11-06T10:45:00'
-                    arrival:
-                      iataCode: BOS
-                      terminal: E
-                      at: '2021-11-06T13:44:00'
-                    carrierCode: KL
-                    number: '6017'
-                    aircraft:
-                      code: '333'
-                    operating:
-                      carrierCode: DL
-                    duration: PT7H59M
-                    id: '6'
-                    numberOfStops: 0
-                    blacklistedInEU: false
+            - duration: PT14H15M
+              segments:
+              - departure:
+                  iataCode: SYD
+                  terminal: '1'
+                  at: '2022-11-01T11:35:00'
+                arrival:
+                  iataCode: MNL
+                  terminal: '2'
+                  at: '2022-11-01T16:50:00'
+                carrierCode: PR
+                number: '212'
+                aircraft:
+                  code: '333'
+                operating:
+                  carrierCode: PR
+                duration: PT8H15M
+                id: '1'
+                numberOfStops: 0
+                blacklistedInEU: false
+              - departure:
+                  iataCode: MNL
+                  terminal: '1'
+                  at: '2022-11-01T19:20:00'
+                arrival:
+                  iataCode: BKK
+                  at: '2022-11-01T21:50:00'
+                carrierCode: PR
+                number: '732'
+                aircraft:
+                  code: '321'
+                operating:
+                  carrierCode: PR
+                duration: PT3H30M
+                id: '2'
+                numberOfStops: 0
+                blacklistedInEU: false
+            - duration: PT28H15M
+              segments:
+              - departure:
+                  iataCode: BKK
+                  at: '2022-11-05T01:30:00'
+                arrival:
+                  iataCode: MNL
+                  terminal: '2'
+                  at: '2022-11-05T05:45:00'
+                carrierCode: PR
+                number: '741'
+                aircraft:
+                  code: '321'
+                operating:
+                  carrierCode: PR
+                duration: PT3H15M
+                id: '5'
+                numberOfStops: 0
+                blacklistedInEU: false
+              - departure:
+                  iataCode: MNL
+                  terminal: '1'
+                  at: '2022-11-05T22:10:00'
+                arrival:
+                  iataCode: SYD
+                  terminal: '1'
+                  at: '2022-11-06T09:45:00'
+                carrierCode: PR
+                number: '211'
+                aircraft:
+                  code: '333'
+                operating:
+                  carrierCode: PR
+                duration: PT8H35M
+                id: '6'
+                numberOfStops: 0
+                blacklistedInEU: false
             price:
-              currency: USD
-              total: '4825.40'
-              base: '2772.00'
+              currency: EUR
+              total: '1279.54'
+              base: '844.00'
               fees:
-                - amount: '0.00'
-                  type: SUPPLIER
-                - amount: '0.00'
-                  type: TICKETING
-              grandTotal: '4825.40'
+              - amount: '0.00'
+                type: SUPPLIER
+              - amount: '0.00'
+                type: TICKETING
+              grandTotal: '1279.54'
             pricingOptions:
               fareType:
-                - PUBLISHED
-              includedCheckedBagsOnly: false
+              - PUBLISHED
+              includedCheckedBagsOnly: true
             validatingAirlineCodes:
-              - DL
+            - PR
             travelerPricings:
-              - travelerId: '1'
-                fareOption: STANDARD
-                travelerType: ADULT
-                price:
-                  currency: USD
-                  total: '2412.70'
-                  base: '1386.00'
-                fareDetailsBySegment:
-                  - segmentId: '3'
-                    cabin: FIRST
-                    fareBasis: ZN1JV0D2
-                    class: Z
-                    includedCheckedBags:
-                      quantity: 2
-                  - segmentId: '4'
-                    cabin: BUSINESS
-                    fareBasis: ZN1JV0D2
-                    brandedFare: DLONEBIZ
-                    class: Z
-                    includedCheckedBags:
-                      quantity: 2
-                  - segmentId: '5'
-                    cabin: ECONOMY
-                    fareBasis: TL2J51M3
-                    class: L
-                    includedCheckedBags:
-                      quantity: 1
-                  - segmentId: '6'
-                    cabin: ECONOMY
-                    fareBasis: TL2J51M3
-                    brandedFare: STANDARD
-                    class: T
-                    includedCheckedBags:
-                      quantity: 1
-              - travelerId: '2'
-                fareOption: STANDARD
-                travelerType: CHILD
-                price:
-                  currency: USD
-                  total: '2412.70'
-                  base: '1386.00'
-                fareDetailsBySegment:
-                  - segmentId: '3'
-                    cabin: FIRST
-                    fareBasis: ZN1JV0D2
-                    class: Z
-                  - segmentId: '4'
-                    cabin: BUSINESS
-                    fareBasis: ZN1JV0D2
-                    brandedFare: DLONEBIZ
-                    class: Z
-                  - segmentId: '5'
-                    cabin: ECONOMY
-                    fareBasis: TL2J51M3
-                    class: L
-                  - segmentId: '6'
-                    cabin: ECONOMY
-                    fareBasis: TL2J51M3
-                    brandedFare: STANDARD
-                    class: T
+            - travelerId: '1'
+              fareOption: STANDARD
+              travelerType: ADULT
+              price:
+                currency: EUR
+                total: '639.77'
+                base: '422.00'
+              fareDetailsBySegment:
+              - segmentId: '1'
+                cabin: ECONOMY
+                fareBasis: TBAU
+                class: T
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+              - segmentId: '2'
+                cabin: ECONOMY
+                fareBasis: TBAU
+                class: T
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+              - segmentId: '5'
+                cabin: ECONOMY
+                fareBasis: KBAU
+                class: K
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+              - segmentId: '6'
+                cabin: ECONOMY
+                fareBasis: KBAU
+                class: K
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+            - travelerId: '2'
+              fareOption: STANDARD
+              travelerType: ADULT
+              price:
+                currency: EUR
+                total: '639.77'
+                base: '422.00'
+              fareDetailsBySegment:
+              - segmentId: '1'
+                cabin: ECONOMY
+                fareBasis: TBAU
+                class: T
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+              - segmentId: '2'
+                cabin: ECONOMY
+                fareBasis: TBAU
+                class: T
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+              - segmentId: '5'
+                cabin: ECONOMY
+                fareBasis: KBAU
+                class: K
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
+              - segmentId: '6'
+                cabin: ECONOMY
+                fareBasis: KBAU
+                class: K
+                includedCheckedBags:
+                  weight: 30
+                  weightUnit: KG
         dictionaries:
           locations:
-            MAD:
-              cityCode: MAD
-              countryCode: ES
-            LGA:
-              cityCode: NYC
-              countryCode: US
-            BOS:
-              cityCode: BOS
-              countryCode: US
-            AMS:
-              cityCode: AMS
-              countryCode: NL
-            JFK:
-              cityCode: NYC
-              countryCode: US
+            BKK:
+              cityCode: BKK
+              countryCode: TH
+            MNL:
+              cityCode: MNL
+              countryCode: PH
+            SYD:
+              cityCode: SYD
+              countryCode: AU
           aircraft:
+            '321': AIRBUS A321
             '333': AIRBUS A330-300
-            E75: EMBRAER 175
-            76W: BOEING 767-300 (WINGLETS)
-            73J: BOEING 737-900
           currencies:
-            USD: US DOLLAR
+            EUR: EURO
           carriers:
-            KL: KLM ROYAL DUTCH AIRLINES
-            DL: DELTA AIR LINES
+            PR: PHILIPPINE AIRLINES
   GETAirOffersReply:
     description: Successful Operation
     schema:
