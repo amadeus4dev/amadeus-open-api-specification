@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.7.2",
+    "version": "1.9.0",
     "title": "Seatmap Display",
     "x-status": "validated",
     "x-tags": [
@@ -10,6 +10,13 @@
       "#ama-for-dev"
     ],
     "x-release-note": {
+      "1.9": [
+        "Add new usbType with a new enum in the PowerAmenity"
+      ],
+      "1.8": [
+        "Add new input parameter seatNumberServiceBookingStatusRequired - **available only in Enterprise** ",
+        "Add new output parameter seatNumberServiceBookingStatus - **available only in Enterprise** "
+      ],
       "1.7": [
         "Add new ENUM value for Power Amenity"
       ],
@@ -26,7 +33,7 @@
         "Add the Operating flight in the response for codeshare awareness, aligned with flight offer"
       ],
       "1.3": [
-        "Add support of Light Ticketing Carrier (LTC) and Extended Air Choice (EAC) as flight offer source - **not available in self-service**"
+        "Add support of Light Ticketing Carrier (LTC) and Extended Air Choice (EAC) as flight offer source - **available only in Enterprise**"
       ],
       "1.2": [
         "Retrieve the Amenities per cabin"
@@ -1465,6 +1472,14 @@
                 "USB_PORT",
                 "ADAPTOR",
                 "PLUG_OR_USB_PORT"
+              ]
+            },
+            "usbType": {
+              "type": "string",
+              "enum": [
+                "USB_A",
+                "USB_C",
+                "USB_A_AND_USB_C"
               ]
             }
           }
