@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.5",
+    "version": "1.0.6",
     "title": "Flight Delay Prediction",
     "x-tags": [
       "#ama-for-dev"
@@ -78,7 +78,7 @@
             "description": "local time relative to originLocationCode on which the traveler will depart from the origin. Time respects ISO 8601 standard. e.g. 13:22:00",
             "required": true,
             "type": "string",
-            "format": "date-time",
+            "format": "time",
             "x-example": "18:20:00"
           },
           {
@@ -96,7 +96,7 @@
             "description": "local time relative to destinationLocationCode on which the traveler will arrive to destination. Time respects ISO 8601 standard. e.g. 13:22:00",
             "required": true,
             "type": "string",
-            "format": "date-time",
+            "format": "time",
             "x-example": "22:15:00"
           },
           {
