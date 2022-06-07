@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Hotel List",
-    "version": "1.0",
+    "version": "1.0.1",
     "description": "Before using the API you will need to get an access token. Please read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to get your token."
   },
   "servers": [
@@ -24,6 +24,34 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HotelSearchResponse"
+                },
+                "examples": {
+                  "Successful Reply": {
+                    "value": {
+                      "data": [
+                        {
+                          "chainCode": "AC",
+                          "iataCode": "PAR",
+                          "dupeId": 700140792,
+                          "name": "LE NOTRE DAME",
+                          "hotelId": "ACPAR419",
+                          "geoCode": {
+                            "latitude": 48.85306,
+                            "longitude": 2.34654
+                          },
+                          "address": {
+                            "countryCode": "FR"
+                          }
+                        }
+                      ],
+                      "meta": {
+                        "count": 1,
+                        "links": {
+                          "self": "http://test.api.amadeus.com/reference-data/locations/hotels/by-hotels?hotelIds=ACPAR419"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -95,7 +123,7 @@
             "required": true,
             "style": "form",
             "explode": false,
-            "example": ["ADPAR001"]
+            "example": ["ACPAR419"]
           }
         ]
       }
@@ -113,6 +141,56 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HotelSearchResponse"
+                },
+                "examples": {
+                  "Successful Reply": {
+                    "value": {
+                      "data": [
+                        {
+                          "chainCode": "ZZ",
+                          "iataCode": "NCE",
+                          "dupeId": 504813011,
+                          "name": "HOTEL 3",
+                          "hotelId": "ZZNCENVX",
+                          "geoCode": {
+                            "latitude": 43.66665,
+                            "longitude": 7.21465
+                          },
+                          "address": {
+                            "countryCode": "FR"
+                          },
+                          "distance": {
+                            "value": 0.92,
+                            "unit": "KM"
+                          }
+                        },
+                        {
+                          "chainCode": "NN",
+                          "iataCode": "NCE",
+                          "dupeId": 700091936,
+                          "name": "CAMPANILE NICE - A?ROPORT",
+                          "hotelId": "NNNCE357",
+                          "geoCode": {
+                            "latitude": 43.66686,
+                            "longitude": 7.21397
+                          },
+                          "address": {
+                            "countryCode": "FR"
+                          },
+                          "distance": {
+                            "value": 0.96,
+                            "unit": "KM"
+                          }
+                        }
+                      ],
+                      "meta": {
+                        "count": 2,
+                        "links": {
+                          "self": "http://test.api.amadeus.com/reference-data/locations/hotels/by-city?cityCode=NCE&radius=1"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
@@ -317,6 +395,104 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/HotelSearchResponse"
+                },
+                "examples": {
+                  "Successful Reply": {
+                    "value": {
+                      "data": [
+                        {
+                          "chainCode": "OI",
+                          "iataCode": "SXD",
+                          "dupeId": 700118746,
+                          "name": "HOTEL OMEGA - VALBONNE",
+                          "hotelId": "OISXD968",
+                          "geoCode": {
+                            "latitude": 43.61428,
+                            "longitude": 7.05464
+                          },
+                          "address": {
+                            "countryCode": "FR"
+                          },
+                          "distance": {
+                            "value": 0.73,
+                            "unit": "KM"
+                          }
+                        },
+                        {
+                          "chainCode": "DH",
+                          "iataCode": "SCR",
+                          "dupeId": 505001770,
+                          "name": "CHECK SINGLE CIF DHSCRMS8",
+                          "hotelId": "DHSCRMS8",
+                          "geoCode": {
+                            "latitude": 43.62215,
+                            "longitude": 7.04024
+                          },
+                          "distance": {
+                            "value": 0.82,
+                            "unit": "KM"
+                          }
+                        },
+                        {
+                          "chainCode": "DH",
+                          "iataCode": "VLI",
+                          "dupeId": 504621595,
+                          "name": "CHECK SINGLE CIF DHVLIMS8",
+                          "hotelId": "DHVLIMS8",
+                          "geoCode": {
+                            "latitude": 43.62215,
+                            "longitude": 7.04024
+                          },
+                          "distance": {
+                            "value": 0.82,
+                            "unit": "KM"
+                          }
+                        },
+                        {
+                          "chainCode": "DH",
+                          "iataCode": "AET",
+                          "dupeId": 504621441,
+                          "name": "CHECK SINGLE CIF DHAETMS8",
+                          "hotelId": "DHAETMS8",
+                          "geoCode": {
+                            "latitude": 43.62215,
+                            "longitude": 7.04024
+                          },
+                          "address": {
+                            "countryCode": "US"
+                          },
+                          "distance": {
+                            "value": 0.82,
+                            "unit": "KM"
+                          }
+                        },
+                        {
+                          "chainCode": "DH",
+                          "iataCode": "NYC",
+                          "dupeId": 504621445,
+                          "name": "CHECK SINGLE CIF DHNYCMS8",
+                          "hotelId": "DHNYCMS8",
+                          "geoCode": {
+                            "latitude": 43.62215,
+                            "longitude": 7.04024
+                          },
+                          "address": {
+                            "countryCode": "US"
+                          },
+                          "distance": {
+                            "value": 0.82,
+                            "unit": "KM"
+                          }
+                        }
+                      ],
+                      "meta": {
+                        "count": 5,
+                        "links": {
+                          "self": "http://test.api.amadeus.com/reference-data/locations/hotels/by-geocode?latitude=43.61999752&longitude=7.0499998&radius=1"
+                        }
+                      }
+                    }
+                  }
                 }
               }
             }
