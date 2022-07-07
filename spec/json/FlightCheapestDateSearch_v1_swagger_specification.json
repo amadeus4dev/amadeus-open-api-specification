@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.5",
+    "version": "1.0.6",
     "title": "Flight Cheapest Date Search",
     "x-tags": [
       "#ama-for-dev"
@@ -157,14 +157,6 @@
       }
     },
     "LocationDictionary": {
-      "required": [
-        "key"
-      ],
-      "properties": {
-        "key": {
-          "type": "string"
-        }
-      },
       "additionalProperties": {
         "$ref": "#/definitions/LocationValue"
       }
@@ -188,15 +180,6 @@
       }
     },
     "CurrencyDictionary": {
-      "required": [
-        "key"
-      ],
-      "properties": {
-        "key": {
-          "type": "string",
-          "example": "Euro"
-        }
-      },
       "additionalProperties": {
         "type": "string",
         "example": "EUR"

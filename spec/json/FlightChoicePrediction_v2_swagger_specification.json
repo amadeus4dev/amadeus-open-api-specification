@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2.0.1",
+    "version": "2.0.2",
     "title": "Flight Choice Prediction",
     "x-tags": [
       "#ama-for-dev"
@@ -1916,14 +1916,6 @@
       }
     },
     "LocationEntry": {
-      "required": [
-        "key"
-      ],
-      "properties": {
-        "key": {
-          "type": "string"
-        }
-      },
       "additionalProperties": {
         "$ref": "#/definitions/LocationValue"
       }
@@ -1943,39 +1935,18 @@
       }
     },
     "AircraftEntry": {
-      "type": "object",
-      "properties": {
-        "key": {
-          "type": "string"
-        }
-      },
       "additionalProperties": {
         "description": "the manufacturer/model of aircraft",
         "type": "string"
       }
     },
     "CurrencyEntry": {
-      "required": [
-        "key"
-      ],
-      "properties": {
-        "key": {
-          "type": "string",
-          "example": "Euro"
-        }
-      },
       "additionalProperties": {
         "type": "string",
         "example": "EUR"
       }
     },
     "CarrierEntry": {
-      "type": "object",
-      "properties": {
-        "key": {
-          "type": "string"
-        }
-      },
       "additionalProperties": {
         "description": "the carrier name",
         "type": "string"
