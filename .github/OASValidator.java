@@ -183,7 +183,7 @@ public class OASValidator {
             System.out.println("Review the OAS files provided, the validation failed.");
             System.exit(-1);
         } else {
-            System.out.println("Every OAS files was validated successfully.");
+            System.out.println(specValidatedCounter + " OAS files was validated successfully.");
             System.exit(0);
         }
     }
