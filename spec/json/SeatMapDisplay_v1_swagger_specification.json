@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.9.0",
+    "version": "1.9.1",
     "title": "Seatmap Display",
     "x-status": "validated",
     "x-tags": [
@@ -1641,14 +1641,6 @@
       "description": "Media is a digital content like image, video with associated text and description, several scales and some metadata can be provided also."
     },
     "LocationEntry": {
-      "required": [
-        "key"
-      ],
-      "properties": {
-        "key": {
-          "type": "string"
-        }
-      },
       "additionalProperties": {
         "$ref": "#/definitions/LocationValue"
       }
@@ -1670,11 +1662,6 @@
     "FacilityDictionary": {
       "type": "object",
       "description": "on board facilities map. E.g: bulkhead, closet, exit door, galley, lavatory",
-      "properties": {
-        "key": {
-          "type": "string"
-        }
-      },
       "additionalProperties": {
         "type": "string"
       }
@@ -1682,11 +1669,6 @@
     "SeatCharacteristicDictionary": {
       "type": "object",
       "description": "seat characteristics dictionary allows mapping a service characteristic to its name. Possible values are part of:\n  IATA code: Most of the codes are defined by IATA Standard/IATA Code list 9825, Example: CH = Chargeable Seat, W = Window Seat, A = Aisle\n             Seat, Q = Seat in a quiet zone, E = Exit Row Seat\n  Amadeus Code: defined as extension, example MV=row with movie screen\n  Seat map display Code: API specific codes, example 1A_AQC_PREMIUM_SEAT=premium seat",
-      "properties": {
-        "key": {
-          "type": "string"
-        }
-      },
       "additionalProperties": {
         "type": "string"
       }

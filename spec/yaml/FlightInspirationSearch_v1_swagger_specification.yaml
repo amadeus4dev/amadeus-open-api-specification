@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.5
+  version: 1.0.6
   title: Flight Inspiration Search
   x-tags:
     - '#ama-for-dev'
@@ -124,11 +124,6 @@ definitions:
         type: string
         example: '932.70'
   LocationDictionary:
-    required:
-      - key
-    properties:
-      key:
-        type: string
     additionalProperties:
       $ref: '#/definitions/LocationValue'
   LocationValue:
@@ -145,12 +140,6 @@ definitions:
         description: name of the location
         example: 'Paris/FR: Charles de Gaulle'
   CurrencyDictionary:
-    required:
-      - key
-    properties:
-      key:
-        type: string
-        example: Euro
     additionalProperties:
       type: string
       example: EUR
