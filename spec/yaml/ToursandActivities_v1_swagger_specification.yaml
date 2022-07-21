@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.1
+  version: 1.0.2
   title: Tours and Activities
   x-status: validated
   x-tags:
@@ -345,7 +345,8 @@ responses:
       example:
         meta:
           count: '1'
-          self: 'https://test.api.amadeus.com/v1/shopping/activities?longitude=-3.69170868&latitude=40.41436995&radius=1'
+          links:
+            self: 'https://test.api.amadeus.com/v1/shopping/activities?longitude=-3.69170868&latitude=40.41436995&radius=1'
         data:
           - id: '23642'
             type: activity
