@@ -1,0 +1,1381 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Travel Restrictions",
+    "version": "2.0",
+    "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token.\n",
+    "x-release-note": {
+      "2.0": [
+        "First release of new major version"
+      ]
+    }
+  },
+  "servers": [
+    {
+      "url": "https://test.api.amadeus.com/v2"
+    }
+  ],
+  "paths": {
+    "/duty-of-care/diseases/covid19-area-report": {
+      "get": {
+        "summary": "GET covid area report",
+        "operationId": "GETCovidReport",
+        "tags": [
+          "Covid-19 Area Report"
+        ],
+        "parameters": [
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2
+            },
+            "in": "query",
+            "name": "countryCode",
+            "required": true,
+            "description": "Country code following [ISO 3166 Alpha-2 standard](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)",
+            "example": "US"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 3,
+              "maxLength": 3
+            },
+            "in": "query",
+            "name": "cityCode",
+            "description": "[IATA code](http://www.iata.org/publications/Pages/code-search.aspx) for city metropolitan area.",
+            "example": "NYC"
+          },
+          {
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 2
+            },
+            "in": "query",
+            "name": "language",
+            "description": "Language code to get the result in given language. \n Supported language code are: \n * EN - English \n* ES - Spanish \n* DE - German\n* JA - Japanese\n* KO - Korean\n* TH - Thai\n* ID - Bahasa\n* ZH - Chinese\n* FR - French",
+            "example": "EN"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Reply",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "warnings": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Warning"
+                      }
+                    },
+                    "meta": {
+                      "$ref": "#/components/schemas/Meta"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/DiseaseAreaReport"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "example": {
+                    "value": {
+                      "data": [
+                        {
+                          "type": "Covid-19 Area Report",
+                          "area": {
+                            "name": "United States of America",
+                            "areaType": "Country",
+                            "iataCode": "US",
+                            "geoCode": {
+                              "latitude": "37.0902",
+                              "longitude": "95.7129"
+                            }
+                          },
+                          "summary": "Authorities imposed international travel restrictions from late February 2020",
+                          "diseaseRiskLevel": "High",
+                          "diseaseInfection": {
+                            "rate": "176.02",
+                            "level": "Extreme",
+                            "date": "2021-04-25",
+                            "infectionMapLink": "https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html"
+                          },
+                          "diseaseCases": {
+                            "confirmed": 32940846,
+                            "deaths": 585970,
+                            "recovered": 0,
+                            "active": 32354876,
+                            "date": "2021-05-06"
+                          },
+                          "areaVaccinated": [
+                            {
+                              "vaccinationDoseStatus": "One Dose",
+                              "percentage": 37.789,
+                              "date": "2021-05-02"
+                            }
+                          ],
+                          "hotspots": "Minnesota, Michigan, Pennsylvania, New Jersey, Delaware, New York, Connecticut, Rhode Island, New Hampshire, Vermont, Massachusetts",
+                          "dataSources": {
+                            "governmentSiteLink": "https://www.cdc.gov/coronavirus/2019-ncov/index.html",
+                            "healthDepartmentSiteLink": "https://www.helsenorge.no/en/coronavirus/"
+                          },
+                          "areaRestrictions": [
+                            {
+                              "text": "A nightly nationwide curfew is in effect from 21:00-06:00 local time until further notice.",
+                              "date": "2021-05-02",
+                              "restrictionType": "Lockdown"
+                            }
+                          ],
+                          "areaAccessRestriction": {
+                            "transportation": {
+                              "text": "American Airlines, United Airlines, Delta Air Lines and other major carriers have suspended most flights to China, Hong Kong, Macau, the UK, continental Europe and Latin America. Officials partially lifted a ban on flights by Air China, China Eastern Airlines, China Southern Airlines, and Xiamen Airlines after Chinese authorities allowed United and Delta airlines to operate one round-trip between the two countries.",
+                              "isBanned": "Partial",
+                              "throughDate": "indef",
+                              "date": "2021-04-25",
+                              "transportationType": "Air"
+                            },
+                            "declarationDocumentations": {
+                              "text": "Arriving travellers must complete a passenger locator form within 24 hours of arrival.",
+                              "documentRequired": "Yes",
+                              "travelDocumentLink": "https://travel.state.gov/content/travel/en/traveladvisories/ea/covid-19-information.html",
+                              "healthDocumentLink": "https://travel.state.gov/content/travel/en/traveladvisories/ea/covid-19-information.html",
+                              "date": "2021-05-03"
+                            },
+                            "travelVaccination": {
+                              "isRequired": "No",
+                              "policy": "Yes",
+                              "exemptions": "Entry Ban, Testing, Quarantine, Domestic Restrictions",
+                              "refrenceLink": "https://www.gouvernement.us",
+                              "date": "2021-06-09",
+                              "qualifiedVaccines": [
+                                "Pfizer - 14 days after second dose.",
+                                "AstraZeneca - 14 days after second dose.",
+                                "Johnson & Johnson - 28 days after first dose.",
+                                "Moderna - 14 days after second dose."
+                              ],
+                              "acceptedCertificates": [
+                                "Paper Certificate"
+                              ]
+                            },
+                            "entry": {
+                              "text": "Travellers arriving from or transiting through India, South Africa, China, Iran, Brazil, Ireland, the United Kingdom and the European Schengen Area countries of Austria, Belgium, Czech Republic, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Iceland, Italy, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Netherlands, Norway, Poland, Portugal, Slovakia, Slovenia, Spain, Sweden, Switzerland, Monaco, San Marin and Vatican City within 14 days of their planned arrival in the US are barred from entry.",
+                              "exemptions": "https://travel.state.gov/content/travel/en/News/visas-news/presidential-proclamation-coronavirus.html",
+                              "ban": "Partial",
+                              "throughDate": "indef",
+                              "rules": "https://www.cdc.gov/coronavirus/2019-ncov/travelers/from-other-countries.html",
+                              "date": "2021-04-26"
+                            },
+                            "diseaseTesting": {
+                              "when": "Before travel",
+                              "requirement": "Mandatory",
+                              "exemptions": "Diplomatic, Citizen",
+                              "text": "All passengers on inbound international flights – including fully vaccinated people – must present a negative COVID-19 test result,Vaccinated travellers arriving from other countries must take PCR tests on day 4 and 8 after arrival. ",
+                              "rules": "https://www.cdc.gov/coronavirus/2019-ncov/travelers/testing-international-air-travelers.html#:~:text=On%20January%2012%2C%202021%2C%20CDC,airline%20before%20boarding%20the%20flight.",
+                              "isRequired": "Yes",
+                              "testType": "PCR, Antigen",
+                              "minimumAge": 15,
+                              "daysAfterArival": " PD4, PD8",
+                              "validityPeriod": {
+                                "delay": "P72H",
+                                "referenceDateType": "Departure"
+                              },
+                              "date": "2021-05-05"
+                            },
+                            "tracingApplication": {
+                              "text": "There is no national contact tracing app. Local authorities have developed or are developing optional platforms through Apple’s Exposure Notification API in multiple states, including Alabama, Arizona, California, Colorado, Delaware, Maryland, Michigan, Nevada, New York, North Carolina, North Dakota, Oregon, Pennsylvania, South Carolina, Virginia Washington and Wyoming, the District of Columbia, and territories, including Guam and Puerto Rico.",
+                              "isRequired": "No",
+                              "date": "2021-05-05"
+                            },
+                            "quarantineModality": {
+                              "text": "International travellers are not required to quarantine upon arrival. However, the CDC recommends that travellers stay home and self-quarantine for 7 days after arrival. Travellers should take a test again 3-5 days after arrival; if a test is not available or results are delayed, travellers are recommended to stay home and self-quarantine for a total of 10 days after travelling.",
+                              "rules": "https://travel.state.gov/content/travel/en/traveladvisories/ea/covid-19-information.html",
+                              "eligiblePerson": "None",
+                              "date": "2021-05-05"
+                            },
+                            "masks": {
+                              "isRequired": "Yes, conditional",
+                              "text": "Some states and territories require residents to wear masks while out in public. Violators may be subject to fines and be denied entry to businesses and use of public transport. Most states and territories have voluntary measures or measures restricted to specific venues and municipalities.",
+                              "date": "2021-05-05"
+                            },
+                            "exit": {
+                              "isAllowed": "No",
+                              "text": "There are no exit restrictions though international travel is strongly discouraged.",
+                              "rules": "https://travel.state.gov/content/travel/en/traveladvisories/traveladvisories.html/",
+                              "date": "2021-05-05"
+                            },
+                            "otherRestrictions": {
+                              "text": "Effective 23 April-20 May, a state of exception will be imposed in NYC",
+                              "date": "2021-05-05"
+                            }
+                          },
+                          "AreaPolicy": {
+                            "text": "Limited federal policies for quarantine, testing and masking are in effect nationwide. Most policy decisions are implemented at the state, county and municipal level.",
+                            "status": "Distancing",
+                            "startDate": "2021-04-23",
+                            "endDate": "indef",
+                            "date": "2021-05-03"
+                          },
+                          "subArea": [
+                            {
+                              "area": {
+                                "name": "Houston",
+                                "areaType": "City",
+                                "iataCode": "HOU",
+                                "geoCode": {
+                                  "latitude": "29.75894",
+                                  "longitude": "-95.3676"
+                                }
+                              },
+                              "summary": "Authorities were quick to impose curfew measures from mid-March 2020 .",
+                              "diseaseRiskLevel": "High"
+                            }
+                          ]
+                        }
+                      ],
+                      "meta": {
+                        "language": "EN",
+                        "links": {
+                          "self": "https://api.amadeus.net/v1/duty-of-care/disease/covid19-area-report?countryCode=US&cityCode=HOU&language=EN"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request\n\ncode    | title                                 \n------- | ------------------------------------- \n4926    | INVALID DATA RECEIVED                          \n32171   | MANDATORY DATA MISSING \n 477    | INVALID FORMAT\n 572    | INVALID OPTION\n2781    | INVALID LENGTH",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Error"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "example-400": {
+                    "value": {
+                      "errors": [
+                        {
+                          "status": 400,
+                          "code": 32171,
+                          "title": "MANDATORY DATA MISSING",
+                          "detail": "CONTENT IS MISSING IN THE GIVEN REQUEST, PLEASE CHECK AND RESEND YOUR REQUEST"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error\n\ncode    | title                                 \n------- | ------------------------------------- \n141     | SYSTEM ERROR HAS OCCURRED",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Error"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "example-500": {
+                    "value": {
+                      "errors": [
+                        {
+                          "status": 500,
+                          "code": 141,
+                          "title": "SYSTEM ERROR HAS OCCURRED"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "501": {
+            "description": "Not Implemented\ncode    | title                                 \n------- | ------------------------------------- \n141     | UNABLE TO SUPPORT",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Error"
+                      }
+                    }
+                  }
+                },
+                "examples": {
+                  "example-501": {
+                    "value": {
+                      "errors": [
+                        {
+                          "status": 501,
+                          "code": 141,
+                          "title": "UNABLE TO SUPPORT"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Exit": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "specialRequirements": {
+                "type": "string",
+                "description": "Yes/No/Yes conditional; indicates whether there are special requirements to fulfill in order to leave the country/territory"
+              },
+              "referenceLink": {
+                "type": "string",
+                "description": "Requirements to exit country \n\nWebsite information"
+              },
+              "isBanned": {
+                "type": "string",
+                "description": "Yes/Recommended/Partial/No; 'Yes' indicates all travellers are banned from leaving; 'Recommended' indicates that travellers should not leave, but are mostly free to do so; 'Partial' indicates that some travellers may leave, but others are prevented; 'No' indicates all travellers are free to leave"
+              }
+            }
+          }
+        ],
+        "title": "Exit",
+        "description": ""
+      },
+      "Entry": {
+        "title": "Entry",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "ban": {
+                "type": "string",
+                "description": "Indicates if entry for all or some types of people is banned. \"Yes\" includes situations that are equivalent to a ban"
+              },
+              "throughDate": {
+                "type": "string",
+                "description": "Latest end date for entry ban. Date in YYYY-MM-DD format OR \"indefinite\" OR blank"
+              },
+              "referenceLink": {
+                "type": "string",
+                "description": "Rules implied with specific to borders"
+              },
+              "exemptions": {
+                "type": "string",
+                "description": "Webpage for entry exemptions"
+              },
+              "bannedArea": {
+                "type": "array",
+                "description": "Countries/territories from where travellers are generally banned from entry due to covid-19 rules. If no travellers are banned based on origin, this will be blank. Uses ISO 3166 country codes",
+                "items": {
+                  "$ref": "#/components/schemas/Area"
+                }
+              },
+              "borderBan": {
+                "type": "array",
+                "description": "Open/Partially Open/Closed",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "borderType": {
+                      "type": "string",
+                      "description": "Land or Maritime or Air"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Open/Partially open/Closed"
+                    }
+                  }
+                }
+              },
+              "bannedTravellers": {
+                "type": "string",
+                "description": "travellers who are banned"
+              }
+            }
+          }
+        ]
+      },
+      "Masks": {
+        "title": "Masks",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "isRequired": {
+                "type": "string",
+                "description": "Requirement of Mask \n\nYes,no"
+              }
+            }
+          }
+        ]
+      },
+      "travelQuarantineModality": {
+        "title": "Travel Quarantine",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "eligiblePerson": {
+                "type": "string",
+                "description": "Who needs to Quarantine on Arrival \n\neg Some travellers"
+              },
+              "quarantineType": {
+                "type": "string",
+                "description": "Type of Quarantine \n\nSelf/Gov"
+              },
+              "duration": {
+                "type": "integer",
+                "description": "Minimum number of days for quarantine period."
+              },
+              "referenceLink": {
+                "type": "string",
+                "description": "Rules of Quarantine on Arrival "
+              },
+              "mandateList": {
+                "type": "string",
+                "description": "Mandatory On Quarantine on Arrival \n\neg Websites "
+              },
+              "quarantineOnArrivalAreas": {
+                "description": "Countries/territories from where travellers are generally required to quarantine on arrival. If no travellers are required to quarantine, this will be blank. Uses ISO 3166 country codes",
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Area"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "TracingApplication": {
+        "title": "Tracing Application",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "isRequired": {
+                "type": "string",
+                "description": "While Entering the Country we need a Government proposed APP"
+              },
+              "iosUrl": {
+                "type": "array",
+                "description": "iOS URLS to Download the app",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "androidUrl": {
+                "type": "array",
+                "description": "Android URLs for App Download ",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "description": ""
+      },
+      "travelTest": {
+        "title": "Travel Test",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "isRequired": {
+                "type": "string",
+                "description": "Required Testing \n\neg , Yes,No, \"Yes, conditional\"."
+              },
+              "requirement": {
+                "type": "string",
+                "description": "Is the testing is required \n\neg Mandatory,Yes."
+              },
+              "referenceLink": {
+                "type": "string",
+                "description": "Rules regarding the testing \n\neg https://corona.fo/quarantine."
+              },
+              "travelTestConditionsAndRules": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/travelTestConditionsAndRules"
+                }
+              }
+            }
+          }
+        ],
+        "description": ""
+      },
+      "DeclarationDocuments": {
+        "title": "Declaration Documents",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "isRequired": {
+                "type": "string",
+                "description": "Health Travel related declartaion Documentations \n\neg Yes/No"
+              },
+              "healthDocumentationLink": {
+                "type": "string",
+                "description": "Health document \n\neg \"www.edcardaruba.aw\""
+              },
+              "travelDocumentationLink": {
+                "type": "string",
+                "description": "Travel document \n\neg \"www.edcardaruba.aw\""
+              },
+              "text": {
+                "type": "string"
+              },
+              "lastUpdate": {
+                "type": "string"
+              },
+              "healthInsurance": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/HealthInsuranceModality"
+                }
+              }
+            }
+          }
+        ],
+        "description": ""
+      },
+      "Transportation": {
+        "title": "Transportation",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "transportationType": {
+                "type": "string",
+                "enum": [
+                  "FLIGHT",
+                  "CAR",
+                  "BUS"
+                ],
+                "description": "Transportation Type"
+              },
+              "isBanned": {
+                "type": "string",
+                "description": "\"Yes\" or \"No\". Indicates if transpotation are allow or not. "
+              },
+              "throughDate": {
+                "type": "string",
+                "description": "Latest end date for flight ban. Date in YYYY-MM-DD format OR \"indefinite\" OR blank\n"
+              }
+            }
+          }
+        ]
+      },
+      "AreaAccessRestriction": {
+        "title": "Area Access Restriction",
+        "type": "object",
+        "description": "Restriction applying to enter or leave the Area",
+        "properties": {
+          "transportation": {
+            "$ref": "#/components/schemas/Transportation"
+          },
+          "declarationDocuments": {
+            "$ref": "#/components/schemas/DeclarationDocuments"
+          },
+          "entry": {
+            "$ref": "#/components/schemas/Entry"
+          },
+          "travelTest": {
+            "$ref": "#/components/schemas/travelTest"
+          },
+          "tracingApplication": {
+            "$ref": "#/components/schemas/TracingApplication"
+          },
+          "masks": {
+            "$ref": "#/components/schemas/Masks"
+          },
+          "exit": {
+            "$ref": "#/components/schemas/Exit"
+          },
+          "otherRestrictions": {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          "travelVaccination": {
+            "$ref": "#/components/schemas/travelVaccination"
+          },
+          "travelQuarantineModality": {
+            "$ref": "#/components/schemas/travelQuarantineModality"
+          },
+          "areaHealthPass": {
+            "$ref": "#/components/schemas/AreaHealthPass"
+          }
+        }
+      },
+      "AreaPolicy": {
+        "title": "Area Policy",
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "status": {
+                "type": "string",
+                "description": "Current level of regional movement control. Can be de jure or de facto control. \"Lockdown\" | \"Curfew\" | \"Distancing\" | \"None\" | \"Partial Measures\" | \"Opening\" |\n\"Closing\" | \"Open\""
+              },
+              "startDate": {
+                "type": "string",
+                "description": "Start Date"
+              },
+              "endDate": {
+                "type": "string",
+                "description": "Latest end date for current control measures. Date in YYYY-MM-DD format OR \"indefinite\" OR blank\n"
+              },
+              "referenceLink": {
+                "type": "string",
+                "description": "Webpage for national Covid-19 policy"
+              }
+            }
+          }
+        ]
+      },
+      "AreaRestrictions": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          {
+            "type": "object",
+            "properties": {
+              "restrictionType": {
+                "type": "string",
+                "description": "Restriction type like ENUM:Lockdown,Curfew,other,DomesticTravel,Additional Section",
+                "enum": [
+                  "LOCKDOWN",
+                  "CURFEW",
+                  "OTHER",
+                  "ADDITIONAL_SECTION",
+                  "DOMESTIC_TRAVEL"
+                ]
+              },
+              "title": {
+                "type": "string"
+              }
+            }
+          }
+        ],
+        "title": "Area Restrictions"
+      },
+      "DatedInformation": {
+        "title": "Dated Information",
+        "type": "object",
+        "description": "Confirmed information at a given date",
+        "properties": {
+          "lastUpdate": {
+            "type": "string",
+            "description": "It will display the last updated date "
+          },
+          "text": {
+            "type": "string",
+            "description": "Freetext"
+          }
+        }
+      },
+      "DataSources": {
+        "title": "Data Sources",
+        "type": "object",
+        "properties": {
+          "covidDashboardLink": {
+            "type": "string",
+            "description": "Information about Covid Dashboard"
+          },
+          "healthDepartmentSiteLink": {
+            "type": "string",
+            "description": "Information about health Department Covid Site"
+          },
+          "governmentSiteLink": {
+            "type": "string",
+            "description": "Information about Government Covid Site"
+          }
+        }
+      },
+      "DiseaseInfection": {
+        "title": "Disease Infection",
+        "description": "Confirmed infinction information at a given date",
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "level": {
+                "type": "string",
+                "description": "Infection risk level. \"Extreme\" | \"High\" | \"Medium\" | \"Moderate\" | \"Low\""
+              },
+              "rate": {
+                "type": "number",
+                "description": "Covid-19 infection rate"
+              },
+              "infectionMapLink": {
+                "type": "string",
+                "description": "Disease Infection map link"
+              },
+              "trend": {
+                "type": "string",
+                "description": "Compares latest week to previous week. \"Significant Decrease\" | \"Significant Increase\" | \"Decrease\" | \"Increase\" | \"Steady\""
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          }
+        ]
+      },
+      "DiseaseCase": {
+        "title": "Disease Cases",
+        "description": "Last confrmed picture at the given date",
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "active": {
+                "type": "number",
+                "description": "Active cases."
+              },
+              "recovered": {
+                "type": "number",
+                "description": "Total Recovered."
+              },
+              "deaths": {
+                "type": "number",
+                "description": "Total deaths."
+              },
+              "confirmed": {
+                "type": "number",
+                "description": "Total Confirmed cases."
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          }
+        ]
+      },
+      "DiseaseAreaReport": {
+        "title": "Disease Area Report",
+        "type": "object",
+        "description": "",
+        "properties": {
+          "type": {
+            "type": "string",
+            "description": "Resource Type"
+          },
+          "area": {
+            "$ref": "#/components/schemas/Area"
+          },
+          "subAreas": {
+            "type": "array",
+            "description": "it can be city or region",
+            "items": {
+              "$ref": "#/components/schemas/DiseaseAreaReport"
+            }
+          },
+          "summary": {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          "dataSources": {
+            "$ref": "#/components/schemas/DataSources"
+          },
+          "relatedArea": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Link"
+            }
+          },
+          "areaVaccinated": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/areaVaccinated"
+            }
+          },
+          "hotspots": {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          "diseaseCases": {
+            "$ref": "#/components/schemas/DiseaseCase"
+          },
+          "diseaseInfection": {
+            "$ref": "#/components/schemas/DiseaseInfection"
+          },
+          "diseaseRiskLevel": {
+            "$ref": "#/components/schemas/DatedInformation"
+          },
+          "AreaPolicy": {
+            "$ref": "#/components/schemas/AreaPolicy"
+          },
+          "areaAccessRestriction": {
+            "$ref": "#/components/schemas/AreaAccessRestriction"
+          },
+          "areaRestrictions": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/AreaRestrictions"
+            }
+          }
+        }
+      },
+      "Area": {
+        "allOf": [
+          {
+            "description": "Description of a particular point or place in physical space",
+            "title": "Location",
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "Label associated to the location (e.g. Eiffel Tower, Madison Square)",
+                "example": "Eiffel Tower"
+              },
+              "code": {
+                "type": "string",
+                "description": "IATA location code",
+                "example": "PAR"
+              },
+              "geoCode": {
+                "type": "object",
+                "description": "Geographic coordinates describing the position of any location on the surface of Earth",
+                "title": "GeoCode",
+                "properties": {
+                  "latitude": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Latitude of the position expressed in decimal degrees (WSG 84), e.g. 6.244203. A positive value denotes northern hemisphere or the equator, and a negative value denotes southern hemisphere. The number of digits to represent the precision of the coordinate.",
+                    "minimum": -90,
+                    "exclusiveMinimum": false,
+                    "maximum": 90,
+                    "exclusiveMaximum": false,
+                    "example": 48.85837
+                  },
+                  "longitude": {
+                    "type": "number",
+                    "format": "float",
+                    "description": "Longitude of the position expressed in decimal degrees (WSG 84), e.g. -75.581211. A positive value denotes east longitude or the prime meridian, and a negative value denotes west longitude.  The number of digits to represent the precision of the coordinate.",
+                    "minimum": -180,
+                    "exclusiveMinimum": false,
+                    "maximum": 180,
+                    "exclusiveMaximum": false,
+                    "example": 2.294481
+                  }
+                }
+              }
+            }
+          },
+          {
+            "properties": {
+              "areaType": {
+                "type": "string",
+                "description": "Area Type example country,city,region"
+              }
+            }
+          }
+        ],
+        "title": "Area",
+        "description": "Area Model",
+        "type": "object"
+      },
+      "Link": {
+        "title": "Links",
+        "type": "object",
+        "description": "Web link , see  https://tools.ietf.org/html/rfc8288",
+        "properties": {
+          "href": {
+            "type": "string",
+            "format": "url",
+            "description": "URL value"
+          },
+          "methods": {
+            "type": "array",
+            "description": "HTTP methods supported by the sibling URL",
+            "items": {
+              "type": "string",
+              "enum": [
+                "GET",
+                "POST",
+                "PUT",
+                "PATCH",
+                "DELETE",
+                "OPTIONS"
+              ]
+            }
+          },
+          "rel": {
+            "type": "string",
+            "description": "Expose the type of relation between the current entity and the describe entity : https://www.iana.org/assignments/link-relations/link-relations.xhtml"
+          }
+        }
+      },
+      "areaVaccinated": {
+        "title": "Area Vaccinated",
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "vaccinationDoseStatus": {
+                "type": "string",
+                "description": "Status of Vaccination dose status ,example one dose, fully vaccinated"
+              },
+              "percentage": {
+                "type": "number",
+                "description": "Percent of population vaccinated based on the vaccination dose status"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          }
+        ]
+      },
+      "travelVaccination": {
+        "title": "Travel Vaccination",
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "isRequired": {
+                "type": "string"
+              },
+              "referenceLink": {
+                "type": "string",
+                "description": "Webpage of vaccination regulations"
+              },
+              "acceptedCertificates": {
+                "type": "array",
+                "description": "List of accepted certificates. Not Specified/Paper Certificate/ and/or the name of the app",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "qualifiedVaccines": {
+                "type": "array",
+                "description": "Vaccine types recognized by the country/territory. Each entry contains the vaccine's short name and the number of days after the first/second dose for full vaccination, i.e. AstraZeneca 14 days after second dose",
+                "items": {
+                  "$ref": "#/components/schemas/vaccine"
+                }
+              },
+              "details": {
+                "type": "string",
+                "description": "Text explanation of the policies and exemptions for vaccinated travellers"
+              },
+              "minimumAge": {
+                "type": "integer",
+                "description": "Minimum age, in years, that a vaccine can be administered. Under this age, no vaccine is required"
+              },
+              "exemptionFromVaccination": {
+                "type": "string",
+                "description": "Categories of travellers that do not require vaccination: \"Aircrew\", \"Transit\", \"Diplomatic\", \"Transport\", \"Medical\", \"Short\", \"Urgent\", \"Family\" Family or close relationship \"Culture\", \"Sports\", \"Remote\", \"Commute\", \"Frequent\", Citizen, Resident, Military, Seamen, Deported, Humanitarian, Healthcare, Disability, \"Pregnant\""
+              },
+              "vaccinatedTravellers": {
+                "type": "object",
+                "properties": {
+                  "policy": {
+                    "type": "string",
+                    "description": "Yes/No; 'Yes' indicates fully vaccinated travellers are exempt from some requirements or restrictions"
+                  },
+                  "exemptions": {
+                    "type": "string",
+                    "description": "Entry Ban Testing Documents App Quarantine Masks Exit Domestic Restrictions; indicates what exemptions fully vaccinated travellers qualify for. "
+                  }
+                }
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          }
+        ]
+      },
+      "AreaHealthPass": {
+        "title": "Area Health Pass",
+        "allOf": [
+          {
+            "type": "object",
+            "properties": {
+              "isRequired": {
+                "type": "string",
+                "description": "\"Yes\", \"No\""
+              },
+              "applicationGuidance": {
+                "type": "string",
+                "description": "Text explanation of what activities and establishments require a entry pass"
+              },
+              "obtentionMethods": {
+                "type": "string",
+                "description": "Text explanation of how to obtain the covid pass, if known."
+              },
+              "referenceLink": {
+                "type": "string",
+                "description": "URL to covid pass rules, web portal or app landing page"
+              }
+            }
+          },
+          {
+            "$ref": "#/components/schemas/DatedInformation"
+          }
+        ]
+      },
+      "vaccine": {
+        "title": "Qualified Vaccines",
+        "type": "object",
+        "properties": {
+          "supportedVaccineProducts": {
+            "type": "string",
+            "description": "the vaccine's short name"
+          },
+          "numberOfDoses": {
+            "type": "integer",
+            "description": "The number of doses required for full vaccination"
+          },
+          "expiration": {
+            "$ref": "#/components/schemas/Expiration"
+          },
+          "boosterRequired": {
+            "type": "string",
+            "description": "Yes\", \"No\""
+          },
+          "boosterExpiration": {
+            "$ref": "#/components/schemas/Expiration"
+          },
+          "validity": {
+            "$ref": "#/components/schemas/validity"
+          }
+        }
+      },
+      "Expiration": {
+        "title": "Expiration",
+        "type": "object",
+        "properties": {
+          "expiresAfter": {
+            "type": "string"
+          },
+          "referenceDateTime": {
+            "type": "string"
+          }
+        }
+      },
+      "travelTestConditionsAndRules": {
+        "title": "Travel Test Conditions and Rules",
+        "type": "object",
+        "properties": {
+          "travelPhases ": {
+            "type": "string",
+            "description": "Travel Phase like BEFORE_TRAVEL,UPON_TRAVEL,AFTER_ARRIVAL,IN_TRANSIT"
+          },
+          "scenarios": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TravelTestSceanrio"
+            }
+          }
+        }
+      },
+      "validity": {
+        "title": "Validity",
+        "type": "object",
+        "properties": {
+          "delay": {
+            "type": "string",
+            "description": "explain validity in terms of days,months or hours "
+          },
+          "referenceDateTime": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelTestSceanrio": {
+        "title": "Travel Test Scenario",
+        "type": "object",
+        "properties": {
+          "name ": {
+            "type": "string",
+            "description": "Unique name that explains the scenario "
+          },
+          "condition": {
+            "$ref": "#/components/schemas/TravelTestCondition"
+          },
+          "rule": {
+            "$ref": "#/components/schemas/TravelTestRules"
+          }
+        }
+      },
+      "TravelTestCondition": {
+        "title": "Travel Test Condition",
+        "type": "object",
+        "properties": {
+          "traveller": {
+            "$ref": "#/components/schemas/TravelTestTravellerCondition"
+          },
+          "trip": {
+            "$ref": "#/components/schemas/TravelTestTripCondition"
+          },
+          "textualScenario": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelTestTravellerCondition": {
+        "title": "Travel Test Traveller Condition",
+        "type": "object",
+        "properties": {
+          "whoNeeds": {
+            "type": "string"
+          },
+          "minimumAge": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelTestRules": {
+        "title": "Travel Test Rules",
+        "type": "object",
+        "properties": {
+          "exemptions": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "test": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TravelTestRequirementsRule"
+            }
+          },
+          "arrivalTestDays": {
+            "type": "string"
+          }
+        }
+      },
+      "TravelTestRequirementsRule": {
+        "title": "Travel Test Requirements Rules",
+        "type": "object",
+        "properties": {
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "validity": {
+            "$ref": "#/components/schemas/validity"
+          }
+        }
+      },
+      "TravelTestTripCondition": {
+        "title": "Travel Test Trip Condition",
+        "type": "object",
+        "properties": {
+          "countries": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Area"
+            }
+          },
+          "destinationCountry": {
+            "type": "string",
+            "description": "Country Name (IATA Code)"
+          },
+          "destinationCity": {
+            "type": "string",
+            "description": "City Name (Optional)"
+          },
+          "transitCountry": {
+            "type": "string",
+            "description": "Country Name"
+          },
+          "transitCity": {
+            "type": "string",
+            "description": "City Name"
+          }
+        },
+        "required": [
+          "destinationCountry"
+        ]
+      },
+      "HealthInsuranceModality": {
+        "title": "Health Insurance Modality",
+        "type": "object",
+        "description": "The traveller's Health Insurance",
+        "properties": {
+          "isRequired": {
+            "type": "string",
+            "description": "Is the health insurance needed ? YES/NO"
+          },
+          "minAmount": {
+            "type": "string",
+            "description": "Minumum amount of Health Insurance needed"
+          },
+          "currencyCode": {
+            "type": "string",
+            "description": "Currency "
+          },
+          "text": {
+            "type": "string",
+            "description": "freetext"
+          }
+        }
+      },
+      "Meta": {
+        "type": "object",
+        "description": "Meta information about the returned object(s) in \"data\"",
+        "properties": {
+          "links": {
+            "type": "object",
+            "description": "Links related to the returned object(s)",
+            "properties": {
+              "self": {
+                "type": "string",
+                "description": "Link to the same page."
+              }
+            }
+          },
+          "lang": {
+            "type": "string",
+            "description": "Default language of the response (fr-FR)"
+          }
+        }
+      },
+      "Warning": {
+        "type": "object",
+        "description": "The Warning Definition",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "A machine-readable error code from the Canned Messages table, that will enable the API Consumers code to handle this type of error"
+          },
+          "title": {
+            "type": "string",
+            "description": "An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized"
+          },
+          "detail": {
+            "type": "string",
+            "description": "An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized."
+          },
+          "source": {
+            "type": "object",
+            "description": "The Warning Source Definition",
+            "properties": {
+              "parameter": {
+                "type": "string",
+                "description": "The key of the URI path or query parameter that caused the error"
+              },
+              "pointer": {
+                "type": "string",
+                "description": "A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error"
+              },
+              "example": {
+                "type": "string",
+                "description": "A sample input to guide the user when resolving this issue"
+              }
+            }
+          }
+        },
+        "required": [
+          "code",
+          "title"
+        ]
+      },
+      "Error": {
+        "type": "object",
+        "description": "The Error Definition",
+        "title": "Error",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "The [HTTP status code](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) of this response. This is present only in terminal errors which cause an unsuccessful response. In the case of multiple errors, they must all have the same status."
+          },
+          "code": {
+            "type": "integer",
+            "description": "A machine-readable error code from the Amadeus Canned Messages table, that will enable the API Consumers code to handle this type of error"
+          },
+          "title": {
+            "type": "string",
+            "description": "An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized"
+          },
+          "detail": {
+            "type": "string",
+            "description": "An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized."
+          },
+          "source": {
+            "type": "object",
+            "title": "Error_Source",
+            "properties": {
+              "parameter": {
+                "type": "string",
+                "description": "The key of the URI path or query parameter that caused the error"
+              },
+              "pointer": {
+                "type": "string",
+                "description": "A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error"
+              },
+              "example": {
+                "type": "string",
+                "description": "A sample input to guide the user when resolving this issue"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
