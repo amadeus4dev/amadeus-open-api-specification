@@ -1,31 +1,48 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.5.2",
+    "version": "1.9.0",
     "title": "Flight Order Management",
     "x-tags": [
-      "#quick-connect",
       "#online-retail",
       "#mobile-services",
       "#ama-for-dev"
     ],
     "x-status": "validated",
     "x-release-note": {
+      "1.9.0": [
+        "Add FormIdentification into the flight-order"
+      ],
+      "1.8.0": [
+        "Add new source \"NDC\" - **only available in Enterprise**"
+      ],
+      "1.7.0": [
+        "Add new PaymentBrand enum \"PYTON\" - **only available in Enterprise**",
+        "Add new OtherPaymentMethod enum \"PYTON\" - **only available in Enterprise**",
+        "Add FM Commission - **only available in Enterprise**"
+      ],
+      "1.6.0": [
+        "Add BookingStatus information",
+        "Add included Meals content",
+        "Add extra bags options on Get Flight Order - **only available in Enterprise**",
+        "Add Margins and Discounts content from Margin Manager product - **only available in Enterprise**"
+      ],
       "1.5.0": [
         "Add new Gender enum \"UNSPECIFIED\" and \"UNDISCLOSED\"",
-        "Add EasyPay credit card brand - **not available in self-service**"
+        "Add EasyPay credit card brand - **only available in Enterprise**"
       ],
       "1.4.0": [
         "Add new airlineRemark subtype \"ADVANCED_TICKET_TIME_LIMIT\""
       ],
       "1.3.0": [
-        "Add new sources \"LTC\" and \"EAC\" - **not available in self-service**"
+        "Add new sources \"LTC\" and \"EAC\" - **only available in Enterprise**"
       ],
       "1.2.0": [
-        "Add PATCH flight Order End point - **not available in self-service**"
+        "Add PATCH flight Order End point - **only available in Enterprise**"
       ],
       "1.1.0": [
-        "Add Delete flight Order End point"
+        "Add Delete flight Order End point",
+        "Add Patch flight Order End Point - **only available in Enterprise**"
       ],
       "1.0.0": [
         "Initial version"
@@ -99,6 +116,7 @@
   },
   "definitions": {
     "Error_400": {
+      "type": "object",
       "properties": {
         "errors": {
           "type": "array",
@@ -126,6 +144,7 @@
       }
     },
     "Error_404": {
+      "type": "object",
       "properties": {
         "errors": {
           "type": "array",
@@ -152,6 +171,7 @@
       }
     },
     "Error_500": {
+      "type": "object",
       "properties": {
         "errors": {
           "type": "array",
@@ -174,6 +194,7 @@
       }
     },
     "Issue": {
+      "type": "object",
       "properties": {
         "status": {
           "description": "the HTTP status code applicable to this error",
@@ -215,6 +236,7 @@
       }
     },
     "Collection_Meta_Link": {
+      "type": "object",
       "title": "Collection_Meta",
       "properties": {
         "count": {
@@ -222,6 +244,7 @@
           "example": 1
         },
         "links": {
+          "type": "object",
           "title": "CollectionLinks",
           "properties": {
             "self": {
@@ -325,6 +348,34 @@
           "items": {
             "$ref": "#/definitions/FlightStop"
           }
+        },
+        "bookingStatus": {
+          "description": "booking status of the segment",
+          "type": "string",
+          "enum": [
+            "CONFIRMED",
+            "WAITLISTED",
+            "CANCELLED",
+            "PENDING",
+            "DENIED"
+          ],
+          "example": "CONFIRMED"
+        },
+        "segmentType": {
+          "description": "type of the segment",
+          "type": "string",
+          "enum": [
+            "ACTIVE",
+            "PASSIVE",
+            "GHOST",
+            "STAFF"
+          ],
+          "example": "GHOST"
+        },
+        "isFlown": {
+          "type": "boolean",
+          "description": "indicator set to true if segment is flown",
+          "example": true
         }
       }
     },
@@ -785,16 +836,7 @@
                       "example": true
                     },
                     "allotmentDetails": {
-                      "title": "AllotmentDetails",
-                      "type": "object",
-                      "properties": {
-                        "tourName": {
-                          "type": "string"
-                        },
-                        "tourReference": {
-                          "type": "string"
-                        }
-                      }
+                      "$ref": "#/definitions/AllotmentDetails"
                     },
                     "sliceDiceIndicator": {
                       "$ref": "#/definitions/SliceDiceIndicator"
@@ -803,6 +845,20 @@
                       "title": "includedCheckedBags",
                       "$ref": "#/definitions/BaggageAllowance",
                       "description": "Details of the included checked bags"
+                    },
+                    "mealServices": {
+                      "type": "array",
+                      "description": "meal services proposed for the booked segment, there can be several, for example D DINNER + B BREAKFAST",
+                      "items": {
+                        "title": "MealServices",
+                        "properties": {
+                          "label": {
+                            "type": "string",
+                            "example": "DINNER",
+                            "description": "meal label"
+                          }
+                        }
+                      }
                     },
                     "additionalServices": {
                       "type": "object",
@@ -948,6 +1004,20 @@
         "SUB_OD_AVAILABILITY_1",
         "SUB_OD_AVAILABILITY_2"
       ]
+    },
+    "AllotmentDetails": {
+      "title": "AllotmentDetails",
+      "type": "object",
+      "properties": {
+        "tourName": {
+          "description": "The tour name agreed for this specific allotment.",
+          "type": "string"
+        },
+        "tourReference": {
+          "description": "The tour reference agreed for this specific allotment.",
+          "type": "string"
+        }
+      }
     },
     "Dictionaries": {
       "type": "object",
@@ -1119,6 +1189,13 @@
           "items": {
             "$ref": "#/definitions/AirTravelDocument"
           }
+        },
+        "formOfIdentifications": {
+          "description": "list of forms of identifications applicable to travelers by airline",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FormOfIdentification"
+          }
         }
       }
     },
@@ -1287,6 +1364,56 @@
           "example": "12357466574"
         }
       }
+    },
+    "FormOfIdentification": {
+      "type": "object",
+      "description": "alternative means of identifying stakeholders for eTicket.",
+      "properties": {
+        "identificationType": {
+          "type": "string",
+          "description": "Type of identification",
+          "enum": [
+            "DRIVERS_LICENSE",
+            "PASSPORT",
+            "NATIONAL_IDENTITY_CARD",
+            "BOOKING_CONFIRMATION",
+            "TICKET",
+            "OTHER_ID"
+          ],
+          "example": "PASSPORT"
+        },
+        "carrierCode": {
+          "type": "string",
+          "description": "providing the airline / carrier code",
+          "minLength": 1,
+          "maxLength": 2,
+          "example": "DL"
+        },
+        "number": {
+          "type": "string",
+          "description": "identification number relative to the type of identification either ticket number, booking number, passport number, identity card number, drivers licence number, other ID",
+          "example": "XN0019390"
+        },
+        "travelerIds": {
+          "description": "Ids of the concerned travelers",
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "example": "1"
+        },
+        "flightOfferIds": {
+          "description": "Id of the concerned flightOffers",
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 6,
+          "items": {
+            "type": "string"
+          },
+          "example": "1"
+        }
+      },
+      "title": "FormOfIdentification"
     },
     "Discount": {
       "title": "Discount",
@@ -1720,7 +1847,8 @@
         "BACKOFFICE",
         "FULFILLMENT",
         "ITINERARY",
-        "TICKETING_MISCELLANEOUS"
+        "TICKETING_MISCELLANEOUS",
+        "TOUR_CODE"
       ],
       "example": "GENERAL_MISCELLANEOUS"
     },
@@ -2722,5 +2850,5 @@
       "x-example": "eJzTd9f3s4gKC%2FMEAAt8Ans%3D"
     }
   },
-  "x-generatedAt": "2020-11-06T17:41:31.499Z"
+  "x-generatedAt": "2022-08-09T11:22:31.499Z"
 }
