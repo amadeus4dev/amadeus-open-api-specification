@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Hotel List",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Before using the API you will need to get an access token. Please read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to get your token."
   },
   "servers": [
@@ -942,68 +942,11 @@
                     "description": "Address information",
                     "title": "Address",
                     "properties": {
-                      "category": {
-                        "description": "Category of the contact element",
-                        "type": "string",
-                        "enum": [
-                          "BUSINESS",
-                          "PERSONAL",
-                          "OTHER"
-                        ]
-                      },
-                      "lines": {
-                        "type": "array",
-                        "description": "Line 1 = Street address, Line 2 = Apartment, suite, unit, building, floor, etc",
-                        "items": {
-                          "type": "string"
-                        },
-                        "x-risk-personal-data-field": "ADDRESS"
-                      },
-                      "postalCode": {
-                        "type": "string",
-                        "description": "Example: 74130",
-                        "x-risk-personal-data-field": "ADDRESS"
-                      },
                       "countryCode": {
                         "type": "string",
                         "description": "ISO 3166-1 country code",
-                        "pattern": "[a-zA-Z]{2}",
-                        "x-risk-personal-data-field": "ADDRESS"
-                      },
-                      "cityName": {
-                        "type": "string",
-                        "description": "Full city name. Example: Dublin",
-                        "pattern": "[a-zA-Z -]{1,35}",
-                        "x-risk-personal-data-field": "ADDRESS"
-                      },
-                      "stateCode": {
-                        "type": "string",
-                        "description": "State code (two character standard IATA state code)",
-                        "pattern": "[a-zA-Z0-9]{1,2}",
-                        "x-risk-personal-data-field": "ADDRESS"
-                      },
-                      "postalBox": {
-                        "type": "string",
-                        "description": "E.g. BP 220",
-                        "x-risk-personal-data-field": "ADDRESS"
-                      },
-                      "text": {
-                        "type": "string",
-                        "description": "Field containing a full unformatted address. Only applicable when the fields lines, postalCode, countryCode, cityName are not filled.",
-                        "x-risk-personal-data-field": "ADDRESS"
-                      },
-                      "state": {
-                        "type": "string",
-                        "description": "State, province or country name",
-                        "example": "Florida",
-                        "x-risk-personal-data-field": "ADDRESS"
-                      }
-                    },
-                    "x-tags": [
-                      "address",
-                      "postal",
-                      "PII"
-                    ]
+                        "pattern": "[a-zA-Z]{2}"                      }
+                    }
                   },
                   "geoCode": {
                     "type": "object",
