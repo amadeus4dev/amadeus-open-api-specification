@@ -1,37 +1,42 @@
 swagger: '2.0'
 info:
-  version: 1.5.3
+  version: 1.9.0
   title: Flight Create Orders
   x-tags:
+    - '#travel-booking'
     - '#quick-connect'
-    - '#online-retail'
     - '#mobile-services'
     - '#ama-for-dev'
   x-status: validated
   x-release-note:
+    1.9.0:
+      - Add FormIdentification into the flight-order
+    1.8.0:
+      - Add new source "NDC" - **only available in Enterprise**
+    1.7.0:
+      - Add new PaymentBrand enum "PYTON" - **only available in Enterprise**
+      - Add new OtherPaymentMethod enum "PYTON" - **only available in Enterprise**
+      - Add FM Commission - **only available in Enterprise**
+    1.6.0:
+      - Add Margins and Discounts content from Margin Manager product - **only available in Enterprise**
     1.5.0:
       - Add new General Remark enum "TOUR_CODE"
     1.4.0:
       - Add new Gender enum "UNSPECIFIED" and "UNDISCLOSED"
-      - Add EasyPay credit card brand - **not available in self-service**
+      - Add EasyPay credit card brand - **only available in Enterprise**
     1.3.0:
       - Add new airlineRemark subtype "ADVANCED_TICKET_TIME_LIMIT"
     1.2.0:
-      - Add new sources "LTC" and "EAC" - **not available in self-service**
+      - Add new sources "LTC" and "EAC" - **only available in Enterprise**
     1.1.0:
       - Add Co2Emissions information into Create flight-order reply
       - Add language in Contact for the APN feature
     1.0.0:
       - Initial version
-  description: >-
-    Before using this API, we recommend you read our **[Authorization
-    Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)**
-    for more information on how to generate an access token. 
+  description: |-
+    Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
 
-
-    Please also be aware that our test environment is based on a subset of the
-    production, if you are not returning any results try with big
-    cities/airports like LON (London) or NYC (New-York).
+    Please also be aware that our test environment is based on a subset of the production, if you are not returning any results try with big cities/airports like LON (London) or NYC (New-York).
 host: test.api.amadeus.com
 basePath: /v1
 schemes:
@@ -351,7 +356,7 @@ paths:
                     emailAddress: support@increibleviajes.es
                     address:
                       lines:
-                        - 'Calle Prado, 16'
+                        - Calle Prado, 16
                       postalCode: '28014'
                       cityName: Madrid
                       countryCode: ES
@@ -365,6 +370,7 @@ paths:
       description: ''
 definitions:
   Error_400:
+    type: object
     properties:
       errors:
         type: array
@@ -382,6 +388,7 @@ definitions:
             parameter: airport
             example: CDG
   Error_500:
+    type: object
     properties:
       errors:
         type: array
@@ -395,6 +402,7 @@ definitions:
           code: 141
           title: SYSTEM ERROR HAS OCCURRED
   Issue:
+    type: object
     properties:
       status:
         description: the HTTP status code applicable to this error
@@ -416,9 +424,7 @@ definitions:
         maxProperties: 1
         properties:
           pointer:
-            description: >-
-              a JSON Pointer [RFC6901] to the associated entity in the request
-              document
+            description: a JSON Pointer [RFC6901] to the associated entity in the request document
             type: string
           parameter:
             description: a string indicating which URI query parameter caused the issue
@@ -427,40 +433,42 @@ definitions:
             description: a string indicating an example of the right value
             type: string
   Collection_Meta_Link:
+    type: object
     title: Collection_Meta
     properties:
       count:
         type: integer
         example: 1
       links:
+        type: object
         title: CollectionLinks
         properties:
           self:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           next:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           previous:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           last:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           first:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           up:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
         example:
-          self: 'https://test.api.amadeus.com/v1/area/resources?param=value'
+          self: https://test.api.amadeus.com/v1/area/resources?param=value
   LocationEntry:
     additionalProperties:
       $ref: '#/definitions/LocationValue'
@@ -478,9 +486,7 @@ definitions:
       type: string
   FlightSegment:
     type: object
-    description: >-
-      defining a flight segment; including both operating and marketing details
-      when applicable
+    description: defining a flight segment; including both operating and marketing details when applicable
     properties:
       departure:
         $ref: '#/definitions/FlightEndPoint'
@@ -504,15 +510,11 @@ definitions:
         $ref: '#/definitions/OperatingFlight'
       duration:
         type: string
-        description: >-
-          stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)
-          PnYnMnDTnHnMnS format, e.g. PT2H10M
+        description: stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M
         example: PT2H10M
       stops:
         type: array
-        description: >-
-          information regarding the different stops composing the flight
-          segment. E.g. technical stop, change of gauge...
+        description: information regarding the different stops composing the flight segment. E.g. technical stop, change of gauge...
         items:
           $ref: '#/definitions/FlightStop'
   OriginalFlightEndPoint:
@@ -520,9 +522,7 @@ definitions:
     description: departure or arrival information
     properties:
       iataCode:
-        description: >-
-          [IATA airline
-          codes](http://www.iata.org/publications/Pages/code-search.aspx)
+        description: '[IATA airline codes](http://www.iata.org/publications/Pages/code-search.aspx)'
         type: string
         example: JFK
       terminal:
@@ -537,10 +537,7 @@ definitions:
       - type: object
         properties:
           at:
-            description: >-
-              local date and time in
-              [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)
-              YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
+            description: local date and time in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
             type: string
             format: date-time
             example: '2017-10-23T20:00:00'
@@ -549,16 +546,12 @@ definitions:
     type: object
     properties:
       iataCode:
-        description: >-
-          [IATA airline
-          codes](http://www.iata.org/publications/Pages/code-search.aspx)
+        description: '[IATA airline codes](http://www.iata.org/publications/Pages/code-search.aspx)'
         type: string
         example: JFK
       duration:
         type: string
-        description: >-
-          stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)
-          PnYnMnDTnHnMnS format, e.g. PT2H10M
+        description: stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M
         example: PT2H10M
   FlightStop:
     title: FlightStop
@@ -568,18 +561,12 @@ definitions:
       - type: object
         properties:
           arrivalAt:
-            description: >-
-              arrival at the stop in
-              [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)
-              YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
+            description: arrival at the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
             type: string
             format: date-time
             example: '2017-10-23T20:00:00'
           departureAt:
-            description: >-
-              departure from the stop in
-              [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)
-              YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
+            description: departure from the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
             type: string
             format: date-time
             example: '2017-10-23T20:00:00'
@@ -588,9 +575,8 @@ definitions:
     properties:
       code:
         type: string
-        description: >
-          IATA aircraft code
-          (http://www.flugzeuginfo.net/table_accodes_iata_en.php)
+        description: |
+          IATA aircraft code (http://www.flugzeuginfo.net/table_accodes_iata_en.php)
         pattern: '[a-zA-Z0-9]{3}'
         example: '318'
   OperatingFlight:
@@ -637,22 +623,15 @@ definitions:
       - type: object
         properties:
           margin:
-            description: >-
-              BOOK step ONLY - The price margin percentage (plus or minus) that
-              the booking can tolerate. When set to 0, then no price magin is
-              tolerated.
+            description: BOOK step ONLY - The price margin percentage (plus or minus) that the booking can tolerate. When set to 0, then no price magin is tolerated.
             type: string
             example: '1.00'
           grandTotal:
-            description: >-
-              Total amount paid by the user (including fees and selected
-              additional services).
+            description: Total amount paid by the user (including fees and selected additional services).
             type: string
             example: '987.00'
           billingCurrency:
-            description: >-
-              Currency of the payment. It may be different than the requested
-              currency
+            description: Currency of the payment. It may be different than the requested currency
             type: string
             example: EUR
           additionalServices:
@@ -695,9 +674,7 @@ definitions:
         type: string
         example: MX
   TravelClass:
-    description: >-
-      quality of service offered in the cabin where the seat is located in this
-      flight. Economy, premium economy, business or first class
+    description: quality of service offered in the cabin where the seat is located in this flight. Economy, premium economy, business or first class
     type: string
     enum:
       - ECONOMY
@@ -736,46 +713,31 @@ definitions:
       source:
         $ref: '#/definitions/FlightOfferSource'
       instantTicketingRequired:
-        description: 'If true, inform that a ticketing will be required at booking step.'
+        description: If true, inform that a ticketing will be required at booking step.
         type: boolean
         example: false
       disablePricing:
-        description: >-
-          BOOK step ONLY - If true, allows to book a PNR without pricing. Only
-          for the source "GDS"
+        description: BOOK step ONLY - If true, allows to book a PNR without pricing. Only for the source "GDS"
         type: boolean
         example: false
       nonHomogeneous:
-        description: >-
-          If true, upon completion of the booking, this pricing solution is
-          expected to yield multiple records (a record contains booking
-          information confirmed and stored, typically a Passenger Name Record
-          (PNR), in the provider GDS or system)
+        description: If true, upon completion of the booking, this pricing solution is expected to yield multiple records (a record contains booking information confirmed and stored, typically a Passenger Name Record (PNR), in the provider GDS or system)
         type: boolean
         example: false
       oneWay:
-        description: >-
-          If true, the flight offer fulfills only one originDestination and has
-          to be combined with other oneWays to complete the whole journey.
+        description: If true, the flight offer fulfills only one originDestination and has to be combined with other oneWays to complete the whole journey.
         type: boolean
         example: false
       paymentCardRequired:
-        description: 'If true, a payment card is mandatory to book this flight offer'
+        description: If true, a payment card is mandatory to book this flight offer
         type: boolean
         example: false
       lastTicketingDate:
-        description: >-
-          If booked on the same day as the search (with respect to timezone),
-          this flight offer is guaranteed to be thereafter valid for ticketing
-          until this date (included). Unspecified when it does not make sense
-          for this flight offer (e.g. no control over ticketing once booked).
-          YYYY-MM-DD format, e.g. 2019-06-07
+        description: If booked on the same day as the search (with respect to timezone), this flight offer is guaranteed to be thereafter valid for ticketing until this date (included). Unspecified when it does not make sense for this flight offer (e.g. no control over ticketing once booked). YYYY-MM-DD format, e.g. 2019-06-07
         type: string
         example: '2018-06-19T00:00:00.000Z'
       numberOfBookableSeats:
-        description: >-
-          Number of seats bookable in a single request. Can not be higher than
-          9.
+        description: Number of seats bookable in a single request. Can not be higher than 9.
         type: number
         example: 9
         minimum: 1
@@ -789,9 +751,7 @@ definitions:
           type: object
           properties:
             duration:
-              description: >-
-                duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)
-                PnYnMnDTnHnMnS format, e.g. PT2H10M for a duration of 2h10m
+              description: duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M for a duration of 2h10m
               type: string
               example: PT2H10M
             segments:
@@ -814,19 +774,19 @@ definitions:
             $ref: '#/definitions/PricingOptionsFareType'
           includedCheckedBagsOnly:
             type: boolean
-            description: 'If true, returns the flight-offers with included checked bags only'
+            description: If true, returns the flight-offers with included checked bags only
             example: true
           refundableFare:
             type: boolean
-            description: 'If true, returns the flight-offers with refundable fares only'
+            description: If true, returns the flight-offers with refundable fares only
             example: true
           noRestrictionFare:
             type: boolean
-            description: 'If true, returns the flight-offers with no restriction fares only'
+            description: If true, returns the flight-offers with no restriction fares only
             example: true
           noPenaltyFare:
             type: boolean
-            description: 'If true, returns the flight-offers with no penalty fares only'
+            description: If true, returns the flight-offers with no penalty fares only
             example: true
       validatingAirlineCodes:
         description: This option ensures that the system will only consider these airlines.
@@ -861,9 +821,7 @@ definitions:
               $ref: '#/definitions/TravelerType'
             associatedAdultId:
               type: string
-              description: >-
-                if type="HELD_INFANT", corresponds to the adult traveler's id
-                who will share the seat
+              description: if type="HELD_INFANT", corresponds to the adult traveler's id who will share the seat
             price:
               description: price detail of the traveler
               $ref: '#/definitions/Price'
@@ -884,27 +842,16 @@ definitions:
                   cabin:
                     $ref: '#/definitions/TravelClass'
                   fareBasis:
-                    description: >-
-                      Fare basis specifying the rules of a fare. Usually, though
-                      not always, is composed of the booking class code followed
-                      by a set of letters and digits representing other
-                      characteristics of the ticket, such as refundability,
-                      minimum stay requirements, discounts or special
-                      promotional elements.
+                    description: Fare basis specifying the rules of a fare. Usually, though not always, is composed of the booking class code followed by a set of letters and digits representing other characteristics of the ticket, such as refundability, minimum stay requirements, discounts or special promotional elements.
                     type: string
                     example: ANNNNF4K
                     pattern: '[[A-Z0-9]{1,18}'
                   brandedFare:
-                    description: >-
-                      The name of the Fare Family corresponding to the fares.
-                      Only for the GDS provider and if the airline has fare
-                      families filled
+                    description: The name of the Fare Family corresponding to the fares. Only for the GDS provider and if the airline has fare families filled
                     type: string
                     example: LIGHTONE
                   class:
-                    description: >-
-                      The code of the booking class, a.k.a. class of service or
-                      Reservations/Booking Designator (RBD)
+                    description: The code of the booking class, a.k.a. class of service or Reservations/Booking Designator (RBD)
                     type: string
                     example: A
                     pattern: '[A-Z]{1}'
@@ -913,13 +860,7 @@ definitions:
                     type: boolean
                     example: true
                   allotmentDetails:
-                    title: AllotmentDetails
-                    type: object
-                    properties:
-                      tourName:
-                        type: string
-                      tourReference:
-                        type: string
+                    $ref: '#/definitions/AllotmentDetails'
                   sliceDiceIndicator:
                     $ref: '#/definitions/SliceDiceIndicator'
                   includedCheckedBags:
@@ -959,23 +900,11 @@ definitions:
             type: integer
             example: 0
           blacklistedInEU:
-            description: >
-              When the flight has a marketing or/and operating airline that is
-              identified as blacklisted by the European Commission. 
+            description: |
+              When the flight has a marketing or/and operating airline that is identified as blacklisted by the European Commission. 
 
-
-              To improve travel safety, the European Commission regularly
-              updates the list of the banned carriers from operating in Europe.
-              It allows any Travel Agency located in the European Union to
-              easily identify and hide any travel recommendation based on some
-              unsafe airlines. 
-
-              The [list of the banned
-              airlines](https://ec.europa.eu/transport/sites/transport/files/air-safety-list_en.pdf)
-              is published in the Official Journal of the European Union, where
-              they are included as annexes A and B to the Commission Regulation.
-              The blacklist of an airline can concern all its flights or some
-              specific aircraft types pertaining to the airline   
+              To improve travel safety, the European Commission regularly updates the list of the banned carriers from operating in Europe. It allows any Travel Agency located in the European Union to easily identify and hide any travel recommendation based on some unsafe airlines. 
+              The [list of the banned airlines](https://ec.europa.eu/transport/sites/transport/files/air-safety-list_en.pdf) is published in the Official Journal of the European Union, where they are included as annexes A and B to the Commission Regulation. The blacklist of an airline can concern all its flights or some specific aircraft types pertaining to the airline   
             type: boolean
             example: false
           co2Emissions:
@@ -988,11 +917,9 @@ definitions:
       - $ref: '#/definitions/FlightSegment'
   TravelerType:
     type: string
-    description: >
+    description: |
       traveler type
-
-      age restrictions : CHILD < 12y, HELD_INFANT < 2y, SEATED_INFANT < 2y,
-      SENIOR >=60y
+      age restrictions : CHILD < 12y, HELD_INFANT < 2y, SEATED_INFANT < 2y, SENIOR >=60y
     enum:
       - ADULT
       - CHILD
@@ -1027,10 +954,8 @@ definitions:
     example:
       - PUBLISHED
   TravelerPricingFareOption:
-    description: >
-      option specifying a group of fares, which may be valid under certain
-      conditons
-
+    description: |
+      option specifying a group of fares, which may be valid under certain conditons
       Can be used to specify special fare discount for a passenger
     type: string
     enum:
@@ -1048,14 +973,22 @@ definitions:
       - COMPANION
     example: STANDARD
   SliceDiceIndicator:
-    description: >-
-      slice and Dice indicator, such as Local Availability, Sub OnD(Origin and
-      Destination) 1 Availability and Sub OnD 2 Availability
+    description: slice and Dice indicator, such as Local Availability, Sub OnD(Origin and Destination) 1 Availability and Sub OnD 2 Availability
     type: string
     enum:
       - LOCAL_AVAILABILITY
       - SUB_OD_AVAILABILITY_1
       - SUB_OD_AVAILABILITY_2
+  AllotmentDetails:
+    title: AllotmentDetails
+    type: object
+    properties:
+      tourName:
+        description: The tour name agreed for this specific allotment.
+        type: string
+      tourReference:
+        description: The tour reference agreed for this specific allotment.
+        type: string
   Dictionaries:
     type: object
     properties:
@@ -1083,9 +1016,7 @@ definitions:
     properties:
       amount:
         type: string
-        description: >-
-          Amount of the fare. could be alpha numeric. Ex- 500.20 or 514.13A,
-          'A'signifies additional collection.
+        description: Amount of the fare. could be alpha numeric. Ex- 500.20 or 514.13A, 'A'signifies additional collection.
       currencyCode:
         type: string
         description: Currency type of the fare.
@@ -1188,6 +1119,11 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/AirTravelDocument'
+      formOfIdentifications:
+        description: list of forms of identifications applicable to travelers by airline
+        type: array
+        items:
+          $ref: '#/definitions/FormOfIdentification'
   Stakeholder:
     type: object
     description: stakeholder definition
@@ -1205,9 +1141,7 @@ definitions:
         $ref: '#/definitions/Name'
       documents:
         type: array
-        description: >-
-          Advanced Passenger Information - regulatory identity documents - SSR
-          DOCS & DOCO elements
+        description: Advanced Passenger Information - regulatory identity documents - SSR DOCS & DOCO elements
         items:
           $ref: '#/definitions/IdentityDocument'
   StakeholderGender:
@@ -1231,18 +1165,12 @@ definitions:
             $ref: '#/definitions/DocumentType'
           validityCountry:
             type: string
-            description: >-
-              [ISO 3166-1
-              alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the
-              country where the document is valid
+            description: '[ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the country where the document is valid'
             example: IN
             pattern: '[a-zA-Z]{2}'
           birthCountry:
             type: string
-            description: >-
-              [ISO 3166-1
-              alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the
-              country of birth
+            description: '[ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the country of birth'
             example: FR
             pattern: '[a-zA-Z]{2}'
           holder:
@@ -1266,21 +1194,14 @@ definitions:
         format: date
       issuanceCountry:
         type: string
-        description: >-
-          [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
-          of the country that issued the document
+        description: '[ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the country that issued the document'
         pattern: '[a-zA-Z]{2}'
       issuanceLocation:
         type: string
-        description: >-
-          A more precise information concerning the place where the document has
-          been issued, when available. It may be a country, a state, a city or
-          any other type of location. e.g. New-York
+        description: A more precise information concerning the place where the document has been issued, when available. It may be a country, a state, a city or any other type of location. e.g. New-York
       nationality:
         type: string
-        description: >-
-          [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
-          of the nationality appearing on the document
+        description: '[ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) of the nationality appearing on the document'
         pattern: '[a-zA-Z]{2}'
       birthPlace:
         type: string
@@ -1301,21 +1222,15 @@ definitions:
     properties:
       addresseeName:
         type: string
-        description: >-
-          Adressee name (e.g. in case of emergency purpose it corresponds to
-          name of the person to be contacted).
+        description: Adressee name (e.g. in case of emergency purpose it corresponds to name of the person to be contacted).
         pattern: '[a-zA-Z -]'
       countryCode:
         type: string
-        description: >-
-          Country code of the country (ISO3166-1). E.g. "US" for the United
-          States
+        description: Country code of the country (ISO3166-1). E.g. "US" for the United States
         pattern: '[A-Z]{2}'
       number:
         type: string
-        description: >-
-          Phone number. Composed of digits only. The number of digits depends on
-          the country.
+        description: Phone number. Composed of digits only. The number of digits depends on the country.
         pattern: '[0-9]{1,15}'
       text:
         type: string
@@ -1333,6 +1248,46 @@ definitions:
         type: string
         description: loyalty program number
         example: '12357466574'
+  FormOfIdentification:
+    type: object
+    description: alternative means of identifying stakeholders for eTicket.
+    properties:
+      identificationType:
+        type: string
+        description: Type of identification
+        enum:
+          - DRIVERS_LICENSE
+          - PASSPORT
+          - NATIONAL_IDENTITY_CARD
+          - BOOKING_CONFIRMATION
+          - TICKET
+          - OTHER_ID
+        example: PASSPORT
+      carrierCode:
+        type: string
+        description: providing the airline / carrier code
+        minLength: 1
+        maxLength: 2
+        example: DL
+      number:
+        type: string
+        description: identification number relative to the type of identification either ticket number, booking number, passport number, identity card number, drivers licence number, other ID
+        example: XN0019390
+      travelerIds:
+        description: Ids of the concerned travelers
+        type: array
+        items:
+          type: string
+        example: '1'
+      flightOfferIds:
+        description: Id of the concerned flightOffers
+        type: array
+        minItems: 1
+        maxItems: 6
+        items:
+          type: string
+        example: '1'
+    title: FormOfIdentification
   Discount:
     title: Discount
     description: traveler discount
@@ -1467,7 +1422,7 @@ definitions:
         description: Last name.
         type: string
       middleName:
-        description: 'Middle name(s), for example "Lee" in "John Lee Smith".'
+        description: Middle name(s), for example "Lee" in "John Lee Smith".
         type: string
   Phone:
     type: object
@@ -1477,20 +1432,15 @@ definitions:
         $ref: '#/definitions/PhoneDeviceType'
       countryCallingCode:
         type: string
-        description: >-
-          Country calling code of the phone number, as defined by the
-          International Communication Union. Examples - "1" for US, "371" for
-          Latvia.
+        description: Country calling code of the phone number, as defined by the International Communication Union. Examples - "1" for US, "371" for Latvia.
         pattern: '[0-9+]{2,5}'
       number:
         type: string
-        description: >-
-          Phone number. Composed of digits only. The number of digits depends on
-          the country.
+        description: Phone number. Composed of digits only. The number of digits depends on the country.
         pattern: '[0-9]{1,15}'
   PhoneDeviceType:
     type: string
-    description: 'Type of the device (Landline, Mobile or Fax)'
+    description: Type of the device (Landline, Mobile or Fax)
     enum:
       - MOBILE
       - LANDLINE
@@ -1501,10 +1451,8 @@ definitions:
     properties:
       lines:
         type: array
-        description: >-
-          Line 1 = Street address, Line 2 = Apartment, suite, unit, building,
-          floor, etc 
-
+        description: |-
+          Line 1 = Street address, Line 2 = Apartment, suite, unit, building, floor, etc 
           Each line is limited to 35 characters
         items:
           type: string
@@ -1513,9 +1461,7 @@ definitions:
         description: 'Example: 74130'
       countryCode:
         type: string
-        description: >-
-          country code [ISO 3166-1 country
-          code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
+        description: country code [ISO 3166-1 country code](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2)
         pattern: '[a-zA-Z]{2}'
       cityName:
         type: string
@@ -1538,9 +1484,7 @@ definitions:
         description: Delay before applying automatic process if no issuance in days
         type: string
       dateTime:
-        description: >-
-          Exact date to apply automatic process if no issuance. YYYY-MM-DD
-          format, e.g. 2019-06-07
+        description: Exact date to apply automatic process if no issuance. YYYY-MM-DD format, e.g. 2019-06-07
         type: string
         readOnly: true
         example: '2017-10-23'
@@ -1552,20 +1496,13 @@ definitions:
           type: string
         example: '1'
   TicketingAgreementOption:
-    description: >
+    description: |
       Ticketing agreement option
-
       * **CONFIRM**, when the payment is done
+      * **DELAY_TO_QUEUE**, queue the reservation at a wished date if the payment is not done
+      * **DELAY_TO_CANCEL**, cancel the reservation at a wished date if the payment is not done
 
-      * **DELAY_TO_QUEUE**, queue the reservation at a wished date if the
-      payment is not done
-
-      * **DELAY_TO_CANCEL**, cancel the reservation at a wished date if the
-      payment is not done
-
-
-      Queueing and cancellation occurs at local date and time. When no time is
-      specified, reservation is queued or cancelled at 00:00.
+      Queueing and cancellation occurs at local date and time. When no time is specified, reservation is queued or cancelled at 00:00.
     type: string
     enum:
       - CONFIRM
@@ -1581,9 +1518,7 @@ definitions:
       queue:
         title: Queue
         type: object
-        description: >-
-          Identifies the queue onto which PNR must be automatically placed upon
-          process execution.
+        description: Identifies the queue onto which PNR must be automatically placed upon process execution.
         properties:
           number:
             type: string
@@ -1609,9 +1544,7 @@ definitions:
           dateTime:
             type: string
             format: date-time
-            description: >-
-              Datetime limit at which the process takes action in case issuance
-              is not done.
+            description: Datetime limit at which the process takes action in case issuance is not done.
   AutomatedProcessCode:
     type: string
     description: queuing action to be taken
@@ -1700,10 +1633,8 @@ definitions:
         type: string
         example: PARK
       airlineCode:
-        description: >
-          Code of the airline following IATA standard ([IATA table
-          codes](http://www.iata.org/publications/Pages/code-search.aspx))
-
+        description: |
+          Code of the airline following IATA standard ([IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx))
 
           When it apply to any airline, value is YY.
         type: string
@@ -1834,10 +1765,7 @@ definitions:
         example: '4012999999999999'
         pattern: '[a-zA-Z0-9]{1,35}'
       expiryDate:
-        description: >-
-          credit card expiration date following [ISO
-          8601](https://en.wikipedia.org/wiki/ISO_8601) (YYYY-MM format, e.g.
-          2012-08)
+        description: credit card expiration date following [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) (YYYY-MM format, e.g. 2012-08)
         type: string
         example: 2021-08
   CreditCardBrand:
@@ -1884,16 +1812,10 @@ definitions:
     properties:
       reference:
         type: string
-        description: >-
-          Record locator [Amadeus or OA] with which the current reservation is
-          related. In case of a codeshare relation, it enables to identify the
-          operating PNR.
+        description: Record locator [Amadeus or OA] with which the current reservation is related. In case of a codeshare relation, it enables to identify the operating PNR.
       creationDate:
         type: string
-        description: >-
-          Creation date of the referenced reservation. Date and time in
-          [ISO8601](https://en.wikipedia.org/wiki/ISO_8601)
-          YYYY-MM-ddThh:mm:ss.sss format, e.g. 2019-07-09T12:30:00.000
+        description: Creation date of the referenced reservation. Date and time in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss.sss format, e.g. 2019-07-09T12:30:00.000
         example: '2019-07-09T12:30:00.000'
       originSystemCode:
         type: string
@@ -1941,10 +1863,7 @@ definitions:
           - MCO
       documentNumber:
         type: string
-        description: >-
-          Identifier of the travel document prefixed by its owner code [NALC - 3
-          digits]. Can either be a primary or a conjunctive document number.
-          Necessary for TicketingReference definition.
+        description: Identifier of the travel document prefixed by its owner code [NALC - 3 digits]. Can either be a primary or a conjunctive document number. Necessary for TicketingReference definition.
       documentStatus:
         type: string
         description: Status of the travel document contained in the fare element
@@ -1999,7 +1918,7 @@ responses:
                     number: '487692704'
               documents:
                 - documentType: PASSPORT
-                  number: 012345678
+                  number: '012345678'
                   expiryDate: '2009-04-14'
                   issuanceCountry: GB
                   nationality: GB
@@ -2361,7 +2280,7 @@ responses:
               address:
                 lines:
                   - 485 route du Pin Montard
-                postalCode: 06902
+                postalCode: '06902'
                 cityName: Sophia Antipolis Cedex
                 countryCode: FR
         dictionaries:
@@ -2394,4 +2313,4 @@ responses:
       38034   | ONE OR MORE SERVICES ARE NOT AVAILABLE
     schema:
       $ref: '#/definitions/Error_400'
-x-generatedAt: '2021-05-03T13:13:05.285Z'
+x-generatedAt: '2022-08-09T10:48:05.285Z'
