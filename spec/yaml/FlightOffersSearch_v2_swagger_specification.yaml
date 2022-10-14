@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 2.5.4
+  version: 2.8.0
   title: Flight Offers Search
   x-tags:
     - '#online-retail'
@@ -8,16 +8,22 @@ info:
     - '#ama-for-dev'
   x-status: validated
   x-release-note:
+    2.8.0:
+      - Add Non-stop preferred option
+    2.7.0:
+      - Add new source "NDC" - **only available in Enterprise**
+    2.6.0:
+      - Add Margins and Discounts content from Margin Manager product - **only available in Enterprise**
     2.5.0:
       - Add Expanded parameters criterias in flight-offers search
     2.4.0:
-      - Add new sources "LTC" and "EAC"
+      - Add new sources "LTC" and "EAC" - **only available in Enterprise**
     2.3.0:
       - Add Farerules into POST Search flight-offer reply
     2.2.0:
       - Add maxPrice filtering
     2.1.0:
-      - 'Add currencies, aircraft and carriers dictionary'
+      - Add currencies, aircraft and carriers dictionary
     2.0.0:
       - Initial Version
       - Includes search and price flight offer
@@ -65,28 +71,28 @@ paths:
       parameters:
         - name: originLocationCode
           in: query
-          description: 'city/airport [IATA code](http://www.iata.org/publications/Pages/code-search.aspx) from which the traveler will depart, e.g. BOS for Boston'
+          description: city/airport [IATA code](http://www.iata.org/publications/Pages/code-search.aspx) from which the traveler will depart, e.g. BOS for Boston
           required: true
           type: string
           pattern: '[A-Z]{3}'
           x-example: SYD
         - name: destinationLocationCode
           in: query
-          description: 'city/airport [IATA code](http://www.iata.org/publications/Pages/code-search.aspx) to which the traveler is going, e.g. PAR for Paris'
+          description: city/airport [IATA code](http://www.iata.org/publications/Pages/code-search.aspx) to which the traveler is going, e.g. PAR for Paris
           required: true
           type: string
           pattern: '[A-Z]{3}'
           x-example: BKK
         - name: departureDate
           in: query
-          description: 'the date on which the traveler will depart from the origin to go to the destination. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2017-12-25'
+          description: the date on which the traveler will depart from the origin to go to the destination. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2017-12-25
           required: true
           type: string
           format: date
-          x-example: '2022-11-01'
+          x-example: '2023-05-02'
         - name: returnDate
           in: query
-          description: 'the date on which the traveler will depart from the destination to return to the origin. If this parameter is not specified, only one-way itineraries are found. If this parameter is specified, only round-trip itineraries are found. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2018-02-28'
+          description: the date on which the traveler will depart from the destination to return to the origin. If this parameter is not specified, only one-way itineraries are found. If this parameter is specified, only round-trip itineraries are found. Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2018-02-28
           required: false
           type: string
           format: date
@@ -100,21 +106,21 @@ paths:
           default: 1
         - name: children
           in: query
-          description: 'the number of child travelers (older than age 2 and younger than age 12 on date of departure) who will each have their own separate seat. If specified, this number should be greater than or equal to 0'
+          description: the number of child travelers (older than age 2 and younger than age 12 on date of departure) who will each have their own separate seat. If specified, this number should be greater than or equal to 0
           required: false
           type: integer
           minimum: 0
           maximum: 9
         - name: infants
           in: query
-          description: 'the number of infant travelers (whose age is less or equal to 2 on date of departure). Infants travel on the lap of an adult traveler, and thus the number of infants must not exceed the number of adults. If specified, this number should be greater than or equal to 0'
+          description: the number of infant travelers (whose age is less or equal to 2 on date of departure). Infants travel on the lap of an adult traveler, and thus the number of infants must not exceed the number of adults. If specified, this number should be greater than or equal to 0
           required: false
           type: integer
           minimum: 0
           maximum: 9
         - name: travelClass
           in: query
-          description: 'most of the flight time should be spent in a cabin of this quality or higher. The accepted travel class is economy, premium economy, business or first class. If no travel class is specified, the search considers any travel class'
+          description: most of the flight time should be spent in a cabin of this quality or higher. The accepted travel class is economy, premium economy, business or first class. If no travel class is specified, the search considers any travel class
           required: false
           type: string
           enum:
@@ -144,25 +150,25 @@ paths:
           pattern: '[0-9A-Z]{2}'
         - name: nonStop
           in: query
-          description: 'if set to true, the search will find only flights going from the origin to the destination with no stop in between'
+          description: if set to true, the search will find only flights going from the origin to the destination with no stop in between
           required: false
           type: boolean
           default: false
         - name: currencyCode
           in: query
-          description: 'the preferred currency for the flight offers. Currency is specified in the [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format, e.g. EUR for Euro'
+          description: the preferred currency for the flight offers. Currency is specified in the [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format, e.g. EUR for Euro
           required: false
           type: string
           pattern: '[A-Z]{3}'
         - name: maxPrice
           in: query
-          description: 'maximum price per traveler. By default, no limit is applied. If specified, the value should be a positive number with no decimals'
+          description: maximum price per traveler. By default, no limit is applied. If specified, the value should be a positive number with no decimals
           required: false
           type: integer
           minimum: 1
         - name: max
           in: query
-          description: 'maximum number of flight offers to return. If specified, the value should be greater than or equal to 1'
+          description: maximum number of flight offers to return. If specified, the value should be greater than or equal to 1
           required: false
           type: integer
           minimum: 1
@@ -177,6 +183,7 @@ paths:
       description: ''
 definitions:
   Error_400:
+    type: object
     properties:
       errors:
         type: array
@@ -194,6 +201,7 @@ definitions:
             parameter: airport
             example: CDG
   Error_500:
+    type: object
     properties:
       errors:
         type: array
@@ -207,6 +215,7 @@ definitions:
           code: 141
           title: SYSTEM ERROR HAS OCCURRED
   Issue:
+    type: object
     properties:
       status:
         description: the HTTP status code applicable to this error
@@ -228,7 +237,7 @@ definitions:
         maxProperties: 1
         properties:
           pointer:
-            description: 'a JSON Pointer [RFC6901] to the associated entity in the request document'
+            description: a JSON Pointer [RFC6901] to the associated entity in the request document
             type: string
           parameter:
             description: a string indicating which URI query parameter caused the issue
@@ -254,40 +263,42 @@ definitions:
               items:
                 type: string
   Collection_Meta_Link:
+    type: object
     title: Collection_Meta
     properties:
       count:
         type: integer
         example: 1
       links:
+        type: object
         title: CollectionLinks
         properties:
           self:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           next:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           previous:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           last:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           first:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           up:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
         example:
-          self: 'https://test.api.amadeus.com/v1/area/resources?param=value'
+          self: https://test.api.amadeus.com/v1/area/resources?param=value
   LocationEntry:
     additionalProperties:
       $ref: '#/definitions/LocationValue'
@@ -329,11 +340,11 @@ definitions:
         $ref: '#/definitions/OperatingFlight'
       duration:
         type: string
-        description: 'stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M'
+        description: stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M
         example: PT2H10M
       stops:
         type: array
-        description: 'information regarding the different stops composing the flight segment. E.g. technical stop, change of gauge...'
+        description: information regarding the different stops composing the flight segment. E.g. technical stop, change of gauge...
         items:
           $ref: '#/definitions/FlightStop'
   OriginalFlightEndPoint:
@@ -356,7 +367,7 @@ definitions:
       - type: object
         properties:
           at:
-            description: 'local date and time in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00'
+            description: local date and time in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
             type: string
             format: date-time
             example: '2017-10-23T20:00:00'
@@ -370,7 +381,7 @@ definitions:
         example: JFK
       duration:
         type: string
-        description: 'stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M'
+        description: stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M
         example: PT2H10M
   FlightStop:
     title: FlightStop
@@ -380,12 +391,12 @@ definitions:
       - type: object
         properties:
           arrivalAt:
-            description: 'arrival at the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00'
+            description: arrival at the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
             type: string
             format: date-time
             example: '2017-10-23T20:00:00'
           departureAt:
-            description: 'departure from the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00'
+            description: departure from the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
             type: string
             format: date-time
             example: '2017-10-23T20:00:00'
@@ -442,7 +453,7 @@ definitions:
       - type: object
         properties:
           margin:
-            description: 'BOOK step ONLY - The price margin percentage (plus or minus) that the booking can tolerate. When set to 0, then no price magin is tolerated.'
+            description: BOOK step ONLY - The price margin percentage (plus or minus) that the booking can tolerate. When set to 0, then no price magin is tolerated.
             type: string
             example: '1.00'
           grandTotal:
@@ -493,7 +504,7 @@ definitions:
         type: string
         example: MX
   TravelClass:
-    description: 'quality of service offered in the cabin where the seat is located in this flight. Economy, premium economy, business or first class'
+    description: quality of service offered in the cabin where the seat is located in this flight. Economy, premium economy, business or first class
     type: string
     enum:
       - ECONOMY
@@ -521,7 +532,7 @@ definitions:
         type: string
         example: 1
       originLocationCode:
-        description: 'Origin location, such as a city or an airport. Currently, only the locations defined in [IATA](http://www.iata.org/publications/Pages/code-search.aspx) are supported.'
+        description: Origin location, such as a city or an airport. Currently, only the locations defined in [IATA](http://www.iata.org/publications/Pages/code-search.aspx) are supported.
         type: string
         example: PAR
       originRadius:
@@ -533,7 +544,7 @@ definitions:
         example: 200
       alternativeOriginsCodes:
         type: array
-        description: 'Set of alternative origin location, such as a city or an airport. Currently, only the locations defined in [IATA](http://www.iata.org/publications/Pages/code-search.aspx) are supported.'
+        description: Set of alternative origin location, such as a city or an airport. Currently, only the locations defined in [IATA](http://www.iata.org/publications/Pages/code-search.aspx) are supported.
         minItems: 1
         maxItems: 2
         items:
@@ -543,7 +554,7 @@ definitions:
           - LON
           - MUC
       destinationLocationCode:
-        description: 'Destination location, such as a city or an airport. Currently, only the locations defined in [IATA](http://www.iata.org/publications/Pages/code-search.aspx) are supported.'
+        description: Destination location, such as a city or an airport. Currently, only the locations defined in [IATA](http://www.iata.org/publications/Pages/code-search.aspx) are supported.
         type: string
         example: NYC
       destinationRadius:
@@ -555,21 +566,21 @@ definitions:
         example: 200
       alternativeDestinationsCodes:
         type: array
-        description: 'Set of alternative destination location, such as a city or an airport. Currently, only the locations defined in [IATA](http://www.iata.org/publications/Pages/code-search.aspx) are supported.'
+        description: Set of alternative destination location, such as a city or an airport. Currently, only the locations defined in [IATA](http://www.iata.org/publications/Pages/code-search.aspx) are supported.
         minItems: 1
         maxItems: 2
         items:
           title: code
           type: string
       departureDateTimeRange:
-        description: 'Approximate date and time of departure, specified as a local date and time range.'
+        description: Approximate date and time of departure, specified as a local date and time range.
         $ref: '#/definitions/DateTimeRange'
       arrivalDateTimeRange:
-        description: 'Approximate date and time of arrival, specified as a local date and time range.'
+        description: Approximate date and time of arrival, specified as a local date and time range.
         $ref: '#/definitions/DateTimeRange'
       includedConnectionPoints:
         type: array
-        description: 'List of included connections points. When an includedViaPoints option is specified, all FlightOffer returned must at least go via this Connecting Point. Currently, only the locations defined in IATA are supported. Used only by the AMADEUS provider'
+        description: List of included connections points. When an includedViaPoints option is specified, all FlightOffer returned must at least go via this Connecting Point. Currently, only the locations defined in IATA are supported. Used only by the AMADEUS provider
         minItems: 1
         maxItems: 2
         items:
@@ -579,7 +590,7 @@ definitions:
           - MRS
       excludedConnectionPoints:
         type: array
-        description: 'List of excluded connections points. Any FlightOffer with these connections points will be present in response. Currently, only the locations defined in IATA are supported. Used only by the AMADEUS provider'
+        description: List of excluded connections points. Any FlightOffer with these connections points will be present in response. Currently, only the locations defined in IATA are supported. Used only by the AMADEUS provider
         minItems: 1
         maxItems: 3
         items:
@@ -592,7 +603,7 @@ definitions:
     type: object
     properties:
       date:
-        description: 'Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2018-12-25'
+        description: Dates are specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DD format, e.g. 2018-12-25
         type: string
         format: date
         example: '2018-09-22'
@@ -603,9 +614,9 @@ definitions:
           Can not be combined with "originRadius" or "destinationRadius".
         type: string
         example: I3D
-        pattern: '^[MPI][1-3]D'
+        pattern: ^[MPI][1-3]D
       time:
-        description: 'Local time. hh:mm:ss format, e.g 10:30:00'
+        description: Local time. hh:mm:ss format, e.g 10:30:00
         type: string
         example: '10:30:00'
       timeWindow:
@@ -615,7 +626,7 @@ definitions:
           Can not be combined with "originRadius" or "destinationRadius".
         type: string
         example: 2H
-        pattern: '^([1-9]|10|11|12)H'
+        pattern: ^([1-9]|10|11|12)H
     required:
       - date
   Traveler:
@@ -628,7 +639,7 @@ definitions:
         $ref: '#/definitions/TravelerType'
       associatedAdultId:
         type: string
-        description: 'if type="HELD_INFANT", corresponds to the adult travelers''s id who will share the seat'
+        description: if type="HELD_INFANT", corresponds to the adult travelers's id who will share the seat
     required:
       - id
       - travelerType
@@ -649,7 +660,7 @@ definitions:
         default: 250
         example: 250
       maxPrice:
-        description: 'maximum price per traveler. By default, no limit is applied. If specified, the value should be a positive number with no decimals'
+        description: maximum price per traveler. By default, no limit is applied. If specified, the value should be a positive number with no decimals
         type: integer
         example: 100
       allowAlternativeFareOptions:
@@ -657,7 +668,7 @@ definitions:
         type: boolean
         example: true
       oneFlightOfferPerDay:
-        description: 'Requests the system to find at least one flight-offer per day, if possible, when a range of dates is specified. Default is false.'
+        description: Requests the system to find at least one flight-offer per day, if possible, when a range of dates is specified. Default is false.
         type: boolean
         example: true
       additionalInformation:
@@ -665,11 +676,11 @@ definitions:
         type: object
         properties:
           chargeableCheckedBags:
-            description: 'If true, returns the price of the first additional bag when the airline is an "Amadeus Ancillary Services" member.'
+            description: If true, returns the price of the first additional bag when the airline is an "Amadeus Ancillary Services" member.
             type: boolean
             example: true
           brandedFares:
-            description: 'If true, returns the fare family name for each flight-offer which supports fare family'
+            description: If true, returns the fare family name for each flight-offer which supports fare family
             type: boolean
             example: true
       pricingOptions:
@@ -691,7 +702,7 @@ definitions:
             type: boolean
             example: false
           railSegmentAllowed:
-            description: 'This flag enable/disable filtering of rail segment (TGV AIR, RAIL ...)'
+            description: This flag enable/disable filtering of rail segment (TGV AIR, RAIL ...)
             type: boolean
             example: true
           busSegmentAllowed:
@@ -708,7 +719,7 @@ definitions:
             type: object
             properties:
               blacklistedInEUAllowed:
-                description: 'This flag enable/disable filtering of blacklisted airline by EU. The list of the banned airlines is published in the Official Journal of the European Union, where they are included as annexes A and B to the Commission Regulation. The blacklist of an airline can concern all its flights or some specific aircraft types pertaining to the airline'
+                description: This flag enable/disable filtering of blacklisted airline by EU. The list of the banned airlines is published in the Official Journal of the European Union, where they are included as annexes A and B to the Commission Regulation. The blacklist of an airline can concern all its flights or some specific aircraft types pertaining to the airline
                 type: boolean
                 default: false
               excludedCarrierCodes:
@@ -754,9 +765,17 @@ definitions:
             type: object
             properties:
               maxNumberOfConnections:
-                description: 'The maximal number of connections for each itinerary. Value can be 0, 1 or 2.'
+                description: The maximal number of connections for each itinerary. Value can be 0, 1 or 2.
                 type: number
                 example: 2
+              nonStopPreferred:
+                description: When this option is requested, recommendations made of Non-Stop flights only are favoured by the search, on the whole itinerary, with a weight of 75%. It is possible to override this default 75% weight of Non-Stop recommendations by providing the requested weight in the attribute nonStopPreferredWeight
+                type: boolean
+                example: false
+              nonStopPreferredWeight:
+                description: This weight is the percentage of total number of recommendations that could be returned for Non-Stop flight recommendations. It is only relevant when combined with nonSTopPreferred set to true. If not specified, the default weight of 75% is applied
+                type: number
+                example: 50
               airportChangeAllowed:
                 description: Allow to change airport during connection
                 type: boolean
@@ -783,27 +802,27 @@ definitions:
       source:
         $ref: '#/definitions/FlightOfferSource'
       instantTicketingRequired:
-        description: 'If true, inform that a ticketing will be required at booking step.'
+        description: If true, inform that a ticketing will be required at booking step.
         type: boolean
         example: false
       disablePricing:
-        description: 'BOOK step ONLY - If true, allows to book a PNR without pricing. Only for the source "GDS"'
+        description: BOOK step ONLY - If true, allows to book a PNR without pricing. Only for the source "GDS"
         type: boolean
         example: false
       nonHomogeneous:
-        description: 'If true, upon completion of the booking, this pricing solution is expected to yield multiple records (a record contains booking information confirmed and stored, typically a Passenger Name Record (PNR), in the provider GDS or system)'
+        description: If true, upon completion of the booking, this pricing solution is expected to yield multiple records (a record contains booking information confirmed and stored, typically a Passenger Name Record (PNR), in the provider GDS or system)
         type: boolean
         example: false
       oneWay:
-        description: 'If true, the flight offer can be combined with other oneWays flight-offers to complete the whole journey (one-Way combinable feature).'
+        description: If true, the flight offer can be combined with other oneWays flight-offers to complete the whole journey (one-Way combinable feature).
         type: boolean
         example: false
       paymentCardRequired:
-        description: 'If true, a payment card is mandatory to book this flight offer'
+        description: If true, a payment card is mandatory to book this flight offer
         type: boolean
         example: false
       lastTicketingDate:
-        description: 'If booked on the same day as the search (with respect to timezone), this flight offer is guaranteed to be thereafter valid for ticketing until this date (included). Unspecified when it does not make sense for this flight offer (e.g. no control over ticketing once booked). YYYY-MM-DD format, e.g. 2019-06-07'
+        description: If booked on the same day as the search (with respect to timezone), this flight offer is guaranteed to be thereafter valid for ticketing until this date (included). Unspecified when it does not make sense for this flight offer (e.g. no control over ticketing once booked). YYYY-MM-DD format, e.g. 2019-06-07
         type: string
         example: '2018-06-19T00:00:00.000Z'
       numberOfBookableSeats:
@@ -821,7 +840,7 @@ definitions:
           type: object
           properties:
             duration:
-              description: 'duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M for a duration of 2h10m'
+              description: duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M for a duration of 2h10m
               type: string
               example: PT2H10M
             segments:
@@ -844,19 +863,19 @@ definitions:
             $ref: '#/definitions/PricingOptionsFareType'
           includedCheckedBagsOnly:
             type: boolean
-            description: 'If true, returns the flight-offers with included checked bags only'
+            description: If true, returns the flight-offers with included checked bags only
             example: true
           refundableFare:
             type: boolean
-            description: 'If true, returns the flight-offers with refundable fares only'
+            description: If true, returns the flight-offers with refundable fares only
             example: true
           noRestrictionFare:
             type: boolean
-            description: 'If true, returns the flight-offers with no restriction fares only'
+            description: If true, returns the flight-offers with no restriction fares only
             example: true
           noPenaltyFare:
             type: boolean
-            description: 'If true, returns the flight-offers with no penalty fares only'
+            description: If true, returns the flight-offers with no penalty fares only
             example: true
       validatingAirlineCodes:
         description: This option ensures that the system will only consider offers with these airlines as validating carrier.
@@ -891,7 +910,7 @@ definitions:
               $ref: '#/definitions/TravelerType'
             associatedAdultId:
               type: string
-              description: 'if type="HELD_INFANT", corresponds to the adult traveler''s id who will share the seat'
+              description: if type="HELD_INFANT", corresponds to the adult traveler's id who will share the seat
             price:
               description: price detail of the traveler
               $ref: '#/definitions/Price'
@@ -912,7 +931,7 @@ definitions:
                   cabin:
                     $ref: '#/definitions/TravelClass'
                   fareBasis:
-                    description: 'Fare basis specifying the rules of a fare. Usually, though not always, is composed of the booking class code followed by a set of letters and digits representing other characteristics of the ticket, such as refundability, minimum stay requirements, discounts or special promotional elements.'
+                    description: Fare basis specifying the rules of a fare. Usually, though not always, is composed of the booking class code followed by a set of letters and digits representing other characteristics of the ticket, such as refundability, minimum stay requirements, discounts or special promotional elements.
                     type: string
                     example: ANNNNF4K
                     pattern: '[[A-Z0-9]{1,18}'
@@ -921,7 +940,7 @@ definitions:
                     type: string
                     example: LIGHTONE
                   class:
-                    description: 'The code of the booking class, a.k.a. class of service or Reservations/Booking Designator (RBD)'
+                    description: The code of the booking class, a.k.a. class of service or Reservations/Booking Designator (RBD)
                     type: string
                     example: A
                     pattern: '[A-Z]{1}'
@@ -1012,19 +1031,19 @@ definitions:
     properties:
       includedCheckedBagsOnly:
         type: boolean
-        description: 'If true, returns the flight-offers with included checked bags only'
+        description: If true, returns the flight-offers with included checked bags only
         example: true
       refundableFare:
         type: boolean
-        description: 'If true, returns the flight-offers with refundable fares only'
+        description: If true, returns the flight-offers with refundable fares only
         example: true
       noRestrictionFare:
         type: boolean
-        description: 'If true, returns the flight-offers with no restriction fares only'
+        description: If true, returns the flight-offers with no restriction fares only
         example: true
       noPenaltyFare:
         type: boolean
-        description: 'If true, returns the flight-offers with no penalty fares only'
+        description: If true, returns the flight-offers with no penalty fares only
         example: true
   Coverage:
     description: part of the trip covered by the travel class restriction (ALL_SEGMENTS if ommited)
@@ -1080,7 +1099,7 @@ definitions:
       - COMPANION
     example: STANDARD
   SliceDiceIndicator:
-    description: 'slice and Dice indicator, such as Local Availability, Sub OnD(Origin and Destination) 1 Availability and Sub OnD 2 Availability'
+    description: slice and Dice indicator, such as Local Availability, Sub OnD(Origin and Destination) 1 Availability and Sub OnD 2 Availability
     type: string
     enum:
       - LOCAL_AVAILABILITY
@@ -1116,11 +1135,11 @@ definitions:
     properties:
       currencyCode:
         type: string
-        description: 'The currency code, as defined in [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217), to reflect the currency in which this amount is expressed.'
+        description: The currency code, as defined in [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217), to reflect the currency in which this amount is expressed.
         example: EUR
       originDestinations:
         title: originDestinations
-        description: 'Origins and Destinations must be properly ordered in time (chronological order in accordance with the timezone of each location) to describe the journey consistently. Dates and times must not be past nor more than 365 days in the future, according to provider settings.Number of Origins and Destinations must not exceed the limit defined in provider settings.'
+        description: Origins and Destinations must be properly ordered in time (chronological order in accordance with the timezone of each location) to describe the journey consistently. Dates and times must not be past nor more than 365 days in the future, according to provider settings.Number of Origins and Destinations must not exceed the limit defined in provider settings.
         type: array
         minItems: 1
         maxItems: 6
@@ -1140,7 +1159,7 @@ definitions:
           $ref: '#/definitions/Traveler'
       sources:
         title: sources
-        description: 'Allows enable one or more sources. If present in the list, these sources will be called by the system.'
+        description: Allows enable one or more sources. If present in the list, these sources will be called by the system.
         type: array
         minItems: 1
         items:
@@ -1242,169 +1261,169 @@ responses:
             lastTicketingDate: '2022-11-01'
             numberOfBookableSeats: 9
             itineraries:
-            - duration: PT14H15M
-              segments:
-              - departure:
-                  iataCode: SYD
-                  terminal: '1'
-                  at: '2022-11-01T11:35:00'
-                arrival:
-                  iataCode: MNL
-                  terminal: '2'
-                  at: '2022-11-01T16:50:00'
-                carrierCode: PR
-                number: '212'
-                aircraft:
-                  code: '333'
-                operating:
-                  carrierCode: PR
-                duration: PT8H15M
-                id: '1'
-                numberOfStops: 0
-                blacklistedInEU: false
-              - departure:
-                  iataCode: MNL
-                  terminal: '1'
-                  at: '2022-11-01T19:20:00'
-                arrival:
-                  iataCode: BKK
-                  at: '2022-11-01T21:50:00'
-                carrierCode: PR
-                number: '732'
-                aircraft:
-                  code: '321'
-                operating:
-                  carrierCode: PR
-                duration: PT3H30M
-                id: '2'
-                numberOfStops: 0
-                blacklistedInEU: false
-            - duration: PT16H15M
-              segments:
-              - departure:
-                  iataCode: BKK
-                  at: '2022-11-05T13:30:00'
-                arrival:
-                  iataCode: MNL
-                  terminal: '2'
-                  at: '2022-11-05T18:00:00'
-                carrierCode: PR
-                number: '731'
-                aircraft:
-                  code: '333'
-                operating:
-                  carrierCode: PR
-                duration: PT3H30M
-                id: '3'
-                numberOfStops: 0
-                blacklistedInEU: false
-              - departure:
-                  iataCode: MNL
-                  terminal: '1'
-                  at: '2022-11-05T22:10:00'
-                arrival:
-                  iataCode: SYD
-                  terminal: '1'
-                  at: '2022-11-06T09:45:00'
-                carrierCode: PR
-                number: '211'
-                aircraft:
-                  code: '333'
-                operating:
-                  carrierCode: PR
-                duration: PT8H35M
-                id: '4'
-                numberOfStops: 0
-                blacklistedInEU: false
+              - duration: PT14H15M
+                segments:
+                  - departure:
+                      iataCode: SYD
+                      terminal: '1'
+                      at: '2022-11-01T11:35:00'
+                    arrival:
+                      iataCode: MNL
+                      terminal: '2'
+                      at: '2022-11-01T16:50:00'
+                    carrierCode: PR
+                    number: '212'
+                    aircraft:
+                      code: '333'
+                    operating:
+                      carrierCode: PR
+                    duration: PT8H15M
+                    id: '1'
+                    numberOfStops: 0
+                    blacklistedInEU: false
+                  - departure:
+                      iataCode: MNL
+                      terminal: '1'
+                      at: '2022-11-01T19:20:00'
+                    arrival:
+                      iataCode: BKK
+                      at: '2022-11-01T21:50:00'
+                    carrierCode: PR
+                    number: '732'
+                    aircraft:
+                      code: '321'
+                    operating:
+                      carrierCode: PR
+                    duration: PT3H30M
+                    id: '2'
+                    numberOfStops: 0
+                    blacklistedInEU: false
+              - duration: PT16H15M
+                segments:
+                  - departure:
+                      iataCode: BKK
+                      at: '2022-11-05T13:30:00'
+                    arrival:
+                      iataCode: MNL
+                      terminal: '2'
+                      at: '2022-11-05T18:00:00'
+                    carrierCode: PR
+                    number: '731'
+                    aircraft:
+                      code: '333'
+                    operating:
+                      carrierCode: PR
+                    duration: PT3H30M
+                    id: '3'
+                    numberOfStops: 0
+                    blacklistedInEU: false
+                  - departure:
+                      iataCode: MNL
+                      terminal: '1'
+                      at: '2022-11-05T22:10:00'
+                    arrival:
+                      iataCode: SYD
+                      terminal: '1'
+                      at: '2022-11-06T09:45:00'
+                    carrierCode: PR
+                    number: '211'
+                    aircraft:
+                      code: '333'
+                    operating:
+                      carrierCode: PR
+                    duration: PT8H35M
+                    id: '4'
+                    numberOfStops: 0
+                    blacklistedInEU: false
             price:
               currency: EUR
               total: '1279.54'
               base: '844.00'
               fees:
-              - amount: '0.00'
-                type: SUPPLIER
-              - amount: '0.00'
-                type: TICKETING
+                - amount: '0.00'
+                  type: SUPPLIER
+                - amount: '0.00'
+                  type: TICKETING
               grandTotal: '1279.54'
             pricingOptions:
               fareType:
-              - PUBLISHED
+                - PUBLISHED
               includedCheckedBagsOnly: true
             validatingAirlineCodes:
-            - PR
+              - PR
             travelerPricings:
-            - travelerId: '1'
-              fareOption: STANDARD
-              travelerType: ADULT
-              price:
-                currency: EUR
-                total: '639.77'
-                base: '422.00'
-              fareDetailsBySegment:
-              - segmentId: '1'
-                cabin: ECONOMY
-                fareBasis: TBAU
-                class: T
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-              - segmentId: '2'
-                cabin: ECONOMY
-                fareBasis: TBAU
-                class: T
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-              - segmentId: '3'
-                cabin: ECONOMY
-                fareBasis: KBAU
-                class: K
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-              - segmentId: '4'
-                cabin: ECONOMY
-                fareBasis: KBAU
-                class: K
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-            - travelerId: '2'
-              fareOption: STANDARD
-              travelerType: ADULT
-              price:
-                currency: EUR
-                total: '639.77'
-                base: '422.00'
-              fareDetailsBySegment:
-              - segmentId: '1'
-                cabin: ECONOMY
-                fareBasis: TBAU
-                class: T
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-              - segmentId: '2'
-                cabin: ECONOMY
-                fareBasis: TBAU
-                class: T
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-              - segmentId: '3'
-                cabin: ECONOMY
-                fareBasis: KBAU
-                class: K
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-              - segmentId: '4'
-                cabin: ECONOMY
-                fareBasis: KBAU
-                class: K
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
+              - travelerId: '1'
+                fareOption: STANDARD
+                travelerType: ADULT
+                price:
+                  currency: EUR
+                  total: '639.77'
+                  base: '422.00'
+                fareDetailsBySegment:
+                  - segmentId: '1'
+                    cabin: ECONOMY
+                    fareBasis: TBAU
+                    class: T
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+                  - segmentId: '2'
+                    cabin: ECONOMY
+                    fareBasis: TBAU
+                    class: T
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+                  - segmentId: '3'
+                    cabin: ECONOMY
+                    fareBasis: KBAU
+                    class: K
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+                  - segmentId: '4'
+                    cabin: ECONOMY
+                    fareBasis: KBAU
+                    class: K
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+              - travelerId: '2'
+                fareOption: STANDARD
+                travelerType: ADULT
+                price:
+                  currency: EUR
+                  total: '639.77'
+                  base: '422.00'
+                fareDetailsBySegment:
+                  - segmentId: '1'
+                    cabin: ECONOMY
+                    fareBasis: TBAU
+                    class: T
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+                  - segmentId: '2'
+                    cabin: ECONOMY
+                    fareBasis: TBAU
+                    class: T
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+                  - segmentId: '3'
+                    cabin: ECONOMY
+                    fareBasis: KBAU
+                    class: K
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+                  - segmentId: '4'
+                    cabin: ECONOMY
+                    fareBasis: KBAU
+                    class: K
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
           - type: flight-offer
             id: '2'
             source: GDS
@@ -1414,169 +1433,169 @@ responses:
             lastTicketingDate: '2022-11-01'
             numberOfBookableSeats: 9
             itineraries:
-            - duration: PT14H15M
-              segments:
-              - departure:
-                  iataCode: SYD
-                  terminal: '1'
-                  at: '2022-11-01T11:35:00'
-                arrival:
-                  iataCode: MNL
-                  terminal: '2'
-                  at: '2022-11-01T16:50:00'
-                carrierCode: PR
-                number: '212'
-                aircraft:
-                  code: '333'
-                operating:
-                  carrierCode: PR
-                duration: PT8H15M
-                id: '1'
-                numberOfStops: 0
-                blacklistedInEU: false
-              - departure:
-                  iataCode: MNL
-                  terminal: '1'
-                  at: '2022-11-01T19:20:00'
-                arrival:
-                  iataCode: BKK
-                  at: '2022-11-01T21:50:00'
-                carrierCode: PR
-                number: '732'
-                aircraft:
-                  code: '321'
-                operating:
-                  carrierCode: PR
-                duration: PT3H30M
-                id: '2'
-                numberOfStops: 0
-                blacklistedInEU: false
-            - duration: PT28H15M
-              segments:
-              - departure:
-                  iataCode: BKK
-                  at: '2022-11-05T01:30:00'
-                arrival:
-                  iataCode: MNL
-                  terminal: '2'
-                  at: '2022-11-05T05:45:00'
-                carrierCode: PR
-                number: '741'
-                aircraft:
-                  code: '321'
-                operating:
-                  carrierCode: PR
-                duration: PT3H15M
-                id: '5'
-                numberOfStops: 0
-                blacklistedInEU: false
-              - departure:
-                  iataCode: MNL
-                  terminal: '1'
-                  at: '2022-11-05T22:10:00'
-                arrival:
-                  iataCode: SYD
-                  terminal: '1'
-                  at: '2022-11-06T09:45:00'
-                carrierCode: PR
-                number: '211'
-                aircraft:
-                  code: '333'
-                operating:
-                  carrierCode: PR
-                duration: PT8H35M
-                id: '6'
-                numberOfStops: 0
-                blacklistedInEU: false
+              - duration: PT14H15M
+                segments:
+                  - departure:
+                      iataCode: SYD
+                      terminal: '1'
+                      at: '2022-11-01T11:35:00'
+                    arrival:
+                      iataCode: MNL
+                      terminal: '2'
+                      at: '2022-11-01T16:50:00'
+                    carrierCode: PR
+                    number: '212'
+                    aircraft:
+                      code: '333'
+                    operating:
+                      carrierCode: PR
+                    duration: PT8H15M
+                    id: '1'
+                    numberOfStops: 0
+                    blacklistedInEU: false
+                  - departure:
+                      iataCode: MNL
+                      terminal: '1'
+                      at: '2022-11-01T19:20:00'
+                    arrival:
+                      iataCode: BKK
+                      at: '2022-11-01T21:50:00'
+                    carrierCode: PR
+                    number: '732'
+                    aircraft:
+                      code: '321'
+                    operating:
+                      carrierCode: PR
+                    duration: PT3H30M
+                    id: '2'
+                    numberOfStops: 0
+                    blacklistedInEU: false
+              - duration: PT28H15M
+                segments:
+                  - departure:
+                      iataCode: BKK
+                      at: '2022-11-05T01:30:00'
+                    arrival:
+                      iataCode: MNL
+                      terminal: '2'
+                      at: '2022-11-05T05:45:00'
+                    carrierCode: PR
+                    number: '741'
+                    aircraft:
+                      code: '321'
+                    operating:
+                      carrierCode: PR
+                    duration: PT3H15M
+                    id: '5'
+                    numberOfStops: 0
+                    blacklistedInEU: false
+                  - departure:
+                      iataCode: MNL
+                      terminal: '1'
+                      at: '2022-11-05T22:10:00'
+                    arrival:
+                      iataCode: SYD
+                      terminal: '1'
+                      at: '2022-11-06T09:45:00'
+                    carrierCode: PR
+                    number: '211'
+                    aircraft:
+                      code: '333'
+                    operating:
+                      carrierCode: PR
+                    duration: PT8H35M
+                    id: '6'
+                    numberOfStops: 0
+                    blacklistedInEU: false
             price:
               currency: EUR
               total: '1279.54'
               base: '844.00'
               fees:
-              - amount: '0.00'
-                type: SUPPLIER
-              - amount: '0.00'
-                type: TICKETING
+                - amount: '0.00'
+                  type: SUPPLIER
+                - amount: '0.00'
+                  type: TICKETING
               grandTotal: '1279.54'
             pricingOptions:
               fareType:
-              - PUBLISHED
+                - PUBLISHED
               includedCheckedBagsOnly: true
             validatingAirlineCodes:
-            - PR
+              - PR
             travelerPricings:
-            - travelerId: '1'
-              fareOption: STANDARD
-              travelerType: ADULT
-              price:
-                currency: EUR
-                total: '639.77'
-                base: '422.00'
-              fareDetailsBySegment:
-              - segmentId: '1'
-                cabin: ECONOMY
-                fareBasis: TBAU
-                class: T
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-              - segmentId: '2'
-                cabin: ECONOMY
-                fareBasis: TBAU
-                class: T
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-              - segmentId: '5'
-                cabin: ECONOMY
-                fareBasis: KBAU
-                class: K
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-              - segmentId: '6'
-                cabin: ECONOMY
-                fareBasis: KBAU
-                class: K
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-            - travelerId: '2'
-              fareOption: STANDARD
-              travelerType: ADULT
-              price:
-                currency: EUR
-                total: '639.77'
-                base: '422.00'
-              fareDetailsBySegment:
-              - segmentId: '1'
-                cabin: ECONOMY
-                fareBasis: TBAU
-                class: T
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-              - segmentId: '2'
-                cabin: ECONOMY
-                fareBasis: TBAU
-                class: T
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-              - segmentId: '5'
-                cabin: ECONOMY
-                fareBasis: KBAU
-                class: K
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
-              - segmentId: '6'
-                cabin: ECONOMY
-                fareBasis: KBAU
-                class: K
-                includedCheckedBags:
-                  weight: 30
-                  weightUnit: KG
+              - travelerId: '1'
+                fareOption: STANDARD
+                travelerType: ADULT
+                price:
+                  currency: EUR
+                  total: '639.77'
+                  base: '422.00'
+                fareDetailsBySegment:
+                  - segmentId: '1'
+                    cabin: ECONOMY
+                    fareBasis: TBAU
+                    class: T
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+                  - segmentId: '2'
+                    cabin: ECONOMY
+                    fareBasis: TBAU
+                    class: T
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+                  - segmentId: '5'
+                    cabin: ECONOMY
+                    fareBasis: KBAU
+                    class: K
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+                  - segmentId: '6'
+                    cabin: ECONOMY
+                    fareBasis: KBAU
+                    class: K
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+              - travelerId: '2'
+                fareOption: STANDARD
+                travelerType: ADULT
+                price:
+                  currency: EUR
+                  total: '639.77'
+                  base: '422.00'
+                fareDetailsBySegment:
+                  - segmentId: '1'
+                    cabin: ECONOMY
+                    fareBasis: TBAU
+                    class: T
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+                  - segmentId: '2'
+                    cabin: ECONOMY
+                    fareBasis: TBAU
+                    class: T
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+                  - segmentId: '5'
+                    cabin: ECONOMY
+                    fareBasis: KBAU
+                    class: K
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
+                  - segmentId: '6'
+                    cabin: ECONOMY
+                    fareBasis: KBAU
+                    class: K
+                    includedCheckedBags:
+                      weight: 30
+                      weightUnit: KG
         dictionaries:
           locations:
             BKK:
@@ -1618,7 +1637,7 @@ responses:
         meta:
           count: 2
           links:
-            self: 'https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SYD&destinationLocationCode=BKK&departureDate=2021-11-01&adults=1&max=2'
+            self: https://test.api.amadeus.com/v2/shopping/flight-offers?originLocationCode=SYD&destinationLocationCode=BKK&departureDate=2021-11-01&adults=1&max=2
         data:
           - type: flight-offer
             id: '1'
@@ -1829,4 +1848,4 @@ parameters:
     in: header
     type: string
     default: GET
-x-generatedAt: '2020-08-03T13:16:56.309Z'
+x-generatedAt: '2022-09-07T12:58:47.163Z'
