@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Hotel List
-  version: 1.0.2
+  version: 1.0.3
   description: Before using the API you will need to get an access token. Please read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to get your token.
 servers:
   - url: https://test.api.amadeus.com/v1
@@ -40,6 +40,8 @@ paths:
           description: |-
             Bad Request
 
+             Code | Title  
+            -----|-----
             00001 | CHECK FORMAT
             00477 | INVALID FORMAT
             00009 | CHECK CITY CODE
@@ -143,6 +145,8 @@ paths:
           description: |-
             Bad Request
 
+             Code | Title  
+            -----|-----
             00001 | CHECK FORMAT
             00477 | INVALID FORMAT
             00009 | CHECK CITY CODE
@@ -375,6 +379,8 @@ paths:
           description: |-
             Bad Request
 
+             Code | Title  
+            -----|-----
             00001 | CHECK FORMAT
             00477 | INVALID FORMAT
             00009 | CHECK CITY CODE

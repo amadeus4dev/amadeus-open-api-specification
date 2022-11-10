@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Hotel List",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Before using the API you will need to get an access token. Please read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to get your token."
   },
   "servers": [
@@ -57,7 +57,7 @@
             }
           },
           "400": {
-            "description": "Bad Request\n\n00001 | CHECK FORMAT\n00477 | INVALID FORMAT\n00009 | CHECK CITY CODE\n01157 | INVALID CITY CODE\n03237 | PROPERTY CODE NOT FOUND IN SYSTEM\n01257 | INVALID PROPERTY CODE\n00895 | NOTHING FOUND FOR REQUESTED CITY\n01271 | GUEST RECORD NOT FOUND\n11126 | NO PROPERTIES FOUND FOR RP/DI REQUESTED",
+            "description": "Bad Request\n\n Code | Title  \n-----|-----\n00001 | CHECK FORMAT\n00477 | INVALID FORMAT\n00009 | CHECK CITY CODE\n01157 | INVALID CITY CODE\n03237 | PROPERTY CODE NOT FOUND IN SYSTEM\n01257 | INVALID PROPERTY CODE\n00895 | NOTHING FOUND FOR REQUESTED CITY\n01271 | GUEST RECORD NOT FOUND\n11126 | NO PROPERTIES FOUND FOR RP/DI REQUESTED",
             "content": {
               "application/json": {
                 "schema": {
@@ -196,7 +196,7 @@
             }
           },
           "400": {
-            "description": "Bad Request\n\n00001 | CHECK FORMAT\n00477 | INVALID FORMAT\n00009 | CHECK CITY CODE\n01157 | INVALID CITY CODE\n03237 | PROPERTY CODE NOT FOUND IN SYSTEM\n01257 | INVALID PROPERTY CODE\n00895 | NOTHING FOUND FOR REQUESTED CITY\n01271 | GUEST RECORD NOT FOUND\n11126 | NO PROPERTIES FOUND FOR RP/DI REQUESTED",
+            "description": "Bad Request\n\n Code | Title  \n-----|-----\n00001 | CHECK FORMAT\n00477 | INVALID FORMAT\n00009 | CHECK CITY CODE\n01157 | INVALID CITY CODE\n03237 | PROPERTY CODE NOT FOUND IN SYSTEM\n01257 | INVALID PROPERTY CODE\n00895 | NOTHING FOUND FOR REQUESTED CITY\n01271 | GUEST RECORD NOT FOUND\n11126 | NO PROPERTIES FOUND FOR RP/DI REQUESTED",
             "content": {
               "application/json": {
                 "schema": {
@@ -498,7 +498,7 @@
             }
           },
           "400": {
-            "description": "Bad Request\n\n00001 | CHECK FORMAT\n00477 | INVALID FORMAT\n00009 | CHECK CITY CODE\n01157 | INVALID CITY CODE\n03237 | PROPERTY CODE NOT FOUND IN SYSTEM\n01257 | INVALID PROPERTY CODE\n00895 | NOTHING FOUND FOR REQUESTED CITY\n01271 | GUEST RECORD NOT FOUND\n11126 | NO PROPERTIES FOUND FOR RP/DI REQUESTED",
+            "description": "Bad Request\n\n Code | Title  \n-----|-----\n00001 | CHECK FORMAT\n00477 | INVALID FORMAT\n00009 | CHECK CITY CODE\n01157 | INVALID CITY CODE\n03237 | PROPERTY CODE NOT FOUND IN SYSTEM\n01257 | INVALID PROPERTY CODE\n00895 | NOTHING FOUND FOR REQUESTED CITY\n01271 | GUEST RECORD NOT FOUND\n11126 | NO PROPERTIES FOUND FOR RP/DI REQUESTED",
             "content": {
               "application/json": {
                 "schema": {
