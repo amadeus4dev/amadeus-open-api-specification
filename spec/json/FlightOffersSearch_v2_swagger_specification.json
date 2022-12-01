@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2.5.4",
+    "version": "2.8.0",
     "title": "Flight Offers Search",
     "x-tags": [
       "#online-retail",
@@ -10,11 +10,20 @@
     ],
     "x-status": "validated",
     "x-release-note": {
+      "2.8.0": [
+        "Add Non-stop preferred option"
+      ],
+      "2.7.0": [
+        "Add new source \"NDC\" - **only available in Enterprise**"
+      ],
+      "2.6.0": [
+        "Add Margins and Discounts content from Margin Manager product - **only available in Enterprise**"
+      ],
       "2.5.0": [
         "Add Expanded parameters criterias in flight-offers search"
       ],
       "2.4.0": [
-        "Add new sources \"LTC\" and \"EAC\""
+        "Add new sources \"LTC\" and \"EAC\" - **only available in Enterprise**"
       ],
       "2.3.0": [
         "Add Farerules into POST Search flight-offer reply"
@@ -110,7 +119,7 @@
             "required": true,
             "type": "string",
             "format": "date",
-            "x-example": "2022-11-01"
+            "x-example": "2023-05-02"
           },
           {
             "name": "returnDate",
@@ -230,6 +239,7 @@
   },
   "definitions": {
     "Error_400": {
+      "type": "object",
       "properties": {
         "errors": {
           "type": "array",
@@ -257,6 +267,7 @@
       }
     },
     "Error_500": {
+      "type": "object",
       "properties": {
         "errors": {
           "type": "array",
@@ -279,6 +290,7 @@
       }
     },
     "Issue": {
+      "type": "object",
       "properties": {
         "status": {
           "description": "the HTTP status code applicable to this error",
@@ -346,6 +358,7 @@
       }
     },
     "Collection_Meta_Link": {
+      "type": "object",
       "title": "Collection_Meta",
       "properties": {
         "count": {
@@ -353,6 +366,7 @@
           "example": 1
         },
         "links": {
+          "type": "object",
           "title": "CollectionLinks",
           "properties": {
             "self": {
@@ -1005,6 +1019,16 @@
                   "description": "The maximal number of connections for each itinerary. Value can be 0, 1 or 2.",
                   "type": "number",
                   "example": 2
+                },
+                "nonStopPreferred": {
+                  "description": "When this option is requested, recommendations made of Non-Stop flights only are favoured by the search, on the whole itinerary, with a weight of 75%. It is possible to override this default 75% weight of Non-Stop recommendations by providing the requested weight in the attribute nonStopPreferredWeight",
+                  "type": "boolean",
+                  "example": false
+                },
+                "nonStopPreferredWeight": {
+                  "description": "This weight is the percentage of total number of recommendations that could be returned for Non-Stop flight recommendations. It is only relevant when combined with nonSTopPreferred set to true. If not specified, the default weight of 75% is applied",
+                  "type": "number",
+                  "example": 50
                 },
                 "airportChangeAllowed": {
                   "description": "Allow to change airport during connection",
@@ -2490,5 +2514,5 @@
       "default": "GET"
     }
   },
-  "x-generatedAt": "2020-08-03T13:16:56.309Z"
+  "x-generatedAt": "2022-09-07T12:58:47.163Z"
 }
