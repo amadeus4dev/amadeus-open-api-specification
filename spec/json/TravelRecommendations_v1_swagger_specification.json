@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Travel Recommendations API",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token."
   },
   "servers": [
@@ -300,18 +300,16 @@
             },
             "in": "query",
             "name": "travelerCountryCode",
-            "description": "Origin country of the traveler following [IATA standard](http://www.iata.org/publications/Pages/code-search.aspx)",
+            "description": "Origin country of the traveler following [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code format (e.g. US)",
             "example": "FR"
           },
           {
             "schema": {
-              "type": "string",
-              "minLength": 0,
-              "maxLength": 0
+              "type": "string"
             },
             "in": "query",
             "name": "destinationCountryCodes",
-            "description": "List of country the traveler want to visit, separated with comma.\n\nCountry codes follow [IATA standard](http://www.iata.org/publications/Pages/code-search.aspx)"
+            "description": "List of country the traveler want to visit, separated with comma.\n\nCountry codes follow [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) code format (e.g. US)"
           }
         ],
         "description": ""
