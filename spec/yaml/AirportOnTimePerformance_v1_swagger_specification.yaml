@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.3
+  version: 1.0.4
   title: Airport On-Time Performance
   x-tags:
     - '#ama-for-dev'
@@ -38,7 +38,7 @@ paths:
           required: true
           type: string
           format: date
-          x-example: '2020-12-01'
+          x-example: '2023-11-12'
       responses:
         '200':
           $ref: '#/responses/200'
@@ -57,14 +57,14 @@ definitions:
         $ref: '#/definitions/Meta'
     example:
       data:
-        id: JFK20201201
+        id: JFK20231112
         probability: '0.928'
-        result: '0.85957181'
+        result: '0.84062016'
         subType: on-time
         type: prediction
       meta:
         links:
-          self: 'https://test.api.amadeus.com/v1/airport/predictions/on-time?airportCode=JFK&date=2020-12-01'
+          self: 'https://test.api.amadeus.com/v1/airport/predictions/on-time?airportCode=JFK&date=2023-11-12'
   Meta:
     type: object
     properties:
