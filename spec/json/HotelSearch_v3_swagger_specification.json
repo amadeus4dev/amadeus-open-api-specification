@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "3.0.6",
+    "version": "3.0.7",
     "title": "Hotel Search API",
     "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York)."
   },
@@ -64,7 +64,7 @@
             "type": "string",
             "format": "date",
             "description": "Check-in date of the stay (hotel local date). Format YYYY-MM-DD. The lowest accepted value is the present date (no dates in the past). If not present, the default value will be today's date in the GMT time zone.",
-            "x-example":"2022-11-22"
+            "x-example":"2023-11-22"
           },
           {
             "name": "checkOutDate",
@@ -202,6 +202,7 @@
             "required": true,
             "type": "string",
             "pattern": "^[A-Z0-9]*$",
+            "x-example": "TSXOJ6LFQ2",
             "description": "Unique identifier of an offer. Either the GDS booking code or the aggregator offerId with a limited lifetime."
           },
           {
@@ -275,6 +276,81 @@
         "data": {
           "$ref": "#/definitions/HotelOffers"
         }
+      },
+      "example": {
+        "data": {
+          "type": "hotel-offers",
+          "hotel": {
+            "type": "hotel",
+            "hotelId": "MCLONGHM",
+            "chainCode": "MC",
+            "name": "JW MARRIOTT GROSVENOR HOUSE",
+            "cityCode": "LON",
+            "address": {
+              "countryCode": "GB"
+            },
+            "amenities": [
+              "CRIBS_AVAILABLE"
+            ]
+          },
+          "available": true,
+          "offers": [
+            {
+              "id": "TSXOJ6LFQ2",
+              "checkInDate": "2023-11-22",
+              "checkOutDate": "2023-11-23",
+              "rateCode": "V  ",
+              "rateFamilyEstimated": {
+                "code": "PRO",
+                "type": "P"
+              },
+              "description": {
+                "text": "Executive King Room, Executive Lounge Access, 1 King, 35sqm/377sqft-40sqm/430sqft, Wireless in ternet, for a fee, Wired internet, for a fee, C A credit card is required for payment to guarantee the Prepay Non-refundable Non-changeable rate. Prepay rates will be charged the full cost of the reservation within 24 hours of making the reservation. If payment is unsuccessful within 48 hours of making the reservation, the hotel reserves the right to cancel the reservation. Date changes to the reservation are not allowed. Cancellation will result in forfeiture of the prepayment. The credit card used at the time of making the reservation must be valid for the entire stay.",
+                "lang": "EN"
+              },
+              "room": {
+                "type": "ELE",
+                "typeEstimated": {
+                  "beds": 1,
+                  "bedType": "DOUBLE"
+                },
+                "description": {
+                  "text": "Prepay Non-refundable Non-changeable, prepay in full",
+                  "lang": "EN"
+                }
+              },
+              "guests": {
+                "adults": 1
+              },
+              "price": {
+                "currency": "GBP",
+                "base": "716.00",
+                "total": "716.00",
+                "variations": {
+                  "changes": [
+                    {
+                      "startDate": "2023-11-22",
+                      "endDate": "2023-11-23",
+                      "base": "716.00"
+                    }
+                  ]
+                }
+              },
+              "policies": {
+                "paymentType": "deposit",
+                "cancellation": {
+                  "description": {
+                    "text": "NON-REFUNDABLE RATE"
+                  },
+                  "type": "FULL_STAY"
+                }
+              }
+            }
+          ]
+        },
+        "meta": {
+          "lang": "EN"
+        }
       }
     },
     "Errors": {
@@ -299,90 +375,78 @@
         }
       },
       "example": {
-          "data": [
-            {
-              "type": "hotel-offers",
-              "hotel": {
-                "type": "hotel",
-                "hotelId": "HLLON101",
-                "chainCode": "HL",
-                "dupeId": "700027723",
-                "name": "THE TRAFALGAR",
-                "cityCode": "LON",
-                "latitude": 51.50729,
-                "longitude": -0.12889
-              },
-              "available": true,
-              "offers": [
-                {
-                  "id": "1BCMABM7A8",
-                  "checkInDate": "2021-11-20",
-                  "checkOutDate": "2021-11-21",
-                  "rateCode": "RAC",
-                  "rateFamilyEstimated": {
-                    "code": "PRO",
-                    "type": "P"
+        "data": [
+          {
+            "type": "hotel-offers",
+            "hotel": {
+              "type": "hotel",
+              "hotelId": "MCLONGHM",
+              "chainCode": "MC",
+              "dupeId": "700031300",
+              "name": "JW Marriott Grosvenor House London",
+              "cityCode": "LON",
+              "latitude": 51.50988,
+              "longitude": -0.15509
+            },
+            "available": true,
+            "offers": [
+              {
+                "id": "TSXOJ6LFQ2",
+                "checkInDate": "2023-11-22",
+                "checkOutDate": "2023-11-23",
+                "rateCode": "V  ",
+                "rateFamilyEstimated": {
+                  "code": "PRO",
+                  "type": "P"
+                },
+                "room": {
+                  "type": "ELE",
+                  "typeEstimated": {
+                    "category": "EXECUTIVE_ROOM",
+                    "beds": 1,
+                    "bedType": "DOUBLE"
                   },
-                  "commission": {
-                    "percentage": "8.00"
-                  },
-                  "room": {
-                    "type": "M1K",
-                    "typeEstimated": {
-                      "category": "STANDARD_ROOM",
-                      "beds": 1,
-                      "bedType": "KING"
+                  "description": {
+                    "text": "Prepay Non-refundable Non-changeable, prepay in full\nExecutive King Room, Executive Lounge Access,\n1 King, 35sqm/377sqft-40sqm/430sqft, Wireless",
+                    "lang": "EN"
+                  }
+                },
+                "guests": {
+                  "adults": 1
+                },
+                "price": {
+                  "currency": "GBP",
+                  "base": "716.00",
+                  "total": "716.00",
+                  "variations": {
+                    "average": {
+                      "base": "716.00"
                     },
-                    "description": {
-                      "text": "ADVANCE PURCHASE\nTRAFALGAR KING ROOM\nCOMP WIFI/COFFEE-TEA FACILITIES/USB PORT",
-                      "lang": "EN"
-                    }
-                  },
-                  "guests": {
-                    "adults": 1
-                  },
-                  "price": {
-                    "currency": "GBP",
-                    "base": "300.00",
-                    "total": "300.00",
-                    "taxes": [
+                    "changes": [
                       {
-                        "code": "TOTAL_TAX",
-                        "amount": "0.00",
-                        "currency": "GBP",
-                        "included": true
+                        "startDate": "2023-11-22",
+                        "endDate": "2023-11-23",
+                        "total": "716.00"
                       }
-                    ],
-                    "variations": {
-                      "average": {
-                        "base": "305.50"
-                      },
-                      "changes": [
-                        {
-                          "startDate": "2021-11-20",
-                          "endDate": "2021-11-21",
-                          "total": "300.00"
-                        }
-                      ]
-                    }
-                  },
-                  "policies": {
-                    "paymentType": "deposit",
-                    "cancellation": {
-                      "type": "FULL_STAY",
-                      "description": {
-                        "text": "Non refundable rate",
-                        "lang": "EN"
-                      }
-                    }
-                  },
-                  "self": "https://test.api.amadeus.com/v3/shopping/hotel-offers/1BCMABM7A8"
-                }
-              ],
-              "self": "https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=HLLON101&adults=1&checkInDate=2021-11-20&paymentPolicy=NONE&roomQuantity=1"
-            }
-          ]
-        }
+                    ]
+                  }
+                },
+                "policies": {
+                  "paymentType": "deposit",
+                  "cancellation": {
+                    "description": {
+                      "text": "NON-REFUNDABLE RATE"
+                    },
+                    "type": "FULL_STAY"
+                  }
+                },
+                "self": "https://test.api.amadeus.com/v3/shopping/hotel-offers/TSXOJ6LFQ2"
+              }
+            ],
+            "self": "https://test.api.amadeus.com/v3/shopping/hotel-offers?hotelIds=MCLONGHM&adults=1&checkInDate=2023-11-22&paymentPolicy=NONE&roomQuantity=1"
+          }
+        ]
+      }
     },
     "Hotel": {
       "title": "Hotel",
@@ -435,7 +499,7 @@
         },
         "id": {
           "description": "Unique identifier of this offer. Might be valid for a temporary period only.",
-          "example": "63A93695B58821ABB0EC2B33FE9FAB24D72BF34B1BD7D707293763D8D9378FC3",
+          "example": "TSXOJ6LFQ2",
           "type": "string",
           "minLength": 2,
           "maxLength": 100,

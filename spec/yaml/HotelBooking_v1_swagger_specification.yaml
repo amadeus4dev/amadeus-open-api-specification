@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Hotel Booking
-  version: 1.1.1
+  version: 1.1.2
   description: |
 
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
@@ -130,7 +130,7 @@ parameters:
               card:
                 vendorCode: VI
                 cardNumber: '4111111111111111'
-                expiryDate: 2023-01
+                expiryDate: 2026-01
   Ama-Client-Ref:
     name: Ama-Client-Ref
     in: header

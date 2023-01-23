@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 2.0.1
+  version: 2.0.2
   title: On-Demand Flight Status
   x-status: validated
   x-release-note:
@@ -29,17 +29,17 @@ paths:
             2 to 3-character IATA carrier code ([IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx)).
           required: true
           type: string
-          x-example: IB
+          x-example: TP
         - name: flightNumber
           in: query
           description: 1 to 4-digit number of the flight. e.g. 4537
           required: true
           type: string
-          x-example: '532'
+          x-example: '487'
         - name: scheduledDepartureDate
           in: query
           description: 'scheduled departure date of the flight, local to the departure airport, format YYYY-MM-DD.'
-          x-example: '2021-03-23'
+          x-example: '2023-08-01'
           required: true
           type: string
           format: date
@@ -382,32 +382,36 @@ responses:
         meta:
           count: 1
           links:
-            self: 'https://test.api.amadeus.com/v2/schedule/flights?carrierCode=AZ&flightNumber=319&scheduledDepartureDate=2021-03-13'
+            self: 'https://test.api.amadeus.com/v2/schedule/flights?carrierCode=TP&flightNumber=487&scheduledDepartureDate=2023-08-01'
         data:
           - type: DatedFlight
-            scheduledDepartureDate: '2021-03-13'
+            scheduledDepartureDate: '2023-08-01'
             flightDesignator:
-              carrierCode: AZ
-              flightNumber: 319
+              carrierCode: TP
+              flightNumber: 487
             flightPoints:
-              - iataCode: CDG
+              - iataCode: NCE
                 departure:
                   timings:
                     - qualifier: STD
-                      value: '2021-03-13T11:10+01:00'
-              - iataCode: FCO
+                      value: '2023-08-01T18:10+02:00'
+              - iataCode: LIS
                 arrival:
                   timings:
                     - qualifier: STA
-                      value: '2021-03-13T13:15+01:00'
+                      value: '2023-08-01T19:45+01:00'
             segments:
-              - boardPointIataCode: CDG
-                offPointIataCode: FCO
-                scheduledSegmentDuration: PT2H5M
+              - boardPointIataCode: NCE
+                offPointIataCode: LIS
+                scheduledSegmentDuration: PT2H35M
+                partnership:
+                  operatingFlight: 
+                    carrierCode: A3
+                    flightNumber: 1748
             legs:
-              - boardPointIataCode: CDG
-                offPointIataCode: FCO
+              - boardPointIataCode: NCE
+                offPointIataCode: LIS
                 aircraftEquipment:
-                  aircraftType: 32S
-                scheduledLegDuration: PT2H5M
+                  aircraftType: E90
+                scheduledLegDuration: PT2H35M
 x-generatedAt: '2020-09-07T09:52:13.997Z'
