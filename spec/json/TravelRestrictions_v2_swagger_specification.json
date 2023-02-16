@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Travel Restrictions",
-    "version": "2.0",
+    "version": "2.0.1",
     "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token.\n",
     "x-release-note": {
       "2.0": [
@@ -63,7 +63,7 @@
           "200": {
             "description": "Successful Reply",
             "content": {
-              "application/json": {
+              "application/vnd.amadeus+json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -254,7 +254,7 @@
           "400": {
             "description": "Bad Request\n\ncode    | title                                 \n------- | ------------------------------------- \n4926    | INVALID DATA RECEIVED                          \n32171   | MANDATORY DATA MISSING \n 477    | INVALID FORMAT\n 572    | INVALID OPTION\n2781    | INVALID LENGTH",
             "content": {
-              "application/json": {
+              "application/vnd.amadeus+json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -286,7 +286,7 @@
           "500": {
             "description": "Internal Server Error\n\ncode    | title                                 \n------- | ------------------------------------- \n141     | SYSTEM ERROR HAS OCCURRED",
             "content": {
-              "application/json": {
+              "application/vnd.amadeus+json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -317,7 +317,7 @@
           "501": {
             "description": "Not Implemented\ncode    | title                                 \n------- | ------------------------------------- \n141     | UNABLE TO SUPPORT",
             "content": {
-              "application/json": {
+              "application/vnd.amadeus+json": {
                 "schema": {
                   "type": "object",
                   "properties": {

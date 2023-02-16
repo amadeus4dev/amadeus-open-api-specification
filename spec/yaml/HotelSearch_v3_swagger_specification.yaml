@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 3.0.8
+  version: 3.0.9
   title: Hotel Search API
   description: |-
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
@@ -11,9 +11,9 @@ basePath: /v3
 schemes:
   - https
 consumes:
-  - application/json
+  - application/vnd.amadeus+json
 produces:
-  - application/json
+  - application/vnd.amadeus+json
 paths:
   /shopping/hotel-offers:
     get:
@@ -23,8 +23,6 @@ paths:
         - shopping
       operationId: getMultiHotelOffers
       deprecated: false
-      produces:
-        - application/json
       parameters:
         - name: hotelIds
           in: query
@@ -191,8 +189,6 @@ paths:
         - shopping
       operationId: getOfferPricing
       deprecated: false
-      produces:
-        - application/json
       parameters:
         - name: offerId
           in: path

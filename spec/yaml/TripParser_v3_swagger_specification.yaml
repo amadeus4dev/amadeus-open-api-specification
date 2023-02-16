@@ -1,10 +1,9 @@
 openapi: 3.0.0
 info:
   title: Trip Parser
-  version: '3.0'
+  version: '3.0.1'
   description: |2-
-
-    Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token.
+    Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token.
 x-release-note:
   '3.0':
   - First release of Trip Parser V3
@@ -21,7 +20,7 @@ paths:
         '200':
           description: Successful Reply
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 type: object
                 properties:
@@ -76,7 +75,7 @@ paths:
             | ------------------------------------- \n4926    | INVALID DATA RECEIVED
             \                         \n32171   | MANDATORY DATA MISSING "
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 "$ref": "#/components/schemas/error_400"
               examples:
@@ -92,7 +91,7 @@ paths:
           description: "Internal Server Error\n\ncode    | title                                 \n-------
             | ------------------------------------- \n141     | SYSTEM ERROR HAS OCCURRED"
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 "$ref": "#/components/schemas/error_500"
               examples:
@@ -106,7 +105,7 @@ paths:
           description: "Not Implemented\n\ncode    | title                                 \n-------
             | ------------------------------------- \n141     | UNABLE TO SUPPORT"
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 "$ref": "#/components/schemas/error_501"
               examples:
@@ -119,7 +118,7 @@ paths:
       description: ''
       requestBody:
         content:
-          application/json:
+          application/vnd.amadeus+json:
             schema:
               title: DocumentEnvelope
               type: object

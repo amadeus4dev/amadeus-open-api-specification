@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Travel Recommendations API",
-    "version": "1.0.2",
+    "version": "1.0.3",
     "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token."
   },
   "servers": [
@@ -21,55 +21,14 @@
           "200": {
             "description": "Successful reply",
             "content": {
-              "application/json": {
+              "application/vnd.amadeus+json": {
                 "schema": {
                   "type": "object",
                   "properties": {
                     "warnings": {
                       "type": "array",
                       "items": {
-                        "type": "object",
-                        "description": "The Warning Definition",
-                        "title": "Warning",
-                        "properties": {
-                          "code": {
-                            "type": "integer",
-                            "description": "A machine-readable error code from the Canned Messages table, that will enable the API Consumers code to handle this type of error"
-                          },
-                          "title": {
-                            "type": "string",
-                            "description": "An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized"
-                          },
-                          "detail": {
-                            "type": "string",
-                            "description": "An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized."
-                          },
-                          "source": {
-                            "properties": {
-                              "parameter": {
-                                "type": "string",
-                                "description": "The key of the URI path or query parameter that caused the error"
-                              },
-                              "pointer": {
-                                "type": "string",
-                                "description": "A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error"
-                              },
-                              "example": {
-                                "type": "string",
-                                "description": "A sample input to guide the user when resolving this issue"
-                              }
-                            }
-                          },
-                          "documentation": {
-                            "type": "string",
-                            "format": "url",
-                            "description": "A link to a web page or file with further documentation to help the API consumer resolve this error"
-                          }
-                        },
-                        "required": [
-                          "code",
-                          "title"
-                        ]
+                        "$ref": "#/components/schemas/Warning"
                       }
                     },
                     "data": {
@@ -79,50 +38,7 @@
                       }
                     },
                     "meta": {
-                      "type": "object",
-                      "description": "Meta information about the returned object(s) in \"data\"",
-                      "title": "Meta",
-                      "properties": {
-                        "count": {
-                          "type": "integer",
-                          "format": "int64",
-                          "description": "Total number of object(s) retrieved",
-                          "minimum": 0,
-                          "exclusiveMinimum": false
-                        },
-                        "links": {
-                          "type": "object",
-                          "title": "Links",
-                          "description": "Links related to the returned object(s)",
-                          "properties": {
-                            "self": {
-                              "type": "string",
-                              "format": "url",
-                              "description": "Link to the same page."
-                            },
-                            "first": {
-                              "type": "string",
-                              "format": "url",
-                              "description": "Link to the first page."
-                            },
-                            "prev": {
-                              "type": "string",
-                              "format": "url",
-                              "description": "Link to the previous page."
-                            },
-                            "next": {
-                              "type": "string",
-                              "format": "url",
-                              "description": "Link to the next page."
-                            },
-                            "last": {
-                              "type": "string",
-                              "format": "url",
-                              "description": "Link to the last page."
-                            }
-                          }
-                        }
-                      }
+                      "$ref": "#/components/schemas/Meta"
                     }
                   }
                 },
@@ -168,63 +84,9 @@
           "400": {
             "description": "code    | title                                 \n------- | ------------------------------------- \n477     | INVALID FORMAT\n572     | INVALID OPTION                            \n32171   | MANDATORY DATA MISSING ",
             "content": {
-              "application/json": {
+              "application/vnd.amadeus+json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "errors": {
-                      "type": "array",
-                      "items": {
-                        "type": "object",
-                        "description": "The Error Definition",
-                        "title": "Error",
-                        "properties": {
-                          "status": {
-                            "type": "integer",
-                            "description": "The [HTTP status code](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) of this response. This is present only in terminal errors which cause an unsuccessful response. In the case of multiple errors, they must all have the same status."
-                          },
-                          "code": {
-                            "type": "integer",
-                            "description": "A machine-readable error code from the Amadeus Canned Messages table, that will enable the API Consumers code to handle this type of error"
-                          },
-                          "title": {
-                            "type": "string",
-                            "description": "An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized"
-                          },
-                          "detail": {
-                            "type": "string",
-                            "description": "An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized."
-                          },
-                          "source": {
-                            "properties": {
-                              "parameter": {
-                                "type": "string",
-                                "description": "The key of the URI path or query parameter that caused the error"
-                              },
-                              "pointer": {
-                                "type": "string",
-                                "description": "A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error"
-                              },
-                              "example": {
-                                "type": "string",
-                                "description": "A sample input to guide the user when resolving this issue"
-                              }
-                            }
-                          },
-                          "documentation": {
-                            "type": "string",
-                            "format": "url",
-                            "description": "A link to a web page or file with further documentation to help the API consumer resolve this error"
-                          }
-                        },
-                        "required": [
-                          "status",
-                          "code",
-                          "title"
-                        ]
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/Error_400"
                 },
                 "examples": {
                   "Error 400": {
@@ -250,17 +112,9 @@
           "500": {
             "description": "Internal Server Error",
             "content": {
-              "application/json": {
+              "application/vnd.amadeus+json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "errors": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/paths/~1reference-data~1recommended-locations/get/responses/400/content/application~1json/schema/properties/errors/items"
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/Error_500"
                 },
                 "examples": {
                   "Error 500": {
@@ -313,12 +167,10 @@
           }
         ],
         "description": ""
-      },
-      "parameters": []
+      }
     }
   },
   "components": {
-    "securitySchemes": {},
     "schemas": {
       "RecommendedLocation": {
         "description": "Similar Location",
@@ -399,6 +251,176 @@
           }
         },
         "title": ""
+      },
+      "Error_400": {
+        "type": "object",
+        "description": "A set of errors",
+        "title": "Error 400",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "The Error Definition",
+              "title": "Error",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "The [HTTP status code](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) of this response. This is present only in terminal errors which cause an unsuccessful response. In the case of multiple errors, they must all have the same status."
+                },
+                "code": {
+                  "type": "integer",
+                  "description": "A machine-readable error code from the Amadeus Canned Messages table, that will enable the API Consumers code to handle this type of error"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized"
+                },
+                "detail": {
+                  "type": "string",
+                  "description": "An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized."
+                },
+                "source": {
+                  "type": "object",
+                  "title": "Error_Source",
+                  "properties": {
+                    "parameter": {
+                      "type": "string",
+                      "description": "The key of the URI path or query parameter that caused the error"
+                    },
+                    "pointer": {
+                      "type": "string",
+                      "description": "A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error"
+                    },
+                    "example": {
+                      "type": "string",
+                      "description": "A sample input to guide the user when resolving this issue"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Error_500": {
+        "type": "object",
+        "description": "A set of errors",
+        "title": "Error 500",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "description": "The Error Definition",
+              "title": "Error",
+              "properties": {
+                "status": {
+                  "type": "integer",
+                  "description": "The [HTTP status code](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) of this response. This is present only in terminal errors which cause an unsuccessful response. In the case of multiple errors, they must all have the same status."
+                },
+                "code": {
+                  "type": "integer",
+                  "description": "A machine-readable error code from the Amadeus Canned Messages table, that will enable the API Consumers code to handle this type of error"
+                },
+                "title": {
+                  "type": "string",
+                  "description": "An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized"
+                },
+                "detail": {
+                  "type": "string",
+                  "description": "An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized."
+                },
+                "source": {
+                  "type": "object",
+                  "title": "Error_Source",
+                  "properties": {
+                    "parameter": {
+                      "type": "string",
+                      "description": "The key of the URI path or query parameter that caused the error"
+                    },
+                    "pointer": {
+                      "type": "string",
+                      "description": "A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error"
+                    },
+                    "example": {
+                      "type": "string",
+                      "description": "A sample input to guide the user when resolving this issue"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "Warning": {
+        "type": "object",
+        "description": "The Warning Definition",
+        "title": "Warning",
+        "properties": {
+          "code": {
+            "type": "integer",
+            "description": "A machine-readable error code from the Canned Messages table, that will enable the API Consumers code to handle this type of error"
+          },
+          "title": {
+            "type": "string",
+            "description": "An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized"
+          },
+          "detail": {
+            "type": "string",
+            "description": "An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized."
+          },
+          "source": {
+            "type": "object",
+            "description": "The Warning Source Definition",
+            "title": "Warning_Source",
+            "properties": {
+              "parameter": {
+                "type": "string",
+                "description": "The key of the URI path or query parameter that caused the error"
+              },
+              "pointer": {
+                "type": "string",
+                "description": "A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error"
+              },
+              "example": {
+                "type": "string",
+                "description": "A sample input to guide the user when resolving this issu"
+              }
+            }
+          }
+        },
+        "required": [
+          "code",
+          "title"
+        ]
+      },
+      "Meta": {
+        "type": "object",
+        "description": "Meta information about the returned object(s) in \"data\"",
+        "title": "Meta",
+        "properties": {
+          "count": {
+            "type": "integer",
+            "format": "int64",
+            "description": "Total number of object(s) retrieved",
+            "minimum": 0,
+            "exclusiveMinimum": false
+          },
+          "links": {
+            "type": "object",
+            "title": "Links",
+            "description": "Links related to the returned object(s)",
+            "properties": {
+              "self": {
+                "type": "string",
+                "format": "url",
+                "description": "Link to the same page."
+              }
+            }
+          }
+        }
       }
     }
   }

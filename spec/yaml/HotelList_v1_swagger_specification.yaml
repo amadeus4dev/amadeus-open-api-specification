@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: Hotel List
-  version: 1.0.4
+  version: 1.0.5
   description: Before using the API you will need to get an access token. Please read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to get your token.
 servers:
   - url: https://test.api.amadeus.com/v1
@@ -15,7 +15,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 $ref: '#/components/schemas/HotelSearchResponse'
               examples:
@@ -52,7 +52,7 @@ paths:
             01271 | GUEST RECORD NOT FOUND
             11126 | NO PROPERTIES FOUND FOR RP/DI REQUESTED
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 $ref: '#/components/schemas/Error_400'
               examples:
@@ -68,13 +68,13 @@ paths:
         '404':
           description: Not Found
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 $ref: '#/components/schemas/Error_404'
         '500':
           description: Internal Server Error
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 $ref: '#/components/schemas/Error_500'
       operationId: get-shopping-hotels-by-hotels
@@ -104,7 +104,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 $ref: '#/components/schemas/HotelSearchResponse'
               examples:
@@ -157,7 +157,7 @@ paths:
             01271 | GUEST RECORD NOT FOUND
             11126 | NO PROPERTIES FOUND FOR RP/DI REQUESTED
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 $ref: '#/components/schemas/Error_400'
               examples:
@@ -174,7 +174,7 @@ paths:
         '500':
           description: Internal Server Error
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 $ref: '#/components/schemas/Error_500'
       operationId: get-shopping-hotels-by-city
@@ -303,7 +303,7 @@ paths:
         '200':
           description: OK
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 $ref: '#/components/schemas/HotelSearchResponse'
               examples:
@@ -391,7 +391,7 @@ paths:
             01271 | GUEST RECORD NOT FOUND
             11126 | NO PROPERTIES FOUND FOR RP/DI REQUESTED
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 $ref: '#/components/schemas/Error_400'
               examples:
@@ -408,7 +408,7 @@ paths:
         '500':
           description: Internal Server Error
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 $ref: '#/components/schemas/Error_500'
       operationId: get-shopping-hotels-geocodes
