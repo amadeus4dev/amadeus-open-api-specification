@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "3.0.7",
+    "version": "3.0.8",
     "title": "Hotel Search API",
     "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York)."
   },
@@ -47,11 +47,12 @@
           {
             "name": "adults",
             "in": "query",
-            "required": true,
+            "required": false,
+            "default": 1,
             "type": "integer",
             "format": "int32",
-            "minimum": 1.0,
-            "maximum": 9.0,
+            "minimum": 1,
+            "maximum": 9,
             "exclusiveMaximum": false,
             "exclusiveMinimum": false,
             "description": "Number of adult guests (1-9) per room.",
@@ -89,8 +90,8 @@
             "default": 1,
             "type": "integer",
             "format": "int32",
-            "minimum": 1.0,
-            "maximum": 9.0,
+            "minimum": 1,
+            "maximum": 9,
             "exclusiveMaximum": false,
             "exclusiveMinimum": false,
             "description": "Number of rooms requested (1-9)."
@@ -664,7 +665,7 @@
         "numberOfNights": {
           "description": "Number of nights due as fee in case of cancellation.",
           "type": "integer",
-          "minimum": 0.0,
+          "minimum": 0,
           "format": "int32"
         },
         "percentage": {
@@ -787,8 +788,8 @@
           "description": "number of adult guests (1-9) per room",
           "example": 2,
           "type": "integer",
-          "minimum": 1.0,
-          "maximum": 9.0,
+          "minimum": 1,
+          "maximum": 9,
           "format": "int32"
         },
         "childAges": {
@@ -796,12 +797,10 @@
           "type": "array",
           "items": {
             "type": "integer",
-            "minimum": 0.0,
-            "maximum": 20.0,
+            "minimum": 0,
+            "maximum": 20,
             "format": "int32"
-          },
-          "minimum": 0.0,
-          "maximum": 20.0
+          }
         }
       }
     },
