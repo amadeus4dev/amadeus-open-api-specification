@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Hotel List",
-    "version": "1.0.5",
+    "version": "1.0.4",
     "description": "Before using the API you will need to get an access token. Please read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to get your token."
   },
   "servers": [

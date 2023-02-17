@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 3.0.9
+  version: 3.0.8
   title: Hotel Search API
   description: |-
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
