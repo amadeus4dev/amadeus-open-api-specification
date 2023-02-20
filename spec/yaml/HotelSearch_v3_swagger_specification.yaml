@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 3.0.7
+  version: 3.0.8
   title: Hotel Search API
   description: |-
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
@@ -11,9 +11,9 @@ basePath: /v3
 schemes:
   - https
 consumes:
-  - application/json
+  - application/vnd.amadeus+json
 produces:
-  - application/json
+  - application/vnd.amadeus+json
 paths:
   /shopping/hotel-offers:
     get:
@@ -23,8 +23,6 @@ paths:
         - shopping
       operationId: getMultiHotelOffers
       deprecated: false
-      produces:
-        - application/json
       parameters:
         - name: hotelIds
           in: query
@@ -40,7 +38,8 @@ paths:
           description: Amadeus property codes on 8 chars. Mandatory parameter for a search by predefined list of hotels.
         - name: adults
           in: query
-          required: true
+          required: false
+          default: 1
           type: integer
           format: int32
           minimum: 1
@@ -190,8 +189,6 @@ paths:
         - shopping
       operationId: getOfferPricing
       deprecated: false
-      produces:
-        - application/json
       parameters:
         - name: offerId
           in: path
@@ -732,8 +729,6 @@ definitions:
           minimum: 0
           maximum: 20
           format: int32
-        minimum: 0
-        maximum: 20
   HotelProduct_HoldPolicy:
     title: HotelProduct_HoldPolicy
     description: the hold policy

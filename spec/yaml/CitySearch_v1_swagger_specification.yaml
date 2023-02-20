@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: City Search
-  version: '1.0'
+  version: 1.0.1
   description: Before using the API you will need to get an access token. Please read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to get your token.
 servers:
   - url: https://test.api.amadeus.com/v1
@@ -31,7 +31,7 @@ paths:
           example: PARIS
           required: true
         - schema:
-            type: number
+            type: integer
           in: query
           name: max
           description: Number of results user want to see in response.
@@ -51,7 +51,7 @@ paths:
         '200':
           description: Successful Reply
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 type: object
                 properties:
@@ -118,7 +118,7 @@ paths:
             477     | INVALID FORMAT
             4926    | INVALID DATA RECEIVED
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 $ref: '#/components/schemas/Error_400'
               examples:
@@ -137,7 +137,7 @@ paths:
             ------- | ------------------------------------- 
             141     | SYSTEM ERROR HAS OCCURRED
           content:
-            application/json:
+            application/vnd.amadeus+json:
               schema:
                 $ref: '#/components/schemas/Error_500'
               examples:

@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "City Search",
-    "version": "1.0",
+    "version": "1.0.1",
     "description": "Before using the API you will need to get an access token. Please read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to get your token."
   },
   "servers": [
@@ -44,7 +44,7 @@
           },
           {
             "schema": {
-              "type": "number"
+              "type": "integer"
             },
             "in": "query",
             "name": "max",
@@ -72,7 +72,7 @@
           "200": {
             "description": "Successful Reply",
             "content": {
-              "application/json": {
+              "application/vnd.amadeus+json": {
                 "schema": {
                   "type": "object",
                   "properties": {
@@ -163,7 +163,7 @@
           "400": {
             "description": "Bad Request\n\ncode    | title                                 \n------- | -------------------------------------                        \n32171   | MANDATORY DATA MISSING \n572     | INVALID OPTION\n2781    | INVALID LENGTH\n477     | INVALID FORMAT\n4926    | INVALID DATA RECEIVED\n",
             "content": {
-              "application/json": {
+              "application/vnd.amadeus+json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error_400"
                 },
@@ -187,7 +187,7 @@
           "500": {
             "description": "Internal Server Error\n\ncode    | title                                 \n------- | ------------------------------------- \n141     | SYSTEM ERROR HAS OCCURRED",
             "content": {
-              "application/json": {
+              "application/vnd.amadeus+json": {
                 "schema": {
                   "$ref": "#/components/schemas/Error_500"
                 },
