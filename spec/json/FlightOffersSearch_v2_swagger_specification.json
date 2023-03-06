@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2.8.1",
+    "version": "2.8.2",
     "title": "Flight Offers Search",
     "x-tags": [
       "#online-retail",
@@ -132,7 +132,7 @@
           {
             "name": "adults",
             "in": "query",
-            "description": "the number of adult travelers (age 12 or older on date of departure).",
+            "description": "the number of adult travelers (age 12 or older on date of departure).\n\nThe total number of seated travelers (adult and children) can not exceed 9.",
             "required": true,
             "type": "integer",
             "minimum": 1,
@@ -142,7 +142,7 @@
           {
             "name": "children",
             "in": "query",
-            "description": "the number of child travelers (older than age 2 and younger than age 12 on date of departure) who will each have their own separate seat. If specified, this number should be greater than or equal to 0",
+            "description": "the number of child travelers (older than age 2 and younger than age 12 on date of departure) who will each have their own separate seat. If specified, this number should be greater than or equal to 0\n\nThe total number of seated travelers (adult and children) can not exceed 9.",
             "required": false,
             "type": "integer",
             "minimum": 0,
