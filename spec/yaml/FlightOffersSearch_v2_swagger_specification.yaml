@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 2.8.1
+  version: 2.8.2
   title: Flight Offers Search
   x-tags:
     - '#online-retail'
@@ -98,7 +98,10 @@ paths:
           format: date
         - name: adults
           in: query
-          description: the number of adult travelers (age 12 or older on date of departure).
+          description: |-
+            the number of adult travelers (age 12 or older on date of departure).
+
+            The total number of seated travelers (adult and children) can not exceed 9.
           required: true
           type: integer
           minimum: 1
@@ -106,7 +109,10 @@ paths:
           default: 1
         - name: children
           in: query
-          description: the number of child travelers (older than age 2 and younger than age 12 on date of departure) who will each have their own separate seat. If specified, this number should be greater than or equal to 0
+          description: |-
+            the number of child travelers (older than age 2 and younger than age 12 on date of departure) who will each have their own separate seat. If specified, this number should be greater than or equal to 0
+
+            The total number of seated travelers (adult and children) can not exceed 9.
           required: false
           type: integer
           minimum: 0
@@ -1169,25 +1175,25 @@ definitions:
     example:
       currencyCode: USD
       originDestinations:
-      - id: '1'
-        originLocationCode: NYC
-        destinationLocationCode: MAD
-        departureDateTimeRange:
-          date: '2023-11-01'
-          time: '10:00:00'
+        - id: '1'
+          originLocationCode: NYC
+          destinationLocationCode: MAD
+          departureDateTimeRange:
+            date: '2023-11-01'
+            time: '10:00:00'
       travelers:
-      - id: '1'
-        travelerType: ADULT
+        - id: '1'
+          travelerType: ADULT
       sources:
-      - GDS
+        - GDS
       searchCriteria:
         maxFlightOffers: 2
         flightFilters:
           cabinRestrictions:
-          - cabin: BUSINESS
-            coverage: MOST_SEGMENTS
-            originDestinationIds:
-            - '1'
+            - cabin: BUSINESS
+              coverage: MOST_SEGMENTS
+              originDestinationIds:
+                - '1'
   ServiceName:
     description: type of service
     type: string
@@ -1248,77 +1254,77 @@ responses:
             lastTicketingDate: '2023-11-01'
             numberOfBookableSeats: 9
             itineraries:
-            - duration: PT9H10M
-              segments:
-              - departure:
-                  iataCode: EWR
-                  at: '2023-11-01T21:50:00'
-                arrival:
-                  iataCode: LHR
-                  at: '2023-11-02T08:45:00'
-                carrierCode: 6X
-                number: '188'
-                aircraft:
-                  code: '777'
-                operating:
-                  carrierCode: 6X
-                duration: PT5H55M
-                id: '3'
-                numberOfStops: 0
-                blacklistedInEU: false
-              - departure:
-                  iataCode: LHR
-                  at: '2023-11-02T10:30:00'
-                arrival:
-                  iataCode: MAD
-                  at: '2023-11-02T13:00:00'
-                carrierCode: 6X
-                number: '9931'
-                aircraft:
-                  code: '320'
-                operating:
-                  carrierCode: 6X
-                duration: PT1H30M
-                id: '4'
-                numberOfStops: 0
-                blacklistedInEU: false
+              - duration: PT9H10M
+                segments:
+                  - departure:
+                      iataCode: EWR
+                      at: '2023-11-01T21:50:00'
+                    arrival:
+                      iataCode: LHR
+                      at: '2023-11-02T08:45:00'
+                    carrierCode: 6X
+                    number: '188'
+                    aircraft:
+                      code: '777'
+                    operating:
+                      carrierCode: 6X
+                    duration: PT5H55M
+                    id: '3'
+                    numberOfStops: 0
+                    blacklistedInEU: false
+                  - departure:
+                      iataCode: LHR
+                      at: '2023-11-02T10:30:00'
+                    arrival:
+                      iataCode: MAD
+                      at: '2023-11-02T13:00:00'
+                    carrierCode: 6X
+                    number: '9931'
+                    aircraft:
+                      code: '320'
+                    operating:
+                      carrierCode: 6X
+                    duration: PT1H30M
+                    id: '4'
+                    numberOfStops: 0
+                    blacklistedInEU: false
             price:
               currency: USD
               total: '342.20'
               base: '294.00'
               fees:
-              - amount: '0.00'
-                type: SUPPLIER
-              - amount: '0.00'
-                type: TICKETING
+                - amount: '0.00'
+                  type: SUPPLIER
+                - amount: '0.00'
+                  type: TICKETING
               grandTotal: '342.20'
             pricingOptions:
               fareType:
-              - PUBLISHED
+                - PUBLISHED
               includedCheckedBagsOnly: true
             validatingAirlineCodes:
-            - 6X
+              - 6X
             travelerPricings:
-            - travelerId: '1'
-              fareOption: STANDARD
-              travelerType: ADULT
-              price:
-                currency: USD
-                total: '342.20'
-                base: '294.00'
-              fareDetailsBySegment:
-              - segmentId: '3'
-                cabin: BUSINESS
-                fareBasis: J6XQSMIX
-                class: J
-                includedCheckedBags:
-                  quantity: 8
-              - segmentId: '4'
-                cabin: BUSINESS
-                fareBasis: J6XQSMIX
-                class: J
-                includedCheckedBags:
-                  quantity: 8
+              - travelerId: '1'
+                fareOption: STANDARD
+                travelerType: ADULT
+                price:
+                  currency: USD
+                  total: '342.20'
+                  base: '294.00'
+                fareDetailsBySegment:
+                  - segmentId: '3'
+                    cabin: BUSINESS
+                    fareBasis: J6XQSMIX
+                    class: J
+                    includedCheckedBags:
+                      quantity: 8
+                  - segmentId: '4'
+                    cabin: BUSINESS
+                    fareBasis: J6XQSMIX
+                    class: J
+                    includedCheckedBags:
+                      quantity: 8
           - type: flight-offer
             id: '2'
             source: GDS
@@ -1328,77 +1334,77 @@ responses:
             lastTicketingDate: '2023-11-01'
             numberOfBookableSeats: 9
             itineraries:
-            - duration: PT11H
-              segments:
-              - departure:
-                  iataCode: JFK
-                  at: '2023-11-01T20:00:00'
-                arrival:
-                  iataCode: LHR
-                  at: '2023-11-02T08:05:00'
-                carrierCode: 6X
-                number: '172'
-                aircraft:
-                  code: '744'
-                operating:
-                  carrierCode: 6X
-                duration: PT7H5M
-                id: '1'
-                numberOfStops: 0
-                blacklistedInEU: false
-              - departure:
-                  iataCode: LHR
-                  at: '2023-11-02T10:30:00'
-                arrival:
-                  iataCode: MAD
-                  at: '2023-11-02T13:00:00'
-                carrierCode: 6X
-                number: '9931'
-                aircraft:
-                  code: '320'
-                operating:
-                  carrierCode: 6X
-                duration: PT1H30M
-                id: '2'
-                numberOfStops: 0
-                blacklistedInEU: false
+              - duration: PT11H
+                segments:
+                  - departure:
+                      iataCode: JFK
+                      at: '2023-11-01T20:00:00'
+                    arrival:
+                      iataCode: LHR
+                      at: '2023-11-02T08:05:00'
+                    carrierCode: 6X
+                    number: '172'
+                    aircraft:
+                      code: '744'
+                    operating:
+                      carrierCode: 6X
+                    duration: PT7H5M
+                    id: '1'
+                    numberOfStops: 0
+                    blacklistedInEU: false
+                  - departure:
+                      iataCode: LHR
+                      at: '2023-11-02T10:30:00'
+                    arrival:
+                      iataCode: MAD
+                      at: '2023-11-02T13:00:00'
+                    carrierCode: 6X
+                    number: '9931'
+                    aircraft:
+                      code: '320'
+                    operating:
+                      carrierCode: 6X
+                    duration: PT1H30M
+                    id: '2'
+                    numberOfStops: 0
+                    blacklistedInEU: false
             price:
               currency: USD
               total: '342.20'
               base: '294.00'
               fees:
-              - amount: '0.00'
-                type: SUPPLIER
-              - amount: '0.00'
-                type: TICKETING
+                - amount: '0.00'
+                  type: SUPPLIER
+                - amount: '0.00'
+                  type: TICKETING
               grandTotal: '342.20'
             pricingOptions:
               fareType:
-              - PUBLISHED
+                - PUBLISHED
               includedCheckedBagsOnly: true
             validatingAirlineCodes:
-            - 6X
+              - 6X
             travelerPricings:
-            - travelerId: '1'
-              fareOption: STANDARD
-              travelerType: ADULT
-              price:
-                currency: USD
-                total: '342.20'
-                base: '294.00'
-              fareDetailsBySegment:
-              - segmentId: '1'
-                cabin: BUSINESS
-                fareBasis: J6XQSMIX
-                class: J
-                includedCheckedBags:
-                  quantity: 8
-              - segmentId: '2'
-                cabin: BUSINESS
-                fareBasis: J6XQSMIX
-                class: J
-                includedCheckedBags:
-                  quantity: 8
+              - travelerId: '1'
+                fareOption: STANDARD
+                travelerType: ADULT
+                price:
+                  currency: USD
+                  total: '342.20'
+                  base: '294.00'
+                fareDetailsBySegment:
+                  - segmentId: '1'
+                    cabin: BUSINESS
+                    fareBasis: J6XQSMIX
+                    class: J
+                    includedCheckedBags:
+                      quantity: 8
+                  - segmentId: '2'
+                    cabin: BUSINESS
+                    fareBasis: J6XQSMIX
+                    class: J
+                    includedCheckedBags:
+                      quantity: 8
         dictionaries:
           locations:
             EWR:
