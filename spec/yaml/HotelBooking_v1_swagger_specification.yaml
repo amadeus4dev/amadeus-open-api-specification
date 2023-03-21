@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Hotel Booking
-  version: 1.1.2
+  version: 1.1.3
   description: |
 
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
@@ -15,7 +15,6 @@ info:
   x-status: validated
 host: test.api.amadeus.com
 basePath: /v1
-securityDefinitions: {}
 schemes:
   - https
 consumes:
@@ -67,7 +66,7 @@ parameters:
             offerId:
               type: string
               description: offerId to book
-              pattern: '^[A-Z0-9]*$'
+              pattern: ^[A-Z0-9]*$
               minLength: 2
               maxLength: 100
               example: 63A93695B58821ABB0EC2B33FE9FAB24D72BF34B1BD7D707293763D8D9378FC3
@@ -106,7 +105,7 @@ parameters:
                       example: 1
                   paymentId:
                     type: integer
-                    description: 'if missing, the first payment is used (optional)'
+                    description: if missing, the first payment is used (optional)
                     example: 1
                   specialRequest:
                     type: string
@@ -129,14 +128,14 @@ parameters:
             - method: creditCard
               card:
                 vendorCode: VI
-                cardNumber: '4111111111111111'
+                cardNumber: '0000000000000000'
                 expiryDate: 2026-01
   Ama-Client-Ref:
     name: Ama-Client-Ref
     in: header
     required: false
     type: string
-    pattern: '^[A-Z0-9_]*$'
+    pattern: ^[A-Z0-9_]*$
     description: Client Reference to track Request/Response
   Accept-Encoding:
     name: Accept-Encoding
@@ -215,17 +214,17 @@ definitions:
         example: hotel-booking
       id:
         type: string
-        pattern: '^[A-Z0-9_]*$'
+        pattern: ^[A-Z0-9_]*$
         minLength: 5
         maxLength: 19
         description: Booking Id
         example: XD_8138319951754
       providerConfirmationId:
         type: string
-        pattern: '^[A-Z0-9_]*$'
+        pattern: ^[A-Z0-9_]*$
         minLength: 2
         maxLength: 16
-        description: 'GDS Confirmation Number. If you call the Provider, this Reference may be asked'
+        description: GDS Confirmation Number. If you call the Provider, this Reference may be asked
         example: '8138319951754'
       associatedRecords:
         type: array
@@ -237,7 +236,7 @@ definitions:
         type: string
         format: uri
         description: Retrieve Booking Details
-        example: 'https://test.api.amadeus.com/v1/booking/hotel-bookings/XD_8138319951754'
+        example: https://test.api.amadeus.com/v1/booking/hotel-bookings/XD_8138319951754
   AssociatedRecord:
     type: object
     description: Associated Record (Flight Booking Record)
@@ -247,7 +246,7 @@ definitions:
     properties:
       reference:
         type: string
-        pattern: '^[A-Z0-9]{6}$'
+        pattern: ^[A-Z0-9]{6}$
         description: Amadeus GDS Record
         minLength: 6
         maxLength: 6
@@ -275,7 +274,7 @@ definitions:
         $ref: '#/definitions/Contact'
       hotelRewardsMember:
         type: string
-        pattern: '^[A-Z0-9-]{1,21}$'
+        pattern: ^[A-Z0-9-]{1,21}$
         minLength: 1
         maxLength: 21
         example: '3081031320523260'
@@ -310,7 +309,7 @@ definitions:
       title:
         type: string
         description: title/gender of room guest
-        pattern: '^[A-Za-z -]*$'
+        pattern: ^[A-Za-z -]*$
         minLength: 1
         maxLength: 54
         enum:
@@ -321,14 +320,14 @@ definitions:
       firstName:
         type: string
         description: first name (and middle name) of room guest
-        pattern: '^[A-Za-z \p{Han}\p{Katakana}\p{Hiragana}\p{Hangul}-]*$'
+        pattern: ^[A-Za-z \p{Han}\p{Katakana}\p{Hiragana}\p{Hangul}-]*$
         minLength: 1
         maxLength: 56
         example: BOB
       lastName:
         type: string
         description: last name of room guest
-        pattern: '^[A-Za-z \p{Han}\p{Katakana}\p{Hiragana}\p{Hangul}-]*$'
+        pattern: ^[A-Za-z \p{Han}\p{Katakana}\p{Hiragana}\p{Hangul}-]*$
         minLength: 1
         maxLength: 57
         example: SMITH
@@ -341,8 +340,8 @@ definitions:
     properties:
       phone:
         type: string
-        description: 'Phone Number in standard E.123(https://en.wikipedia.org/wiki/E.123)'
-        pattern: '^[+][1-9][0-9]{4,18}$'
+        description: Phone Number in standard E.123(https://en.wikipedia.org/wiki/E.123)
+        pattern: ^[+][1-9][0-9]{4,18}$
         minLength: 6
         maxLength: 20
         example: '+33679278416'
@@ -350,7 +349,7 @@ definitions:
         type: string
         format: email
         description: Email Address
-        pattern: '^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$'
+        pattern: ^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$
         minLength: 3
         maxLength: 90
         example: bob.smith@email.com
@@ -383,7 +382,7 @@ definitions:
         properties:
           vendorCode:
             type: string
-            pattern: '^[A-Z]{2}$'
+            pattern: ^[A-Z]{2}$
             minLength: 2
             maxLength: 2
             example: VI
@@ -409,14 +408,13 @@ definitions:
           cardNumber:
             type: string
             description: card number
-            pattern: '^[0-9]*$'
+            pattern: ^[0-9]*$
             minLength: 2
             maxLength: 22
-            example: '4111111111111111'
           expiryDate:
             type: string
             description: Expiration Date YYYY-MM
-            pattern: '^[0-9]{4}-[0-9]{2}$'
+            pattern: ^[0-9]{4}-[0-9]{2}$
             minLength: 7
             maxLength: 7
             example: 2019-01
