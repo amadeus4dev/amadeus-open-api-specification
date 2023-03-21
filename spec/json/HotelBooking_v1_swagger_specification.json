@@ -2,7 +2,7 @@
   "swagger": "2.0",
   "info": {
     "title": "Hotel Booking",
-    "version": "1.1.2",
+    "version": "1.1.3",
     "description": "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York).\n\n\n**Warning: Do not perform test booking in production**. All requests are sent and processed by hotel providers. An excessive amount of fake/canceled reservation will make you blacklisted by hotel providers.\n",
     "x-tags": [
       "#mobile-services"
@@ -11,8 +11,6 @@
   },
   "host": "test.api.amadeus.com",
   "basePath": "/v1",
-  "securityDefinitions": {
-  },
   "schemes": [
     "https"
   ],
@@ -170,7 +168,7 @@
                 "method": "creditCard",
                 "card": {
                   "vendorCode": "VI",
-                  "cardNumber": "4111111111111111",
+                  "cardNumber": "0000000000000000",
                   "expiryDate": "2026-01"
                 }
               }
@@ -493,8 +491,7 @@
               "description": "card number",
               "pattern": "^[0-9]*$",
               "minLength": 2,
-              "maxLength": 22,
-              "example": "4111111111111111"
+              "maxLength": 22
             },
             "expiryDate": {
               "type": "string",
