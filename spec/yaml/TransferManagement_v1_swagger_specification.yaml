@@ -1,0 +1,182 @@
+swagger: '2.0'
+info:
+  version: 1.11.0
+  title: Transfer Management
+  description: |-
+    Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
+
+    Please also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York).
+host: test.api.amadeus.com
+basePath: /v1
+schemes:
+  - https
+consumes:
+  - application/vnd.amadeus+json
+  - application/json
+produces:
+  - application/vnd.amadeus+json
+  - application/json
+paths:
+  /ordering/transfer-orders/{orderId}/transfers/cancellation:
+    post:
+      tags:
+        - Booking
+      operationId: cancelTransfer
+      summary: Cancel a transfer in an existing orderId.
+      parameters:
+        - name: orderId
+          in: path
+          type: string
+          required: true
+          description: transfer order identifier
+        - name: confirmNbr
+          in: query
+          type: string
+          required: true
+          description: transfer identifier - confirmation number from transfer supplier that identifies the ride
+      responses:
+        '200':
+          $ref: '#/responses/transfer_cancel'
+        '400':
+          $ref: '#/responses/400'
+        '401':
+          $ref: '#/responses/401'
+        '404':
+          $ref: '#/responses/404'
+        default:
+          $ref: '#/responses/500'
+      description: ''
+definitions:
+  TransferCancellation:
+    type: object
+    description: information returned in cancelation response
+    properties:
+      confirmNbr:
+        type: string
+        description: transfer identifier - confirmation number from service provider that identifies the ride
+      reservationStatus:
+        type: string
+        enum:
+          - CANCELLED
+          - CONFIRMED
+        description: status of reservation
+  Error_400:
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+    required:
+      - errors
+    example:
+      errors:
+        - status: 400
+          code: 4926
+          title: INVALID DATA RECEIVED
+          detail: Transfer type is not valid
+          source:
+            parameter: transferType
+  Error_401:
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+    required:
+      - errors
+    example:
+      errors:
+        - status: 401
+          code: 20
+          title: RESTRICTED
+          detail: Query unauthorized
+  Error_404:
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+    required:
+      - errors
+    example:
+      errors:
+        - status: 404
+          code: 1797
+          title: NOT FOUND
+          detail: no response found for this query parameter
+          source:
+            parameter: orderId
+  Error_500:
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+    required:
+      - errors
+    example:
+      errors:
+        - status: 500
+          code: 141
+          title: SYSTEM ERROR HAS OCCURRED
+  Issue:
+    properties:
+      status:
+        description: the HTTP status code applicable to this error
+        type: integer
+      code:
+        description: an application-specific error code
+        type: integer
+        format: int64
+      title:
+        description: a short summary of the error
+        type: string
+      detail:
+        description: explanation of the error
+        type: string
+      source:
+        type: object
+        title: Issue_Source
+        description: an object containing references to the source of the error
+        maxProperties: 1
+        properties:
+          pointer:
+            description: a JSON Pointer [RFC6901] to the associated entity in the request document
+            type: string
+          parameter:
+            description: a string indicating which URI query parameter caused the issue
+            type: string
+          example:
+            description: a string indicating an example of the right value
+            type: string
+responses:
+  '400':
+    description: "code    | title                                 \n------- | -------------------------------------                 \n32171   | MANDATORY DATA MISSING \t     \n"
+    schema:
+      $ref: '#/definitions/Error_400'
+  '401':
+    description: Unauthorized
+    schema:
+      $ref: '#/definitions/Error_401'
+  '404':
+    description: Not Found
+    schema:
+      $ref: '#/definitions/Error_404'
+  '500':
+    description: Unexpected Error
+    schema:
+      $ref: '#/definitions/Error_500'
+  transfer_cancel:
+    description: Successful Operation
+    schema:
+      title: Success_Cancellation
+      required:
+        - data
+      properties:
+        data:
+          $ref: '#/definitions/TransferCancellation'
+      example:
+        data:
+          confirmNbr: '2904892'
+          reservationStatus: CANCELLED
+x-generatedAt: '2021-04-19T12:58:58.637Z'
