@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.1
+  version: 1.2.0
   title: Branded Fares Upsell
   x-tags:
     - '#quick-connect'
@@ -9,6 +9,11 @@ info:
     - '#ama-for-dev'
   x-status: validated
   x-release-note:
+    1.2.0:
+      - Add chargeableSeat element
+      - Add lastTicketingDateTime
+    1.1.0:
+      - Add Margins and Discounts content from Margin Manager product - **only available in Enterprise**
     1.0.0:
       - First version of Branded Fares Upsell
   description: |-
@@ -251,7 +256,7 @@ definitions:
         maxProperties: 1
         properties:
           pointer:
-            description: 'a JSON Pointer [RFC6901] to the associated entity in the request document'
+            description: a JSON Pointer [RFC6901] to the associated entity in the request document
             type: string
           parameter:
             description: a string indicating which URI query parameter caused the issue
@@ -300,11 +305,11 @@ definitions:
         $ref: '#/definitions/OperatingFlight'
       duration:
         type: string
-        description: 'stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M'
+        description: stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M
         example: PT2H10M
       stops:
         type: array
-        description: 'information regarding the different stops composing the flight segment. E.g. technical stop, change of gauge...'
+        description: information regarding the different stops composing the flight segment. E.g. technical stop, change of gauge...
         items:
           $ref: '#/definitions/FlightStop'
   OriginalFlightEndPoint:
@@ -327,7 +332,7 @@ definitions:
       - type: object
         properties:
           at:
-            description: 'local date and time in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00'
+            description: local date and time in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
             type: string
             format: date-time
             example: '2017-10-23T20:00:00'
@@ -341,7 +346,7 @@ definitions:
         example: JFK
       duration:
         type: string
-        description: 'stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M'
+        description: stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M
         example: PT2H10M
   FlightStop:
     title: FlightStop
@@ -351,12 +356,12 @@ definitions:
       - type: object
         properties:
           arrivalAt:
-            description: 'arrival at the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00'
+            description: arrival at the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
             type: string
             format: date-time
             example: '2017-10-23T20:00:00'
           departureAt:
-            description: 'departure from the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00'
+            description: departure from the stop in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
             type: string
             format: date-time
             example: '2017-10-23T20:00:00'
@@ -413,7 +418,7 @@ definitions:
       - type: object
         properties:
           margin:
-            description: 'BOOK step ONLY - The price margin percentage (plus or minus) that the booking can tolerate. When set to 0, then no price magin is tolerated.'
+            description: BOOK step ONLY - The price margin percentage (plus or minus) that the booking can tolerate. When set to 0, then no price magin is tolerated.
             type: string
             example: '1.00'
           grandTotal:
@@ -464,7 +469,7 @@ definitions:
         type: string
         example: MX
   TravelClass:
-    description: 'quality of service offered in the cabin where the seat is located in this flight. Economy, premium economy, business or first class'
+    description: quality of service offered in the cabin where the seat is located in this flight. Economy, premium economy, business or first class
     type: string
     enum:
       - ECONOMY
@@ -521,29 +526,34 @@ definitions:
       source:
         $ref: '#/definitions/FlightOfferSource'
       instantTicketingRequired:
-        description: 'If true, inform that a ticketing will be required at booking step.'
+        description: If true, inform that a ticketing will be required at booking step.
         type: boolean
         example: false
       disablePricing:
-        description: 'BOOK step ONLY - If true, allows to book a PNR without pricing. Only for the source "GDS"'
+        description: BOOK step ONLY - If true, allows to book a PNR without pricing. Only for the source "GDS"
         type: boolean
         example: false
       nonHomogeneous:
-        description: 'If true, upon completion of the booking, this pricing solution is expected to yield multiple records (a record contains booking information confirmed and stored, typically a Passenger Name Record (PNR), in the provider GDS or system)'
+        description: If true, upon completion of the booking, this pricing solution is expected to yield multiple records (a record contains booking information confirmed and stored, typically a Passenger Name Record (PNR), in the provider GDS or system)
         type: boolean
         example: false
       oneWay:
-        description: 'If true, the flight offer fulfills only one originDestination and has to be combined with other oneWays to complete the whole journey.'
+        description: If true, the flight offer can be combined with other oneWays flight-offers to complete the whole journey (one-Way combinable feature).
         type: boolean
         example: false
       paymentCardRequired:
-        description: 'If true, a payment card is mandatory to book this flight offer'
+        description: If true, a payment card is mandatory to book this flight offer
         type: boolean
         example: false
       lastTicketingDate:
-        description: 'If booked on the same day as the search (with respect to timezone), this flight offer is guaranteed to be thereafter valid for ticketing until this date (included). Unspecified when it does not make sense for this flight offer (e.g. no control over ticketing once booked). YYYY-MM-DD format, e.g. 2019-06-07'
+        description: If booked on the same day as the search (with respect to timezone), this flight offer is guaranteed to be thereafter valid for ticketing until this date (included). Unspecified when it does not make sense for this flight offer (e.g. no control over ticketing once booked). YYYY-MM-DD format, e.g. 2019-06-07
         type: string
-        example: '2018-06-19T00:00:00.000Z'
+        example: '2018-06-19'
+      lastTicketingDateTime:
+        description: If booked on the same day as the search (with respect to timezone), this flight offer is guaranteed to be thereafter valid for ticketing until this date/time (included). Unspecified when it does not make sense for this flight offer (e.g. no control over ticketing once booked). Information only this attribute is not used in input of pricing request. Local date and time in YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00
+        type: string
+        format: date-time
+        example: '2018-06-19T15:00:00'
       numberOfBookableSeats:
         description: Number of seats bookable in a single request. Can not be higher than 9.
         type: number
@@ -559,7 +569,7 @@ definitions:
           type: object
           properties:
             duration:
-              description: 'duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M for a duration of 2h10m'
+              description: duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M for a duration of 2h10m
               type: string
               example: PT2H10M
             segments:
@@ -582,22 +592,22 @@ definitions:
             $ref: '#/definitions/PricingOptionsFareType'
           includedCheckedBagsOnly:
             type: boolean
-            description: 'If true, returns the flight-offers with included checked bags only'
+            description: If true, returns the flight-offers with included checked bags only
             example: true
           refundableFare:
             type: boolean
-            description: 'If true, returns the flight-offers with refundable fares only'
+            description: If true, returns the flight-offers with refundable fares only
             example: true
           noRestrictionFare:
             type: boolean
-            description: 'If true, returns the flight-offers with no restriction fares only'
+            description: If true, returns the flight-offers with no restriction fares only
             example: true
           noPenaltyFare:
             type: boolean
-            description: 'If true, returns the flight-offers with no penalty fares only'
+            description: If true, returns the flight-offers with no penalty fares only
             example: true
       validatingAirlineCodes:
-        description: This option ensures that the system will only consider these airlines.
+        description: This option ensures that the system will only consider offers with these airlines as validating carrier.
         type: array
         minItems: 1
         maxItems: 9
@@ -629,7 +639,7 @@ definitions:
               $ref: '#/definitions/TravelerType'
             associatedAdultId:
               type: string
-              description: 'if type="HELD_INFANT", corresponds to the adult traveler''s id who will share the seat'
+              description: if type="HELD_INFANT", corresponds to the adult traveler's id who will share the seat
             price:
               description: price detail of the traveler
               $ref: '#/definitions/Price'
@@ -650,7 +660,7 @@ definitions:
                   cabin:
                     $ref: '#/definitions/TravelClass'
                   fareBasis:
-                    description: 'Fare basis specifying the rules of a fare. Usually, though not always, is composed of the booking class code followed by a set of letters and digits representing other characteristics of the ticket, such as refundability, minimum stay requirements, discounts or special promotional elements.'
+                    description: Fare basis specifying the rules of a fare. Usually, though not always, is composed of the booking class code followed by a set of letters and digits representing other characteristics of the ticket, such as refundability, minimum stay requirements, discounts or special promotional elements.
                     type: string
                     example: ANNNNF4K
                     pattern: '[[A-Z0-9]{1,18}'
@@ -659,7 +669,7 @@ definitions:
                     type: string
                     example: LIGHTONE
                   class:
-                    description: 'The code of the booking class, a.k.a. class of service or Reservations/Booking Designator (RBD)'
+                    description: The code of the booking class, a.k.a. class of service or Reservations/Booking Designator (RBD)
                     type: string
                     example: A
                     pattern: '[A-Z]{1}'
@@ -668,13 +678,7 @@ definitions:
                     type: boolean
                     example: true
                   allotmentDetails:
-                    title: AllotmentDetails
-                    type: object
-                    properties:
-                      tourName:
-                        type: string
-                      tourReference:
-                        type: string
+                    $ref: '#/definitions/AllotmentDetails'
                   sliceDiceIndicator:
                     $ref: '#/definitions/SliceDiceIndicator'
                   includedCheckedBags:
@@ -687,11 +691,15 @@ definitions:
                     properties:
                       chargeableCheckedBags:
                         title: chargeableCheckedBags
-                        $ref: '#/definitions/BaggageAllowance'
                         description: Details of chargeable checked bags
+                        $ref: '#/definitions/ChargeableCheckdBags'
+                      chargeableSeat:
+                        title: chargeableSeat
+                        description: Details of chargeable seat
+                        $ref: '#/definitions/ChargeableSeat'
                       chargeableSeatNumber:
                         type: string
-                        description: seat number
+                        description: DEPRECATED - use the chargeableSeat attribute -  seat number
                         example: 33D
                         pattern: '[1-9][0-9]{0,2}[A-Z]?'
                       otherServices:
@@ -701,50 +709,6 @@ definitions:
                           $ref: '#/definitions/ServiceName'
                         example:
                           - PRIORITY_BOARDING
-                  amenities:
-                    type: array
-                    items:
-                      $ref: '#/definitions/Amenity'
-      fareRules:
-        description: Fare rules of the flight offer
-        $ref: '#/definitions/FareRules'
-  ExtendedPricingOptions:
-    title: pricingOptions
-    description: fare filter options
-    type: object
-    properties:
-      minimumDelayBeforeTicketing:
-        description: 'Required delay before being able to ticket. This option ensures that the system will only search for flight-offers which can still be ticketed the last day after this delay. If booked on the same day as the search (with respect to provider timezone), such flight-offers are guaranteed to be thereafter valid for ticketing at least during this delay (last day included). This option has no effect on flight-offers for which the last ticketing date does not make sense. Overrides the default settings. Max 365D'
-        type: string
-        example: 3D
-      fareType:
-        $ref: '#/definitions/PricingOptionsFareType'
-      corporateCodes:
-        type: array
-        minItems: 1
-        maxItems: 6
-        description: Allow Corporate negotiated fares using one or more corporate number (corporate code).
-        items:
-          type: string
-        example:
-          - '123456'
-        pattern: '[0-9A-Z]{6}'
-      includedCheckedBagsOnly:
-        type: boolean
-        description: 'If true, returns the flight-offers with included checked bags only'
-        example: true
-      refundableFare:
-        type: boolean
-        description: 'If true, returns the flight-offers with refundable fares only'
-        example: true
-      noRestrictionFare:
-        type: boolean
-        description: 'If true, returns the flight-offers with no restriction fares only'
-        example: true
-      noPenaltyFare:
-        type: boolean
-        description: 'If true, returns the flight-offers with no penalty fares only'
-        example: true
   Segment:
     allOf:
       - type: object
@@ -787,39 +751,6 @@ definitions:
       - SEATED_INFANT
       - STUDENT
     example: ADULT
-  FareOptions:
-    type: array
-    description: |
-      option specifying a group of fares, which may be valid under certain conditons
-      can be used to specify special fare discount for a passenger
-    minItems: 1
-    maxItems: 3
-    items:
-      type: string
-      enum:
-        - STANDARD
-        - INCLUSIVE_TOUR
-        - SPANISH_MELILLA_RESIDENT
-        - SPANISH_CEUTA_RESIDENT
-        - SPANISH_CANARY_RESIDENT
-        - SPANISH_BALEARIC_RESIDENT
-        - AIR_FRANCE_METROPOLITAN_DISCOUNT_PASS
-        - AIR_FRANCE_DOM_DISCOUNT_PASS
-        - AIR_FRANCE_COMBINED_DISCOUNT_PASS
-        - AIR_FRANCE_FAMILY
-        - ADULT_WITH_COMPANION
-        - COMPANION
-    example:
-      - STANDARD
-      - INCLUSIVE_TOUR
-  Coverage:
-    description: part of the trip covered by the travel class restriction (ALL_SEGMENTS if ommited)
-    type: string
-    enum:
-      - MOST_SEGMENTS
-      - AT_LEAST_ONE_SEGMENT
-      - ALL_SEGMENTS
-    example: MOST_SEGMENTS
   AdditionalServiceType:
     type: string
     description: additional service type
@@ -866,12 +797,45 @@ definitions:
       - COMPANION
     example: STANDARD
   SliceDiceIndicator:
-    description: 'slice and Dice indicator, such as Local Availability, Sub OnD(Origin and Destination) 1 Availability and Sub OnD 2 Availability'
+    description: slice and Dice indicator, such as Local Availability, Sub OnD(Origin and Destination) 1 Availability and Sub OnD 2 Availability
     type: string
     enum:
       - LOCAL_AVAILABILITY
       - SUB_OD_AVAILABILITY_1
       - SUB_OD_AVAILABILITY_2
+  AllotmentDetails:
+    title: AllotmentDetails
+    type: object
+    properties:
+      tourName:
+        description: The tour name agreed for this specific allotment.
+        type: string
+      tourReference:
+        description: The tour reference agreed for this specific allotment.
+        type: string
+  ChargeableCheckdBags:
+    description: Details of chargeable checked bags
+    allOf:
+      - $ref: '#/definitions/BaggageAllowance'
+      - type: object
+        properties:
+          id:
+            description: Id of the chargeable bag
+            type: string
+            example: '1'
+  ChargeableSeat:
+    description: Details of chargeable seat
+    type: object
+    properties:
+      id:
+        description: Id of the chargeable seat
+        type: string
+        example: '1'
+      number:
+        type: string
+        description: seat number
+        example: 33D
+        pattern: '[1-9][0-9]{0,2}[A-Z]?'
   Dictionaries:
     type: object
     properties:
@@ -893,46 +857,6 @@ definitions:
         type: string
         description: Country code of the airport
         example: FR
-  FareRules:
-    type: object
-    title: FareRules
-    properties:
-      currency:
-        type: string
-        description: The currency of the penalties
-      rules:
-        type: array
-        minItems: 1
-        items:
-          $ref: '#/definitions/TermAndCondition'
-  TermAndCondition:
-    properties:
-      category:
-        type: string
-        description: This defines what type of modification is concerned in this rule.
-        enum:
-          - REFUND
-          - EXCHANGE
-          - REVALIDATION
-          - REISSUE
-          - REBOOK
-          - CANCELLATION
-        example: EXCHANGE
-      circumstances:
-        type: string
-      notApplicable:
-        type: boolean
-      maxPenaltyAmount:
-        type: string
-      descriptions:
-        type: array
-        items:
-          title: Description
-          properties:
-            descriptionType:
-              type: string
-            text:
-              type: string
   PaymentBrand:
     description: credit card brand
     type: string
@@ -1015,42 +939,6 @@ definitions:
               type: array
               items:
                 type: string
-  Amenity:
-    type: object
-    description: Amenity
-    title: Amenity
-    properties:
-      code:
-        type: string
-      description:
-        type: string
-      isChargeable:
-        type: boolean
-      amenityType:
-        $ref: '#/definitions/AmenityType'
-  AmenityType:
-    description: Amenity type
-    type: string
-    enum:
-      - BUNDLED_SERVICE
-      - BRANDED_FARES
-      - BAGGAGE
-      - CARBON_OFFSET
-      - FREQUENT_FLYER
-      - GROUND
-      - ENTERTAINMENT
-      - LOUNGE
-      - MEDICAL
-      - MEAL
-      - PETS
-      - RULE_OVERRIDE
-      - STANDBY
-      - STORE
-      - TRAVEL_SERVICES
-      - UNACCOMPANIED_TRAVEL
-      - UPGRADES
-      - UNACCOMPANIED_TRAVEL_UNESCORTED
-      - PRE_RESERVED_SEAT
 responses:
   '500':
     description: Unexpected error
@@ -1187,7 +1075,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -1203,7 +1091,7 @@ responses:
                         description: CHOICE OF STANDARD SEAT
                         isChargeable: true
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -1259,7 +1147,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -1275,7 +1163,7 @@ responses:
                         description: CHOICE OF STANDARD SEAT
                         isChargeable: true
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -1322,7 +1210,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -1338,7 +1226,7 @@ responses:
                         description: CHOICE OF STANDARD SEAT
                         isChargeable: true
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -1459,7 +1347,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -1471,7 +1359,7 @@ responses:
                         description: CHOICE OF STANDARD SEAT
                         isChargeable: true
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -1499,7 +1387,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -1511,7 +1399,7 @@ responses:
                         description: CHOICE OF STANDARD SEAT
                         isChargeable: true
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -1564,7 +1452,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -1576,7 +1464,7 @@ responses:
                         description: CHOICE OF STANDARD SEAT
                         isChargeable: true
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -1604,7 +1492,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -1616,7 +1504,7 @@ responses:
                         description: CHOICE OF STANDARD SEAT
                         isChargeable: true
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -1660,7 +1548,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -1672,7 +1560,7 @@ responses:
                         description: CHOICE OF STANDARD SEAT
                         isChargeable: true
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -1700,7 +1588,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -1712,7 +1600,7 @@ responses:
                         description: CHOICE OF STANDARD SEAT
                         isChargeable: true
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -1830,7 +1718,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -1850,7 +1738,7 @@ responses:
                         description: FLEX MILES ACCRUAL
                         isChargeable: false
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -1882,7 +1770,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -1902,7 +1790,7 @@ responses:
                         description: FLEX MILES ACCRUAL
                         isChargeable: false
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -1959,7 +1847,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -1979,7 +1867,7 @@ responses:
                         description: FLEX MILES ACCRUAL
                         isChargeable: false
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -2011,7 +1899,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2031,7 +1919,7 @@ responses:
                         description: FLEX MILES ACCRUAL
                         isChargeable: false
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -2079,7 +1967,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2099,7 +1987,7 @@ responses:
                         description: FLEX MILES ACCRUAL
                         isChargeable: false
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -2131,7 +2019,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2151,7 +2039,7 @@ responses:
                         description: FLEX MILES ACCRUAL
                         isChargeable: false
                         amenityType: BRANDED_FARES
-                      - code: 058
+                      - code: '058'
                         description: UPGRADE ELIGIBILITY
                         isChargeable: true
                         amenityType: BRANDED_FARES
@@ -2277,7 +2165,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2321,7 +2209,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2390,7 +2278,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2434,7 +2322,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2494,7 +2382,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2538,7 +2426,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2668,7 +2556,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2720,7 +2608,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2797,7 +2685,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2849,7 +2737,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2917,7 +2805,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -2969,7 +2857,7 @@ responses:
                         description: BEVERAGE
                         isChargeable: false
                         amenityType: MEAL
-                      - code: 059
+                      - code: '059'
                         description: CHANGEABLE TICKET
                         isChargeable: false
                         amenityType: BRANDED_FARES
@@ -3016,4 +2904,4 @@ parameters:
     in: header
     type: string
     default: GET
-x-generatedAt: '2021-02-05T09:26:13.229Z'
+x-generatedAt: '2023-02-01T13:10:18.028Z'

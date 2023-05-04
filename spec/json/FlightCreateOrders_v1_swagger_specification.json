@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.9.0",
+    "version": "1.10.0",
     "title": "Flight Create Orders",
     "x-tags": [
       "#travel-booking",
@@ -11,6 +11,10 @@
     ],
     "x-status": "validated",
     "x-release-note": {
+      "1.10.0": [
+        "Add chargeableSeat element",
+        "Add lastTicketingDateTime"
+      ],
       "1.9.0": [
         "Add FormIdentification into the flight-order"
       ],
@@ -1053,7 +1057,7 @@
           "example": false
         },
         "oneWay": {
-          "description": "If true, the flight offer fulfills only one originDestination and has to be combined with other oneWays to complete the whole journey.",
+          "description": "If true, the flight offer can be combined with other oneWays flight-offers to complete the whole journey (one-Way combinable feature).",
           "type": "boolean",
           "example": false
         },
@@ -1065,7 +1069,13 @@
         "lastTicketingDate": {
           "description": "If booked on the same day as the search (with respect to timezone), this flight offer is guaranteed to be thereafter valid for ticketing until this date (included). Unspecified when it does not make sense for this flight offer (e.g. no control over ticketing once booked). YYYY-MM-DD format, e.g. 2019-06-07",
           "type": "string",
-          "example": "2018-06-19T00:00:00.000Z"
+          "example": "2018-06-19"
+        },
+        "lastTicketingDateTime": {
+          "description": "If booked on the same day as the search (with respect to timezone), this flight offer is guaranteed to be thereafter valid for ticketing until this date/time (included). Unspecified when it does not make sense for this flight offer (e.g. no control over ticketing once booked). Information only this attribute is not used in input of pricing request. Local date and time in YYYY-MM-ddThh:mm:ss format, e.g. 2017-02-10T20:40:00",
+          "type": "string",
+          "format": "date-time",
+          "example": "2018-06-19T15:00:00"
         },
         "numberOfBookableSeats": {
           "description": "Number of seats bookable in a single request. Can not be higher than 9.",
@@ -1136,7 +1146,7 @@
           }
         },
         "validatingAirlineCodes": {
-          "description": "This option ensures that the system will only consider these airlines.",
+          "description": "This option ensures that the system will only consider offers with these airlines as validating carrier.",
           "type": "array",
           "minItems": 1,
           "maxItems": 9,
@@ -1239,12 +1249,17 @@
                       "properties": {
                         "chargeableCheckedBags": {
                           "title": "chargeableCheckedBags",
-                          "$ref": "#/definitions/BaggageAllowance",
-                          "description": "Details of chargeable checked bags"
+                          "description": "Details of chargeable checked bags",
+                          "$ref": "#/definitions/ChargeableCheckdBags"
+                        },
+                        "chargeableSeat": {
+                          "title": "chargeableSeat",
+                          "description": "Details of chargeable seat",
+                          "$ref": "#/definitions/ChargeableSeat"
                         },
                         "chargeableSeatNumber": {
                           "type": "string",
-                          "description": "seat number",
+                          "description": "DEPRECATED - use the chargeableSeat attribute -  seat number",
                           "example": "33D",
                           "pattern": "[1-9][0-9]{0,2}[A-Z]?"
                         },
@@ -1389,6 +1404,41 @@
         "tourReference": {
           "description": "The tour reference agreed for this specific allotment.",
           "type": "string"
+        }
+      }
+    },
+    "ChargeableCheckdBags": {
+      "description": "Details of chargeable checked bags",
+      "allOf": [
+        {
+          "$ref": "#/definitions/BaggageAllowance"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "id": {
+              "description": "Id of the chargeable bag",
+              "type": "string",
+              "example": "1"
+            }
+          }
+        }
+      ]
+    },
+    "ChargeableSeat": {
+      "description": "Details of chargeable seat",
+      "type": "object",
+      "properties": {
+        "id": {
+          "description": "Id of the chargeable seat",
+          "type": "string",
+          "example": "1"
+        },
+        "number": {
+          "type": "string",
+          "description": "seat number",
+          "example": "33D",
+          "pattern": "[1-9][0-9]{0,2}[A-Z]?"
         }
       }
     },
@@ -3199,5 +3249,5 @@
       }
     }
   },
-  "x-generatedAt": "2022-08-09T10:48:05.285Z"
+  "x-generatedAt": "2023-02-01T12:47:28.953Z"
 }

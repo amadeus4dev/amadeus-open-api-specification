@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 3.0.8
+  version: 3.0.9
   title: Hotel Search API
   description: |-
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
@@ -805,8 +805,10 @@ definitions:
         $ref: '#/definitions/HotelProduct_DepositPolicy'
       holdTime:
         $ref: '#/definitions/HotelProduct_HoldPolicy'
-      cancellation:
-        $ref: '#/definitions/HotelProduct_CancellationPolicy'
+      cancellations:
+        type: array
+        items:
+          $ref: '#/definitions/HotelProduct_CancellationPolicy'
       checkInOut:
         $ref: '#/definitions/HotelProduct_CheckInOutPolicy'
   HotelProduct_PriceVariation:
