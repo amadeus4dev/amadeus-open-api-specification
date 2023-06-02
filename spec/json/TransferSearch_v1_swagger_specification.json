@@ -1,0 +1,1654 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.11.0",
+    "title": "Transfer Search",
+    "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York)."
+  },
+  "host": "test.api.amadeus.com",
+  "basePath": "/v1",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/vnd.amadeus+json",
+    "application/json"
+  ],
+  "produces": [
+    "application/vnd.amadeus+json",
+    "application/json"
+  ],
+  "paths": {
+    "/shopping/transfer-offers": {
+      "post": {
+        "tags": [
+          "Shopping"
+        ],
+        "operationId": "getTransferOffers",
+        "summary": "Gets transfer offers.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "title": "Body_TransferOffers",
+              "type": "object",
+              "required": [
+                "startDateTime",
+                "startLocationCode",
+                "endLocationCode"
+              ],
+              "properties": {
+                "startDateTime": {
+                  "description": "date and time specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DDThh:mm:ss format e.g. 2017-11-10T10:00:00",
+                  "type": "string"
+                },
+                "passengers": {
+                  "description": "the number of passengers, e.g. 3. Default value is 1",
+                  "type": "integer",
+                  "default": 1
+                },
+                "startLocationCode": {
+                  "description": "location from [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx), e.g. CDG. Location could be defined either using location code or address (address line, zip code, country code, city, geo code)",
+                  "type": "string"
+                },
+                "startUicCode": {
+                  "description": "UIC code defined by the worldwide railway organization e.g. 8600626",
+                  "type": "string"
+                },
+                "startLfiCode": {
+                  "description": "internal airport identifier used for private jets and helicopters\nExample: FR84734\n",
+                  "type": "string"
+                },
+                "startAddressLine": {
+                  "description": "street address including building number, e.g. 5 Avenue Anatole France",
+                  "type": "string"
+                },
+                "startZipCode": {
+                  "description": "postal/zip code, e.g. 75007",
+                  "type": "string"
+                },
+                "startCountryCode": {
+                  "description": "country of the pick-up location with [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g. US)",
+                  "type": "string"
+                },
+                "startCityName": {
+                  "description": "city name, e.g. Paris",
+                  "type": "string"
+                },
+                "startStateCode": {
+                  "description": "state code according to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)",
+                  "type": "string"
+                },
+                "startGeoCode": {
+                  "description": "latitude and longitude of geographical location following the structure {latitude},{longitude}\nExample: 48.858093,2.294694",
+                  "type": "string"
+                },
+                "startName": {
+                  "description": "place name e.g. Airport Name, Hotel Name etc.",
+                  "type": "string"
+                },
+                "startGooglePlaceId": {
+                  "description": "google place id only for google address e.g. ChIJL-DOWeBv5kcRfTbh97PimNc.",
+                  "type": "string"
+                },
+                "endLocationCode": {
+                  "description": "location from [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx), e.g. CDG. Optional, for transferType = HOURLY. Location could be defined either using location code or address (address line, zip code, country code, city, geo code)",
+                  "type": "string"
+                },
+                "endUicCode": {
+                  "description": "UIC code defined by the worldwide railway organization e.g. 8600626",
+                  "type": "string"
+                },
+                "endLfiCode": {
+                  "description": "internal airport identifier used for private jets and helicopters\nExample: SP68724",
+                  "type": "string"
+                },
+                "endAddressLine": {
+                  "description": "street address, e.g. 5 Avenue Anatole France",
+                  "type": "string"
+                },
+                "endZipCode": {
+                  "description": "postal/zip code, e.g. 75007",
+                  "type": "string"
+                },
+                "endCountryCode": {
+                  "description": "country of the location with [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g. US)",
+                  "type": "string"
+                },
+                "endCityName": {
+                  "description": "city name, e.g. Paris",
+                  "type": "string"
+                },
+                "endStateCode": {
+                  "description": "state code according to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)",
+                  "type": "string"
+                },
+                "endGeoCode": {
+                  "description": "latitude and longitude of geographical location following the structure {latitude},{longitude}\nExample: 48.858093,2.294694",
+                  "type": "string"
+                },
+                "endName": {
+                  "description": "place name e.g. Airport Name, Hotel Name etc.",
+                  "type": "string"
+                },
+                "endGooglePlaceId": {
+                  "description": "google place id only for google address e.g. ChIJL-DOWeBv5kcRfTbh97PimNc.",
+                  "type": "string"
+                },
+                "transferType": {
+                  "type": "string",
+                  "enum": [
+                    "PRIVATE",
+                    "SHARED",
+                    "TAXI",
+                    "HOURLY",
+                    "AIRPORT_EXPRESS",
+                    "HELICOPTER",
+                    "PRIVATE_JET",
+                    "AIRPORT_BUS"
+                  ],
+                  "description": "a transfer service type\nExample: PRIVATE\n\nvalue           | description\n--------------  | ------------------------\nPRIVATE         | Private transfer from point to point\nSHARED          | Shared transfer from point to point\nTAXI            | Taxi reservation from point to point, price is estimated\nHOURLY          | Chauffeured driven transfer per hour\nAIRPORT_EXPRESS | Express Train from/to Airport\nAIRPORT_BUS     | Express Bus from/to Airport\nHELICOPTER      | Private helicopter flight from/to airport\nPRIVATE_JET     | Private flight from airport to airport\n\nIf not filled, all transfer service types are requested\n"
+                },
+                "duration": {
+                  "description": "transfer duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M. It is used and mandatory for transferType = HOURLY",
+                  "type": "string"
+                },
+                "language": {
+                  "description": "code of the preferred language to be used in [ISO 639-1 alpha-2](https://en.wikipedia.org/wiki/ISO_639-1) format, e.g. EN",
+                  "type": "string",
+                  "default": "EN"
+                },
+                "currency": {
+                  "description": "the preferred currency for the transfer offers. Currency is specified in the [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format, e.g. EUR for Euro",
+                  "type": "string"
+                },
+                "vehicleCategory": {
+                  "type": "string",
+                  "enum": [
+                    "ST",
+                    "BU",
+                    "FC"
+                  ],
+                  "description": "a vehicle category\nExample: BU\n\ncode  | name\n----- | -------------------------------------\nST    | Standard Class\nBU    | Business Class\nFC    | First Class\n\nIf not filled, all vehicle categories are requested\n"
+                },
+                "vehicleCode": {
+                  "type": "string",
+                  "enum": [
+                    "MBR",
+                    "CAR",
+                    "SED",
+                    "WGN",
+                    "ELC",
+                    "VAN",
+                    "SUV",
+                    "LMS",
+                    "TRN",
+                    "BUS",
+                    "HLC",
+                    "JET"
+                  ],
+                  "description": "a vehicle type code\nExample: VAN\n\ncode   | name\n------ | -------------------------------------\nMBK    | Motorcycle\nCAR    | Car\nSED    | Sedan\nWGN    | Wagon\nELC    | Electric car\nVAN    | Van or minivan\nSUV    | Sport utility vehicle\nLMS    | Limousine\nTRN    | Train\nBUS    | Bus\nHLC    | Helicopter\nJET    | Jet\n\nIf not filled, all vehicle types are requested\n"
+                },
+                "providerCodes": {
+                  "description": "transfer provider codes, comma-separated. If not filled, the request is sent to all providers\nExample: TXO,FGT",
+                  "type": "string"
+                },
+                "baggages": {
+                  "description": "the number of baggages to be supported by the vehicle. If specified, this number should be greater than or equal to 0",
+                  "type": "integer"
+                },
+                "discountNumbers": {
+                  "type": "string",
+                  "description": "transfer provider discount numbers, which could be used to get negotiated or discounted rates. Comma separated array with the following structure: {providerCode}|{discountType}|{discountNumber}.\nExample: ABC|CD|1122-DD-22, where providerCode=ABC, discountType=CD and discountNumber=1122-DD-22\nAccepted discountType:  \"CD\" for corporate discount code, \"PC\" for promotional/campaign discount code"
+                },
+                "extraServiceCodes": {
+                  "type": "string",
+                  "description": "a comma-separated list of extra service codes\nExample: EWT,MAG,FLM\n\ncode   | name\n------ | ----------------------------\nDSL    | Driver language specified\nEWT    | Extra waiting time\nMAG    | Meet & Greet\nFLM    | Flight monitoring\nNWS    | Newspaper\nCAI    | Cancellation insurance\nWNR    | Wait and Return. Driver waits at destination and brings back the customer to pick-up point"
+                },
+                "equipmentCodes": {
+                  "type": "string",
+                  "description": "a comma-separated list of extra equipment codes\nExample: CBS,BYC\n\ncode   | name\n------ | -------------------------------------\nBBS    | Baby stroller/Push chair\nBYC    | Bicycle rack\nCBB    | Cargo barrier rack\nCBF    | Cargo barrier front\nCBS    | Booster seat for child under 135cm or up to 12 years\nCSB    | Child seat determined by weight/age of child 1-3 years / 9-18 Kg\nCSI    | Child seat determined by weight/age of child 0-12 month/0-13Kg\nCST    | Child seat determined by weight/age of child 4-7 years/15 – 30 Kg\nSBR    | Snow board racks\nSKB    | Ski box\nSKR    | Ski rack\nTAB    | Travel Tablet \nWAR    | Wheelchair access ramp\nWHC    | Wheelchair\nWIF    | Wi-Fi access\nCNT    | Charger cable\n"
+                },
+                "reference": {
+                  "description": "reference of the Trip e.g. YNK4JQ",
+                  "type": "string"
+                },
+                "stopOvers": {
+                  "type": "array",
+                  "description": "Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude, lfi). Vehicle change via stop overs is not supported.",
+                  "items": {
+                    "$ref": "#/definitions/StopOverRequest"
+                  }
+                },
+                "startConnectedSegment": {
+                  "$ref": "#/definitions/TravelSegment"
+                },
+                "endConnectedSegment": {
+                  "$ref": "#/definitions/TravelSegment"
+                },
+                "passenegerCharacteristics": {
+                  "type": "array",
+                  "description": "Describes passenger typeCode and their age.",
+                  "items": {
+                    "$ref": "#/definitions/PassengerCharacteristics"
+                  }
+                }
+              },
+              "example": {
+                "startLocationCode": "CDG",
+                "endAddressLine": "Avenue Anatole France, 5",
+                "endCityName": "Paris",
+                "endZipCode": "75007",
+                "endCountryCode": "FR",
+                "endName": "Souvenirs De La Tour",
+                "endGooglePlaceId": "ChIJL-DOWeBv5kcRfTbh97PimNc",
+                "endGeoCode": "48.859466,2.2976965",
+                "transferType": "PRIVATE",
+                "startDateTime": "2021-11-10T10:30:00",
+                "providerCodes": "TXO",
+                "passengers": 2,
+                "stopOvers": [
+                  {
+                    "duration": "PT2H30M",
+                    "sequenceNumber": 1,
+                    "addressLine": "Avenue de la Bourdonnais, 19",
+                    "countryCode": "FR",
+                    "cityName": "Paris",
+                    "zipCode": "75007",
+                    "googlePlaceId": "DOWeBv5kcRfTbh97PimN",
+                    "name": "De La Tours",
+                    "geoCode": "48.859477,2.2976985",
+                    "stateCode": "FR"
+                  }
+                ],
+                "startConnectedSegment": {
+                  "transportationType": "FLIGHT",
+                  "transportationNumber": "AF380",
+                  "departure": {
+                    "localDateTime": "2021-11-10T09:00:00",
+                    "iataCode": "NCE"
+                  },
+                  "arrival": {
+                    "localDateTime": "2021-11-10T10:00:00",
+                    "iataCode": "CDG"
+                  }
+                },
+                "passengerCharacteristics": [
+                  {
+                    "passengerTypeCode": "ADT",
+                    "age": 20
+                  },
+                  {
+                    "passengerTypeCode": "CHD",
+                    "age": 10
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/transfer_offers_post"
+          },
+          "400": {
+            "$ref": "#/responses/400_postTransferOffers"
+          },
+          "401": {
+            "$ref": "#/responses/401"
+          },
+          "default": {
+            "$ref": "#/responses/500"
+          }
+        },
+        "description": ""
+      }
+    }
+  },
+  "definitions": {
+    "TransferOffer": {
+      "description": "transfer offer",
+      "allOf": [
+        {
+          "type": "object",
+          "required": [
+            "transferType",
+            "start",
+            "serviceProvider",
+            "vehicle",
+            "quotation",
+            "methodsOfPaymentAccepted"
+          ],
+          "properties": {
+            "transferType": {
+              "type": "string",
+              "enum": [
+                "PRIVATE",
+                "SHARED",
+                "TAXI",
+                "HOURLY",
+                "AIRPORT_EXPRESS",
+                "HELICOPTER",
+                "PRIVATE_JET",
+                "AIRPORT_BUS"
+              ],
+              "description": "amadeus transfer service type\n\nvalue           | description                                 \n--------------  | ------------------------\nPRIVATE         | Private transfer from point to point\nSHARED          | Shared transfer from point to point\nTAXI            | Taxi reservation from point to point, price is estimated\nHOURLY          | Chauffeured driven transfer per hour\nAIRPORT_EXPRESS | Express Train from/to Airport\nAIRPORT_BUS     | Express Bus from/to Airport\nHELICOPTER      | Private helicopter flight from/to airport\nPRIVATE_JET     | Private flight from airport to airport\n"
+            },
+            "start": {
+              "$ref": "#/definitions/Location"
+            },
+            "end": {
+              "$ref": "#/definitions/Location"
+            },
+            "stopOvers": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/StopOver"
+              }
+            },
+            "passenegerCharacteristics": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/PassengerCharacteristics"
+              }
+            },
+            "duration": {
+              "description": "transfer duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M",
+              "type": "string",
+              "example": "PT2H30M"
+            },
+            "vehicle": {
+              "$ref": "#/definitions/Vehicle"
+            },
+            "serviceProvider": {
+              "$ref": "#/definitions/ServiceProvider"
+            },
+            "partnerInfo": {
+              "$ref": "#/definitions/PartnerInfo"
+            },
+            "quotation": {
+              "$ref": "#/definitions/Quotation"
+            },
+            "converted": {
+              "$ref": "#/definitions/Quotation"
+            },
+            "extraServices": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/ExtraService"
+              }
+            },
+            "equipment": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Equipment"
+              }
+            },
+            "cancellationRules": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/CancellationRule"
+              }
+            },
+            "methodsOfPaymentAccepted": {
+              "type": "array",
+              "description": "list of payment methods, allowed by provider",
+              "items": {
+                "type": "string",
+                "description": "Method of payment required when PaymentType equal BT (applicable only for reservation action).",
+                "enum": [
+                  "CREDIT_CARD",
+                  "INVOICE",
+                  "TRAVEL_ACCOUNT"
+                ]
+              }
+            },
+            "discountCodes": {
+              "type": "array",
+              "description": "list of discount codes",
+              "items": {
+                "$ref": "#/definitions/DiscountCode"
+              }
+            },
+            "language": {
+              "description": "code of the preferred language to be used in [ISO 639-1 alpha-2](https://en.wikipedia.org/wiki/ISO_639-1) format, e.g. EN",
+              "type": "string",
+              "default": "EN"
+            },
+            "distance": {
+              "$ref": "#/definitions/Distance"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "type",
+            "id"
+          ],
+          "properties": {
+            "type": {
+              "description": "the resource name",
+              "type": "string"
+            },
+            "id": {
+              "type": "string",
+              "description": "offer identifier"
+            }
+          }
+        }
+      ]
+    },
+    "TransferOfferPost": {
+      "description": "transfer offer",
+      "allOf": [
+        {
+          "$ref": "#/definitions/TransferOffer"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "startConnectedSegment": {
+              "$ref": "#/definitions/TravelSegment"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "endConnectedSegment": {
+              "$ref": "#/definitions/TravelSegment"
+            }
+          }
+        }
+      ]
+    },
+    "AddressCommon": {
+      "description": "address of the departure location",
+      "properties": {
+        "line": {
+          "description": "Address line with street, number, bulding, etc...",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 70
+        },
+        "zip": {
+          "description": "Post office code number",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "countryCode": {
+          "description": "Country code (two character standard IATA country code)",
+          "type": "string",
+          "pattern": "[a-zA-Z]{2}"
+        },
+        "cityName": {
+          "description": "City, town or postal station",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "stateCode": {
+          "description": "State code (two character standard IATA state code)",
+          "type": "string",
+          "pattern": "[a-zA-Z0-9]{1-2}"
+        }
+      }
+    },
+    "Address": {
+      "type": "object",
+      "description": "address information",
+      "properties": {
+        "line": {
+          "description": "Address line with street, number, bulding, etc...",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 70
+        },
+        "zip": {
+          "description": "Post office code number",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
+        },
+        "countryCode": {
+          "description": "Country code (two character standard IATA country code)",
+          "type": "string",
+          "pattern": "[a-zA-Z]{2}"
+        },
+        "cityName": {
+          "description": "City, town or postal station",
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 35
+        },
+        "stateCode": {
+          "description": "State code (two character standard IATA state code)",
+          "type": "string",
+          "pattern": "[a-zA-Z0-9]{1-2}"
+        },
+        "latitude": {
+          "description": "latitude of the location",
+          "type": "number",
+          "format": "double",
+          "example": 43.580418
+        },
+        "longitude": {
+          "description": "longitude of the location",
+          "type": "number",
+          "format": "double",
+          "example": 7.125102
+        }
+      }
+    },
+    "Baggage": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "description": "baggage capacity",
+          "example": 3
+        },
+        "size": {
+          "type": "string",
+          "description": "baggage size\n\ncode   | name                                 \n------ | ---------------------------- \nS \t   | Small\nM \t   | Medium\nL \t   | Large\n",
+          "enum": [
+            "S",
+            "M",
+            "L"
+          ]
+        }
+      }
+    },
+    "CancellationRule": {
+      "type": "object",
+      "description": "cancellation rule information",
+      "properties": {
+        "ruleDescription": {
+          "type": "string",
+          "description": "description of cancellation rule"
+        },
+        "feeType": {
+          "type": "string",
+          "enum": [
+            "PERCENTAGE",
+            "VALUE"
+          ],
+          "description": "type of fee - percentage of total amount (PERCENTAGE) or fixed amount (VALUE)\n"
+        },
+        "feeValue": {
+          "type": "string",
+          "description": "value of the fee, e.g. \"100\" or \"12.50\""
+        },
+        "currencyCode": {
+          "type": "string",
+          "pattern": "[A-Z]{3}",
+          "description": "currency code of the fee in [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format, e.g. USD, EUR"
+        },
+        "metricType": {
+          "type": "string",
+          "description": "type of metric",
+          "enum": [
+            "MINUTES",
+            "HOURS",
+            "DAYS",
+            "YEARS"
+          ]
+        },
+        "metricMin": {
+          "type": "string",
+          "description": "metric min value"
+        },
+        "metricMax": {
+          "type": "string",
+          "description": "metric max value"
+        }
+      }
+    },
+    "Contact": {
+      "type": "object",
+      "properties": {
+        "phoneNumber": {
+          "type": "string",
+          "pattern": "([+]?)[0-9]{1,20}",
+          "description": "Contact phone number"
+        },
+        "email": {
+          "type": "string",
+          "format": "email",
+          "description": "Contact email"
+        }
+      }
+    },
+    "DiscountCode": {
+      "type": "object",
+      "description": "discount object that gives access to negotiated prices",
+      "properties": {
+        "type": {
+          "type": "string",
+          "description": "describes type of discount",
+          "enum": [
+            "CD",
+            "PC"
+          ]
+        },
+        "value": {
+          "type": "string",
+          "description": "discount code value. \n\"CD\" type stands for corporate discount code - a number generated by provider in case of\n  special agreement with a given subscriber is passed (airlines, TMC,\n  corporation…). It gives to subscriber access to negotiated prices for\n  transfer      \n\"PC\" - for promotional/campaign discount code - a voucher code generated by the\n  provider valid for a given period of time or a given number of usage.\n  The code is sent by customer to provider in order to get a discounted\n  price."
+        }
+      }
+    },
+    "Distance": {
+      "properties": {
+        "value": {
+          "description": "great-circle distance between two locations. This distance thus do not take into account traffic conditions; international boundaries; mountains; water; or other elements that might make the a nearby location hard to reach.",
+          "type": "integer",
+          "example": 152
+        },
+        "unit": {
+          "description": "unit of the distance",
+          "type": "string",
+          "example": "KM",
+          "enum": [
+            "KM",
+            "MI"
+          ]
+        }
+      }
+    },
+    "Equipment": {
+      "type": "object",
+      "description": "extra equipment information",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "extra equipment codes, which can take following values\n\ncode   | name                                 \n------ | -------------------------------------  \nBBS    | Baby stroller/Push chair\nBYC    | Bicycle rack\nCBB    | Cargo barrier rack\nCBF    | Cargo barrier front\nCBS    | Booster seat for child under 135cm or up to 12 years\nCSB    | Child seat determined by weight/age of child 1-3 years / 9-18 Kg\nCSI    | Child seat determined by weight/age of child 0-12 month/0-13Kg\nCST    | Child seat determined by weight/age of child 4-7 years/15 – 30 Kg\nSBR    | Snow board racks\nSKB    | Ski box\nSKR    | Ski rack\nTAB    | Travel Tablet \nWAR    | Wheelchair access ramp\nWHC    | Wheelchair\nWIF    | Wi-Fi access\nCNT    | Charger cable\n",
+          "enum": [
+            "BBS",
+            "BYC",
+            "CBB",
+            "CBF",
+            "CBS",
+            "CSB",
+            "CSI",
+            "CST",
+            "SBR",
+            "SKB",
+            "SKR",
+            "TAB ",
+            "WAR",
+            "WHC",
+            "WIF",
+            "CNT"
+          ]
+        },
+        "itemId": {
+          "type": "string",
+          "description": "extra equipment identifier"
+        },
+        "description": {
+          "type": "string",
+          "description": "extra equipment description"
+        },
+        "quotation": {
+          "$ref": "#/definitions/Quotation"
+        },
+        "converted": {
+          "$ref": "#/definitions/Quotation"
+        },
+        "isBookable": {
+          "type": "boolean",
+          "description": "true if extra equipment is available for booking"
+        },
+        "taxIncluded": {
+          "type": "boolean",
+          "description": "true if tax included in extra equipment price"
+        },
+        "includedInTotal": {
+          "type": "boolean",
+          "description": "true if extra equipment price is included in total transfer amount"
+        }
+      }
+    },
+    "ExtraService": {
+      "type": "object",
+      "required": [
+        "code"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "extra service code, which can take following values\n\ncode   | name                                 \n------ | ---------------------------- \nDSL    | Driver language specified\nEWT    | Extra waiting time\nMAG    | Meet & Greet\nFLM    | Flight monitoring\nNWS    | Newspaper\nCAI    | Cancellation insurance\nWNR    | Wait and Return. Driver waits at destination and brings back the customer to pick-up point\n",
+          "enum": [
+            "DSL",
+            "EWT",
+            "MAG",
+            "FLM",
+            "NWS",
+            "CAI",
+            "WNR"
+          ]
+        },
+        "itemId": {
+          "type": "string",
+          "description": "extra service identifier"
+        },
+        "description": {
+          "type": "string",
+          "description": "extra service description"
+        },
+        "metricType": {
+          "type": "string",
+          "description": "extra service time metric type",
+          "enum": [
+            "YEARS",
+            "DAYS",
+            "HOURS",
+            "MINUTES"
+          ]
+        },
+        "metricValue": {
+          "type": "string",
+          "description": "extra service metric value"
+        },
+        "quotation": {
+          "$ref": "#/definitions/Quotation"
+        },
+        "converted": {
+          "$ref": "#/definitions/Quotation"
+        },
+        "isBookable": {
+          "type": "boolean",
+          "description": "true if extra service is available for booking"
+        },
+        "taxIncluded": {
+          "type": "boolean",
+          "description": "true if tax included in extra service price"
+        },
+        "includedInTotal": {
+          "type": "boolean",
+          "description": "true if extra service price is included in total transfer amount"
+        }
+      }
+    },
+    "Fee": {
+      "description": "single fee information",
+      "allOf": [
+        {
+          "$ref": "#/definitions/PointsAndCash"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "currencyCode": {
+              "type": "string",
+              "example": "USD"
+            },
+            "indicator": {
+              "type": "string",
+              "description": "fee category e.g. \"AIRPORT\", \"CREDITCARD\" ,\"CANCELLATION\""
+            }
+          }
+        }
+      ]
+    },
+    "Location": {
+      "type": "object",
+      "description": "location information",
+      "properties": {
+        "dateTime": {
+          "description": "date and time specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DDThh:mm:ss format e.g. 2017-11-10T10:00:00\nnot supported for stopOvers object\n",
+          "type": "string",
+          "example": "2019-11-10T10:30:00"
+        },
+        "locationCode": {
+          "type": "string",
+          "description": "airport code from [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx), e.g. CDG.",
+          "pattern": "[A-Za-z]{3}",
+          "example": "CDG"
+        },
+        "lfiCode": {
+          "type": "string",
+          "description": "internal airport identifier used for private jets and helicopters e.g. IT87100",
+          "example": "IT87100"
+        },
+        "address": {
+          "$ref": "#/definitions/Address"
+        },
+        "name": {
+          "type": "string",
+          "description": "Place name e.g. Airport Name, Hotel Name etc."
+        },
+        "googlePlaceId": {
+          "description": "Google place id only for google address e.g. ChIJL-DOWeBv5kcRfTbh97PimNc.",
+          "type": "string",
+          "example": "ChIJrTLr-GyuEmsRBfy61i59si0"
+        },
+        "uicCode": {
+          "type": "string",
+          "description": "UIC code defined by the worldwide railway organization e.g. 8600626"
+        }
+      }
+    },
+    "StopOver": {
+      "description": "Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude, lfi). Vehicle change via stop overs is not supported.",
+      "properties": {
+        "duration": {
+          "description": "transfer stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M.",
+          "type": "string",
+          "example": "PT2H30M"
+        },
+        "sequenceNumber": {
+          "description": "sequence number of the stop e.g. 3",
+          "type": "number",
+          "example": 1
+        },
+        "location": {
+          "$ref": "#/definitions/Location"
+        }
+      }
+    },
+    "StopOverRequest": {
+      "properties": {
+        "duration": {
+          "description": "the intermediate stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M",
+          "type": "string",
+          "example": "PT2H30M"
+        },
+        "locationCode": {
+          "type": "string",
+          "description": "the intermediate stop airport IATA code, e.g. CDG. Location could be defined either using location code or address (address line, zip code, country code, city, geo code)",
+          "pattern": "[A-Za-z]{3}",
+          "example": "CDG"
+        },
+        "addressLine": {
+          "type": "string",
+          "description": "the intermediate stop street address including building number, e.g. 5 Avenue Anatole France",
+          "example": "5 Avenue Anatole France"
+        },
+        "countryCode": {
+          "type": "string",
+          "description": "the intermediate stop country, the location with [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g. US)",
+          "pattern": "[A-Za-z]{2}",
+          "example": "US"
+        },
+        "cityName": {
+          "type": "string",
+          "description": "the intermediate stop city name, e.g. Paris",
+          "example": "Paris"
+        },
+        "zipCode": {
+          "type": "string",
+          "description": "the intermediate stop postal/zip code, e.g. 75007",
+          "pattern": "[a-zA-Z0-9]{1,20}",
+          "example": 75007
+        },
+        "googlePlaceId": {
+          "description": "the intermediate stop google place id only for google address e.g. ChIJL-DOWeBv5kcRfTbh97PimNc.",
+          "type": "string",
+          "example": "ChIJrTLr-GyuEmsRBfy61i59si0"
+        },
+        "name": {
+          "type": "string",
+          "description": "the intermediate stop name e.g. Airport Name, Hotel Name etc."
+        },
+        "lfiCode": {
+          "type": "string",
+          "description": "the intermediate stop internal airport identifier used for private jets and helicopters e.g. IT87100",
+          "example": "IT87100"
+        },
+        "stateCode": {
+          "type": "string",
+          "description": "the intermediate stop state code according to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)"
+        },
+        "geoCode": {
+          "type": "string",
+          "description": "the intermediate stop latitude and longitude of geographical location following the structure {latitude},{longitude} e.g. 48.858093,2.294694",
+          "example": "48.858093,2.294694"
+        },
+        "sequenceNumber": {
+          "description": "sequence number of the stop e.g. 3",
+          "type": "number",
+          "example": 1
+        },
+        "uicCode": {
+          "type": "string",
+          "description": "UIC code defined by the worldwide railway organization e.g. 8600626"
+        }
+      }
+    },
+    "PassengerCharacteristics": {
+      "properties": {
+        "passengerTypeCode": {
+          "description": "Passenger type codes e.g. CHD , ADT. CHD is for child and ADT for Adult.",
+          "type": "string",
+          "example": "child"
+        },
+        "age": {
+          "type": "integer",
+          "description": "Age of the Passenger (Mandatory if typeCode= “CHD”)",
+          "example": 12
+        }
+      }
+    },
+    "PartnerInfo": {
+      "type": "object",
+      "description": "Information about partner/subprovider. Below settings configuration is not applicable for sub-provider. Fields 'code', 'name' and 'logoUrl' are not mandatory for sub-provider.",
+      "properties": {
+        "serviceProvider": {
+          "$ref": "#/definitions/ServiceProvider"
+        }
+      }
+    },
+    "PointsAndCash": {
+      "type": "object",
+      "properties": {
+        "monetaryAmount": {
+          "type": "string",
+          "example": "10.5"
+        }
+      }
+    },
+    "Quotation": {
+      "description": "quotation representing a price valuation and its components. The monetaryAmount at the root are the sum of base and all the taxes/fees/discounts",
+      "allOf": [
+        {
+          "$ref": "#/definitions/PointsAndCash"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "currencyCode": {
+              "type": "string",
+              "example": "USD"
+            },
+            "isEstimated": {
+              "type": "boolean",
+              "description": "indicates if the price is pre-estimated prior to ride. Becomes mandatory for transferType = TAXI"
+            },
+            "base": {
+              "description": "base price",
+              "allOf": [
+                {
+                  "$ref": "#/definitions/PointsAndCash"
+                }
+              ]
+            },
+            "discount": {
+              "description": "discount amount of base price",
+              "allOf": [
+                {
+                  "$ref": "#/definitions/PointsAndCash"
+                }
+              ]
+            },
+            "taxes": {
+              "description": "Taxes breakdown",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Tax"
+              }
+            },
+            "fees": {
+              "description": "Fees breakdown",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Fee"
+              }
+            },
+            "totalTaxes": {
+              "$ref": "#/definitions/PointsAndCash"
+            },
+            "totalFees": {
+              "$ref": "#/definitions/PointsAndCash"
+            }
+          }
+        }
+      ]
+    },
+    "Seat": {
+      "type": "object",
+      "properties": {
+        "count": {
+          "type": "integer",
+          "description": "seat capacity",
+          "example": 3
+        },
+        "row": {
+          "type": "string",
+          "description": "seat row",
+          "example": "front"
+        },
+        "size": {
+          "type": "string",
+          "description": "seat size",
+          "example": "XL"
+        }
+      }
+    },
+    "ServiceProvider": {
+      "type": "object",
+      "description": "information about provider",
+      "required": [
+        "code",
+        "name",
+        "logoUrl"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "pattern": "[a-zA-Z]{3}",
+          "description": "provider code"
+        },
+        "name": {
+          "type": "string",
+          "pattern": "[a-zA-Z]{30}",
+          "description": "provider name"
+        },
+        "logoUrl": {
+          "type": "string",
+          "description": "URL to provider logo"
+        },
+        "termsUrl": {
+          "type": "string",
+          "description": "URL to provider's terms and conditions page"
+        },
+        "isPreferred": {
+          "type": "boolean",
+          "description": "indicates if sub-provider is preferred for the travel-seller"
+        },
+        "contacts": {
+          "$ref": "#/definitions/ContactWithAddress"
+        },
+        "settings": {
+          "type": "array",
+          "description": "list of provider settings",
+          "items": {
+            "type": "string",
+            "description": "provider setting",
+            "enum": [
+              "BILLING_ADDRESS_REQUIRED",
+              "FLIGHT_NUMBER_REQUIRED",
+              "CVV_NUMBER_REQUIRED"
+            ]
+          }
+        },
+        "businessIdentification": {
+          "description": "Information about the Customer stakeholder participating to the described sales summary.",
+          "properties": {
+            "vatRegistrationNumber": {
+              "type": "string",
+              "description": "VAT (Value Added Tax) Registration Number of the customer applicable ot the current sales."
+            }
+          }
+        }
+      }
+    },
+    "Tax": {
+      "description": "single tax information",
+      "allOf": [
+        {
+          "type": "object",
+          "properties": {
+            "monetaryAmount": {
+              "type": "string",
+              "example": "10.5"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "indicator": {
+              "type": "string",
+              "description": "Tax category"
+            },
+            "natureCode": {
+              "type": "string",
+              "description": "Tax code"
+            },
+            "countryCode": {
+              "type": "string",
+              "description": "Tax iso country code"
+            },
+            "rate": {
+              "type": "string",
+              "description": "Tax rate"
+            }
+          }
+        }
+      ]
+    },
+    "TransportationType": {
+      "type": "string",
+      "title": "TransportationType",
+      "description": "The type of connection \"FLIGHT\" or \"TRAIN\"",
+      "enum": [
+        "FLIGHT",
+        "TRAIN"
+      ]
+    },
+    "TravelSegment": {
+      "description": "A segment of an itinerary used by a traveler between 2 locations at a given date and time using a particular transportation type FLIGHT or TRAIN",
+      "type": "object",
+      "properties": {
+        "transportationType": {
+          "$ref": "#/definitions/TransportationType"
+        },
+        "transportationNumber": {
+          "type": "string",
+          "example": "AF380",
+          "description": "The flight number or train number, e.g. AF380"
+        },
+        "departure": {
+          "$ref": "#/definitions/TravelSegmentLocation"
+        },
+        "arrival": {
+          "$ref": "#/definitions/TravelSegmentLocation"
+        }
+      }
+    },
+    "TravelSegmentLocation": {
+      "description": "The flight or train departure/arrival date&time, location information",
+      "type": "object",
+      "properties": {
+        "uicCode": {
+          "type": "string",
+          "description": "The railway UIC code defined by the worldwide railway organization, e.g. 7400001",
+          "example": 7400001
+        },
+        "iataCode": {
+          "type": "string",
+          "description": "The airport code from IATA table codes, e.g. CDG",
+          "example": "CDG"
+        },
+        "localDateTime": {
+          "type": "string",
+          "description": "The date and time inspired from ISO 8601 (YYYY-MM-DDTHH:MM:SS) format",
+          "format": "date-time",
+          "example": "2021-03-27T20:03:00"
+        }
+      }
+    },
+    "Vehicle": {
+      "type": "object",
+      "required": [
+        "code",
+        "category",
+        "description",
+        "seats"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "enum": [
+            "CAR",
+            "SED",
+            "WGN",
+            "ELC",
+            "VAN",
+            "SUV",
+            "LMS",
+            "MBR",
+            "TRN",
+            "BUS",
+            "HLC",
+            "JET"
+          ],
+          "description": "vehicle type, which can take following values\n\nvalue           | description\n--------------  | ------------------------\nCAR             | Car\nSED             | Sedan\nWGN             | Wagon\nELC             | Electric car\nVAN             | Van or minivan\nSUV             | Sport utility vehicle\nLMS             | Limousine\nMBR             | Motorbike\nTRN             | Train\nBUS             | Bus\nHLC             | Helicopter (accessible only for private jet transfer)\nJET             | Jet (accessible only for private jet transfer)\n"
+        },
+        "category": {
+          "type": "string",
+          "enum": [
+            "ST",
+            "BU",
+            "FC"
+          ],
+          "description": "category of the vehicle, which can take following values\n\nvalue           | description\n--------------  | ------------------------\nST              | Standard\nBU              | Business\nFC              | First class\n"
+        },
+        "description": {
+          "type": "string",
+          "description": "description of the vehicle. Can describe a list of potential vehicles, e.g. VW Polo or similar"
+        },
+        "seats": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Seat"
+          }
+        },
+        "baggages": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Baggage"
+          }
+        },
+        "imageURL": {
+          "type": "string",
+          "description": "URL to vehicle image"
+        }
+      }
+    },
+    "Error_400": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 400,
+            "code": 4926,
+            "title": "INVALID DATA RECEIVED",
+            "detail": "Transfer type is not valid",
+            "source": {
+              "parameter": "transferType"
+            }
+          }
+        ]
+      }
+    },
+    "Error_401": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 401,
+            "code": 20,
+            "title": "RESTRICTED",
+            "detail": "Query unauthorized"
+          }
+        ]
+      }
+    },
+    "Error_500": {
+      "properties": {
+        "errors": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/Issue"
+          }
+        }
+      },
+      "required": [
+        "errors"
+      ],
+      "example": {
+        "errors": [
+          {
+            "status": 500,
+            "code": 141,
+            "title": "SYSTEM ERROR HAS OCCURRED"
+          }
+        ]
+      }
+    },
+    "Issue": {
+      "properties": {
+        "status": {
+          "description": "the HTTP status code applicable to this error",
+          "type": "integer"
+        },
+        "code": {
+          "description": "an application-specific error code",
+          "type": "integer",
+          "format": "int64"
+        },
+        "title": {
+          "description": "a short summary of the error",
+          "type": "string"
+        },
+        "detail": {
+          "description": "explanation of the error",
+          "type": "string"
+        },
+        "source": {
+          "type": "object",
+          "title": "Issue_Source",
+          "description": "an object containing references to the source of the error",
+          "maxProperties": 1,
+          "properties": {
+            "pointer": {
+              "description": "a JSON Pointer [RFC6901] to the associated entity in the request document",
+              "type": "string"
+            },
+            "parameter": {
+              "description": "a string indicating which URI query parameter caused the issue",
+              "type": "string"
+            },
+            "example": {
+              "description": "a string indicating an example of the right value",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "ContactWithAddress": {
+      "allOf": [
+        {
+          "$ref": "#/definitions/Contact"
+        },
+        {
+          "type": "object",
+          "properties": {
+            "address": {
+              "$ref": "#/definitions/AddressCommon"
+            }
+          }
+        }
+      ],
+      "description": "Contact and Adress details"
+    }
+  },
+  "responses": {
+    "401": {
+      "description": "Unauthorized",
+      "schema": {
+        "$ref": "#/definitions/Error_401"
+      }
+    },
+    "500": {
+      "description": "Unexpected Error",
+      "schema": {
+        "$ref": "#/definitions/Error_500"
+      }
+    },
+    "transfer_offers_post": {
+      "description": "Successful Operation",
+      "schema": {
+        "title": "Success_TransferOffers",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TransferOfferPost"
+            }
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Issue"
+            }
+          }
+        },
+        "example": {
+            "data": [
+              {
+                "type": "transfer-offer",
+                "id": "0cb11574-4a02-11e8-842f-0ed5f89f718b",
+                "transferType": "PRIVATE",
+                "start": {
+                  "dateTime": "2021-11-10T10:30:00",
+                  "locationCode": "CDG"
+                },
+                "end": {
+                  "address": {
+                    "line": "Avenue Anatole France, 5",
+                    "zip": "75007",
+                    "countryCode": "FR",
+                    "cityName": "Paris",
+                    "latitude": 48.859466,
+                    "longitude": 2.2976965
+                  },
+                  "googlePlaceId": "ChIJL-DOWeBv5kcRfTbh97PimNc",
+                  "name": "Souvenirs De La Tour"
+                },
+                "stopOvers": [
+                  {
+                    "duration": "PT2H30M",
+                    "sequenceNumber": 1,
+                    "location": {
+                      "locationCode": "CDG",
+                      "address": {
+                        "line": "Avenue de la Bourdonnais, 19",
+                        "zip": "75007",
+                        "countryCode": "FR",
+                        "cityName": "Paris",
+                        "latitude": 48.859477,
+                        "longitude": 2.2976975
+                      },
+                      "googlePlaceId": "DOWeBv5kcRfTbh97PimN",
+                      "name": "De La Tours"
+                    }
+                  }
+                ],
+                "vehicle": {
+                  "code": "VAN",
+                  "category": "BU",
+                  "description": "Mercedes-Benz V-Class, Chevrolet Suburban, Cadillac Escalade or similar",
+                  "seats": [
+                    {
+                      "count": 3
+                    }
+                  ],
+                  "baggages": [
+                    {
+                      "count": 3,
+                      "size": "M"
+                    }
+                  ],
+                  "imageURL": "https://provider.com/images/BU_VAN.png"
+                },
+                "serviceProvider": {
+                  "code": "ABC",
+                  "name": "Provider name",
+                  "logoUrl": "https://provider.com/images/logo.png",
+                  "termsUrl": "https://provider.com/terms_and_conditions.html",
+                  "contacts": {
+                    "phoneNumber": "+33123456789",
+                    "email": "support@provider.com"
+                  },
+                  "settings": [
+                    "BILLING_ADDRESS_REQUIRED",
+                    "FLIGHT_NUMBER_REQUIRED",
+                    "CVV_NUMBER_REQUIRED"
+                  ]
+                },
+                "quotation": {
+                  "monetaryAmount": "63.70",
+                  "currencyCode": "USD",
+                  "isEstimated": false,
+                  "base": {
+                    "monetaryAmount": "103.70"
+                  },
+                  "discount": {
+                    "monetaryAmount": "50.00"
+                  },
+                  "fees": [
+                    {
+                      "indicator": "AIRPORT",
+                      "monetaryAmount": "10.00"
+                    }
+                  ],
+                  "totalTaxes": {
+                    "monetaryAmount": "12.74"
+                  },
+                  "totalFees": {
+                    "monetaryAmount": "10.00"
+                  }
+                },
+                "converted": {
+                  "monetaryAmount": "63.70",
+                  "currencyCode": "EUR",
+                  "isEstimated": false,
+                  "base": {
+                    "monetaryAmount": "103.70"
+                  },
+                  "discount": {
+                    "monetaryAmount": "50.00"
+                  },
+                  "fees": [
+                    {
+                      "indicator": "AIRPORT",
+                      "monetaryAmount": "10.00"
+                    }
+                  ],
+                  "totalTaxes": {
+                    "monetaryAmount": "12.74"
+                  },
+                  "totalFees": {
+                    "monetaryAmount": "10.00"
+                  }
+                },
+                "extraServices": [
+                  {
+                    "code": "EWT",
+                    "itemId": "EWT0291",
+                    "description": "Extra 15 min. wait",
+                    "quotation": {
+                      "monetaryAmount": "39.20",
+                      "currencyCode": "USD",
+                      "base": {
+                        "monetaryAmount": "36.00"
+                      },
+                      "totalTaxes": {
+                        "monetaryAmount": "3.20"
+                      }
+                    },
+                    "converted": {
+                      "monetaryAmount": "32.70",
+                      "currencyCode": "EUR",
+                      "base": {
+                        "monetaryAmount": "30.00"
+                      },
+                      "totalTaxes": {
+                        "monetaryAmount": "2.7"
+                      }
+                    },
+                    "isBookable": true,
+                    "taxIncluded": true,
+                    "includedInTotal": false
+                  }
+                ],
+                "equipment": [
+                  {
+                    "code": "BBS",
+                    "description": "Baby stroller or Push chair",
+                    "quotation": {
+                      "monetaryAmount": "39.20",
+                      "currencyCode": "USD",
+                      "base": {
+                        "monetaryAmount": "36.00"
+                      },
+                      "totalTaxes": {
+                        "monetaryAmount": "3.20"
+                      }
+                    },
+                    "converted": {
+                      "monetaryAmount": "32.70",
+                      "currencyCode": "EUR",
+                      "base": {
+                        "monetaryAmount": "30.00"
+                      },
+                      "totalTaxes": {
+                        "monetaryAmount": "2.7"
+                      }
+                    },
+                    "isBookable": true,
+                    "taxIncluded": true,
+                    "includedInTotal": false
+                  }
+                ],
+                "cancellationRules": [
+                  {
+                    "feeType": "PERCENTAGE",
+                    "feeValue": "100",
+                    "metricType": "DAYS",
+                    "metricMin": "0",
+                    "metricMax": "1"
+                  },
+                  {
+                    "feeType": "PERCENTAGE",
+                    "feeValue": "0",
+                    "metricType": "DAYS",
+                    "metricMin": "1",
+                    "metricMax": "100"
+                  }
+                ],
+                "methodsOfPaymentAccepted": [
+                  "CREDIT_CARD",
+                  "INVOICE"
+                ],
+                "discountCodes": [
+                  {
+                    "type": "CD",
+                    "value": "FJKS0289LDIW234"
+                  }
+                ],
+                "distance": {
+                  "value": 152,
+                  "unit": "KM"
+                },
+                "startConnectedSegment": {
+                  "transportationType": "FLIGHT",
+                  "transportationNumber": "AF380",
+                  "departure": {
+                    "localDateTime": "2021-11-10T09:00:00",
+                    "iataCode": "NCE"
+                  },
+                  "arrival": {
+                    "localDateTime": "2021-11-10T10:00:00",
+                    "iataCode": "CDG"
+                  }
+                },
+                "passengerCharacteristics": [
+                  {
+                    "passengerTypeCode": "ADT",
+                    "age": 20
+                  },
+                  {
+                    "passengerTypeCode": "CHD",
+                    "age": 10
+                  }
+                ]
+              }
+            ],
+            "warnings": [
+              {
+                "code": 101,
+                "title": "PICK-UP DATE TIME CHANGED",
+                "detail": "Transfer pick-up date and time have been changed by provider",
+                "source": {
+                  "pointer": "/data/1/start/dateTime",
+                  "parameter": "dateTime"
+                }
+              }
+            ]
+        }
+      }
+    },
+    "400_postTransferOffers": {
+      "description": "code    | title\n------- | -------------------------------------\n11      | UNABLE TO PROCESS\n450     | INVALID SERVICE TYPE\n477     | INVALID FORMAT\n530     | INVALID VEHICLE TYPE\n531     | INVALID DISCOUNT NUMBER\n534     | INVALID SPECIAL EQUIPMENT CODE\n830     | MISSING/INVALID COUNTRY CODE\n1533    | INVALID OFFICE IDENTIFICATION CODE\n1876    | INVALID IATA CODE\n1929    | INVALID RECORD LOCATOR\n2038    | INVALID LANGUAGE CODE\n2323    | SERVICE TYPE MISSING\n2668    | PARAMETER COMBINATION INVALID/RESTRICTED\n3337    | INVALID DATE/TIME\n4926    | INVALID DATA RECEIVED\n5095    | INVALID FLIGHT/DATE\n6323    | INVALID CURRENCY CODE\n9385    | INVALID NUMBER OF PASSENGER\n10192   | CANNOT PROCESS THE RESERVATION\n10479   | INVALID SPECIAL REQUEST\n10578   | NEED BILLING ADDRESS\n11257   | NEED CITY NAME\n12668   | PICK UP ADDRESS IS MISSING\n12669   | DROP OFF ADDRESS IS MISSING\n13114   | INVALID BOOKING CLASS CODE\n21934   | UNABLE TO PROCESS - TIMEOUT\n23883   | EMAIL ADDRESS REQUIRED\n24198   | INVALID PROVIDER CODE\n32171   | MANDATORY DATA MISSING\n32800   | MISSING PICKUP LOCATION INFORMATION\n32803   | MISSING DROP OFF LOCATION INFORMATION\n32949   | INVALID DURATION\n32986   | INVALID LATITUDE\n32987   | INVALID LONGITUDE\n33891   | PICKUP DATE TIME REQUIRED\n34120   | INVALID EMAIL ADDRESS\n34499   | THE DURATION IS MANDATORY\n34543   | NEED THE NUMBER OF PASSENGER\n34604   | NEED GEOCODES OF THE ADDRESS\n37296   | INVALID/MISSING FLIGHT NUMBER\n34649   | INVALID FLIGHT INFORMATION\n15566   | INVALID RAIL INFORMATION\n",
+      "schema": {
+        "$ref": "#/definitions/Error_400"
+      }
+    }
+  },
+  "x-generatedAt": "2021-04-19T12:58:58.637Z"
+}

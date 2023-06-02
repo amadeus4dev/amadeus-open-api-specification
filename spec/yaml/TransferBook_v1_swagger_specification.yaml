@@ -1,0 +1,1379 @@
+swagger: '2.0'
+info:
+  version: 1.11.0
+  title: Transfer Booking
+  description: |-
+    Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
+
+    Please also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York).
+host: test.api.amadeus.com
+basePath: /v1
+schemes:
+  - https
+consumes:
+  - application/vnd.amadeus+json
+  - application/json
+produces:
+  - application/vnd.amadeus+json
+  - application/json
+paths:
+  /ordering/transfer-orders:
+    post:
+      tags:
+        - Booking
+      operationId: createTransferOrder
+      summary: Performs a transfer reservation.
+      parameters:
+        - in: query
+          name: offerId
+          type: string
+          required: true
+          description: transfer offer id from shopping/transfer-offers response
+        - name: body
+          in: body
+          required: true
+          schema:
+            title: Body_Reservation
+            required:
+              - data
+            properties:
+              data:
+                type: object
+                title: Body_Reservation_Data
+                required:
+                  - passengers
+                  - payment
+                properties:
+                  note:
+                    description: note to driver
+                    type: string
+                  flightNumber:
+                    description: flight number. Mandatory if service provider has setting "FLIGHT_NUMBER_REQUIRED"
+                    type: string
+                  passengers:
+                    type: array
+                    items:
+                      $ref: '#/definitions/Passenger'
+                  agency:
+                    $ref: '#/definitions/Agency'
+                  payment:
+                    $ref: '#/definitions/Payment'
+                  equipment:
+                    type: array
+                    items:
+                      $ref: '#/definitions/Equipment'
+                  extraServices:
+                    type: array
+                    items:
+                      $ref: '#/definitions/ExtraService'
+                  loyaltyNumber:
+                    $ref: '#/definitions/LoyaltyNumber'
+                  corporation:
+                    $ref: '#/definitions/Corporation'
+                  startConnectedSegment:
+                    $ref: '#/definitions/TravelSegment'
+                  endConnectedSegment:
+                    $ref: '#/definitions/TravelSegment'
+                example:
+                  data:
+                    note: Note to driver
+                    passengers:
+                      - firstName: John
+                        lastName: Doe
+                        title: MR
+                        contacts:
+                          phoneNumber: '+33123456789'
+                          email: user@email.com
+                        billingAddress:
+                          line: Avenue de la Bourdonnais, 19
+                          zip: '75007'
+                          countryCode: FR
+                          cityName: Paris
+                    agency:
+                      contacts:
+                        - email:
+                            address: abc@test.com
+                    payment:
+                      methodOfPayment: CREDIT_CARD
+                      creditCard:
+                        number: '4111111111111111'
+                        holderName: JOHN DOE
+                        vendorCode: VI
+                        expiryDate: '1018'
+                        cvv: '111'
+                    extraServices:
+                      - code: EWT
+                        itemId: EWT0291
+                    equipment:
+                      - code: BBS
+                    corporation:
+                      address:
+                        line: 5 Avenue Anatole France
+                        zip: '75007'
+                        countryCode: FR
+                        cityName: Paris
+                      info:
+                        AU: FHOWMD024
+                        CE: 280421GH
+                    startConnectedSegment:
+                      transportationType: FLIGHT
+                      transportationNumber: AF380
+                      departure:
+                        uicCode: '7400001'
+                        iataCode: CDG
+                        localDateTime: '2021-03-27T20:03:00'
+                      arrival:
+                        uicCode: '7400001'
+                        iataCode: CDG
+                        localDateTime: '2021-03-27T20:03:00'
+                    endConnectedSegment:
+                      transportationType: FLIGHT
+                      transportationNumber: AF380
+                      departure:
+                        uicCode: '7400001'
+                        iataCode: CDG
+                        localDateTime: '2021-03-27T20:03:00'
+                      arrival:
+                        uicCode: '7400001'
+                        iataCode: CDG
+                        localDateTime: '2021-03-27T20:03:00'
+            example:
+              data:
+                note: Note to driver
+                passengers:
+                  - firstName: John
+                    lastName: Doe
+                    title: MR
+                    contacts:
+                      phoneNumber: '+33123456789'
+                      email: user@email.com
+                    billingAddress:
+                      line: Avenue de la Bourdonnais, 19
+                      zip: '75007'
+                      countryCode: FR
+                      cityName: Paris
+                agency:
+                  contacts:
+                    - email:
+                        address: abc@test.com
+                payment:
+                  methodOfPayment: CREDIT_CARD
+                  creditCard:
+                    number: '4111111111111111'
+                    holderName: JOHN DOE
+                    vendorCode: VI
+                    expiryDate: '1018'
+                    cvv: '111'
+                extraServices:
+                  - code: EWT
+                    itemId: EWT0291
+                equipment:
+                  - code: BBS
+                corporation:
+                  address:
+                    line: 5 Avenue Anatole France
+                    zip: '75007'
+                    countryCode: FR
+                    cityName: Paris
+                  info:
+                    AU: FHOWMD024
+                    CE: 280421GH
+                startConnectedSegment:
+                  transportationType: FLIGHT
+                  transportationNumber: AF380
+                  departure:
+                    uicCode: '7400001'
+                    iataCode: CDG
+                    localDateTime: '2021-03-27T20:03:00'
+                  arrival:
+                    uicCode: '7400001'
+                    iataCode: CDG
+                    localDateTime: '2021-03-27T20:03:00'
+                endConnectedSegment:
+                  transportationType: FLIGHT
+                  transportationNumber: AF380
+                  departure:
+                    uicCode: '7400001'
+                    iataCode: CDG
+                    localDateTime: '2021-03-27T20:03:00'
+                  arrival:
+                    uicCode: '7400001'
+                    iataCode: CDG
+                    localDateTime: '2021-03-27T20:03:00'
+      responses:
+        '201':
+          $ref: '#/responses/transfer_order'
+        '400':
+          $ref: '#/responses/400_createTransferOrder'
+        '401':
+          $ref: '#/responses/401'
+        default:
+          $ref: '#/responses/500'
+      description: ''
+definitions:
+  Transfer:
+    type: object
+    required:
+      - transferType
+      - start
+      - serviceProvider
+      - vehicle
+      - quotation
+      - methodsOfPaymentAccepted
+    properties:
+      transferType:
+        type: string
+        enum:
+          - PRIVATE
+          - SHARED
+          - TAXI
+          - HOURLY
+          - AIRPORT_EXPRESS
+          - HELICOPTER
+          - PRIVATE_JET
+          - AIRPORT_BUS
+        description: |
+          amadeus transfer service type
+
+          value           | description                                 
+          --------------  | ------------------------
+          PRIVATE         | Private transfer from point to point
+          SHARED          | Shared transfer from point to point
+          TAXI            | Taxi reservation from point to point, price is estimated
+          HOURLY          | Chauffeured driven transfer per hour
+          AIRPORT_EXPRESS | Express Train from/to Airport
+          AIRPORT_BUS     | Express Bus from/to Airport
+          HELICOPTER      | Private helicopter flight from/to airport
+          PRIVATE_JET     | Private flight from airport to airport
+      start:
+        $ref: '#/definitions/Location'
+      end:
+        $ref: '#/definitions/Location'
+      stopOvers:
+        type: array
+        items:
+          $ref: '#/definitions/StopOver'
+      passenegerCharacteristics:
+        type: array
+        items:
+          $ref: '#/definitions/PassengerCharacteristics'
+      duration:
+        description: transfer duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M
+        type: string
+        example: PT2H30M
+      vehicle:
+        $ref: '#/definitions/Vehicle'
+      serviceProvider:
+        $ref: '#/definitions/ServiceProvider'
+      partnerInfo:
+        $ref: '#/definitions/PartnerInfo'
+      quotation:
+        $ref: '#/definitions/Quotation'
+      converted:
+        $ref: '#/definitions/Quotation'
+      extraServices:
+        type: array
+        items:
+          $ref: '#/definitions/ExtraService'
+      equipment:
+        type: array
+        items:
+          $ref: '#/definitions/Equipment'
+      cancellationRules:
+        type: array
+        items:
+          $ref: '#/definitions/CancellationRule'
+      methodsOfPaymentAccepted:
+        type: array
+        description: list of payment methods, allowed by provider
+        items:
+          type: string
+          description: Method of payment required when PaymentType equal BT (applicable only for reservation action).
+          enum:
+            - CREDIT_CARD
+            - INVOICE
+            - TRAVEL_ACCOUNT
+            - PAYMENT_SERVICE_PROVIDER
+      discountCodes:
+        type: array
+        description: list of discount codes
+        items:
+          $ref: '#/definitions/DiscountCode'
+      distance:
+        $ref: '#/definitions/Distance'
+  TransferReservation:
+    description: transfer reservation
+    allOf:
+      - type: object
+        properties:
+          confirmNbr:
+            type: string
+            description: transfer identifier - confirmation number, received from transfer supplier
+          status:
+            type: string
+            description: status of transfer reservation
+            enum:
+              - CONFIRMED
+              - CANCELLED
+          note:
+            type: string
+            description: Note to transfer provider
+          methodOfPayment:
+            type: string
+            description: Method of payment required when PaymentType equal BT (applicable only for reservation action).
+            enum:
+              - CREDIT_CARD
+              - INVOICE
+              - TRAVEL_ACCOUNT
+              - PAYMENT_SERVICE_PROVIDER
+          paymentServiceProvider:
+            type: string
+            description: payment service provider details will be passed to provider in case "PAYMENT_SERVICE_PROVIDER" method of payment.
+            enum:
+              - STRIPE_CONNECT
+          offerId:
+            type: string
+            description: offer identifier
+      - $ref: '#/definitions/Transfer'
+  TransferOrder:
+    type: object
+    required:
+      - type
+      - id
+      - transfers
+    properties:
+      type:
+        description: the resource name
+        type: string
+      id:
+        type: string
+        description: transfer order identifier
+      reference:
+        type: string
+        description: reference of the Trip e.g. YNK4JQ
+      transfers:
+        type: array
+        description: transfer reservations, included in the order
+        items:
+          $ref: '#/definitions/TransferReservation'
+      passengers:
+        type: array
+        description: passengers, related to the Transfer Order
+        items:
+          $ref: '#/definitions/Passenger'
+      agency:
+        $ref: '#/definitions/Agency'
+  AddressCommon:
+    description: address of the departure location
+    properties:
+      line:
+        description: Address line with street, number, bulding, etc...
+        type: string
+        minLength: 1
+        maxLength: 70
+      zip:
+        description: Post office code number
+        type: string
+        minLength: 1
+        maxLength: 120
+      countryCode:
+        description: Country code (two character standard IATA country code)
+        type: string
+        pattern: '[a-zA-Z]{2}'
+      cityName:
+        description: City, town or postal station
+        type: string
+        minLength: 1
+        maxLength: 35
+      stateCode:
+        description: State code (two character standard IATA state code)
+        type: string
+        pattern: '[a-zA-Z0-9]{1-2}'
+  Address:
+    type: object
+    description: address information
+    properties:
+      line:
+        description: Address line with street, number, bulding, etc...
+        type: string
+        minLength: 1
+        maxLength: 70
+      zip:
+        description: Post office code number
+        type: string
+        minLength: 1
+        maxLength: 120
+      countryCode:
+        description: Country code (two character standard IATA country code)
+        type: string
+        pattern: '[a-zA-Z]{2}'
+      cityName:
+        description: City, town or postal station
+        type: string
+        minLength: 1
+        maxLength: 35
+      stateCode:
+        description: State code (two character standard IATA state code)
+        type: string
+        pattern: '[a-zA-Z0-9]{1-2}'
+      latitude:
+        description: latitude of the location
+        type: number
+        format: double
+        example: 43.580418
+      longitude:
+        description: longitude of the location
+        type: number
+        format: double
+        example: 7.125102
+  Agency:
+    type: object
+    description: Agency email information.
+    properties:
+      contacts:
+        type: array
+        description: List of contact information
+        items:
+          type: object
+          properties:
+            email:
+              type: object
+              description: Email information.
+              title: Email
+              properties:
+                address:
+                  type: string
+                  format: email
+                  description: Email address (e.g. john@smith.com)
+  Baggage:
+    type: object
+    properties:
+      count:
+        type: integer
+        description: baggage capacity
+        example: 3
+      size:
+        type: string
+        description: "baggage size\n\ncode   | name                                 \n------ | ---------------------------- \nS \t   | Small\nM \t   | Medium\nL \t   | Large\n"
+        enum:
+          - S
+          - M
+          - L
+  CancellationRule:
+    type: object
+    description: cancellation rule information
+    properties:
+      ruleDescription:
+        type: string
+        description: description of cancellation rule
+      feeType:
+        type: string
+        enum:
+          - PERCENTAGE
+          - VALUE
+        description: |
+          type of fee - percentage of total amount (PERCENTAGE) or fixed amount (VALUE)
+      feeValue:
+        type: string
+        description: value of the fee, e.g. "100" or "12.50"
+      currencyCode:
+        type: string
+        pattern: '[A-Z]{3}'
+        description: currency code of the fee in [ISO 4217](https://en.wikipedia.org/wiki/ISO_4217) format, e.g. USD, EUR
+      metricType:
+        type: string
+        description: type of metric
+        enum:
+          - MINUTES
+          - HOURS
+          - DAYS
+          - YEARS
+      metricMin:
+        type: string
+        description: metric min value
+      metricMax:
+        type: string
+        description: metric max value
+  Contact:
+    type: object
+    properties:
+      phoneNumber:
+        type: string
+        pattern: ([+]?)[0-9]{1,20}
+        description: Contact phone number
+      email:
+        type: string
+        format: email
+        description: Contact email
+  Corporation:
+    type: object
+    description: information about corporation
+    properties:
+      address:
+        $ref: '#/definitions/AddressCommon'
+      info:
+        type: object
+        description: "corporate information map. Possible keys\n\nkey    | name\n------ | ----------------------------\nAU\t   | Accounting Unit\nON\t   | Order Number\nDC\t   | Department Code\nCC\t   | Company Code\nCN\t   | Company Name\nIA\t   | Internal Account\nCE\t   | Cost Centre\nEN\t   | Employee Number\nPN\t   | Project Number\n"
+        additionalProperties:
+          type: string
+        example:
+          AU: Accounting Unit
+          'ON': Order Number
+          DC: Department Code
+          CC: Company Code
+          CN: Company Name
+          IA: Internal Account
+          CE: Cost Centre
+          EN: Employee Number
+          PN: Project Number
+  CreditCard:
+    type: object
+    description: information about payment card
+    required:
+      - number
+      - holderName
+      - vendorCode
+      - expiryDate
+    properties:
+      number:
+        type: string
+        pattern: '[0-9]{16}'
+        description: card number
+      holderName:
+        type: string
+        description: card holder name
+      vendorCode:
+        type: string
+        pattern: '[a-zA-Z]{2}'
+        description: card vendor code, e.g VI – VISA, CA – MasterCard, AX – American Express etc
+      expiryDate:
+        type: string
+        pattern: ^(0[1-9]|1[0-2])[0-9]{2}$
+        description: card expiry date in format MMYY, e.g. 0237 for February 2037
+      cvv:
+        type: string
+        pattern: '[a-zA-Z0-9]{3,4}'
+        description: cerification calue number, as indicated on the credit card. Only for query
+  DiscountCode:
+    type: object
+    description: discount object that gives access to negotiated prices
+    properties:
+      type:
+        type: string
+        description: describes type of discount
+        enum:
+          - CD
+          - PC
+      value:
+        type: string
+        description: |-
+          discount code value. 
+          "CD" type stands for corporate discount code - a number generated by provider in case of
+            special agreement with a given subscriber is passed (airlines, TMC,
+            corporation…). It gives to subscriber access to negotiated prices for
+            transfer      
+          "PC" - for promotional/campaign discount code - a voucher code generated by the
+            provider valid for a given period of time or a given number of usage.
+            The code is sent by customer to provider in order to get a discounted
+            price.
+  Distance:
+    properties:
+      value:
+        description: great-circle distance between two locations. This distance thus do not take into account traffic conditions; international boundaries; mountains; water; or other elements that might make the a nearby location hard to reach.
+        type: integer
+        example: 152
+      unit:
+        description: unit of the distance
+        type: string
+        example: KM
+        enum:
+          - KM
+          - MI
+  Equipment:
+    type: object
+    description: extra equipment information
+    required:
+      - code
+    properties:
+      code:
+        type: string
+        description: |
+          extra equipment codes, which can take following values
+
+          code   | name                                 
+          ------ | -------------------------------------  
+          BBS    | Baby stroller/Push chair
+          BYC    | Bicycle rack
+          CBB    | Cargo barrier rack
+          CBF    | Cargo barrier front
+          CBS    | Booster seat for child under 135cm or up to 12 years
+          CSB    | Child seat determined by weight/age of child 1-3 years / 9-18 Kg
+          CSI    | Child seat determined by weight/age of child 0-12 month/0-13Kg
+          CST    | Child seat determined by weight/age of child 4-7 years/15 – 30 Kg
+          SBR    | Snow board racks
+          SKB    | Ski box
+          SKR    | Ski rack
+          TAB    | Travel Tablet 
+          WAR    | Wheelchair access ramp
+          WHC    | Wheelchair
+          WIF    | Wi-Fi access
+          CNT    | Charger cable
+        enum:
+          - BBS
+          - BYC
+          - CBB
+          - CBF
+          - CBS
+          - CSB
+          - CSI
+          - CST
+          - SBR
+          - SKB
+          - SKR
+          - 'TAB '
+          - WAR
+          - WHC
+          - WIF
+          - CNT
+      itemId:
+        type: string
+        description: extra equipment identifier
+      description:
+        type: string
+        description: extra equipment description
+      quotation:
+        $ref: '#/definitions/Quotation'
+      converted:
+        $ref: '#/definitions/Quotation'
+      isBookable:
+        type: boolean
+        description: true if extra equipment is available for booking
+      taxIncluded:
+        type: boolean
+        description: true if tax included in extra equipment price
+      includedInTotal:
+        type: boolean
+        description: true if extra equipment price is included in total transfer amount
+  ExtraService:
+    type: object
+    required:
+      - code
+    properties:
+      code:
+        type: string
+        description: |
+          extra service code, which can take following values
+
+          code   | name                                 
+          ------ | ---------------------------- 
+          DSL    | Driver language specified
+          EWT    | Extra waiting time
+          MAG    | Meet & Greet
+          FLM    | Flight monitoring
+          NWS    | Newspaper
+          CAI    | Cancellation insurance
+          WNR    | Wait and Return. Driver waits at destination and brings back the customer to pick-up point
+        enum:
+          - DSL
+          - EWT
+          - MAG
+          - FLM
+          - NWS
+          - CAI
+          - WNR
+      itemId:
+        type: string
+        description: extra service identifier
+      description:
+        type: string
+        description: extra service description
+      metricType:
+        type: string
+        description: extra service time metric type
+        enum:
+          - YEARS
+          - DAYS
+          - HOURS
+          - MINUTES
+      metricValue:
+        type: string
+        description: extra service metric value
+      quotation:
+        $ref: '#/definitions/Quotation'
+      converted:
+        $ref: '#/definitions/Quotation'
+      isBookable:
+        type: boolean
+        description: true if extra service is available for booking
+      taxIncluded:
+        type: boolean
+        description: true if tax included in extra service price
+      includedInTotal:
+        type: boolean
+        description: true if extra service price is included in total transfer amount
+  Fee:
+    description: single fee information
+    allOf:
+      - $ref: '#/definitions/PointsAndCash'
+      - type: object
+        properties:
+          currencyCode:
+            type: string
+            example: USD
+          indicator:
+            type: string
+            description: fee category e.g. "AIRPORT", "CREDITCARD" ,"CANCELLATION"
+  Location:
+    type: object
+    description: location information
+    properties:
+      dateTime:
+        description: |
+          date and time specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DDThh:mm:ss format e.g. 2017-11-10T10:00:00
+          not supported for stopOvers object
+        type: string
+        example: '2019-11-10T10:30:00'
+      locationCode:
+        type: string
+        description: airport code from [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx), e.g. CDG.
+        pattern: '[A-Za-z]{3}'
+        example: CDG
+      lfiCode:
+        type: string
+        description: internal airport identifier used for private jets and helicopters e.g. IT87100
+        example: IT87100
+      address:
+        $ref: '#/definitions/Address'
+      name:
+        type: string
+        description: Place name e.g. Airport Name, Hotel Name etc.
+      googlePlaceId:
+        description: Google place id only for google address e.g. ChIJL-DOWeBv5kcRfTbh97PimNc.
+        type: string
+        example: ChIJrTLr-GyuEmsRBfy61i59si0
+      uicCode:
+        type: string
+        description: UIC code defined by the worldwide railway organization e.g. 8600626
+  StopOver:
+    description: Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude, lfi). Vehicle change via stop overs is not supported.
+    properties:
+      duration:
+        description: transfer stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M.
+        type: string
+        example: PT2H30M
+      sequenceNumber:
+        description: sequence number of the stop e.g. 3
+        type: number
+        example: 1
+      location:
+        $ref: '#/definitions/Location'
+  PassengerCharacteristics:
+    properties:
+      passengerTypeCode:
+        description: Passenger type codes e.g. CHD , ADT. CHD is for child and ADT for Adult.
+        type: string
+        example: child
+      age:
+        type: integer
+        description: Age of the Passenger (Mandatory if typeCode= “CHD”)
+        example: 12
+  LoyaltyNumber:
+    type: object
+    properties:
+      program:
+        type: string
+        description: loyalty program name
+      value:
+        type: string
+        description: loyalty number value
+  Name:
+    type: object
+    description: description of the name of a physical person
+    properties:
+      type:
+        description: The type of the Name
+        type: string
+      firstName:
+        description: First name.
+        type: string
+      lastName:
+        description: Last name.
+        type: string
+      title:
+        description: Contains all the suffixes and prefixes that can be appended to a name - Mr, Miss, Pr. - E.g. " Mr".
+        type: string
+  Passenger:
+    description: passenger data
+    allOf:
+      - $ref: '#/definitions/Name'
+      - type: object
+        properties:
+          contacts:
+            $ref: '#/definitions/Contact'
+          billingAddress:
+            $ref: '#/definitions/AddressCommon'
+  Payment:
+    type: object
+    description: |
+      defines the payment in transfer reservation. For "CREDIT_CARD" - creditCard is mandatory, for "INVOICE" - paymentReference is mandatory, for "TRAVEL_ACCOUNT" - paymentReference is optional, for "PAYMENT_SERVICE_PROVIDER" - paymentServiceProvider and paymentReference are mandatory.
+    properties:
+      methodOfPayment:
+        type: string
+        description: Method of payment required when PaymentType equal BT (applicable only for reservation action).
+        enum:
+          - CREDIT_CARD
+          - INVOICE
+          - TRAVEL_ACCOUNT
+          - PAYMENT_SERVICE_PROVIDER
+      paymentReference:
+        type: string
+        description: payment refence that will be passed to provider in case "INVOICE" or "TRAVEL_ACCOUNT" method of payment
+      paymentServiceProvider:
+        type: string
+        description: payment service provider details will be passed to provider in case "PAYMENT_SERVICE_PROVIDER" method of payment.
+        enum:
+          - STRIPE_CONNECT
+      creditCard:
+        $ref: '#/definitions/CreditCard'
+  PartnerInfo:
+    type: object
+    description: Information about partner/subprovider. Below settings configuration is not applicable for sub-provider. Fields 'code', 'name' and 'logoUrl' are not mandatory for sub-provider.
+    properties:
+      serviceProvider:
+        $ref: '#/definitions/ServiceProvider'
+  PointsAndCash:
+    type: object
+    properties:
+      monetaryAmount:
+        type: string
+        example: '10.5'
+  Quotation:
+    description: quotation representing a price valuation and its components. The monetaryAmount at the root are the sum of base and all the taxes/fees/discounts
+    allOf:
+      - $ref: '#/definitions/PointsAndCash'
+      - type: object
+        properties:
+          currencyCode:
+            type: string
+            example: USD
+          isEstimated:
+            type: boolean
+            description: indicates if the price is pre-estimated prior to ride. Becomes mandatory for transferType = TAXI
+          base:
+            description: base price
+            allOf:
+              - $ref: '#/definitions/PointsAndCash'
+          discount:
+            description: discount amount of base price
+            allOf:
+              - $ref: '#/definitions/PointsAndCash'
+          taxes:
+            description: Taxes breakdown
+            type: array
+            items:
+              $ref: '#/definitions/Tax'
+          fees:
+            description: Fees breakdown
+            type: array
+            items:
+              $ref: '#/definitions/Fee'
+          totalTaxes:
+            $ref: '#/definitions/PointsAndCash'
+          totalFees:
+            $ref: '#/definitions/PointsAndCash'
+  Seat:
+    type: object
+    properties:
+      count:
+        type: integer
+        description: seat capacity
+        example: 3
+      row:
+        type: string
+        description: seat row
+        example: front
+      size:
+        type: string
+        description: seat size
+        example: XL
+  ServiceProvider:
+    type: object
+    description: information about provider
+    required:
+      - code
+      - name
+      - logoUrl
+    properties:
+      code:
+        type: string
+        pattern: '[a-zA-Z]{3}'
+        description: provider code
+      name:
+        type: string
+        pattern: '[a-zA-Z]{30}'
+        description: provider name
+      logoUrl:
+        type: string
+        description: URL to provider logo
+      termsUrl:
+        type: string
+        description: URL to provider's terms and conditions page
+      isPreferred:
+        type: boolean
+        description: indicates if sub-provider is preferred for the travel-seller
+      contacts:
+        $ref: '#/definitions/ContactWithAddress'
+      settings:
+        type: array
+        description: list of provider settings
+        items:
+          type: string
+          description: provider setting
+          enum:
+            - BILLING_ADDRESS_REQUIRED
+            - FLIGHT_NUMBER_REQUIRED
+            - CVV_NUMBER_REQUIRED
+      businessIdentification:
+        description: Information about the Customer stakeholder participating to the described sales summary.
+        properties:
+          vatRegistrationNumber:
+            type: string
+            description: VAT (Value Added Tax) Registration Number of the customer applicable ot the current sales.
+  Tax:
+    description: single tax information
+    allOf:
+      - type: object
+        properties:
+          monetaryAmount:
+            type: string
+            example: '10.5'
+      - type: object
+        properties:
+          indicator:
+            type: string
+            description: Tax category
+          natureCode:
+            type: string
+            description: Tax code
+          countryCode:
+            type: string
+            description: Tax iso country code
+          rate:
+            type: string
+            description: Tax rate
+  TransportationType:
+    type: string
+    title: TransportationType
+    description: The type of connection "FLIGHT" or "TRAIN"
+    enum:
+      - FLIGHT
+      - TRAIN
+  TravelSegment:
+    description: A segment of an itinerary used by a traveler between 2 locations at a given date and time using a particular transportation type FLIGHT or TRAIN
+    type: object
+    properties:
+      transportationType:
+        $ref: '#/definitions/TransportationType'
+      transportationNumber:
+        type: string
+        example: AF380
+        description: The flight number or train number, e.g. AF380
+      departure:
+        $ref: '#/definitions/TravelSegmentLocation'
+      arrival:
+        $ref: '#/definitions/TravelSegmentLocation'
+  TravelSegmentLocation:
+    description: The flight or train departure/arrival date&time, location information
+    type: object
+    properties:
+      uicCode:
+        type: string
+        description: The railway UIC code defined by the worldwide railway organization, e.g. 7400001
+        example: 7400001
+      iataCode:
+        type: string
+        description: The airport code from IATA table codes, e.g. CDG
+        example: CDG
+      localDateTime:
+        type: string
+        description: The date and time inspired from ISO 8601 (YYYY-MM-DDTHH:MM:SS) format
+        format: date-time
+        example: '2021-03-27T20:03:00'
+  Vehicle:
+    type: object
+    required:
+      - code
+      - category
+      - description
+      - seats
+    properties:
+      code:
+        type: string
+        enum:
+          - CAR
+          - SED
+          - WGN
+          - ELC
+          - VAN
+          - SUV
+          - LMS
+          - MBR
+          - TRN
+          - BUS
+          - HLC
+          - JET
+        description: |
+          vehicle type, which can take following values
+
+          value           | description
+          --------------  | ------------------------
+          CAR             | Car
+          SED             | Sedan
+          WGN             | Wagon
+          ELC             | Electric car
+          VAN             | Van or minivan
+          SUV             | Sport utility vehicle
+          LMS             | Limousine
+          MBR             | Motorbike
+          TRN             | Train
+          BUS             | Bus
+          HLC             | Helicopter (accessible only for private jet transfer)
+          JET             | Jet (accessible only for private jet transfer)
+      category:
+        type: string
+        enum:
+          - ST
+          - BU
+          - FC
+        description: |
+          category of the vehicle, which can take following values
+
+          value           | description
+          --------------  | ------------------------
+          ST              | Standard
+          BU              | Business
+          FC              | First class
+      description:
+        type: string
+        description: description of the vehicle. Can describe a list of potential vehicles, e.g. VW Polo or similar
+      seats:
+        type: array
+        items:
+          $ref: '#/definitions/Seat'
+      baggages:
+        type: array
+        items:
+          $ref: '#/definitions/Baggage'
+      imageURL:
+        type: string
+        description: URL to vehicle image
+  Error_400:
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+    required:
+      - errors
+    example:
+      errors:
+        - status: 400
+          code: 4926
+          title: INVALID DATA RECEIVED
+          detail: Transfer type is not valid
+          source:
+            parameter: transferType
+  Error_401:
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+    required:
+      - errors
+    example:
+      errors:
+        - status: 401
+          code: 20
+          title: RESTRICTED
+          detail: Query unauthorized
+  Error_500:
+    properties:
+      errors:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+    required:
+      - errors
+    example:
+      errors:
+        - status: 500
+          code: 141
+          title: SYSTEM ERROR HAS OCCURRED
+  Issue:
+    properties:
+      status:
+        description: the HTTP status code applicable to this error
+        type: integer
+      code:
+        description: an application-specific error code
+        type: integer
+        format: int64
+      title:
+        description: a short summary of the error
+        type: string
+      detail:
+        description: explanation of the error
+        type: string
+      source:
+        type: object
+        title: Issue_Source
+        description: an object containing references to the source of the error
+        maxProperties: 1
+        properties:
+          pointer:
+            description: a JSON Pointer [RFC6901] to the associated entity in the request document
+            type: string
+          parameter:
+            description: a string indicating which URI query parameter caused the issue
+            type: string
+          example:
+            description: a string indicating an example of the right value
+            type: string
+  ContactWithAddress:
+    allOf:
+      - $ref: '#/definitions/Contact'
+      - type: object
+        properties:
+          address:
+            $ref: '#/definitions/AddressCommon'
+    description: Contact and Adress details
+responses:
+  '401':
+    description: Unauthorized
+    schema:
+      $ref: '#/definitions/Error_401'
+  '500':
+    description: Unexpected Error
+    schema:
+      $ref: '#/definitions/Error_500'
+  transfer_order:
+    description: Successful Operation
+    schema:
+      title: Success_Reservation
+      required:
+        - data
+      properties:
+        data:
+          $ref: '#/definitions/TransferOrder'
+        warnings:
+          type: array
+          items:
+            $ref: '#/definitions/Issue'
+      example:
+        data:
+          type: transfer-order
+          id: UVZTWlJJfERPRQ
+          reference: YNK4JQ
+          agency:
+            contacts:
+              - email:
+                  address: abc@test.com
+          transfers:
+            - status: CONFIRMED
+              confirmNbr: '2904892'
+              note: Note to driver
+              methodOfPayment: CREDIT_CARD
+              offerId: 0cb11574-4a02-11e8-842f-0ed5f89f718b
+              transferType: PRIVATE
+              start:
+                dateTime: '2019-11-10T10:30:00'
+                locationCode: CDG
+              end:
+                address:
+                  line: Avenue de la Bourdonnais, 19
+                  zip: '75007'
+                  countryCode: FR
+                  cityName: Paris
+                  latitude: 48.859466
+                  longitude: 2.2976965
+                  uicCode: '7400001'
+                googlePlaceId: ChIJL-DOWeBv5kcRfTbh97PimNc
+                name: Souvenirs De La Tour
+              stopOvers:
+                - duration: PT2H30M
+                  sequenceNumber: 1
+                  location:
+                    locationCode: CDG
+                    lfiCode: FR01216
+                    address:
+                      line: Avenue de la Bourdonnais, 19
+                      zip: '75007'
+                      countryCode: FR
+                      cityName: Paris
+                      latitude: 48.859477
+                      longitude: 2.2976975
+                    googlePlaceId: DOWeBv5kcRfTbh97PimN
+                    name: De La Tours
+              vehicle:
+                code: VAN
+                category: BU
+                description: Mercedes-Benz V-Class, Chevrolet Suburban, Cadillac Escalade or similar
+                seats:
+                  - count: 3
+                baggages:
+                  - count: 3
+                    size: M
+                imageURL: https://provider.com/images/BU_VAN.png
+              serviceProvider:
+                code: ABC
+                name: Provider name
+                logoUrl: https://provider.com/images/logo.png
+                termsUrl: https://provider.com/terms_and_conditions.html
+                contacts:
+                  phoneNumber: '+33123456789'
+                  email: support@provider.com
+                  address:
+                    line: Avenue de la Bourdonnais, 19
+                    zip: '75007'
+                    countryCode: FR
+                    cityName: Paris
+                    stateCode: CDG
+                settings:
+                  - BILLING_ADDRESS_REQUIRED
+                  - FLIGHT_NUMBER_REQUIRED
+                  - CVV_NUMBER_REQUIRED
+                businessIdentification:
+                  vatRegistrationNumber: GB999 9999 22
+              partnerInfo:
+                serviceProvider:
+                  code: XYZ
+                  name: SubProvider name
+                  logoUrl: https://provider.com/images/logo.png
+                  termsUrl: https://provider.com/terms_and_conditions.html
+                  isPreferred: true
+                  contacts:
+                    phoneNumber: '+33123456789'
+                    email: support@provider.com
+                    address:
+                      line: Avenue de la Bourdonnais, 19
+                      zip: '75007'
+                      countryCode: FR
+                      cityName: Paris
+                      stateCode: CDG
+                  businessIdentification:
+                    vatRegistrationNumber: GB999 9999 22
+              quotation:
+                monetaryAmount: '63.70'
+                currencyCode: USD
+                isEstimated: false
+                base:
+                  monetaryAmount: '103.70'
+                discount:
+                  monetaryAmount: '50.00'
+                fees:
+                  - indicator: AIRPORT
+                    monetaryAmount: '10.00'
+                totalTaxes:
+                  monetaryAmount: '12.74'
+                totalFees:
+                  monetaryAmount: '10.00'
+              converted:
+                monetaryAmount: '63.70'
+                currencyCode: EUR
+                isEstimated: false
+                base:
+                  monetaryAmount: '103.70'
+                discount:
+                  monetaryAmount: '50.00'
+                fees:
+                  - indicator: AIRPORT
+                    monetaryAmount: '10.00'
+                totalTaxes:
+                  monetaryAmount: '12.74'
+                totalFees:
+                  monetaryAmount: '10.00'
+              extraServices:
+                - code: EWT
+                  itemId: EWT0291
+                  description: Extra 15 min. wait
+                  quotation:
+                    monetaryAmount: '39.20'
+                    currencyCode: USD
+                    base:
+                      monetaryAmount: '36.00'
+                    totalTaxes:
+                      monetaryAmount: '3.20'
+                  converted:
+                    monetaryAmount: '32.70'
+                    currencyCode: EUR
+                    base:
+                      monetaryAmount: '30.00'
+                    totalTaxes:
+                      monetaryAmount: '2.7'
+                  isBookable: true
+                  taxIncluded: true
+                  includedInTotal: true
+              cancellationRules:
+                - feeType: PERCENTAGE
+                  feeValue: '100'
+                  metricType: DAYS
+                  metricMin: '0'
+                  metricMax: '1'
+                - feeType: PERCENTAGE
+                  feeValue: '0'
+                  metricType: DAYS
+                  metricMin: '1'
+                  metricMax: '100'
+              distance:
+                value: 152
+                unit: KM
+          passengerCharacteristics:
+            - passengerTypeCode: ADT
+              age: 20
+          passengers:
+            - firstName: John
+              lastName: Doe
+              title: MR
+              contacts:
+                phoneNumber: '+33123456789'
+                email: user@email.com
+              billingAddress:
+                line: Avenue de la Bourdonnais, 19
+                zip: '75007'
+                countryCode: FR
+                cityName: Paris
+  400_createTransferOrder:
+    description: |
+      code    | title                                 
+      ------- | ------------------------------------- 
+      11      | UNABLE TO PROCESS
+      391     | NEED TELEPHONE NUMBER
+      477     | INVALID FORMAT
+      693     | INVALID CITY/AIRPORT CODE
+      830     | MISSING/INVALID COUNTRY CODE
+      1143    | INVALID CREDIT CARD NUMBER
+      1149    | CREDIT CARD EXPIRED
+      1426    | EXPIRATION DATE MISSING OR INVALID
+      1535    | INVALID VENDOR CODE
+      4926    | INVALID DATA RECEIVED 
+      11041   | NEED PASSENGER NAME
+      11257   | NEED CITY NAME
+      12237   | ZIP CODE IS MANDATORY IN ADDRESS
+      23883   | EMAIL ADDRESS REQUIRED
+      25862   | CREDIT CARD HOLDER NAME REQUIRED
+      27599   | INVALID PASSENGER NAME
+      28926   | MISSING CARD VERIFICATION VALUE CVV
+      32171   | MANDATORY DATA MISSING 
+      32804   | INVALID PHONE NUMBER
+      34120   | INVALID EMAIL ADDRESS
+      34497   | THE LINE IS MANDATORY IN ADDRESS
+      34502   | PAYMENT METHOD IS REQUIRED
+      37576   | INVALID PAYMENT METHOD
+      38597   | CREDIT CARD NUMBER IS REQUIRED
+      45514   | INVALID BILLING ADDRESS
+      34649   | INVALID FLIGHT INFORMATION
+      15566   | INVALID RAIL INFORMATION
+    schema:
+      $ref: '#/definitions/Error_400'
+x-generatedAt: '2021-04-19T12:58:58.637Z'
