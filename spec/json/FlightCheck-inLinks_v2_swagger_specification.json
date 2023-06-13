@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2.1.2",
+    "version": "2.1.3",
     "title": "Flight Check-in Links",
     "x-tags": [
       "#ama-for-dev"
@@ -311,42 +311,26 @@
           }
         },
         "example": {
-          "warnings": [
-            {
-              "status": 200,
-              "code": 10151,
-              "title": "DEFAULT LANGUAGE USED",
-              "detail": "Language not available for this airline, default language applied",
-              "source": {
-                "parameter": "language"
-              }
-            }
-          ],
-          "meta": {
-            "count": 1,
-            "links": {
-              "self": "http://test.api.amadeus.com/v2/reference-data/urls/checkin-links?airlineCode=BA"
-            }
-          },
-          "data": [
-            {
-              "type": "checkin-link",
-              "id": "BAEN-GBAll",
-              "href": "https://www.britishairways.com/travel/managebooking/public/en_ch?&bookingRef={PNR}&lastname={LAST}",
-              "channel": "All",
-              "parameters": {
-                "LAST": {
-                  "description": "Passenger Last Name",
-                  "type": "string"
-                },
-                "PNR": {
-                  "description": "Record Locator",
-                  "type": "string",
-                  "format": "([a-zA-Z]|[0-9]){6}"
+            "meta": {
+                "count": 2,
+                "links": {
+                    "self": "https://test.api.amadeus.com/v2/reference-data/urls/checkin-links?airlineCode=BA&language=EN"
                 }
-              }
-            }
-          ]
+            },
+            "data": [
+                {
+                    "type": "checkin-link",
+                    "id": "BAEN-GBMobile",
+                    "href": "https://www.britishairways.com/travel/olcilandingpageauthreq/public/en_gb/device-mobile",
+                    "channel": "Mobile"
+                },
+                {
+                    "type": "checkin-link",
+                    "id": "BAEN-GBWeb",
+                    "href": "https://www.britishairways.com/travel/olcilandingpageauthreq/public/en_gb",
+                    "channel": "Web"
+                }
+            ]
         }
       }
     }

@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 2.1.2
+  version: 2.1.3
   title: Flight Check-in Links
   x-tags:
     - '#ama-for-dev'
@@ -38,7 +38,7 @@ paths:
             [ICAO airlines table codes](https://en.wikipedia.org/wiki/List_of_airline_codes)
           required: true
           type: string
-          pattern: '([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])'
+          pattern: ([A-Z]{3}|[A-Z]{2})|([0-9][A-Z])|([A-Z][0-9])
           x-example: BA
         - name: language
           in: query
@@ -104,7 +104,7 @@ definitions:
       format:
         description: format of the parameter
         type: string
-        example: '([a-zA-Z]|[0-9]){6}'
+        example: ([a-zA-Z]|[0-9]){6}
   Error_400:
     properties:
       errors:
@@ -157,7 +157,7 @@ definitions:
         maxProperties: 1
         properties:
           pointer:
-            description: 'a JSON Pointer [RFC6901] to the associated entity in the request document'
+            description: a JSON Pointer [RFC6901] to the associated entity in the request document
             type: string
           parameter:
             description: a string indicating which URI query parameter caused the issue
@@ -177,29 +177,29 @@ definitions:
           self:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           next:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           previous:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           last:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           first:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           up:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
         example:
-          self: 'https://test.api.amadeus.com/v1/area/resources?param=value'
+          self: https://test.api.amadeus.com/v1/area/resources?param=value
 responses:
   '400':
     description: "code    | title                                 \n------- | ------------------------------------- \n477     | INVALID FORMAT\n572     | INVALID OPTION\n32171     | MANDATORY DATA MISSING                      \t     \n"
@@ -227,28 +227,17 @@ responses:
           items:
             $ref: '#/definitions/CheckinLink'
       example:
-        warnings:
-          - status: 200
-            code: 10151
-            title: DEFAULT LANGUAGE USED
-            detail: 'Language not available for this airline, default language applied'
-            source:
-              parameter: language
         meta:
-          count: 1
+          count: 2
           links:
-            self: 'http://test.api.amadeus.com/v2/reference-data/urls/checkin-links?airlineCode=BA'
+            self: https://test.api.amadeus.com/v2/reference-data/urls/checkin-links?airlineCode=BA&language=EN
         data:
           - type: checkin-link
-            id: BAEN-GBAll
-            href: 'https://www.britishairways.com/travel/managebooking/public/en_ch?&bookingRef={PNR}&lastname={LAST}'
-            channel: All
-            parameters:
-              LAST:
-                description: Passenger Last Name
-                type: string
-              PNR:
-                description: Record Locator
-                type: string
-                format: '([a-zA-Z]|[0-9]){6}'
+            id: BAEN-GBMobile
+            href: https://www.britishairways.com/travel/olcilandingpageauthreq/public/en_gb/device-mobile
+            channel: Mobile
+          - type: checkin-link
+            id: BAEN-GBWeb
+            href: https://www.britishairways.com/travel/olcilandingpageauthreq/public/en_gb
+            channel: Web
 x-generatedAt: '2020-07-23T11:25:45.773Z'
