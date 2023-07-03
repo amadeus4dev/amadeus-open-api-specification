@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Airport Routes",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "Before using the API you will need to get an access token. Please read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to get your token."
   },
   "servers": [
@@ -45,27 +45,83 @@
                 "examples": {
                   "Successful Reply": {
                     "value": {
+                      "meta": {
+                        "count": 3,
+                        "links": {
+                          "self": "https://api.amadeus.com/v1/airport/direct-destinations?departureAirportCode=ORY&max=3&arrivalCountryCode=FR"
+                        }
+                      },
                       "data": [
                         {
                           "type": "location",
                           "subtype": "city",
-                          "name": "Bangalore",
-                          "iataCode": "BLR"
+                          "name": "TOULOUSE",
+                          "iataCode": "TLS",
+                          "geoCode": {
+                            "latitude": 43.62908,
+                            "longitude": 1.36382
+                          },
+                          "address": {
+                            "cityName": "TOULOUSE",
+                            "countryName": "FRANCE",
+                            "stateCode": "FR-31",
+                            "regionCode": "EUROP"
+                          },
+                          "timeZone": {
+                            "offset": "+02:00",
+                            "referenceLocalDateTime": "2022-10-25T10:17:00"
+                          },
+                          "metrics": {
+                            "relevance": 100
+                          }
                         },
                         {
                           "type": "location",
                           "subtype": "city",
-                          "name": "Paris",
-                          "iataCode": "PAR"
+                          "name": "NICE",
+                          "iataCode": "NCE",
+                          "geoCode": {
+                            "latitude": 43.66272,
+                            "longitude": 7.20787
+                          },
+                          "address": {
+                            "cityName": "NICE",
+                            "countryName": "FRANCE",
+                            "stateCode": "FR-06",
+                            "regionCode": "EUROP"
+                          },
+                          "timeZone": {
+                            "offset": "+02:00",
+                            "referenceLocalDateTime": "2022-10-25T10:17:00"
+                          },
+                          "metrics": {
+                            "relevance": 97
+                          }
+                        },
+                        {
+                          "type": "location",
+                          "subtype": "city",
+                          "name": "MARSEILLE",
+                          "iataCode": "MRS",
+                          "geoCode": {
+                            "latitude": 43.43556,
+                            "longitude": 5.21361
+                          },
+                          "address": {
+                            "cityName": "MARSEILLE",
+                            "countryName": "FRANCE",
+                            "stateCode": "FR-06",
+                            "regionCode": "EUROP"
+                          },
+                          "timeZone": {
+                            "offset": "+02:00",
+                            "referenceLocalDateTime": "2022-10-25T10:17:00"
+                          },
+                          "metrics": {
+                            "relevance": 45
+                          }
                         }
-                      ],
-                      "meta": {
-                        "count": "2",
-                        "sort": "iataCode",
-                        "links": {
-                          "self": "https://test.api.amadeus.com/v1/airport/direct-destination?departureAirportCode=NCE&max=2"
-                        }
-                      }
+                      ]
                     }
                   }
                 }
@@ -136,7 +192,7 @@
             }
           }
         },
-        "operationId": "airport/ direct-destinations",
+        "operationId": "airport/direct-destinations",
         "parameters": [
           {
             "schema": {
@@ -155,6 +211,14 @@
             "in": "query",
             "name": "max",
             "description": "Maximum number of destination in the response."
+          },
+          {
+            "schema": {
+              "type": "string"
+            },
+            "in": "query",
+            "name": "arrivalCountryCode",
+            "description": "Arrival country code following [IATA standard](http://www.iata.org/publications/Pages/code-search.aspx), to filter the list of destinations"
           }
         ],
         "description": ""
@@ -185,6 +249,76 @@
             "type": "string",
             "description": "IATA location code",
             "example": "\"PAR\""
+          },
+          "geoCode": {
+            "type": "object",
+            "description": "Geographic coordinates describing the position of any location on the surface of Earth",
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "description": "Latitude of the position expressed in decimal degrees (WSG 84), e.g. 6.244203. A positive value denotes northern hemisphere or the equator, and a negative value denotes southern hemisphere. The number of digits to represent the precision of the coordinate.",
+                "example": "48.85837",
+                "minimum": -3.402823669209385e+38,
+                "multipleOf": 3.402823669209385e+38
+              },
+              "longitude": {
+                "type": "number",
+                "description": "Longitude of the position expressed in decimal degrees (WSG 84), e.g. -75.581211. A positive value denotes east longitude or the prime meridian, and a negative value denotes west longitude. The number of digits to represent the precision of the coordinate.",
+                "example": "2.294481",
+                "minimum": -3.402823669209385e+38,
+                "multipleOf": 3.402823669209385e+38
+              }
+            }
+          },
+          "address": {
+            "type": "object",
+            "properties": {
+              "countryName": {
+                "type": "string",
+                "description": "Name of the country of the location",
+                "example": "France"
+              },
+              "countryCode": {
+                "type": "string",
+                "description": "Code of the country of the location in ISO standard",
+                "example": "FR"
+              },
+              "stateCode": {
+                "type": "string",
+                "description": "Code of the state of the location (if any)",
+                "example": "FR-13"
+              },
+              "regionCode": {
+                "type": "string",
+                "description": "Code of the region of the location in ISO standard",
+                "example": "EUROP"
+              }
+            }
+          },
+          "timeZone": {
+            "type": "object",
+            "properties": {
+              "offSet": {
+                "type": "string",
+                "description": "'Total offset from UTC including the Daylight Saving Time (DST) following ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601) standard'",
+                "example": "+01:00"
+              },
+              "referenceLocalDateTime": {
+                "type": "string",
+                "description": "Date and time used as reference to determine the time zone name, code, offset, and dstOffset following ISO 8601 (https://en.wikipedia.org/wiki/ISO_8601) standard.",
+                "example": "2022-09-28T19:20:30"
+              }
+            }
+          },
+          "metrics": {
+            "type": "object",
+            "properties": {
+              "relevance": {
+                "description": "Score value based on the number of travelers per year and per destination. Score is between 0 and 100, 100 being the value for the destination city with the highest value of travelers for the origin airport",
+                "example": "100",
+                "type": "integer"
+              }
+            }
           }
         }
       },
