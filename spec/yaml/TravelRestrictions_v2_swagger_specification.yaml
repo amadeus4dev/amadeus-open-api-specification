@@ -1,8 +1,10 @@
 openapi: 3.0.0
 info:
   title: Travel Restrictions
-  version: 2.0.1
+  version: 2.0.2
   description: |
+    <h3 style="color: red;"> WARNING - This API will be permanently decommissioned the 31st of August. For alternative we recommend using [Riskline](https://riskline.com/).</h3>
+
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token.
   x-release-note:
     '2.0':

@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Travel Restrictions",
-    "version": "2.0.1",
-    "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token.\n",
+    "version": "2.0.2",
+    "description": "<h3 style=\"color: red;\"> WARNING - This API will be permanently decommissioned the 31st of August. For alternative we recommend using [Riskline](https://riskline.com/).</h3>\n\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token.\n",
     "x-release-note": {
       "2.0": [
         "First release of new major version"
