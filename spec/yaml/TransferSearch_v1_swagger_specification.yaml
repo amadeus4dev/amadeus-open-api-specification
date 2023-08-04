@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.11.0
+  version: 1.11.1
   title: Transfer Search
   description: |-
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
@@ -33,7 +33,6 @@ paths:
             required:
               - startDateTime
               - startLocationCode
-              - endLocationCode
             properties:
               startDateTime:
                 description: date and time specified in the [ISO 8601](https://en.wikipedia.org/wiki/ISO_8601) YYYY-MM-DDThh:mm:ss format e.g. 2017-11-10T10:00:00
@@ -80,28 +79,40 @@ paths:
                 description: google place id only for google address e.g. ChIJL-DOWeBv5kcRfTbh97PimNc.
                 type: string
               endLocationCode:
-                description: location from [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx), e.g. CDG. Optional, for transferType = HOURLY. Location could be defined either using location code or address (address line, zip code, country code, city, geo code)
+                description: |-
+                  location from [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx). Optional, for transferType = HOURLY. 
+                  End location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
                 type: string
+                example: CDG
               endUicCode:
-                description: UIC code defined by the worldwide railway organization e.g. 8600626
+                description: |-
+                  UIC code defined by the worldwide railway organization. 
+                  End location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
                 type: string
+                example: '8600626'
               endLfiCode:
                 description: |-
-                  internal airport identifier used for private jets and helicopters
-                  Example: SP68724
+                  internal airport identifier used for private jets and helicopters. 
+                  End location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
                 type: string
+                example: SP68724
               endAddressLine:
-                description: street address, e.g. 5 Avenue Anatole France
+                description: |-
+                  street address, e.g. 5 Avenue Anatole France. 
+                  End location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
                 type: string
               endZipCode:
-                description: postal/zip code, e.g. 75007
+                description: postal/zip code
                 type: string
+                example: '75007'
               endCountryCode:
-                description: country of the location with [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g. US)
+                description: country of the location with [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format
                 type: string
+                example: US
               endCityName:
-                description: city name, e.g. Paris
+                description: city name
                 type: string
+                example: Paris
               endStateCode:
                 description: state code according to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)
                 type: string
@@ -114,8 +125,11 @@ paths:
                 description: place name e.g. Airport Name, Hotel Name etc.
                 type: string
               endGooglePlaceId:
-                description: google place id only for google address e.g. ChIJL-DOWeBv5kcRfTbh97PimNc.
+                description: |-
+                  google place id only for google address. 
+                  End location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
                 type: string
+                example: ChIJL-DOWeBv5kcRfTbh97PimNc
               transferType:
                 type: string
                 enum:

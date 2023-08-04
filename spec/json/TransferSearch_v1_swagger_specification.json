@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.11.0",
+    "version": "1.11.1",
     "title": "Transfer Search",
     "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York)."
   },
@@ -36,8 +36,7 @@
               "type": "object",
               "required": [
                 "startDateTime",
-                "startLocationCode",
-                "endLocationCode"
+                "startLocationCode"
               ],
               "properties": {
                 "startDateTime": {
@@ -94,32 +93,38 @@
                   "type": "string"
                 },
                 "endLocationCode": {
-                  "description": "location from [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx), e.g. CDG. Optional, for transferType = HOURLY. Location could be defined either using location code or address (address line, zip code, country code, city, geo code)",
-                  "type": "string"
+                  "description": "location from [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx). Optional, for transferType = HOURLY. \nEnd location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
+                  "type": "string",
+                  "example": "CDG"
                 },
                 "endUicCode": {
-                  "description": "UIC code defined by the worldwide railway organization e.g. 8600626",
-                  "type": "string"
+                  "description": "UIC code defined by the worldwide railway organization. \nEnd location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
+                  "type": "string",
+                  "example": "8600626"
                 },
                 "endLfiCode": {
-                  "description": "internal airport identifier used for private jets and helicopters\nExample: SP68724",
-                  "type": "string"
+                  "description": "internal airport identifier used for private jets and helicopters. \nEnd location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
+                  "type": "string",
+                  "example": "SP68724"
                 },
                 "endAddressLine": {
-                  "description": "street address, e.g. 5 Avenue Anatole France",
+                  "description": "street address, e.g. 5 Avenue Anatole France. \nEnd location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
                   "type": "string"
                 },
                 "endZipCode": {
-                  "description": "postal/zip code, e.g. 75007",
-                  "type": "string"
+                  "description": "postal/zip code",
+                  "type": "string",
+                  "example": "75007"
                 },
                 "endCountryCode": {
-                  "description": "country of the location with [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format (e.g. US)",
-                  "type": "string"
+                  "description": "country of the location with [ISO 3166-1 alpha-2](https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2) format",
+                  "type": "string",
+                  "example": "US"
                 },
                 "endCityName": {
-                  "description": "city name, e.g. Paris",
-                  "type": "string"
+                  "description": "city name",
+                  "type": "string",
+                  "example": "Paris"
                 },
                 "endStateCode": {
                   "description": "state code according to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)",
@@ -134,8 +139,9 @@
                   "type": "string"
                 },
                 "endGooglePlaceId": {
-                  "description": "google place id only for google address e.g. ChIJL-DOWeBv5kcRfTbh97PimNc.",
-                  "type": "string"
+                  "description": "google place id only for google address. \nEnd location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
+                  "type": "string",
+                  "example": "ChIJL-DOWeBv5kcRfTbh97PimNc"
                 },
                 "transferType": {
                   "type": "string",
