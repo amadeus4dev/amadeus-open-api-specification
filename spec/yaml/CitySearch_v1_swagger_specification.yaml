@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   title: City Search
-  version: 1.0.1
+  version: 1.0.2
   description: Before using the API you will need to get an access token. Please read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to get your token.
 servers:
   - url: https://test.api.amadeus.com/v1
@@ -53,25 +53,7 @@ paths:
           content:
             application/vnd.amadeus+json:
               schema:
-                type: object
-                properties:
-                  warnings:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Warning'
-                  meta:
-                    $ref: '#/components/schemas/Meta'
-                  data:
-                    type: array
-                    items:
-                      $ref: '#/components/schemas/Location'
-                  included:
-                    type: object
-                    properties:
-                      airports:
-                        type: object
-                        additionalProperties:
-                          $ref: '#/components/schemas/Location'
+                $ref: '#/components/schemas/response_citySearch'
               examples:
                 example:
                   value:
@@ -120,7 +102,7 @@ paths:
           content:
             application/vnd.amadeus+json:
               schema:
-                $ref: '#/components/schemas/Error_400'
+                $ref: '#/components/schemas/response_error'
               examples:
                 example-400:
                   value:
@@ -139,7 +121,7 @@ paths:
           content:
             application/vnd.amadeus+json:
               schema:
-                $ref: '#/components/schemas/Error_500'
+                $ref: '#/components/schemas/response_error'
               examples:
                 example-500:
                   value:
@@ -231,80 +213,36 @@ components:
                   exclusiveMaximum: false
                   example: 2.294481
       description: ''
-    Error_400:
+    response_error:
       type: object
       description: A set of errors
-      title: Error 400
+      title: Error Reply
       properties:
         errors:
           type: array
           items:
-            type: object
-            description: The Error Definition
-            title: Error
-            properties:
-              status:
-                type: integer
-                description: The [HTTP status code](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) of this response. This is present only in terminal errors which cause an unsuccessful response. In the case of multiple errors, they must all have the same status.
-              code:
-                type: integer
-                description: A machine-readable error code from the Amadeus Canned Messages table, that will enable the API Consumers code to handle this type of error
-              title:
-                type: string
-                description: An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized
-              detail:
-                type: string
-                description: An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized.
-              source:
-                type: object
-                title: Error_Source
-                properties:
-                  parameter:
-                    type: string
-                    description: The key of the URI path or query parameter that caused the error
-                  pointer:
-                    type: string
-                    description: A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error
-                  example:
-                    type: string
-                    description: A sample input to guide the user when resolving this issue
-    Error_500:
+            $ref: '#/components/schemas/errors'
+    response_citySearch:
       type: object
-      description: A set of errors
-      title: Error 500
+      title: City Search Reply
       properties:
-        errors:
+        warnings:
           type: array
           items:
-            type: object
-            description: The Error Definition
-            title: Error
-            properties:
-              status:
-                type: integer
-                description: The [HTTP status code](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) of this response. This is present only in terminal errors which cause an unsuccessful response. In the case of multiple errors, they must all have the same status.
-              code:
-                type: integer
-                description: A machine-readable error code from the Amadeus Canned Messages table, that will enable the API Consumers code to handle this type of error
-              title:
-                type: string
-                description: An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized
-              detail:
-                type: string
-                description: An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized.
-              source:
-                type: object
-                title: Error_Source
-                properties:
-                  parameter:
-                    type: string
-                    description: The key of the URI path or query parameter that caused the error
-                  pointer:
-                    type: string
-                    description: A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error
-                  example:
-                    type: string
-                    description: A sample input to guide the user when resolving this issue
+            $ref: '#/components/schemas/Warning'
+        meta:
+          $ref: '#/components/schemas/Meta'
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/Location'
+        included:
+          type: object
+          properties:
+            airports:
+              type: object
+              additionalProperties:
+                $ref: '#/components/schemas/Location'
     Meta:
       type: object
       description: Meta information about the returned object(s) in "data"
@@ -356,3 +294,31 @@ components:
       required:
         - code
         - title
+    errors:
+      title: Error
+      properties:
+        status:
+          type: integer
+          description: The [HTTP status code](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) of this response. This is present only in terminal errors which cause an unsuccessful response. In the case of multiple errors, they must all have the same status.
+        code:
+          type: integer
+          description: A machine-readable error code from the Amadeus Canned Messages table, that will enable the API Consumers code to handle this type of error
+        title:
+          type: string
+          description: An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized
+        detail:
+          type: string
+          description: An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized.
+        source:
+          type: object
+          title: Error_Source
+          properties:
+            parameter:
+              type: string
+              description: The key of the URI path or query parameter that caused the error
+            pointer:
+              type: string
+              description: A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error
+            example:
+              type: string
+              description: A sample input to guide the user when resolving this issue

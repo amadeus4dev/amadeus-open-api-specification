@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Airline Routes",
-    "version": "1.1.0",
+    "version": "1.1.1",
     "description": "Before using the API you will need to get an access token. Please read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization)** for more information on how to get your token."
   },
   "servers": [
@@ -21,24 +21,7 @@
             "content": {
               "application/vnd.amadeus+json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "warnings": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/warnings"
-                      }
-                    },
-                    "data": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/locations"
-                      }
-                    },
-                    "meta": {
-                      "$ref": "#/components/schemas/meta"
-                    }
-                  }
+                  "$ref": "#/components/schemas/response_airlineRoutes"
                 },
                 "examples": {
                   "Successful Reply": {
@@ -131,15 +114,7 @@
             "content": {
               "application/vnd.amadeus+json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "errors": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/errors"
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/response_error"
                 },
                 "examples": {
                   "example-error 400": {
@@ -163,15 +138,7 @@
             "content": {
               "application/vnd.amadeus+json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "errors": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/errors"
-                      }
-                    }
-                  }
+                  "$ref": "#/components/schemas/response_error"
                 },
                 "examples": {
                   "example-error 500": {
@@ -375,7 +342,7 @@
           }
         }
       },
-	  "errors": {
+	    "errors": {
         "title": "Error",
         "properties": {
           "status": {
@@ -411,6 +378,39 @@
                 "description": "A sample input to guide the user when resolving this issue"
               }
             }
+          }
+        }
+      },
+      "response_error": {
+        "type": "object",
+        "title": "Error Reply",
+        "properties": {
+          "errors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/errors"
+            }
+          }
+        }
+      },
+      "response_airlineRoutes": {
+        "type": "object",
+        "title": "Airline Routes Reply",
+        "properties": {
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/warnings"
+            }
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/locations"
+            }
+          },
+          "meta": {
+            "$ref": "#/components/schemas/meta"
           }
         }
       }
