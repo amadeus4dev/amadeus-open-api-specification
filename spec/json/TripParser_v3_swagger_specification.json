@@ -2,7 +2,7 @@
   "openapi": "3.0.0",
   "info": {
     "title": "Trip Parser",
-    "version": "3.0.1",
+    "version": "3.0.2",
     "description": "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token."
   },
   "x-release-note": {
@@ -29,21 +29,7 @@
             "content": {
               "application/vnd.amadeus+json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "$ref": "#/components/schemas/trip"
-                    },
-                    "warnings": {
-                      "type": "array",
-                      "items": {
-                        "$ref": "#/components/schemas/warnings"
-                      }
-                    }
-                  },
-                  "required": [
-                    "data"
-                  ]
+                  "$ref": "#/components/schemas/response_tripParser"
                 },
                 "examples": {
                   "Successful Reply": {
@@ -195,16 +181,6 @@
               "schema": {
                 "title": "DocumentEnvelope",
                 "type": "object",
-                "x-tags": [
-                  "DocumentEnvelope",
-                  "blob",
-                  "blb",
-                  "binary",
-                  "document",
-                  "compression",
-                  "zip",
-                  "attachment"
-                ],
                 "description": "Data model to convey any kind of document, any format with associated meta data to help the identification and the decoding.",
                 "properties": {
                   "payload": {
@@ -1422,6 +1398,24 @@
             }
           }
         }
+      },
+      "response_tripParser": {
+        "title": "Trip Parser Reply",
+        "type": "object",
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/trip"
+          },
+          "warnings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/warnings"
+            }
+          }
+        },
+        "required": [
+          "data"
+        ]
       }
     }
   }
