@@ -1,85 +1,127 @@
-swagger: '2.0'
+openapi: 3.0.1
 info:
-  version: 1.1.1
   title: Airline Code Lookup API
+  description: |
+    Before using this API, we recommend you read our
+    **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)**
+    for more information on how to generate an access token.
+
+    Please also be aware that our test environment is based on a subset of the production,
+    to see what is included in test please refer to our **[data collection](https://github.com/amadeus4dev/data-collection)**.
+  version: 1.1.1
   x-status: validated
   x-tags:
-    - '#ama-for-dev'
+  - '#ama-for-dev'
   x-release-note:
-    1.1.0:
-      - Correct example
-      - Regroup parameter "IATACode" and "ICAOCode" under the same name "airlineCodes"
-    1.0.0:
-      - initial version
-      - List all airlines information (name and code)
-      - Introduction of search per IATA or ICAO code
-  description: "\nBefore using this API, we recommend you read our\_**[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)**\_for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production, to see what is included in test please refer to our **[data collection](https://github.com/amadeus4dev/data-collection)**."
-host: test.api.amadeus.com
-basePath: /v1
-schemes:
-  - https
-consumes:
-  - application/vnd.amadeus+json
-produces:
-  - application/vnd.amadeus+json
+    "1.1.0":
+    - Correct example
+    - Regroup parameter "IATACode" and "ICAOCode" under the same name "airlineCodes"
+    "1.0.0":
+    - initial version
+    - List all airlines information (name and code)
+    - Introduction of search per IATA or ICAO code
+servers:
+- url: https://test.api.amadeus.com/v1
 paths:
   /reference-data/airlines:
     get:
       tags:
-        - airlines
-      operationId: getairlines
+      - airlines
       summary: Return airlines information.
+      operationId: getairlines
       parameters:
-        - name: airlineCodes
-          description: |
-            Code of the airline following IATA standard([IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx)) or ICAO standard ([ICAO airlines table codes](https://en.wikipedia.org/wiki/List_of_airline_codes))
+      - name: airlineCodes
+        in: query
+        description: |
+          Code of the airline following IATA standard([IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx)) or ICAO standard ([ICAO airlines table codes](https://en.wikipedia.org/wiki/List_of_airline_codes))
 
-            Several airlines can be selected at once by sending a list separated by a coma (i.e. AF, SWA)
-          in: query
-          required: false
+          Several airlines can be selected at once by sending a list separated by a coma (i.e. AF, SWA)
+        schema:
           type: string
-          x-example: BA
+        example: BA
       responses:
-        '200':
-          $ref: '#/responses/airlines'
-        '400':
-          $ref: '#/responses/400'
+        "200":
+          description: Successful Operation
+          content:
+            application/vnd.amadeus+json:
+              schema:
+                title: Success Things
+                required:
+                - data
+                type: object
+                properties:
+                  meta:
+                    $ref: '#/components/schemas/Collection_Meta'
+                  warnings:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Issue'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Airline'
+                example:
+                  meta:
+                    count: 1
+                    links:
+                      self: https://test.api.amadeus.com/v1/reference-data/airlines?airlineCodes=BA
+                  data:
+                  - type: airline
+                    iataCode: BA
+                    icaoCode: BAW
+                    businessName: BRITISH AIRWAYS
+                    commonName: BRITISH A/W
+        "400":
+          description: |
+            | code | title          |
+            | ---- | -------------- |
+            | 572  | INVALID OPTION |
+          content:
+            application/vnd.amadeus+json:
+              schema:
+                $ref: '#/components/schemas/Error_400'
         default:
-          $ref: '#/responses/500'
-      description: ''
-definitions:
-  Airline:
-    properties:
-      type:
-        description: the resource name
-        type: string
-        example: airline
-      iataCode:
-        description: 'IATA airline code. see [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx)'
-        type: string
-        example: WN
-      icaoCode:
-        description: 'IATA airline code. see [ICAO airlines table codes](https://en.wikipedia.org/wiki/List_of_airline_codes)'
-        type: string
-        example: SWA
-      businessName:
-        description: airline business name
-        type: string
-        example: SOUTHWEST AIRLINES TEXAS
-      commonName:
-        description: airline common name
-        type: string
-        example: SW AIRLINES
-  Error_400:
-    properties:
-      errors:
-        type: array
-        items:
-          $ref: '#/definitions/Issue'
-    required:
+          description: Unexpected Error
+          content:
+            application/vnd.amadeus+json:
+              schema:
+                $ref: '#/components/schemas/Error_500'
+components:
+  schemas:
+    Airline:
+      type: object
+      properties:
+        type:
+          type: string
+          description: the resource name
+          example: airline
+        iataCode:
+          type: string
+          description: "IATA airline code. see [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx)"
+          example: WN
+        icaoCode:
+          type: string
+          description: "IATA airline code. see [ICAO airlines table codes](https://en.wikipedia.org/wiki/List_of_airline_codes)"
+          example: SWA
+        businessName:
+          type: string
+          description: airline business name
+          example: SOUTHWEST AIRLINES TEXAS
+        commonName:
+          type: string
+          description: airline common name
+          example: SW AIRLINES
+    Error_400:
+      required:
       - errors
-    example:
-      errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Issue'
+      example:
+        errors:
         - status: 400
           code: 477
           title: INVALID FORMAT
@@ -87,122 +129,135 @@ definitions:
           source:
             parameter: airport
             example: CDG
-  Error_500:
-    properties:
-      errors:
-        type: array
-        items:
-          $ref: '#/definitions/Issue'
-    required:
+    Error_500:
+      required:
       - errors
-    example:
-      errors:
+      type: object
+      properties:
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Issue'
+      example:
+        errors:
         - status: 500
           code: 141
           title: SYSTEM ERROR HAS OCCURRED
-  Issue:
-    properties:
-      status:
-        description: the HTTP status code applicable to this error
-        type: integer
-      code:
-        description: an application-specific error code
-        type: integer
-        format: int64
-      title:
-        description: a short summary of the error
-        type: string
-      detail:
-        description: explanation of the error
-        type: string
-      source:
-        type: object
-        title: Issue_Source
-        description: an object containing references to the source of the error
-        maxProperties: 1
-        properties:
-          pointer:
-            description: 'a JSON Pointer [RFC6901] to the associated entity in the request document'
-            type: string
-          parameter:
-            description: a string indicating which URI query parameter caused the issue
-            type: string
-          example:
-            description: a string indicating an example of the right value
-            type: string
-  Collection_Meta:
-    title: Collection_Meta
-    properties:
-      count:
-        type: integer
-        example: 1
-      links:
-        title: CollectionLinks
-        properties:
-          self:
-            type: string
-            format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
-          next:
-            type: string
-            format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
-          previous:
-            type: string
-            format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
-          last:
-            type: string
-            format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
-          first:
-            type: string
-            format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
-          up:
-            type: string
-            format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
-        example:
-          self: 'https://test.api.amadeus.com/v1/area/resources?param=value'
-responses:
-  '400':
-    description: |
-      code    | title                                 
-      ------- | ------------------------------------- 
-        572   | INVALID OPTION  
-    schema:
-      $ref: '#/definitions/Error_400'
-  '500':
-    description: Unexpected Error
-    schema:
-      $ref: '#/definitions/Error_500'
-  airlines:
-    description: Successful Operation
-    schema:
-      title: Success Things
-      required:
-        - data
+    Issue:
+      type: object
       properties:
-        meta:
-          $ref: '#/definitions/Collection_Meta'
-        warnings:
-          type: array
-          items:
-            $ref: '#/definitions/Issue'
-        data:
-          type: array
-          items:
-            $ref: '#/definitions/Airline'
-      example:
-        meta:
-          count: 1
-          links:
-            self: 'https://test.api.amadeus.com/v1/reference-data/airlines?airlineCodes=BA'
-        data:
-          - type: airline
-            iataCode: BA
-            icaoCode: BAW
-            businessName: BRITISH AIRWAYS
-            commonName: BRITISH A/W
-x-generatedAt: '2020-07-16T07:57:31.414Z'
+        status:
+          type: integer
+          description: the HTTP status code applicable to this error
+        code:
+          type: integer
+          description: an application-specific error code
+          format: int64
+        title:
+          type: string
+          description: a short summary of the error
+        detail:
+          type: string
+          description: explanation of the error
+        source:
+          title: Issue_Source
+          type: object
+          properties:
+            pointer:
+              type: string
+              description: "a JSON Pointer [RFC6901] to the associated entity in the\
+                \ request document"
+            parameter:
+              type: string
+              description: a string indicating which URI query parameter caused the
+                issue
+            example:
+              type: string
+              description: a string indicating an example of the right value
+          description: an object containing references to the source of the error
+    Collection_Meta:
+      title: Collection_Meta
+      type: object
+      properties:
+        count:
+          type: integer
+          example: 1
+        links:
+          title: CollectionLinks
+          type: object
+          properties:
+            self:
+              type: string
+              format: uri
+              example: https://test.api.amadeus.com/v1/area/resources?...
+            next:
+              type: string
+              format: uri
+              example: https://test.api.amadeus.com/v1/area/resources?...
+            previous:
+              type: string
+              format: uri
+              example: https://test.api.amadeus.com/v1/area/resources?...
+            last:
+              type: string
+              format: uri
+              example: https://test.api.amadeus.com/v1/area/resources?...
+            first:
+              type: string
+              format: uri
+              example: https://test.api.amadeus.com/v1/area/resources?...
+            up:
+              type: string
+              format: uri
+              example: https://test.api.amadeus.com/v1/area/resources?...
+          example:
+            self: https://test.api.amadeus.com/v1/area/resources?param=value
+  responses:
+    "400":
+      description: |
+        | code | title          |
+        | ---- | -------------- |
+        | 572  | INVALID OPTION |
+      content:
+        application/vnd.amadeus+json:
+          schema:
+            $ref: '#/components/schemas/Error_400'
+    "500":
+      description: Unexpected Error
+      content:
+        application/vnd.amadeus+json:
+          schema:
+            $ref: '#/components/schemas/Error_500'
+    airlines:
+      description: Successful Operation
+      content:
+        application/vnd.amadeus+json:
+          schema:
+            title: Success Things
+            required:
+            - data
+            type: object
+            properties:
+              meta:
+                $ref: '#/components/schemas/Collection_Meta'
+              warnings:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issue'
+              data:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Airline'
+            example:
+              meta:
+                count: 1
+                links:
+                  self: https://test.api.amadeus.com/v1/reference-data/airlines?airlineCodes=BA
+              data:
+              - type: airline
+                iataCode: BA
+                icaoCode: BAW
+                businessName: BRITISH AIRWAYS
+                commonName: BRITISH A/W
+x-generatedAt: 2020-07-16T07:57:31.414Z
+x-original-swagger-version: "2.0"
