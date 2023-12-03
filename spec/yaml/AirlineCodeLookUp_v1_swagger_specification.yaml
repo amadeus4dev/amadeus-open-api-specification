@@ -40,7 +40,7 @@ paths:
           type: string
         example: BA
       responses:
-        "200":
+        200:
           description: Successful Operation
           content:
             application/vnd.amadeus+json:
@@ -66,26 +66,15 @@ paths:
                     links:
                       self: https://test.api.amadeus.com/v1/reference-data/airlines?airlineCodes=BA
                   data:
-                  - type: airline
+                    type: airline
                     iataCode: BA
                     icaoCode: BAW
                     businessName: BRITISH AIRWAYS
                     commonName: BRITISH A/W
-        "400":
-          description: |
-            | code | title          |
-            | ---- | -------------- |
-            | 572  | INVALID OPTION |
-          content:
-            application/vnd.amadeus+json:
-              schema:
-                $ref: '#/components/schemas/Error_400'
+        400:
+          $ref: '#/components/responses/400'
         default:
-          description: Unexpected Error
-          content:
-            application/vnd.amadeus+json:
-              schema:
-                $ref: '#/components/schemas/Error_500'
+          $ref: '#/components/responses/500'
 components:
   schemas:
     Airline:
@@ -111,38 +100,6 @@ components:
           type: string
           description: airline common name
           example: SW AIRLINES
-    Error_400:
-      required:
-      - errors
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Issue'
-      example:
-        errors:
-        - status: 400
-          code: 477
-          title: INVALID FORMAT
-          detail: invalid query parameter format
-          source:
-            parameter: airport
-            example: CDG
-    Error_500:
-      required:
-      - errors
-      type: object
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Issue'
-      example:
-        errors:
-        - status: 500
-          code: 141
-          title: SYSTEM ERROR HAS OCCURRED
     Issue:
       type: object
       properties:
@@ -175,6 +132,10 @@ components:
               type: string
               description: a string indicating an example of the right value
           description: an object containing references to the source of the error
+    UriType:
+      type: string
+      format: uri
+      example: https://test.api.amadeus.com/v1/area/resources?...
     Collection_Meta:
       title: Collection_Meta
       type: object
@@ -187,33 +148,21 @@ components:
           type: object
           properties:
             self:
-              type: string
-              format: uri
-              example: https://test.api.amadeus.com/v1/area/resources?...
+              $ref: '#/components/schemas/UriType'
             next:
-              type: string
-              format: uri
-              example: https://test.api.amadeus.com/v1/area/resources?...
+              $ref: '#/components/schemas/UriType'
             previous:
-              type: string
-              format: uri
-              example: https://test.api.amadeus.com/v1/area/resources?...
+              $ref: '#/components/schemas/UriType'
             last:
-              type: string
-              format: uri
-              example: https://test.api.amadeus.com/v1/area/resources?...
+              $ref: '#/components/schemas/UriType'
             first:
-              type: string
-              format: uri
-              example: https://test.api.amadeus.com/v1/area/resources?...
+              $ref: '#/components/schemas/UriType'
             up:
-              type: string
-              format: uri
-              example: https://test.api.amadeus.com/v1/area/resources?...
+              $ref: '#/components/schemas/UriType'
           example:
             self: https://test.api.amadeus.com/v1/area/resources?param=value
   responses:
-    "400":
+    400:
       description: |
         | code | title          |
         | ---- | -------------- |
@@ -221,43 +170,31 @@ components:
       content:
         application/vnd.amadeus+json:
           schema:
-            $ref: '#/components/schemas/Error_400'
-    "500":
+            required:
+              - errors
+            type: object
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issue'
+    500:
       description: Unexpected Error
       content:
         application/vnd.amadeus+json:
           schema:
-            $ref: '#/components/schemas/Error_500'
-    airlines:
-      description: Successful Operation
-      content:
-        application/vnd.amadeus+json:
-          schema:
-            title: Success Things
             required:
-            - data
+            - errors
             type: object
             properties:
-              meta:
-                $ref: '#/components/schemas/Collection_Meta'
-              warnings:
+              errors:
                 type: array
                 items:
                   $ref: '#/components/schemas/Issue'
-              data:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Airline'
             example:
-              meta:
-                count: 1
-                links:
-                  self: https://test.api.amadeus.com/v1/reference-data/airlines?airlineCodes=BA
-              data:
-              - type: airline
-                iataCode: BA
-                icaoCode: BAW
-                businessName: BRITISH AIRWAYS
-                commonName: BRITISH A/W
+              errors:
+                status: 500
+                code: 141
+                title: SYSTEM ERROR HAS OCCURRED
 x-generatedAt: 2020-07-16T07:57:31.414Z
 x-original-swagger-version: "2.0"
