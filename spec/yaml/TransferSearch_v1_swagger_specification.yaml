@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.11.1
+  version: 1.11.2
   title: Transfer Search
   description: |-
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
@@ -296,11 +296,9 @@ paths:
               endZipCode: '75007'
               endCountryCode: FR
               endName: Souvenirs De La Tour
-              endGooglePlaceId: ChIJL-DOWeBv5kcRfTbh97PimNc
               endGeoCode: 48.859466,2.2976965
               transferType: PRIVATE
-              startDateTime: '2021-11-10T10:30:00'
-              providerCodes: TXO
+              startDateTime: '2024-04-10T10:30:00'
               passengers: 2
               stopOvers:
                 - duration: PT2H30M
@@ -309,7 +307,6 @@ paths:
                   countryCode: FR
                   cityName: Paris
                   zipCode: '75007'
-                  googlePlaceId: DOWeBv5kcRfTbh97PimN
                   name: De La Tours
                   geoCode: 48.859477,2.2976985
                   stateCode: FR
@@ -317,10 +314,10 @@ paths:
                 transportationType: FLIGHT
                 transportationNumber: AF380
                 departure:
-                  localDateTime: '2021-11-10T09:00:00'
+                  localDateTime: '2024-04-10T09:00:00'
                   iataCode: NCE
                 arrival:
-                  localDateTime: '2021-11-10T10:00:00'
+                  localDateTime: '2024-04-10T10:00:00'
                   iataCode: CDG
               passengerCharacteristics:
                 - passengerTypeCode: ADT
