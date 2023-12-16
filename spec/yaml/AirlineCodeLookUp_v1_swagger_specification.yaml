@@ -189,7 +189,7 @@ components:
                 links:
                   self: https://test.api.amadeus.com/v1/reference-data/airlines?airlineCodes=BA
               data:
-                type: airline
+              - type: airline
                 iataCode: BA
                 icaoCode: BAW
                 businessName: BRITISH AIRWAYS
