@@ -133,7 +133,7 @@ components:
               type: string
               description: a string indicating an example of the right value
           description: an object containing references to the source of the error
-    UriType:
+    Uri:
       type: string
       format: uri
       example: https://test.api.amadeus.com/v1/area/resources?...
@@ -149,17 +149,17 @@ components:
           type: object
           properties:
             self:
-              $ref: '#/components/schemas/UriType'
+              $ref: '#/components/schemas/Uri'
             next:
-              $ref: '#/components/schemas/UriType'
+              $ref: '#/components/schemas/Uri'
             previous:
-              $ref: '#/components/schemas/UriType'
+              $ref: '#/components/schemas/Uri'
             last:
-              $ref: '#/components/schemas/UriType'
+              $ref: '#/components/schemas/Uri'
             first:
-              $ref: '#/components/schemas/UriType'
+              $ref: '#/components/schemas/Uri'
             up:
-              $ref: '#/components/schemas/UriType'
+              $ref: '#/components/schemas/Uri'
           example:
             self: https://test.api.amadeus.com/v1/area/resources?param=value
   responses:
