@@ -133,10 +133,6 @@ components:
               type: string
               description: a string indicating an example of the right value
           description: an object containing references to the source of the error
-    Uri:
-      type: string
-      format: uri
-      example: https://test.api.amadeus.com/v1/area/resources?...
     Collection_Meta:
       title: Collection_Meta
       type: object
@@ -149,17 +145,29 @@ components:
           type: object
           properties:
             self:
-              $ref: '#/components/schemas/Uri'
+              type: string
+              format: uri
+              example: https://test.api.amadeus.com/v1/area/resources?...
             next:
-              $ref: '#/components/schemas/Uri'
+              type: string
+              format: uri
+              example: https://test.api.amadeus.com/v1/area/resources?...
             previous:
-              $ref: '#/components/schemas/Uri'
+              type: string
+              format: uri
+              example: https://test.api.amadeus.com/v1/area/resources?...
             last:
-              $ref: '#/components/schemas/Uri'
+              type: string
+              format: uri
+              example: https://test.api.amadeus.com/v1/area/resources?...
             first:
-              $ref: '#/components/schemas/Uri'
+              type: string
+              format: uri
+              example: https://test.api.amadeus.com/v1/area/resources?...
             up:
-              $ref: '#/components/schemas/Uri'
+              type: string
+              format: uri
+              example: https://test.api.amadeus.com/v1/area/resources?...
           example:
             self: https://test.api.amadeus.com/v1/area/resources?param=value
   responses:
