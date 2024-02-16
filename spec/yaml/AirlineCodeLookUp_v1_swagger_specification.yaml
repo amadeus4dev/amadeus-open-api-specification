@@ -8,11 +8,13 @@ info:
 
     Please also be aware that our test environment is based on a subset of the production,
     to see what is included in test please refer to our **[data collection](https://github.com/amadeus4dev/data-collection)**.
-  version: 1.1.1
+  version: 1.2.1
   x-status: validated
   x-tags:
   - '#ama-for-dev'
   x-release-note:
+    "1.2.0":
+    - Migration to OAS3
     "1.1.0":
     - Correct example
     - Regroup parameter "IATACode" and "ICAOCode" under the same name "airlineCodes"
@@ -38,46 +40,64 @@ paths:
           Several airlines can be selected at once by sending a list separated by a coma (i.e. AF, SWA)
         schema:
           type: string
-        example: BA
+        examples:
+          BA:
+            value: BA
       responses:
         200:
           $ref: '#/components/responses/airlines'
         400:
           $ref: '#/components/responses/400'
-        default:
+        500:
           $ref: '#/components/responses/500'
 components:
-  schemas:
-    Error_400:
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Issue'
-      required:
-        - errors
-      example:
+  examples:
+    INVALID_FORMAT:
+      value:
         errors:
           - status: 400
             code: 477
             title: INVALID FORMAT
             detail: invalid query parameter format
             source:
-              parameter: airport
-              example: CDG
-    Error_500:
-      properties:
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/Issue'
-      required:
-        - errors
-      example:
+              parameter: airlineCodes
+              example: BA
+    SYSTEM_ERROR:
+      value:
         errors:
           - status: 500
             code: 141
             title: SYSTEM ERROR HAS OCCURRED
+  schemas:
+    Warning:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: an application-specific error code
+          format: int64
+        title:
+          type: string
+          description: a short summary of the error
+        detail:
+          type: string
+          description: explanation of the error
+        source:
+          title: Issue_Source
+          type: object
+          properties:
+            pointer:
+              type: string
+              description: "a JSON Pointer [RFC6901] to the associated entity in the\
+                \ request document"
+            parameter:
+              type: string
+              description: a string indicating which URI query parameter caused the
+                issue
+            example:
+              type: string
+              description: a string indicating an example of the right value
+          description: an object containing references to the source of the error
     Airline:
       type: object
       properties:
@@ -101,7 +121,7 @@ components:
           type: string
           description: airline common name
           example: SW AIRLINES
-    Issue:
+    Error:
       type: object
       properties:
         status:
@@ -133,8 +153,8 @@ components:
               type: string
               description: a string indicating an example of the right value
           description: an object containing references to the source of the error
-    Collection_Meta:
-      title: Collection_Meta
+    Meta:
+      title: Meta
       type: object
       properties:
         count:
@@ -176,32 +196,34 @@ components:
       content:
         application/vnd.amadeus+json:
           schema:
-            title: Success Things
+            title: Airlines
             required:
             - data
             type: object
             properties:
               meta:
-                $ref: '#/components/schemas/Collection_Meta'
+                $ref: '#/components/schemas/Meta'
               warnings:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Issue'
+                  $ref: '#/components/schemas/Warning'
               data:
                 type: array
                 items:
                   $ref: '#/components/schemas/Airline'
-            example:
-              meta:
-                count: 1
-                links:
-                  self: https://test.api.amadeus.com/v1/reference-data/airlines?airlineCodes=BA
-              data:
-              - type: airline
-                iataCode: BA
-                icaoCode: BAW
-                businessName: BRITISH AIRWAYS
-                commonName: BRITISH A/W
+          examples:
+            BA:
+              value:
+                meta:
+                  count: 1
+                  links:
+                    self: https://test.api.amadeus.com/v1/reference-data/airlines?airlineCodes=BA
+                data:
+                - type: airline
+                  iataCode: BA
+                  icaoCode: BAW
+                  businessName: BRITISH AIRWAYS
+                  commonName: BRITISH A/W
     400:
       description: |
         | code | title          |
@@ -210,12 +232,28 @@ components:
       content:
         application/vnd.amadeus+json:
           schema:
-            $ref: '#/components/schemas/Error_400'
+            type: object
+            title: Errors
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+          examples:
+            Invalid Format:
+              $ref: '#/components/examples/INVALID_FORMAT'
     500:
       description: Unexpected Error
       content:
         application/vnd.amadeus+json:
           schema:
-            $ref: '#/components/schemas/Error_500'
-x-generatedAt: 2020-07-16T07:57:31.414Z
-x-original-swagger-version: "2.0"
+            type: object
+            title: Errors
+            properties:
+              errors:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Error'
+          examples:
+            500:
+              $ref: '#/components/examples/SYSTEM_ERROR'
