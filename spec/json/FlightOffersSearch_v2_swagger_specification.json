@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "2.9.0",
+    "version": "2.9.1",
     "title": "Flight Offers Search",
     "x-tags": [
       "#online-retail",
@@ -1092,14 +1092,9 @@
                   "example": 2
                 },
                 "nonStopPreferred": {
-                  "description": "When this option is requested, recommendations made of Non-Stop flights only are favoured by the search, on the whole itinerary, with a weight of 75%. It is possible to override this default 75% weight of Non-Stop recommendations by providing the requested weight in the attribute nonStopPreferredWeight",
+                  "description": "When this option is requested, recommendations made of Non-Stop flights only are favoured by the search, on the whole itinerary, with a weight of 75%.",
                   "type": "boolean",
                   "example": false
-                },
-                "nonStopPreferredWeight": {
-                  "description": "This weight is the percentage of total number of recommendations that could be returned for Non-Stop flight recommendations. It is only relevant when combined with nonSTopPreferred set to true. If not specified, the default weight of 75% is applied",
-                  "type": "number",
-                  "example": 50
                 },
                 "airportChangeAllowed": {
                   "description": "Allow to change airport during connection",
