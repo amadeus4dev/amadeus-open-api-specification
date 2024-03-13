@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.11.0
+  version: 1.11.1
   title: Transfer Booking
   description: |-
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
@@ -229,8 +229,6 @@ definitions:
           - TAXI
           - HOURLY
           - AIRPORT_EXPRESS
-          - HELICOPTER
-          - PRIVATE_JET
           - AIRPORT_BUS
         description: |
           amadeus transfer service type
@@ -243,8 +241,6 @@ definitions:
           HOURLY          | Chauffeured driven transfer per hour
           AIRPORT_EXPRESS | Express Train from/to Airport
           AIRPORT_BUS     | Express Bus from/to Airport
-          HELICOPTER      | Private helicopter flight from/to airport
-          PRIVATE_JET     | Private flight from airport to airport
       start:
         $ref: '#/definitions/Location'
       end:
@@ -738,10 +734,6 @@ definitions:
         description: airport code from [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx), e.g. CDG.
         pattern: '[A-Za-z]{3}'
         example: CDG
-      lfiCode:
-        type: string
-        description: internal airport identifier used for private jets and helicopters e.g. IT87100
-        example: IT87100
       address:
         $ref: '#/definitions/Address'
       name:
@@ -755,7 +747,7 @@ definitions:
         type: string
         description: UIC code defined by the worldwide railway organization e.g. 8600626
   StopOver:
-    description: Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude, lfi). Vehicle change via stop overs is not supported.
+    description: Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude). Vehicle change via stop overs is not supported.
     properties:
       duration:
         description: transfer stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M.
@@ -815,19 +807,18 @@ definitions:
   Payment:
     type: object
     description: |
-      defines the payment in transfer reservation. For "CREDIT_CARD" - creditCard is mandatory, for "INVOICE" - paymentReference is mandatory, for "TRAVEL_ACCOUNT" - paymentReference is optional, for "PAYMENT_SERVICE_PROVIDER" - paymentServiceProvider and paymentReference are mandatory.
+      defines the payment in transfer reservation. For "CREDIT_CARD" - creditCard is mandatory, for "TRAVEL_ACCOUNT" - paymentReference is optional, for "PAYMENT_SERVICE_PROVIDER" - paymentServiceProvider and paymentReference are mandatory.
     properties:
       methodOfPayment:
         type: string
         description: Method of payment required when PaymentType equal BT (applicable only for reservation action).
         enum:
           - CREDIT_CARD
-          - INVOICE
           - TRAVEL_ACCOUNT
           - PAYMENT_SERVICE_PROVIDER
       paymentReference:
         type: string
-        description: payment refence that will be passed to provider in case "INVOICE" or "TRAVEL_ACCOUNT" method of payment
+        description: payment refence that will be passed to provider in case "TRAVEL_ACCOUNT" method of payment
       paymentServiceProvider:
         type: string
         description: payment service provider details will be passed to provider in case "PAYMENT_SERVICE_PROVIDER" method of payment.
@@ -1020,8 +1011,6 @@ definitions:
           - MBR
           - TRN
           - BUS
-          - HLC
-          - JET
         description: |
           vehicle type, which can take following values
 
@@ -1037,8 +1026,6 @@ definitions:
           MBR             | Motorbike
           TRN             | Train
           BUS             | Bus
-          HLC             | Helicopter (accessible only for private jet transfer)
-          JET             | Jet (accessible only for private jet transfer)
       category:
         type: string
         enum:
@@ -1205,7 +1192,6 @@ responses:
                   sequenceNumber: 1
                   location:
                     locationCode: CDG
-                    lfiCode: FR01216
                     address:
                       line: Avenue de la Bourdonnais, 19
                       zip: '75007'

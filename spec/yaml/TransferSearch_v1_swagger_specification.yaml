@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.11.2
+  version: 1.11.3
   title: Transfer Search
   description: |-
     Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. 
@@ -47,11 +47,6 @@ paths:
               startUicCode:
                 description: UIC code defined by the worldwide railway organization e.g. 8600626
                 type: string
-              startLfiCode:
-                description: |
-                  internal airport identifier used for private jets and helicopters
-                  Example: FR84734
-                type: string
               startAddressLine:
                 description: street address including building number, e.g. 5 Avenue Anatole France
                 type: string
@@ -81,25 +76,19 @@ paths:
               endLocationCode:
                 description: |-
                   location from [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx). Optional, for transferType = HOURLY. 
-                  End location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
+                  End location must be defined either using code (location code, UIC code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
                 type: string
                 example: CDG
               endUicCode:
                 description: |-
                   UIC code defined by the worldwide railway organization. 
-                  End location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
+                  End location must be defined either using code (location code, UIC code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
                 type: string
                 example: '8600626'
-              endLfiCode:
-                description: |-
-                  internal airport identifier used for private jets and helicopters. 
-                  End location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
-                type: string
-                example: SP68724
               endAddressLine:
                 description: |-
                   street address, e.g. 5 Avenue Anatole France. 
-                  End location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
+                  End location must be defined either using code (location code, UIC code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
                 type: string
               endZipCode:
                 description: postal/zip code
@@ -127,7 +116,7 @@ paths:
               endGooglePlaceId:
                 description: |-
                   google place id only for google address. 
-                  End location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
+                  End location must be defined either using code (location code, UIC code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)
                 type: string
                 example: ChIJL-DOWeBv5kcRfTbh97PimNc
               transferType:
@@ -138,8 +127,6 @@ paths:
                   - TAXI
                   - HOURLY
                   - AIRPORT_EXPRESS
-                  - HELICOPTER
-                  - PRIVATE_JET
                   - AIRPORT_BUS
                 description: |
                   a transfer service type
@@ -153,8 +140,6 @@ paths:
                   HOURLY          | Chauffeured driven transfer per hour
                   AIRPORT_EXPRESS | Express Train from/to Airport
                   AIRPORT_BUS     | Express Bus from/to Airport
-                  HELICOPTER      | Private helicopter flight from/to airport
-                  PRIVATE_JET     | Private flight from airport to airport
 
                   If not filled, all transfer service types are requested
               duration:
@@ -197,8 +182,6 @@ paths:
                   - LMS
                   - TRN
                   - BUS
-                  - HLC
-                  - JET
                 description: |
                   a vehicle type code
                   Example: VAN
@@ -215,8 +198,6 @@ paths:
                   LMS    | Limousine
                   TRN    | Train
                   BUS    | Bus
-                  HLC    | Helicopter
-                  JET    | Jet
 
                   If not filled, all vehicle types are requested
               providerCodes:
@@ -277,7 +258,7 @@ paths:
                 type: string
               stopOvers:
                 type: array
-                description: Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude, lfi). Vehicle change via stop overs is not supported.
+                description: Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude). Vehicle change via stop overs is not supported.
                 items:
                   $ref: '#/definitions/StopOverRequest'
               startConnectedSegment:
@@ -355,8 +336,6 @@ definitions:
               - TAXI
               - HOURLY
               - AIRPORT_EXPRESS
-              - HELICOPTER
-              - PRIVATE_JET
               - AIRPORT_BUS
             description: |
               amadeus transfer service type
@@ -369,8 +348,6 @@ definitions:
               HOURLY          | Chauffeured driven transfer per hour
               AIRPORT_EXPRESS | Express Train from/to Airport
               AIRPORT_BUS     | Express Bus from/to Airport
-              HELICOPTER      | Private helicopter flight from/to airport
-              PRIVATE_JET     | Private flight from airport to airport
           start:
             $ref: '#/definitions/Location'
           end:
@@ -760,10 +737,6 @@ definitions:
         description: airport code from [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx), e.g. CDG.
         pattern: '[A-Za-z]{3}'
         example: CDG
-      lfiCode:
-        type: string
-        description: internal airport identifier used for private jets and helicopters e.g. IT87100
-        example: IT87100
       address:
         $ref: '#/definitions/Address'
       name:
@@ -777,7 +750,7 @@ definitions:
         type: string
         description: UIC code defined by the worldwide railway organization e.g. 8600626
   StopOver:
-    description: Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude, lfi). Vehicle change via stop overs is not supported.
+    description: Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude). Vehicle change via stop overs is not supported.
     properties:
       duration:
         description: transfer stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M.
@@ -825,10 +798,6 @@ definitions:
       name:
         type: string
         description: the intermediate stop name e.g. Airport Name, Hotel Name etc.
-      lfiCode:
-        type: string
-        description: the intermediate stop internal airport identifier used for private jets and helicopters e.g. IT87100
-        example: IT87100
       stateCode:
         type: string
         description: the intermediate stop state code according to [ISO 3166-2](https://en.wikipedia.org/wiki/ISO_3166-2)
@@ -1038,8 +1007,6 @@ definitions:
           - MBR
           - TRN
           - BUS
-          - HLC
-          - JET
         description: |
           vehicle type, which can take following values
 
@@ -1055,8 +1022,6 @@ definitions:
           MBR             | Motorbike
           TRN             | Train
           BUS             | Bus
-          HLC             | Helicopter (accessible only for private jet transfer)
-          JET             | Jet (accessible only for private jet transfer)
       category:
         type: string
         enum:
