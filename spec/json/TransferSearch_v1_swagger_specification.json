@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.11.2",
+    "version": "1.11.3",
     "title": "Transfer Search",
     "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York)."
   },
@@ -56,10 +56,6 @@
                   "description": "UIC code defined by the worldwide railway organization e.g. 8600626",
                   "type": "string"
                 },
-                "startLfiCode": {
-                  "description": "internal airport identifier used for private jets and helicopters\nExample: FR84734\n",
-                  "type": "string"
-                },
                 "startAddressLine": {
                   "description": "street address including building number, e.g. 5 Avenue Anatole France",
                   "type": "string"
@@ -93,22 +89,17 @@
                   "type": "string"
                 },
                 "endLocationCode": {
-                  "description": "location from [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx). Optional, for transferType = HOURLY. \nEnd location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
+                  "description": "location from [IATA table codes](http://www.iata.org/publications/Pages/code-search.aspx). Optional, for transferType = HOURLY. \nEnd location must be defined either using code (location code, UIC code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
                   "type": "string",
                   "example": "CDG"
                 },
                 "endUicCode": {
-                  "description": "UIC code defined by the worldwide railway organization. \nEnd location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
+                  "description": "UIC code defined by the worldwide railway organization. \nEnd location must be defined either using code (location code, UIC code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
                   "type": "string",
                   "example": "8600626"
                 },
-                "endLfiCode": {
-                  "description": "internal airport identifier used for private jets and helicopters. \nEnd location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
-                  "type": "string",
-                  "example": "SP68724"
-                },
                 "endAddressLine": {
-                  "description": "street address, e.g. 5 Avenue Anatole France. \nEnd location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
+                  "description": "street address, e.g. 5 Avenue Anatole France. \nEnd location must be defined either using code (location code, UIC code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
                   "type": "string"
                 },
                 "endZipCode": {
@@ -139,7 +130,7 @@
                   "type": "string"
                 },
                 "endGooglePlaceId": {
-                  "description": "google place id only for google address. \nEnd location must be defined either using code (location code, UIC code, LFI code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
+                  "description": "google place id only for google address. \nEnd location must be defined either using code (location code, UIC code, or GooglePlaceId) or address (address line, zip code, country code, city, geo code)",
                   "type": "string",
                   "example": "ChIJL-DOWeBv5kcRfTbh97PimNc"
                 },
@@ -151,11 +142,9 @@
                     "TAXI",
                     "HOURLY",
                     "AIRPORT_EXPRESS",
-                    "HELICOPTER",
-                    "PRIVATE_JET",
                     "AIRPORT_BUS"
                   ],
-                  "description": "a transfer service type\nExample: PRIVATE\n\nvalue           | description\n--------------  | ------------------------\nPRIVATE         | Private transfer from point to point\nSHARED          | Shared transfer from point to point\nTAXI            | Taxi reservation from point to point, price is estimated\nHOURLY          | Chauffeured driven transfer per hour\nAIRPORT_EXPRESS | Express Train from/to Airport\nAIRPORT_BUS     | Express Bus from/to Airport\nHELICOPTER      | Private helicopter flight from/to airport\nPRIVATE_JET     | Private flight from airport to airport\n\nIf not filled, all transfer service types are requested\n"
+                  "description": "a transfer service type\nExample: PRIVATE\n\nvalue           | description\n--------------  | ------------------------\nPRIVATE         | Private transfer from point to point\nSHARED          | Shared transfer from point to point\nTAXI            | Taxi reservation from point to point, price is estimated\nHOURLY          | Chauffeured driven transfer per hour\nAIRPORT_EXPRESS | Express Train from/to Airport\nAIRPORT_BUS     | Express Bus from/to Airport\n\nIf not filled, all transfer service types are requested\n"
                 },
                 "duration": {
                   "description": "transfer duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M. It is used and mandatory for transferType = HOURLY",
@@ -191,11 +180,9 @@
                     "SUV",
                     "LMS",
                     "TRN",
-                    "BUS",
-                    "HLC",
-                    "JET"
+                    "BUS"
                   ],
-                  "description": "a vehicle type code\nExample: VAN\n\ncode   | name\n------ | -------------------------------------\nMBK    | Motorcycle\nCAR    | Car\nSED    | Sedan\nWGN    | Wagon\nELC    | Electric car\nVAN    | Van or minivan\nSUV    | Sport utility vehicle\nLMS    | Limousine\nTRN    | Train\nBUS    | Bus\nHLC    | Helicopter\nJET    | Jet\n\nIf not filled, all vehicle types are requested\n"
+                  "description": "a vehicle type code\nExample: VAN\n\ncode   | name\n------ | -------------------------------------\nMBK    | Motorcycle\nCAR    | Car\nSED    | Sedan\nWGN    | Wagon\nELC    | Electric car\nVAN    | Van or minivan\nSUV    | Sport utility vehicle\nLMS    | Limousine\nTRN    | Train\nBUS    | Bus\n\nIf not filled, all vehicle types are requested\n"
                 },
                 "providerCodes": {
                   "description": "transfer provider codes, comma-separated. If not filled, the request is sent to all providers\nExample: TXO,FGT",
@@ -223,7 +210,7 @@
                 },
                 "stopOvers": {
                   "type": "array",
-                  "description": "Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude, lfi). Vehicle change via stop overs is not supported.",
+                  "description": "Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude). Vehicle change via stop overs is not supported.",
                   "items": {
                     "$ref": "#/definitions/StopOverRequest"
                   }
@@ -333,11 +320,9 @@
                 "TAXI",
                 "HOURLY",
                 "AIRPORT_EXPRESS",
-                "HELICOPTER",
-                "PRIVATE_JET",
                 "AIRPORT_BUS"
               ],
-              "description": "amadeus transfer service type\n\nvalue           | description                                 \n--------------  | ------------------------\nPRIVATE         | Private transfer from point to point\nSHARED          | Shared transfer from point to point\nTAXI            | Taxi reservation from point to point, price is estimated\nHOURLY          | Chauffeured driven transfer per hour\nAIRPORT_EXPRESS | Express Train from/to Airport\nAIRPORT_BUS     | Express Bus from/to Airport\nHELICOPTER      | Private helicopter flight from/to airport\nPRIVATE_JET     | Private flight from airport to airport\n"
+              "description": "amadeus transfer service type\n\nvalue           | description                                 \n--------------  | ------------------------\nPRIVATE         | Private transfer from point to point\nSHARED          | Shared transfer from point to point\nTAXI            | Taxi reservation from point to point, price is estimated\nHOURLY          | Chauffeured driven transfer per hour\nAIRPORT_EXPRESS | Express Train from/to Airport\nAIRPORT_BUS     | Express Bus from/to Airport\n"
             },
             "start": {
               "$ref": "#/definitions/Location"
@@ -816,11 +801,6 @@
           "pattern": "[A-Za-z]{3}",
           "example": "CDG"
         },
-        "lfiCode": {
-          "type": "string",
-          "description": "internal airport identifier used for private jets and helicopters e.g. IT87100",
-          "example": "IT87100"
-        },
         "address": {
           "$ref": "#/definitions/Address"
         },
@@ -840,7 +820,7 @@
       }
     },
     "StopOver": {
-      "description": "Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude, lfi). Vehicle change via stop overs is not supported.",
+      "description": "Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude). Vehicle change via stop overs is not supported.",
       "properties": {
         "duration": {
           "description": "transfer stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M.",
@@ -900,11 +880,6 @@
         "name": {
           "type": "string",
           "description": "the intermediate stop name e.g. Airport Name, Hotel Name etc."
-        },
-        "lfiCode": {
-          "type": "string",
-          "description": "the intermediate stop internal airport identifier used for private jets and helicopters e.g. IT87100",
-          "example": "IT87100"
         },
         "stateCode": {
           "type": "string",
@@ -1200,11 +1175,9 @@
             "LMS",
             "MBR",
             "TRN",
-            "BUS",
-            "HLC",
-            "JET"
+            "BUS"
           ],
-          "description": "vehicle type, which can take following values\n\nvalue           | description\n--------------  | ------------------------\nCAR             | Car\nSED             | Sedan\nWGN             | Wagon\nELC             | Electric car\nVAN             | Van or minivan\nSUV             | Sport utility vehicle\nLMS             | Limousine\nMBR             | Motorbike\nTRN             | Train\nBUS             | Bus\nHLC             | Helicopter (accessible only for private jet transfer)\nJET             | Jet (accessible only for private jet transfer)\n"
+          "description": "vehicle type, which can take following values\n\nvalue           | description\n--------------  | ------------------------\nCAR             | Car\nSED             | Sedan\nWGN             | Wagon\nELC             | Electric car\nVAN             | Van or minivan\nSUV             | Sport utility vehicle\nLMS             | Limousine\nMBR             | Motorbike\nTRN             | Train\nBUS             | Bus\n"
         },
         "category": {
           "type": "string",

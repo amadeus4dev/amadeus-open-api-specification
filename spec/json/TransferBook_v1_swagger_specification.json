@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.11.0",
+    "version": "1.11.1",
     "title": "Transfer Booking",
     "description": "Before using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n\nPlease also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York)."
   },
@@ -324,11 +324,9 @@
             "TAXI",
             "HOURLY",
             "AIRPORT_EXPRESS",
-            "HELICOPTER",
-            "PRIVATE_JET",
             "AIRPORT_BUS"
           ],
-          "description": "amadeus transfer service type\n\nvalue           | description                                 \n--------------  | ------------------------\nPRIVATE         | Private transfer from point to point\nSHARED          | Shared transfer from point to point\nTAXI            | Taxi reservation from point to point, price is estimated\nHOURLY          | Chauffeured driven transfer per hour\nAIRPORT_EXPRESS | Express Train from/to Airport\nAIRPORT_BUS     | Express Bus from/to Airport\nHELICOPTER      | Private helicopter flight from/to airport\nPRIVATE_JET     | Private flight from airport to airport\n"
+          "description": "amadeus transfer service type\n\nvalue           | description                                 \n--------------  | ------------------------\nPRIVATE         | Private transfer from point to point\nSHARED          | Shared transfer from point to point\nTAXI            | Taxi reservation from point to point, price is estimated\nHOURLY          | Chauffeured driven transfer per hour\nAIRPORT_EXPRESS | Express Train from/to Airport\nAIRPORT_BUS     | Express Bus from/to Airport\n"
         },
         "start": {
           "$ref": "#/definitions/Location"
@@ -939,11 +937,6 @@
           "pattern": "[A-Za-z]{3}",
           "example": "CDG"
         },
-        "lfiCode": {
-          "type": "string",
-          "description": "internal airport identifier used for private jets and helicopters e.g. IT87100",
-          "example": "IT87100"
-        },
         "address": {
           "$ref": "#/definitions/Address"
         },
@@ -963,7 +956,7 @@
       }
     },
     "StopOver": {
-      "description": "Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude, lfi). Vehicle change via stop overs is not supported.",
+      "description": "Location of the stop over or the several stop over points. It can be defined either using IATA code or Address (address line, zip, country, city, state, latitude, longitude). Vehicle change via stop overs is not supported.",
       "properties": {
         "duration": {
           "description": "transfer stop duration in [ISO8601](https://en.wikipedia.org/wiki/ISO_8601) PnYnMnDTnHnMnS format, e.g. PT2H10M.",
@@ -1050,21 +1043,20 @@
     },
     "Payment": {
       "type": "object",
-      "description": "defines the payment in transfer reservation. For \"CREDIT_CARD\" - creditCard is mandatory, for \"INVOICE\" - paymentReference is mandatory, for \"TRAVEL_ACCOUNT\" - paymentReference is optional, for \"PAYMENT_SERVICE_PROVIDER\" - paymentServiceProvider and paymentReference are mandatory.\n",
+      "description": "defines the payment in transfer reservation. For \"CREDIT_CARD\" - creditCard is mandatory, for \"TRAVEL_ACCOUNT\" - paymentReference is optional, for \"PAYMENT_SERVICE_PROVIDER\" - paymentServiceProvider and paymentReference are mandatory.\n",
       "properties": {
         "methodOfPayment": {
           "type": "string",
           "description": "Method of payment required when PaymentType equal BT (applicable only for reservation action).",
           "enum": [
             "CREDIT_CARD",
-            "INVOICE",
             "TRAVEL_ACCOUNT",
             "PAYMENT_SERVICE_PROVIDER"
           ]
         },
         "paymentReference": {
           "type": "string",
-          "description": "payment refence that will be passed to provider in case \"INVOICE\" or \"TRAVEL_ACCOUNT\" method of payment"
+          "description": "payment refence that will be passed to provider in case \"TRAVEL_ACCOUNT\" method of payment"
         },
         "paymentServiceProvider": {
           "type": "string",
@@ -1338,11 +1330,9 @@
             "LMS",
             "MBR",
             "TRN",
-            "BUS",
-            "HLC",
-            "JET"
+            "BUS"
           ],
-          "description": "vehicle type, which can take following values\n\nvalue           | description\n--------------  | ------------------------\nCAR             | Car\nSED             | Sedan\nWGN             | Wagon\nELC             | Electric car\nVAN             | Van or minivan\nSUV             | Sport utility vehicle\nLMS             | Limousine\nMBR             | Motorbike\nTRN             | Train\nBUS             | Bus\nHLC             | Helicopter (accessible only for private jet transfer)\nJET             | Jet (accessible only for private jet transfer)\n"
+          "description": "vehicle type, which can take following values\n\nvalue           | description\n--------------  | ------------------------\nCAR             | Car\nSED             | Sedan\nWGN             | Wagon\nELC             | Electric car\nVAN             | Van or minivan\nSUV             | Sport utility vehicle\nLMS             | Limousine\nMBR             | Motorbike\nTRN             | Train\nBUS             | Bus\n"
         },
         "category": {
           "type": "string",
@@ -1580,7 +1570,6 @@
                     "sequenceNumber": 1,
                     "location": {
                       "locationCode": "CDG",
-                      "lfiCode": "FR01216",
                       "address": {
                         "line": "Avenue de la Bourdonnais, 19",
                         "zip": "75007",
