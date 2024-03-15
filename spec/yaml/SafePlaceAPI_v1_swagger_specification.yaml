@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.0
+  version: 1.0.1
   title: Safe Place
   x-tags:
     - '#ama-for-dev'
@@ -8,7 +8,7 @@ info:
   x-release-note:
     '1.0':
       - Initial Version
-  description: "\nBefore using this API, we recommend you read our\_**[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)**\_for more information on how to generate an access token. \n  \nPlease also be aware that our test environment is based on a subset of the production, this API in test only returns a few selected cities. You can find the list in our **[data collection](https://github.com/amadeus4dev/data-collection)**."
+  description: "<h3 style=\"color: red;\"> WARNING - This API will be permanently decommissioned the 12th of April. For alternative we recommend using [GeoSure](https://geosureglobal.com/).</h3>\n\n\nBefore using this API, we recommend you read our\_**[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)**\_for more information on how to generate an access token. \n  \nPlease also be aware that our test environment is based on a subset of the production, this API in test only returns a few selected cities. You can find the list in our **[data collection](https://github.com/amadeus4dev/data-collection)**."
 host: test.api.amadeus.com
 basePath: /v1
 schemes:
@@ -23,6 +23,7 @@ paths:
       tags:
         - Search
       operationId: getSafetyRanking
+      deprecated: true
       summary: Returns safety rating for a given location and radius.
       parameters:
         - name: latitude
@@ -40,7 +41,7 @@ paths:
           format: double
           x-example: 2.160873
         - name: radius
-          description: 'radius of the search in Kilometer. Can be from 0 to 20, default value is 1 Km.'
+          description: radius of the search in Kilometer. Can be from 0 to 20, default value is 1 Km.
           in: query
           required: false
           type: integer
@@ -57,13 +58,14 @@ paths:
         default:
           $ref: '#/responses/500'
       description: ''
-  '/safety/safety-rated-locations/{safety-rated-locationId}':
+  /safety/safety-rated-locations/{safety-rated-locationId}:
     parameters:
       - $ref: '#/parameters/safety-rated-locationId'
     get:
       tags:
         - Retrieve
       operationId: getLocationSafetyRanking
+      deprecated: true
       summary: Retieve safety information of a location by its Id.
       responses:
         '200':
@@ -80,6 +82,7 @@ paths:
       tags:
         - Search
       operationId: getSafetyRankBySquare
+      deprecated: true
       summary: Returns the safety rating of a given area
       parameters:
         - name: north
@@ -122,14 +125,14 @@ paths:
       description: ''
 parameters:
   pageLimit:
-    name: 'page[limit]'
+    name: page[limit]
     description: maximum items in one page
     required: false
     in: query
     type: integer
     default: 10
   pageOffset:
-    name: 'page[offset]'
+    name: page[offset]
     description: start index of the requested page
     required: false
     in: query
@@ -196,7 +199,7 @@ definitions:
         description: Likelihood of harm or discrimination against LGBTQ persons or groups and level of caution required at location. Score go from 1 (not likely) to 100 (very likely).
         type: integer
       medical:
-        description: 'Likelihood of illness or disease, assessment of water and air quality, and access to reliable medical care. Score go from 1 (not likely) to 100 (very likely).'
+        description: Likelihood of illness or disease, assessment of water and air quality, and access to reliable medical care. Score go from 1 (not likely) to 100 (very likely).
         type: integer
       overall:
         description: An average of the 6 “sub”-categories. Score go from 1 (very safe) to 100 (very dangerous).
@@ -281,7 +284,7 @@ definitions:
         maxProperties: 1
         properties:
           pointer:
-            description: 'a JSON Pointer [RFC6901] to the associated entity in the request document'
+            description: a JSON Pointer [RFC6901] to the associated entity in the request document
             type: string
           parameter:
             description: a string indicating which URI query parameter caused the issue
@@ -301,29 +304,29 @@ definitions:
           self:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           next:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           previous:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           last:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           first:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
           up:
             type: string
             format: uri
-            example: 'https://test.api.amadeus.com/v1/area/resources?...'
+            example: https://test.api.amadeus.com/v1/area/resources?...
         example:
-          self: 'https://test.api.amadeus.com/v1/area/resources?param=value'
+          self: https://test.api.amadeus.com/v1/area/resources?param=value
   Links:
     required:
       - href
@@ -379,15 +382,15 @@ responses:
         meta:
           count: 43
           links:
-            self: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations?latitude=41.397158&longitude=2.160873&radius=2'
-            next: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations?latitude=41.397158&longitude=2.160873&page%5Boffset%5D=1&radius=2'
-            last: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations?latitude=41.397158&longitude=2.160873&page%5Boffset%5D=4&radius=2'
-            first: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations?latitude=41.397158&longitude=2.160873&page%5Boffset%5D=0&radius=2'
+            self: https://test.api.amadeus.com/v1/safety/safety-rated-locations?latitude=41.397158&longitude=2.160873&radius=2
+            next: https://test.api.amadeus.com/v1/safety/safety-rated-locations?latitude=41.397158&longitude=2.160873&page%5Boffset%5D=1&radius=2
+            last: https://test.api.amadeus.com/v1/safety/safety-rated-locations?latitude=41.397158&longitude=2.160873&page%5Boffset%5D=4&radius=2
+            first: https://test.api.amadeus.com/v1/safety/safety-rated-locations?latitude=41.397158&longitude=2.160873&page%5Boffset%5D=0&radius=2
         data:
           - type: safety-rated-location
             id: Q930402719
             self:
-              type: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402719'
+              type: https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402719
               methods:
                 - GET
             subType: CITY
@@ -406,7 +409,7 @@ responses:
           - type: safety-rated-location
             id: Q930402720
             self:
-              type: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402720'
+              type: https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402720
               methods:
                 - GET
             subType: DISTRICT
@@ -425,7 +428,7 @@ responses:
           - type: safety-rated-location
             id: Q930402721
             self:
-              type: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402721'
+              type: https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402721
               methods:
                 - GET
             subType: DISTRICT
@@ -444,7 +447,7 @@ responses:
           - type: safety-rated-location
             id: Q930402722
             self:
-              type: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402722'
+              type: https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402722
               methods:
                 - GET
             subType: DISTRICT
@@ -463,7 +466,7 @@ responses:
           - type: safety-rated-location
             id: Q930402724
             self:
-              type: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402724'
+              type: https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402724
               methods:
                 - GET
             subType: DISTRICT
@@ -482,7 +485,7 @@ responses:
           - type: safety-rated-location
             id: Q930402731
             self:
-              type: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402731'
+              type: https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402731
               methods:
                 - GET
             subType: DISTRICT
@@ -501,7 +504,7 @@ responses:
           - type: safety-rated-location
             id: Q930402732
             self:
-              type: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402732'
+              type: https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402732
               methods:
                 - GET
             subType: DISTRICT
@@ -520,7 +523,7 @@ responses:
           - type: safety-rated-location
             id: Q930402733
             self:
-              type: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402733'
+              type: https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402733
               methods:
                 - GET
             subType: DISTRICT
@@ -539,7 +542,7 @@ responses:
           - type: safety-rated-location
             id: Q930402734
             self:
-              type: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402734'
+              type: https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402734
               methods:
                 - GET
             subType: DISTRICT
@@ -558,7 +561,7 @@ responses:
           - type: safety-rated-location
             id: Q930402735
             self:
-              type: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402735'
+              type: https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402735
               methods:
                 - GET
             subType: DISTRICT
@@ -592,12 +595,12 @@ responses:
       example:
         meta:
           links:
-            self: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402719'
+            self: https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402719
         data:
           - type: safety-rated-location
             id: Q930402719
             self:
-              type: 'https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402719'
+              type: https://test.api.amadeus.com/v1/safety/safety-rated-locations/Q930402719
               methods:
                 - GET
             subType: CITY

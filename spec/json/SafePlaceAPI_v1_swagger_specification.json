@@ -1,7 +1,7 @@
 {
   "swagger": "2.0",
   "info": {
-    "version": "1.0.0",
+    "version": "1.0.1",
     "title": "Safe Place",
     "x-tags": [
       "#ama-for-dev"
@@ -12,7 +12,7 @@
         "Initial Version"
       ]
     },
-    "description": "\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n  \nPlease also be aware that our test environment is based on a subset of the production, this API in test only returns a few selected cities. You can find the list in our **[data collection](https://github.com/amadeus4dev/data-collection)**."
+    "description": "<h3 style=\"color: red;\"> WARNING - This API will be permanently decommissioned the 12th of April. For alternative we recommend using [GeoSure](https://geosureglobal.com/).</h3>\n\n\nBefore using this API, we recommend you read our **[Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization-262)** for more information on how to generate an access token. \n  \nPlease also be aware that our test environment is based on a subset of the production, this API in test only returns a few selected cities. You can find the list in our **[data collection](https://github.com/amadeus4dev/data-collection)**."
   },
   "host": "test.api.amadeus.com",
   "basePath": "/v1",
@@ -32,6 +32,7 @@
           "Search"
         ],
         "operationId": "getSafetyRanking",
+        "deprecated": true,
         "summary": "Returns safety rating for a given location and radius.",
         "parameters": [
           {
@@ -94,6 +95,7 @@
           "Retrieve"
         ],
         "operationId": "getLocationSafetyRanking",
+        "deprecated": true,
         "summary": "Retieve safety information of a location by its Id.",
         "responses": {
           "200": {
@@ -118,6 +120,7 @@
           "Search"
         ],
         "operationId": "getSafetyRankBySquare",
+        "deprecated": true,
         "summary": "Returns the safety rating of a given area",
         "parameters": [
           {
