@@ -1,0 +1,1744 @@
+swagger: '2.0'
+info:
+  title: Hotel Booking API
+  description: |-
+    Before using the API you will need to get an access token. Please read our [Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization) for more information on how to get your token.
+
+    Please also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York).
+
+     **Warning: Do not perform test booking in production.** All requests are sent and processed by hotel providers. An excessive amount of fake/canceled reservation will make you blacklisted by hotel providers.
+  version: 2.0.0
+host: test.api.amadeus.com
+basePath: /v2
+schemes:
+  - https
+consumes:
+  - application/vnd.amadeus+json
+produces:
+  - application/vnd.amadeus+json
+paths:
+  /booking/hotel-orders:
+    post:
+      summary: Create Hotel Order
+      tags:
+        - Booking
+      description: ''
+      operationId: createHotelOrder
+      responses:
+        '201':
+          description: Created
+          schema:
+            type: object
+            properties:
+              data:
+                $ref: '#/definitions/HotelOrder'
+              warnings:
+                type: array
+                items:
+                  $ref: '#/definitions/Warning'
+        '400':
+          description: |
+            Bad Request
+
+            code    | title                               | owner       | pointer               | description
+            --------|-----------------------------------  |-----------  |------------------     |------------------------------------------
+            477   |  INVALID FORMAT                                                |  Amadeus   | data        | If present, detail field gives more information about the parameter missing or invalid. Please correct the parameter in the request.
+            8612   |  INVALID TYPE                                                  |Amadeus     |data/type     |  The type inside the data element is incorrect. Please correct the request.
+            38420   |  OFFER NOT FOUND                                                |Amadeus      | data/roomAssociations/hotelOfferId  | The Offer ID put in request does not exist or has expired. Please use a valid Offer ID or get a new Offer ID.
+            36801   |  INVALID OFFER ID                                              |   Amadeus   |  data/roomAssociations/hotelOfferId  | Check all the references of offer ID in the request.
+            4725    |  INVALID PASSENGER ASSOCIATION                                 |  Amadeus    | data/roomAssociations  | Incoherence between the guests defined and the guests in room association. Please check number of guests and guest IDs.
+            33555   |  NUMBER OF ROOMS MISMATCH BETWEEN SHOPPING AND BOOKING          |Amadeus       | data/roomAssociations |  Different number of rooms requested between Shopping and Booking
+            3843    |  NUMBER IN PARTY EXCEEDS ROOM OCCUPANCY LIMIT                  |Amadeus      | data/guests or data/roomAssociations  |Too many guests in the room.
+            27530   |  AT LEAST ONE ADULT IS REQUIRED                                |  Amadeus     |data/guests or data/roomAssociations     |  No adult was put as a guest
+            1503    |  INVALID NUMBER OF GUESTS                    |Amadeus                    |data/guests or data/roomAssociations                    |Different number of guests requested between Shopping and Booking
+            1295    |  /ID- NOT RECOGNISED                    |Hotel provider                    |data/roomAssociations/guestsReferences/hotelLoyaltyId     |The hotelLoyaltyId is not recognized by the Hotel provider.
+            2997    |  RESTRICTED OPTION-NOT ALLOWED -- /FT-                    |Amadeus                    |data/guests/frequentTraveler                    |The Airline frequent flyer number is not supported by the Hotel provider.
+            3215    |  INVALID LENGTH ON OPTION FOR CHAIN GIVEN -- /SI-                    |Amadeus                    |data/roomAssociations/specialRequest                    |Too long specialRequest.
+            1421    |  /SI-INVALID FORMAT           |Amadeus             |data/roomAssociations/specialRequest           |Invalid format for specialRequest.
+            1146    |  DEPOSIT REQUIRED                  |  Amadeus                  |   data/payment  
+            1427    |  GUARANTEE REQUIRED                  |  Amadeus                  |   data/payment  
+            38592   |  INVALID METHOD OF PAYMENT                  |  Hotel provider                  |   data/payment  
+            38529   |  INVALID PREPAY                  |  Hotel provider                  |   data/payment  
+            37576   |  INVALID PAYMENT METHOD                  |  Hotel provider                  |   data/payment  
+            1207    |  Invalid Form of Guarantee                  |  Hotel provider                  |   data/payment
+            1317    |  Invalid Form of Deposit                  |  Hotel provider                  |   data/payment  
+            12018   |  INVALID BOOKING SOURCE NUMBER+" /BS-"                    |Amadeus          | data/payment                    |Travel Agend ID provided in input is incorrect.
+            3659    |  CREDIT CARD DEPOSIT REQUIRED                    |Hotel provider                    | data/payment/paymentCard  
+            1205    |  INVALID CREDIT CARD TYPE                    |Amadeus                    |data/payment/paymentCard/paymentCardInfo/vendorCode  
+            8517    |  INVALID CREDIT CARD NUMBER                    |Hotel provider                    |data/payment/paymentCard/paymentCardInfo/cardNumber  
+            1240    |  NO CREDIT CARD NUMBER GIVEN                    |Amadeus                    |data/payment/paymentCard/paymentCardInfo/cardNumber  
+            28926   |  MISSING CARD VERIFICATION VALUE CVV                    |Hotel provider                    |data/payment/paymentCard/paymentCardInfo/securityCode  
+            6842    |  ERR INVALID SECURITY CODE(S)                    |Hotel provider                    |data/payment/paymentCard/paymentCardInfo/securityCode  
+            22425   |  CREDIT_CARD_SECURITY_CODE_REQUIRED_/G-                    |Hotel provider                    |data/payment/paymentCard/paymentCardInfo/securityCode  
+            22426   |  CREDIT_CARD_SECURITY_CODE_REQUIRED_/DP                    |Hotel provider                    |data/payment/paymentCard/paymentCardInfo/securityCode  
+            3682    |  CREDIT CARD NOT ACCEPTED AT HOTEL PROPERTY                    |Hotel provider                    |data/payment/paymentCard/paymentCardInfo/vendorCode                    |Credit card are not accepted by this hotel property. Please use another method of payment.
+            24550   |  ERROR IN CREDIT CARD DATE /DP-                    |Hotel provider                    |data/payment/paymentCard/paymentCardInfo/expiryDate                    |Issue with credit card expiration date. Please correct.
+            39871   |  VIRTUAL CREDIT CARD NOT ACCEPTED AT PROPERTY                    |Hotel provider                     |data/payment/billBack or data/payment/paymentCard/VCC                    |Please do not use a virtual credit card to book at this Hotel property.
+            32315   |  PAYMENT TRANSACTION FAILED. PLEASE CHECK YOUR CREDIT CARD DATA    |Hotel provider |  data/payment/paymentCard/paymentCardInfo  
+            41347   |  3DS AUTHENTIFICATION NOT PERMITTED                    |Hotel provider                    |data/payment/paymentCard/paymentCardInfo/threeDomainSecure  
+            4926   |  INVALID DATA RECEIVED                    |Amadeus                    |data/payment/paymentCard/paymentCardInfo/threeDomainSecure                    |The 3DS information of the credit card does not match the ones expected for the version. Please correct it.
+            5020   |  INVALID OWNER                    |Amadeus                    |data/payment/paymentCard/paymentCardInfo/threeDomainSecure                    |For Amadeus Value Hotel booking, it is mandatory to provide the owner of the credit card. Please check which credit card owner are activated for your Office.
+            39283   |  CREDIT CARD AUTHORIZATION TIME-OUT        |Amadeus    
+            15595   |  INVALID PRICING REQUEST                    |Amadeus                      |                  |Cannot book. Please use another Offer ID.
+            12030   |  PRICING INFORMATION MISSING.                     |Amadeus                  |                      |Cannot book. Please use another Offer ID.
+            37200   |  PRICE DISCREPANCY                    |Hotel provider                      |                  |Hotel provider response has a discrepancy in rate amount. Please restart from the shopping.
+            41344   |  CANCELLATION DISCREPANCY                   |  Hotel provider                    |                  |  Hotel provider response has a discrepancy in cancellation policy. Please restart from the shopping.
+            25860   |  CHECK VOUCHER RECEPTION AND CALL HELPDESK - BOOKING FAILURE                    |Amadeus                        |                |Link down between Amadeus and the Hotel provider. Please check before retrying that the booking is not created in the Hotel provider system.
+            3664   |  NO ROOMS AVAILABLE AT REQUESTED PROPERTY                  |Hotel provider            |      |    No availability on hotel hotel provider side.
+            1297   |  ROOM TYPE NOT AT LOCATION                    |Hotel provider                         |           |    Room type not available. Other room types could be available.
+            3289   |  RATE NOT AVAILABLE FOR REQUESTED DATES                    |Hotel provider      |    |  No availability on hotel provider side. Same rate could be available at other dates.
+            1999   |  ROOM TYPE / RATE CODE NOT AVAILABLE                    |Hotel provider                    |                  |  No availability on hotel provider side. Other room types could be available.
+            3494   |  ROOM OR RATE NOT AVAILABLE OR RESTRICTED                    |Hotel provider                  |               |No availability on hotel provider side.
+            6698   |  RATE NOT LOADED                    |Hotel provider                      |          |Rate does not exists on hotel provider side.
+            12247   |  NO RATE FOR REQUESTED OCCUPANCY - RE-ENTER WITH LOWER OCCUPANCY                    |Hotel provider
+            33440   |  THIS PROPERTY IS BLACKLISTED FOR YOUR OFFICE                    |Amadeus        |      |It is forbidden to book this hotel property from your country.
+          schema:
+            $ref: '#/definitions/Errors'
+        '500':
+          description: "Internal Server Error\n\ncode    | title                                                 | owner    \n------- | ----------------------------------------------------- | ---------------\n00011   | UNABLE TO PROCESS                                     | Hotel provider\n04070   | UNABLE TO PROCESS - CONTACT HELP DESK                 | Amadeus\n16440   | BILLBACK ERROR - External Security System             | Amadeus\n31686   | BILLBACK NOT AVAILABLE - PLEASE RETRY LATER            | Amadeus\n21934   | UNABLE\_TO\_PROCESS\_-\_TIMEOUT\_                          | Amadeus\n38660   | UNABLE\_TO\_CREATE\_THE\_ORDER\_-\_FAILED\_ON\_PROVIDER\_SIDE  | Hotel provider\n42150   | PSD2\_AUTHENTICATION\_CANNOT\_BE\_PERFORMED                | Amadeus\n"
+          schema:
+            $ref: '#/definitions/Errors'
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: object
+            properties:
+              data:
+                allOf:
+                  - type: object
+                    properties:
+                      type:
+                        type: string
+                        description: '"hotel-order" to create an hotel order'
+                      guests:
+                        type: array
+                        description: This is the list of all the guests with detailed information.
+                        items:
+                          allOf:
+                            - type: object
+                              properties:
+                                tid:
+                                  type: integer
+                                  description: |-
+                                    The tid is a temporary id of a guest. 
+                                    - It correlates a given guest with a room in the roomAssociation section.
+                                    - It is arbitrarily chosen by the user and is unique.
+                              required:
+                                - tid
+                            - $ref: '#/definitions/Guest'
+                    required:
+                      - type
+                      - guests
+                  - $ref: '#/definitions/CreateHotelBooking'
+            example:
+              data:
+                type: hotel-order
+                guests:
+                  - tid: 1
+                    title: MR
+                    firstName: BOB
+                    lastName: SMITH
+                    phone: '+33679278416'
+                    email: bob.smith@email.com
+                travelAgent:
+                  contact:
+                    email: bob.smith@email.com
+                roomAssociations:
+                  - guestReferences:
+                      - guestReference: '1'
+                    hotelOfferId: EUXSA6P2HI
+          description: ''
+definitions:
+  Guest:
+    type: object
+    description: This modele represent a guest, his name, his loyalty programs, his age when it is a child...
+    title: Guest
+    properties:
+      frequentTraveler:
+        type: array
+        description: |-
+          Airline frequent flyer of the guest 
+          /!\ In case of creation of a new hotel booking, only the first element of the array will be transmitted to the hotel provier. Please only provider one.
+          In case of retrieve of an hotel order, when a guest is having several frequent flyer numbers used in different hotel bookings, they will all be listed here.
+        items:
+          type: object
+          properties:
+            airlineCode:
+              type: string
+              description: Code of the Airline
+              example: AF
+              minLength: 2
+              maxLength: 3
+            frequentTravelerId:
+              type: string
+              example: '32546971326'
+          required:
+            - airlineCode
+            - frequentTravelerId
+      phone:
+        type: string
+        description: |-
+          Phone number of the guest
+
+          It is recommanded to use the standard E.123 (https://en.wikipedia.org/wiki/E.123)
+        maxLength: 199
+        minLength: 2
+        example: '+33679278416'
+      email:
+        type: string
+        description: Email Adress of the guest
+        pattern: ^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$
+        example: test.test@test.com
+        maxLength: 90
+        minLength: 3
+        format: email
+      title:
+        type: string
+        description: Title/gender of the guest
+        example: MR
+        minLength: 1
+        maxLength: 54
+        pattern: ^[A-Za-z -]*$
+      firstName:
+        type: string
+        description: |
+          First Name (and middle name) of the guest. It is mandatory at create order but not mandatory at booking creation.
+          - Complex pattern '^[A-Za-z \p{Han}\p{Katakana}\p{Hiragana}\p{Hangul}-]*$' 
+        example: TEST
+        maxLength: 56
+        minLength: 1
+      lastName:
+        type: string
+        description: |-
+          Last name of the guest - 
+          It is mandatory at create order but not mandatory at booking creation.
+          Complex pattern: '^[A-Za-z \p{Han}\p{Katakana}\p{Hiragana}\p{Hangul}-]*$' 
+        example: TEST
+        maxLength: 57
+        minLength: 1
+      childAge:
+        type: integer
+        description: if the guest is a child, it is mandatory to provide a child age. Else the system will consider him as an adult
+  HotelOrder:
+    title: HotelOrder
+    type: object
+    description: |-
+      An Hotel Order is one or several hotel bookings done for a set of guest.
+      It corresponds to one PNR in Amadeus GDS.
+    properties:
+      hotelBookings:
+        type: array
+        uniqueItems: true
+        minItems: 1
+        description: Array of hotel-bookings
+        items:
+          $ref: '#/definitions/HotelBooking'
+      associatedRecords:
+        type: array
+        uniqueItems: false
+        minItems: 1
+        description: Reference and origin of the hotel order record
+        items:
+          type: object
+          properties:
+            reference:
+              type: string
+              description: Record locator of the PNR in which the hotel order is stored in Amadeus GDS.
+              example: ABCDEF
+              minLength: 6
+              maxLength: 6
+              pattern: ^[A-Z0-9]{6}$
+            originSystemCode:
+              type: string
+              minLength: 1
+              description: As the reference is a PNR record locator, the originSystemCode is set to GDS.
+              example: GDS
+            direction:
+              type: string
+              description: Indicates whether the reference results from a split operation CHILD or has originated a split operation PARENT leading to the current order
+              example: CHILD
+              minLength: 1
+            associationType:
+              type: string
+              description: Specifies the possible natures of association between two orders
+              example: SPLIT
+              minLength: 1
+          required:
+            - reference
+            - originSystemCode
+      self:
+        type: string
+        minLength: 1
+        description: Self URL for retrieving the Hotel Order
+      type:
+        type: string
+        minLength: 1
+        description: Resource name - Is set to "hotel-order"
+      guests:
+        $ref: '#/definitions/Guests'
+      id:
+        type: string
+        description: |-
+          Id of the hotelorder. 
+          It is a crucial information and must be stored in the client system as it is mandatory to provide it in any further step such as cancel or retrieve.
+        minLength: 1
+        pattern: '[A-Za-z0-9+/=]'
+        example: '12312'
+    required:
+      - hotelBookings
+      - associatedRecords
+      - self
+      - type
+      - guests
+      - id
+  HotelBooking:
+    title: HotelBooking
+    type: object
+    description: |-
+      An hotel booking represent one or several rooms booked in the same physical hotel.
+      There is always a reference to this booking, provided by the hotel provider, stored in associated records section.
+    properties:
+      type:
+        type: string
+        minLength: 1
+        description: Type of data - set to "hotel-booking".
+      id:
+        type: string
+        description: |-
+          Unique ID of the hotel booking ID.
+          It is computed by Amadeus System based on technical data.
+        minLength: 1
+        pattern: '[A-Za-z0-9+/=]'
+        example: '456123'
+      bookingStatus:
+        type: string
+        description: |
+          Status of the booking - Possible values 
+          - "CONFIRMED" (HK in cryptic PNR)
+          - "PENDING" for on-request (HN)
+          - "CANCELLED" (It will be returned only in the retrieve byHistory as it repreents a DELETED resource.)
+          - "On HOLD" for deferred payment (HO)
+          - "UNCONFIRMED" (UC) when confirmation finaly refused by Hotel Provider
+          - "DENIED" (NO) when an on-request booking is denied by the hotelier
+          - "GHOST" (GK) for ghost booking
+          - "PAST" for a confirmed booking with the check-out date in the past
+        enum:
+          - CONFIRMED
+          - PENDING
+          - CANCELLED
+          - ON_HOLD
+          - PAST
+          - UNCONFIRMED
+          - DENIED
+          - GHOST
+          - DELETED
+      roomAssociations:
+        type: array
+        description: |-
+          Array of room associations. Each room association correlates one single room to guest(s), a payment and an hotel offer.
+
+          If multiple identical rooms are requested, one roomAssociation is created per hotelBooking (one hotelBooking is created per room).
+        items:
+          $ref: '#/definitions/roomAssociation'
+      hotelOffer:
+        $ref: '#/definitions/HotelOffer'
+      hotel:
+        type: object
+        description: Hotel Content
+        title: Hotel
+        properties:
+          hotelId:
+            type: string
+            pattern: ^[A-Z0-9]{8}$
+            example: ADPAR001
+            description: |
+              Amadeus Property Code (8 chars)
+          chainCode:
+            type: string
+            pattern: ^[A-Z]{2}$
+            example: AD
+            description: |
+              Brand (RT...) or Merchant (AD...) (Amadeus 2 chars Code)
+          name:
+            type: string
+            example: Hotel de Paris
+            description: Hotel Name
+          self:
+            type: string
+            description: link to retrieve the hotel details
+        required:
+          - hotelId
+          - chainCode
+          - name
+      hotelProviderInformation:
+        type: array
+        uniqueItems: true
+        minItems: 1
+        description: References and origin of the hotel bookings records
+        items:
+          type: object
+          properties:
+            hotelProviderCode:
+              type: string
+              description: 2 letters - Hotel provider code  e.g.RT  (for Accor)
+              example: RT
+              minLength: 2
+              maxLength: 2
+            confirmationNumber:
+              type: string
+              description: |-
+                Provider confirmation number. 
+                Never empty, in case of on-request it can be .......
+                If you call the Provider, this Reference may be asked
+              example: '818319951754'
+              minLength: 2
+              maxLength: 16
+              pattern: ^[A-Z0-9]*$
+            cancellationNumber:
+              type: string
+              description: |-
+                Provider cancellation number
+                For cancelled booking it will ablways be filled.
+                If it was not returned by the hotel provider, it will be filled with "NONE".
+              example: C818319951754
+              minLength: 2
+              maxLength: 16
+              pattern: ^[A-Z0-9]*$
+            onRequestNumber:
+              type: string
+              description: Used to describe the on-request identifier
+              example: '818319951754'
+              minLength: 2
+              maxLength: 16
+              pattern: ^[A-Z0-9]*$
+          required:
+            - hotelProviderCode
+            - confirmationNumber
+      payment:
+        $ref: '#/definitions/PaymentOutput'
+      travelAgentId:
+        type: string
+        description: |-
+          Travel Agent ID also called Booking source or IATA number.
+          - When received in booking request, it indicates that the travel agent wants to override the booking source receiving the commission. 
+          - If not provided in booking request, it is set to the IATA Number of the office profile of the agent making the booking. (the commission is given to that office) 
+      arrivalInformation:
+        type: object
+        description: |-
+          Optional information on the way the guest is arriving to the hotel. Today the application only supports Flight details.
+          If this information is provided at booking creation time, it is displayed in the response and in the retrieve.
+        properties:
+          arrivalFlightDetails:
+            $ref: '#/definitions/ArrivalFlightDetails'
+    required:
+      - type
+      - id
+      - roomAssociations
+      - hotelOffer
+      - hotel
+      - hotelProviderInformation
+      - travelAgentId
+  roomAssociation:
+    type: object
+    description: |-
+      Room Association represents a room booked in an hotel, the guests sleeping in this room, the hotel loyalty program if any, plus special request if any. 
+
+      In a first phase, the application only supports single and multi-identical rooms.
+
+      Minimum 1 room, maximum 9 rooms
+      Whatever the enhancement in the future, it will always be expected in case of muliple rooms :
+      - same hotel code (i.e. same provider and same hotel code)
+      - same check-in and check-out date
+      - same AVH supplier
+      - same quantity as shopping time (stored in hotel offer) and booking time (number of roomAssociations).
+    minProperties: 1
+    maxProperties: 1
+    title: roomAssociation
+    properties:
+      guestReferences:
+        type: array
+        description: |-
+          Array of guest references listing all the guests occupying the room.
+          For each guest, the reference provided is the id also provided in guest section, except at booking creation time (in this only case, it will be a temporary id provided by the client called tid).
+          The order of this list is important. The first one is the main guest, the one holding the reservation (and the form of payment).
+          The following references are the ones of the accompagnants, if any.
+        items:
+          type: object
+          properties:
+            guestReference:
+              type: string
+            hotelLoyaltyId:
+              type: string
+              description: |
+                Hotel Chain Rewards Program Membership ID of the guest.
+                To receive your Rewards Points, access online check in, fast check out. An error is returned by the Chain if the number is invalid.
+                Example Rewards Programs:
+                * Marriott Bonvoy
+                * Hilton Honors
+                * Hyatt Rewards
+                * IHG Rewards
+                * Wyndham Rewards
+                * Accor Live Limitless ALL
+                * Best Western Rewards
+                * Choice Privileges
+                * Radisson Rewards
+              pattern: ^[A-Z0-9-]{1,21}$
+              minLength: 1
+              maxLength: 21
+              example: '3081031320523260'
+          required:
+            - guestReference
+      specialRequest:
+        type: string
+        minLength: 2
+        description: special request to send to the reception (optional)
+        example: TEST I will arrive at midnight
+        maxLength: 120
+      hotelOfferId:
+        type: string
+        description: Hotel offerID received in availability response, identifying the product to book.
+        example: 63A93695B58821ABB0EC2B33FE9FAB24D72BF34B1BD7D707293763D8D9378FC3
+        maxLength: 100
+        minLength: 2
+        pattern: ^[A-Z0-9]*$
+    required:
+      - guestReferences
+      - hotelOfferId
+  PaymentOutput:
+    title: Payment Information in output message
+    type: object
+    description: Model with the hotel payment information
+    properties:
+      iataTravelAgency:
+        type: object
+        description: Agency IATA/ARC Number used to Guarantee the booking
+        properties:
+          iataNumber:
+            type: string
+        required:
+          - iataNumber
+      billBack:
+        type: object
+        description: |-
+          To be used when the booking is paid with to a virtual credit card generated through an external provider like Conferma.
+
+          The Billback account number is mandatory.
+          The rest of the information is not mandatory. CAI (Travel Agwency ID) and CBI (Booker ID) can either be provided in input or can be taken from the Amadeus Office Profile.
+
+          Offline activation of Hotel Billback: As soon as Conferma creates the client account and provides Amadeus with specific credentials (CAI/CBI) to identify the agency, Amadeus is able to activate Billback by updating those CAI/CBI credentials into the agency profile (PVA field).
+        properties:
+          travelAgencyId:
+            type: string
+            description: Travel Agency Conferma account (CAI)
+          bookerId:
+            type: string
+            description: Travel Agent conferma ID (CBI)
+          paymentInstructions:
+            type: string
+            description: |-
+              optional free text.
+              It gives the user the ability to specify the payment instructions to be sent to the hotelier
+          billbackProviderDeploymentId:
+            type: string
+            description: The Deployment Id is returned by Amadeus Payment server and is used as the payment reference.
+          billbackProviderCode:
+            type: string
+            description: For conferma provider, it will be CN.
+          billbackProviderAccountNumber:
+            type: string
+            description: Billback Provider account number (Conferma account number)
+          hotelSupplierInformation:
+            $ref: '#/definitions/Hotel_Contact'
+        required:
+          - billbackProviderDeploymentId
+          - billbackProviderCode
+          - billbackProviderAccountNumber
+      method:
+        type: string
+        description: |
+          Indicates the method of payment. 
+          - CREDIT_CARD : It allows payment through a credit card. It is expected to provide the credit card information in the creditCard section.
+          - AGENCY_ACCOUNT (CREDIT LINE) : It allows payment through the credit line of the agency. Nothing more is expected
+          - VCC_BILLBACK : It allows direct payment between the hotel and a corporation or travel agency, via the billback provider.
+          It is expected to provide the billback information in the billback section.
+          To benefit from the solution, a contract has to be signed with the travel agency and
+          Amadeus or Conferma. A contract with a banking partner is also required to open a bank account and issue the Virtual Credit Card.
+          - VCC_B2B_WALLET : This payment method is only available for Amadeus Value Hotels where it allows payment between travel agency and Amadeus Merchant using a virtual credit card.
+          To avail this functionality a Travel Agent has to sign a contract with Amadeus PaymentPlatform, which helps to generate a virtual credit card on behalf of the travel agent.
+          - TRAVEL_AGENT_ID (IATA BS) : It allows payment to the provider with to the IATA booking source. Either this information is passed in the TravelAgentId section, either it is taken from the Amadeus Office Profile.
+          - CREDIT_CARD_AGENCY : This form of payment is exclusively used for Amadeus Value Hotel when the booking is paid with the Travel Agency credit card.
+          It is also possible in this case to use the method CREDIT_CARD but it is then mandatory to specify that the cardOwnerType is TravelAgency
+          - CREDIT_CARD_TRAVELLER : This form of payment is exclusively used for Amadeus Value Hotel when the booking is paid with the guest credit card.
+          It is also possible in this case to use the method CREDIT_CARD but it is then mandatory to specify that the cardOwnerType is Guest
+        enum:
+          - CREDIT_CARD
+          - CREDIT_CARD_AGENCY
+          - CREDIT_CARD_TRAVELER
+          - AGENCY_ACCOUNT
+          - VCC_BILLBACK
+          - VCC_B2B_WALLET
+          - TRAVEL_AGENT_ID
+      b2bWallet:
+        type: object
+        description: |-
+          To perform a booking with B2B wallet, no extra information is needed in input. 
+          Information on the virtal credit card generated, is provided in this section in reply.
+        properties:
+          virtualCreditCardId:
+            type: string
+            description: Amadeus Payment Reference for the generated VCC.
+          paymentProvider:
+            type: string
+            description: Payment provider, for example IXARIS.
+        required:
+          - virtualCreditCardId
+          - paymentProvider
+      paymentCard:
+        type: object
+        description: Credit card information.
+        properties:
+          paymentCardInfo:
+            type: object
+            description: Credit or Debits cards.
+            title: PaymentCard
+            properties:
+              vendorCode:
+                type: string
+                example: VI
+                description: Two-letter code card type or vendor code. E.g. VI for VISA, MA for MasterCard.
+                maxLength: 30
+                minLength: 0
+              holderName:
+                type: string
+                description: Name of credit card holder.
+                maxLength: 99
+                minLength: 1
+              cardNumber:
+                type: string
+                description: Card number
+              expiryDate:
+                type: string
+                description: Date of the expiration of the card in the format MMYY
+            required:
+              - vendorCode
+              - holderName
+              - cardNumber
+              - expiryDate
+          cardOwnerType:
+            type: string
+            description: |-
+              Indicates who is the owner of the credit card, it can be either the travel agency "TravelAgency", the corporation "Corporation" or the traveller "Guest".
+              This field is mamdatory for Amadeus Value Hotel when the method of payment is CREDIT_CARD.
+              This field is optional in informational in all other cases.
+            enum:
+              - TravelAgency
+              - Guest
+              - Corporation
+            example: TravelAgency
+          VCC:
+            type: boolean
+            description: |-
+              If the provided card is a virtual credit card generated by an external provider, this boolean should be true.
+              (It is different from  Billback and B2B wallet VCC. These ones are generated during Amadeus booking process and have a dedicated payment section.)
+          address:
+            $ref: '#/definitions/Address'
+        required:
+          - paymentCardInfo
+    required:
+      - method
+  CreateHotelBooking:
+    description: |-
+      This model allows the creation of an hotel order (PNR) and its hotel segments (HHL). 
+      It can also be used to add an hotel booking (HHL) in an already existing hotel order (PNR).
+    type: object
+    title: CreateHotelBooking
+    properties:
+      arrivalInformation:
+        type: object
+        description: Optional information on the way the guest is arriving to the hotel. Today the application only supports Flight details.
+        properties:
+          arrivalFlightDetails:
+            $ref: '#/definitions/ArrivalFlightDetails'
+      payment:
+        $ref: '#/definitions/PaymentInput'
+      roomAssociations:
+        type: array
+        description: |-
+          Is to correlate a room to a guest and an offer.
+          In a first phase, the application only supports multi-identical rooms.
+
+          Minimum 1 room, maximum 9 rooms
+
+          Whatever the enhancement in the future, it will always be expected in case of muliple rooms :
+          - same hotel code (i.e. same provider and same hotel code)
+          - same check-in and check-out date
+          - same AVH supplier
+          - same quantity as shopping time (stored in hotel offer) and booking time (number of roomAssociations).
+        maxItems: 9
+        minItems: 1
+        items:
+          $ref: '#/definitions/roomAssociation'
+      travelAgent:
+        type: object
+        description: Travel Agent details
+        required:
+          - contact
+        properties:
+          contact:
+            type: object
+            required:
+              - email
+            properties:
+              email:
+                type: string
+                example: travelAgent@agency.com
+                minLength: 3
+                maxLength: 90
+                pattern: ^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$
+                description: travel agency email
+              fax:
+                type: string
+                example: '+33985632145'
+                minLength: 2
+                maxLength: 90
+                pattern: ^[+][1-9][0-9]{4,18}$
+                description: Even if this field is not mandatory it is recommended to fill it. This information is passed to the hotel provider. (When it is not provided in input, it is taken from the Office Profile of the Travel Agency).
+              phone:
+                type: string
+                example: '+33679278416'
+                minLength: 2
+                maxLength: 199
+                description: Even if this field is not mandatory it is recommended to fill it. This information is always passed to the hotel provider. (When it is not provided in input, it is taken from the Office Profile of the Travel Agency).
+          travelAgentId:
+            type: string
+            description: |-
+              Travel Agent ID also called Booking source or IATA number.
+              When received in request, it indicates that the travel agent wants to override the booking source receiving the commission.
+              If not provided, it is by default set to the IATA Number of the office profile the agent is connected to and who makes the booking. (the commission is given to that office) 
+    required:
+      - travelAgent
+  PaymentInput:
+    title: Payment Information in input message
+    type: object
+    description: Model with the hotel payment information
+    properties:
+      iataTravelAgency:
+        type: object
+        description: |-
+          Agency IATA/ARC Number used to Guarantee the booking.
+          If not provided it is taken form the Amadeus Office profile.
+        properties:
+          iataNumber:
+            type: string
+        required:
+          - iataNumber
+      billBack:
+        type: object
+        description: |-
+          To be used when the booking is paid with to a virtual credit card generated through an external provider like Conferma.
+
+          The Billback account number is mandatory.
+          The rest of the information is not mandatory. CAI (Travel Agwency ID) and CBI (Booker ID) can either be provided in input or can be taken from the Amadeus Office Profile.
+
+          Offline activation of Hotel Billback: As soon as Conferma creates the client account and provides Amadeus with specific credentials (CAI/CBI) to identify the agency, Amadeus is able to activate Billback by updating those CAI/CBI credentials into the agency profile (PVA field).
+        properties:
+          travelAgencyId:
+            type: string
+            description: Travel Agency Conferma account (CAI)
+          bookerId:
+            type: string
+            description: Travel Agent conferma ID (CBI)
+          paymentInstructions:
+            type: string
+            description: |-
+              optional free text.
+              It gives the user the ability to specify the payment instructions to be sent to the hotelier
+          billbackProviderCode:
+            type: string
+            description: For conferma provider, it will be CN.
+          billbackProviderAccountNumber:
+            type: string
+            description: Billback Provider account number (Conferma account number)
+          hotelSupplierInformation:
+            $ref: '#/definitions/Hotel_Contact'
+        required:
+          - billbackProviderCode
+          - billbackProviderAccountNumber
+      method:
+        type: string
+        description: |
+          Indicates the method of payment. 
+          - CREDIT_CARD : It allows payment through a credit card. It is expected to provide the credit card information in the creditCard section.
+          - AGENCY_ACCOUNT (CREDIT LINE) : It allows payment through the credit line of the agency. Nothing more is expected
+          - VCC_BILLBACK : It allows direct payment between the hotel and a corporation or travel agency, via the billback provider.
+          It is expected to provide the billback information in the billback section.
+          To benefit from the solution, a contract has to be signed with the travel agency and
+          Amadeus or Conferma. A contract with a banking partner is also required to open a bank account and issue the Virtual Credit Card.
+          - VCC_B2B_WALLET : This payment method is only available for Amadeus Value Hotels where it allows payment between travel agency and Amadeus Merchant using a virtual credit card.
+          To avail this functionality a Travel Agent has to sign a contract with Amadeus PaymentPlatform, which helps to generate a virtual credit card on behalf of the travel agent.
+          - TRAVEL_AGENT_ID (IATA BS) : It allows payment to the provider with to the IATA booking source. Either this information is passed in the TravelAgentId section, either it is taken from the Amadeus Office Profile.
+          - CREDIT_CARD_AGENCY : This form of payment is exclusively used for Amadeus Value Hotel when the booking is paid with the Travel Agency credit card.
+          It is also possible in this case to use the method CREDIT_CARD but it is then mandatory to specify that the cardOwnerType is TravelAgency
+          - CREDIT_CARD_TRAVELLER : This form of payment is exclusively used for Amadeus Value Hotel when the booking is paid with the guest credit card.
+          It is also possible in this case to use the method CREDIT_CARD but it is then mandatory to specify that the cardOwnerType is Guest
+        enum:
+          - CREDIT_CARD
+          - CREDIT_CARD_AGENCY
+          - CREDIT_CARD_TRAVELER
+          - AGENCY_ACCOUNT
+          - VCC_BILLBACK
+          - VCC_B2B_WALLET
+          - TRAVEL_AGENT_ID
+      paymentCard:
+        type: object
+        description: |-
+          Credit card information.
+          The full details of a credit card are expected :
+            . credit card holder name (mandatory, maximum 64 chars) 
+            . credit card vendor code (mandatory)
+            . credit card number (mandatory)
+            . credit card expiry date (mandatory)
+            . credit card security code (optional, it is anyway strongly recommended to always provide it for Aggregators)
+        properties:
+          paymentCardInfo:
+            type: object
+            description: Credit or Debits cards.
+            title: PaymentCard
+            properties:
+              vendorCode:
+                type: string
+                example: VI
+                description: Two-letter code card type or vendor code. E.g. VI for VISA, MA for MasterCard.
+                maxLength: 30
+                minLength: 0
+              holderName:
+                type: string
+                description: Name of credit card holder.
+                maxLength: 99
+                minLength: 1
+              cardNumber:
+                type: string
+                description: Card number
+              securityCode:
+                type: string
+                description: Card security code
+                example: '193'
+                minLength: 3
+                maxLength: 4
+              expiryDate:
+                type: string
+                description: Date of the expiration of the card in the format MMYY
+            required:
+              - vendorCode
+              - holderName
+              - cardNumber
+              - expiryDate
+          threeDomainSecure:
+            title: Payment3dsTransactionSummary
+            type: object
+            description: In Payment domain, the "Payment3dsTransactionSummary" is a transaction summary done during 3 Domain Secure (3DS) authentication process with collection of the 3DS IDs.
+            properties:
+              version:
+                type: string
+                description: |-
+                  Version of the protocol used for example
+                  1.0.2 
+                  1
+                  1.0
+                  2.1.0
+                  2.2
+                enum:
+                  - 1.0.2
+                  - 2.1.0
+                example: 2.1.0
+                minLength: 5
+                maxLength: 5
+              dsTransactionId:
+                type: string
+                description: ds = directory server , Transaction ID Value returned by the 3DS Directory Server - 3DS V2 will provide DS Transaction ID - It is a unique transaction identifier assigned by the DS to identify a single transaction
+                maxLength: 36
+              eci:
+                type: string
+                description: |
+                  Indicates the Payment System-specific value provided by ACS or DS,- Mirrored from ECI - Electronic Commerce Indicator - (for Visa) is currently used
+                  Must be received if Version 1.0.2 and Version 2.1.0 are used.
+
+                  Possible Values 
+
+                  "07" - Unable to authenticate (Visa)
+                  "05" - Successful authentication (Visa)
+                  "06" - Authentication attempted (Visa)
+                  "00" - Failed authentication (Visa / MasterCard)
+                  "02" - Successful authentication (MasterCard)
+                  "01" - Incomplete authentication (MasterCard)
+                enum:
+                  - '00'
+                  - '01'
+                  - '02'
+                  - '05'
+                  - '06'
+                  - '07'
+                minLength: 2
+                maxLength: 2
+              xid:
+                type: string
+                description: |-
+                  Identify a 3DS transaction for version < 2.0
+                  Must be encoded in Base64.
+                maxLength: 28
+              cryptogramValue:
+                type: string
+                description: "Gives\_the result of the authentication\_verification code (CAVV for Visa\_authentication, AEVV for Amaerican express,  for Master Card) - As binary value,  value is Base64 encoded, a the  20-byte giving a 28-byte result "
+                maxLength: 28
+              paresStatus:
+                type: string
+                description: Gives a status on the authentication process for 3DS Version 1.x
+                enum:
+                  - 'Y'
+                  - 'N'
+                  - U
+                  - A
+                  - E
+                minLength: 1
+                maxLength: 1
+              paresStatusLabel:
+                type: string
+                description: |-
+                  Gives a status on the authentication process for 3DS Version 1.x
+
+                  "SUCCESSFUL" - Authentication successful
+                  "FAILED" - Authentication failed
+                  "UNABLE_TO_AUTHENTICATE" - Authentication could not be performed
+                  "ATTEMPTS_PROCESSING" - Attempts processing performed
+                  "ERROR" - Error
+                enum:
+                  - SUCCESSFUL
+                  - FAILED
+                  - UNABLE_TO_AUTHENTICATE
+                  - ATTEMPTS_PROCESSING
+                  - ERROR
+              veresStatus:
+                type: string
+                description: |-
+                  Indicates whether the Cardholder is enrolled 
+                  Is only set when Version 1.x is used. 
+                enum:
+                  - 'Y'
+                  - 'N'
+                  - U
+                  - E
+                  - A
+                minLength: 1
+                maxLength: 1
+              veresStatusLabel:
+                type: string
+                description: |-
+                  Indicates whether the Cardholder is enrolled 
+                  Is only set when Version 1.x is used. 
+                  Possible Values
+                  -  "ENROLLED" - Cardholder enrolled to use 3DS (authentication available)
+                  - "NOT_ENROLLED" - Cardholder not enrolled to use 3DS"
+                  - "UNABLE_TO_VERIFY - verification could not be performed)
+                  - "ERROR" - Error
+                enum:
+                  - ENROLLED
+                  - NOT_ENROLLED
+                  - UNABLE_TO_VERIFY
+                  - ERROR
+                  - ATTEMPTS_PROCESSING
+              transStatus:
+                type: string
+                description: |-
+                  Overall state of 3ds transaction
+                  Is only set when Version is higher than 2.x.
+                enum:
+                  - 'Y'
+                  - 'N'
+                  - U
+                  - A
+                  - E
+                  - C
+                  - D
+                  - R
+                  - I
+                minLength: 1
+                maxLength: 1
+              transStatusLabel:
+                type: string
+                description: |-
+                  Overall state of 3ds transaction
+                  Is only set when Version is higher than 2.x.
+                  "SUCCESSFUL" - Authentication successful
+                  "FAILED" - Authentication failed
+                  "UNABLE_TO_AUTHENTICATE" - Authentication could not be performed
+                  "ATTEMPTS_PROCESSING" - Attempts processing performed
+                  "ERROR" - Error
+                  "CHALLENGE_REQUESTED" - Challenge requested
+                  "DECOUPLED_CHALLENGE_REQUESTED" - Decoupled challenge requested
+                  "AUTHENTICATION_REJECTED" - Authentication rejected, do not authorize
+                  "INFORMATION_ONLY" - Information only
+                enum:
+                  - SUCCESSFUL
+                  - FAILED
+                  - UNABLE_TO_AUTHENTICATE
+                  - ATTEMPTS_PROCESSING
+                  - ERROR
+                  - CHALLENGE_REQUESTED
+                  - DECOUPLED_CHALLENGE_REQUESTED
+                  - AUTHENTICATION_REJECTED
+                  - INFORMATION_ONLY
+            required:
+              - version
+              - eci
+              - cryptogramValue
+          cardOwnerType:
+            type: string
+            description: |-
+              Indicates who is the owner of the credit card, it can be either the travel agency "TravelAgency", the corporation "Corporation" or the traveller "Guest".
+              This field is mamdatory for Amadeus Value Hotel when the method of payment is CREDIT_CARD.
+              This field is optional in informational in all other cases.
+            enum:
+              - TravelAgency
+              - Guest
+              - Corporation
+            example: TravelAgency
+          VCC:
+            type: boolean
+            description: |-
+              If the provided card is a virtual credit card generated by an external provider, this boolean should be true.
+              (It is different from  Billback and B2B wallet VCC. These ones are generated during Amadeus booking process and have a dedicated payment section.)
+          address:
+            $ref: '#/definitions/Address'
+        required:
+          - paymentCardInfo
+    required:
+      - method
+  Errors:
+    type: object
+    description: A set of errors
+    title: Errors
+    properties:
+      errors:
+        type: array
+        items:
+          type: object
+          description: The Error Definition
+          title: Error
+          properties:
+            status:
+              type: integer
+              description: The [HTTP status code](https://www.iana.org/assignments/http-status-codes/http-status-codes.xhtml) of this response. This is present only in terminal errors which cause an unsuccessful response. In the case of multiple errors, they must all have the same status.
+            code:
+              type: integer
+              description: A machine-readable error code, that will enable the API Consumers code to handle this type of error
+            title:
+              type: string
+              description: An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized
+            detail:
+              type: string
+              description: An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized.
+            source:
+              type: object
+              title: Error_Source
+              properties:
+                parameter:
+                  type: string
+                  description: The key of the URI path or query parameter that caused the error
+                pointer:
+                  type: string
+                  description: A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error
+                example:
+                  type: string
+                  description: A sample input to guide the user when resolving this issue
+            documentation:
+              type: string
+              format: url
+              description: A link to a web page or file with further documentation to help the API consumer resolve this error
+          example:
+            errors:
+              - status: 400
+                code: 477
+                title: INVALID FORMAT
+                detail: invalid query parameter format
+                source:
+                  parameter: email
+  Price:
+    type: object
+    description: Price valuation information
+    title: Price
+    properties:
+      currency:
+        type: string
+        description: currency Code apply to all elements of the price
+      sellingTotal:
+        type: string
+        description: sellingTotal = Total + margins + markup + totalFees - discounts
+      total:
+        type: string
+        description: total = base + totalTaxes
+      base:
+        type: string
+      markups:
+        type: array
+        items:
+          title: Markup
+          type: object
+          description: Markup applied to provide a service or a product to the client. Typical use case is to convey markup information set by the travel agent.
+          properties:
+            amount:
+              type: string
+              description: Defines the monetary value with decimal position as a String.
+              example: '10'
+  ArrivalFlightDetails:
+    title: FlightTransfer_FlightSegment
+    type: object
+    properties:
+      carrierCode:
+        type: string
+        description: Carrier code
+        example: LH
+      number:
+        type: string
+        description: Flight segment number
+        example: '1050'
+      departure:
+        type: object
+        description: Departure or arrival information
+        title: FlightSegment_Departure
+        required:
+          - iataCode
+        properties:
+          iataCode:
+            description: IATA Airport code
+            type: string
+            example: JFK
+      arrival:
+        type: object
+        description: Departure or arrival information
+        title: FlightSegment_Arrival
+        properties:
+          iataCode:
+            description: IATA Airport code
+            type: string
+            example: JFK
+          terminal:
+            description: Terminal name / number
+            type: string
+            example: T2
+          at:
+            description: Local date and time at the arrival of the flight with the following format "YYYY-MM-DD'T'HH:mm:ss" (for example 2017-02-10T20:40:00 if the flight arrive 20h40 local time)
+            type: string
+            format: date-time
+            example: '2017-10-23T20:00:00+02:00'
+        required:
+          - iataCode
+          - terminal
+          - at
+    required:
+      - carrierCode
+      - number
+      - departure
+  Guests:
+    type: array
+    items:
+      allOf:
+        - type: object
+          properties:
+            tid:
+              type: integer
+              description: |-
+                The tid is a temporary unique id of a guest. 
+                It is arbitrarily chosen by the user until Amadeus application provides one.
+            id:
+              type: integer
+              description: unique id of the Guest provided by Amadeus application
+          required:
+            - id
+        - $ref: '#/definitions/Guest'
+    description: Array of guests sharing the hotelOrder.
+  guests:
+    title: HotelProduct_Guests
+    type: object
+    properties:
+      adults:
+        type: integer
+        minimum: 1
+        maximum: 9
+        example: 2
+        description: number of adult guests (1-9) per room
+      childAges:
+        type: array
+        items:
+          type: integer
+          minimum: 0
+          maximum: 20
+        description: Comma separated list of ages of each child at the time of check-out from the hotel. If several children have the same age, the ages will be repeated.
+  Address:
+    type: object
+    description: Address information
+    title: Address
+    properties:
+      lines:
+        type: array
+        description: Line 1 = Street address, Line 2 = Apartment, suite, unit, building, floor, etc
+        items:
+          type: string
+      postalCode:
+        type: string
+        description: 'Example: 74130'
+      countryCode:
+        type: string
+        description: ISO 3166-1 country code
+        pattern: '[a-zA-Z]{2}'
+      cityName:
+        type: string
+        description: 'Full city name. Example: Dublin'
+        pattern: '[a-zA-Z -]{1,35}'
+      stateCode:
+        type: string
+        description: State code (two character standard IATA state code)
+        pattern: '[a-zA-Z0-9]{1,2}'
+    required:
+      - postalCode
+      - countryCode
+      - cityName
+  QualifiedFreeText:
+    type: object
+    description: Specific type to convey a list of string for specific information type ( via qualifier) in specific character set, or language
+    title: QualifiedFreeText
+    properties:
+      text:
+        type: string
+        description: Free Text
+        example: Do you need and example ?
+      lang:
+        type: string
+        description: see RFC 5646
+        example: fr-FR
+  HotelProduct_PaymentPolicy:
+    title: HotelProduct_PaymentPolicy
+    type: object
+    description: Accepted Payment Methods and Card Types. Several Payment Methods and Card Types may be available.
+    properties:
+      creditCards:
+        type: array
+        description: Accepted Payment Card Types for the `method` CREDIT_CARD
+        items:
+          type: string
+          pattern: ^[A-Z]{2}$
+          minLength: 2
+          maxLength: 2
+          example: VI
+          description: |
+            card type (CA, VI, AX, DC...)
+            Examples:
+              * CA - Mastercard (warning: use it instead of MC/IK/EC/MD/XS)
+              * VI - VISA
+              * AX - AMERICAN EXPRESS
+              * DC - Diners Club
+              * DS - DISCOVER
+              * JC - JCB
+              * TP - UATP / AirPlus
+              * UP - UnionPay  
+        example:
+          - CA
+          - VI
+          - AX
+      methods:
+        type: array
+        description: Accepted Payment Methods
+        items:
+          type: string
+          example: CREDIT_CARD
+          enum:
+            - CREDIT_CARD
+            - CREDIT_CARD_AGENCY
+            - CREDIT_CARD_TRAVELER
+            - VCC_BILLBACK
+            - VCC_B2B_WALLET
+            - TRAVEL_AGENT_ID
+            - AGENCY_ACCOUNT
+            - CORPORATE_ID
+            - CHECK
+            - ADVANCE_DEPOSIT
+            - COMPANY_ADDRESS
+            - HOTEL_GUEST_ID
+            - MISC_CHARGE_ORDER
+            - DEFERED_PAYMENT
+            - TRAVEL_AGENT_IMMEDIATE
+          description: |-
+            The Payment Methods :
+             * CREDIT_CARD (CC) - Payment Cards in `creditCards` are accepted
+             * CREDIT_CARD_AGENCY (CA) - Payment Cards in `creditCards` are accepted
+             * CREDIT_CARD_TRAVELER (CC) - Payment Cards in `creditCards` are accepted
+             * AGENCY_ACCOUNT - Agency Account (Credit Line) is accepted. Agency is Charged at CheckOut
+             * TRAVEL_AGENT_ID - Agency IATA/ARC Number is accepted to Guarantee the booking
+             * CORPORATE_ID (COR-ID) - Corporate Account is accepted to Guarantee the booking
+             * HOTEL_GUEST_ID - Hotel Chain Rewards Card Number is accepted to Guarantee the booking
+             * CHECK - Checks are accepted
+             * MISC_CHARGE_ORDER - Miscellaneous Charge Order is accepted
+             * ADVANCE_DEPOSIT - Cash is accepted for Deposit/PrePay
+             * COMPANY_ADDRESS - Company Billing Address is accepted to Guarantee the booking
+  HotelProduct_DepositPolicy:
+    title: HotelProduct_DepositPolicy
+    type: object
+    description: the deposit/prepay policy information applicable to the offer. It includes accepted payments, deadline and the amount due
+    properties:
+      amount:
+        type: string
+        description: Deposit-Prepay amount
+        pattern: ^\\d+(\\.\\d+)?$
+      deadline:
+        type: string
+        format: date-time
+        description: |
+          The date and time of the deadline in ISO 8601[https://www.w3.org/TR/NOTE-datetime]. 
+           Example: 2010-08-14T13:00:00
+           Please note that this value is expressed in the hotels local time zone
+      description:
+        $ref: '#/definitions/QualifiedFreeText'
+      acceptedPayments:
+        $ref: '#/definitions/HotelProduct_PaymentPolicy'
+  Hotel_Contact:
+    title: Hotel_Contact
+    type: object
+    description: Contact Details
+    properties:
+      phone:
+        type: string
+        description: Phone Number
+        example: '+33679278416'
+        minLength: 2
+        maxLength: 90
+        pattern: ^[+][1-9][0-9]{4,18}$
+      fax:
+        type: string
+        description: Fax Number
+        example: '+33679278417'
+        minLength: 2
+        maxLength: 90
+        pattern: ^[+][1-9][0-9]{4,18}$
+      email:
+        type: string
+        description: Email Address
+        format: email
+        example: hotel@brand.com
+        minLength: 3
+        maxLength: 90
+        pattern: ^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$
+    required:
+      - fax
+  HotelOffer:
+    description: Hotel Offer
+    title: HotelOffer
+    allOf:
+      - type: object
+        properties:
+          type:
+            description: data type set to hotel-offer
+            type: string
+            example: hotel-offer
+            default: hotel-offer
+            enum:
+              - hotel-offer
+          id:
+            type: string
+            pattern: ^[A-Z0-9]*$
+            minLength: 2
+            maxLength: 100
+            example: 63A93695B58821ABB0EC2B33FE9FAB24D72BF34B1BD7D707293763D8D9378FC3
+            description: Unique identifier of this offer. Might be valid for a temporary period only.
+        required:
+          - id
+      - $ref: '#/definitions/HotelProduct'
+  HotelProduct:
+    description: |
+      Hotel Offer
+    type: object
+    title: HotelProduct
+    properties:
+      checkInDate:
+        type: string
+        format: date
+        example: '2020-12-30'
+        description: |-
+          check-in date of the stay (hotel local date). Format YYYY-MM-DD
+          The lowest accepted value is today date (no dates in the past).  
+      checkOutDate:
+        type: string
+        format: date
+        example: '2020-12-31'
+        description: |-
+          check-out date of the stay (hotel local date). Format YYYY-MM-DD
+          The lowest accepted value is `checkInDate`+1. 
+      roomQuantity:
+        type: integer
+        minimum: 1
+        maximum: 9
+        example: 1
+        description: number of rooms (1-9)
+      rateCode:
+        type: string
+        description: |
+          Special Rate - Provider Response Code (3 chars)
+          Examples
+
+            * RAC - Rack
+
+            * BAR - Best Available Rate
+
+            * PRO - Promotional
+
+            * COR - Corporate
+
+            * GOV - Government (qualified)
+
+            * AAA - AAA (qualified)
+
+            * BNB - Bed and Breakfast
+
+            * PKG - Package
+
+            * TVL - Travel Industry
+
+            * SPC - Special Promo Rate
+
+            * WKD - Weekend
+
+            * CON - Convention
+
+            * SNR - Senior (Europe) (qualified)
+
+            * ARP - AARP - American Association of Retired People (50+) (qualified)
+
+            * SRS - Senior (qualified)
+
+            * ROR - Room Only Rate (no breakfast)
+
+            * FAM - Family
+
+            * DAY - Day rate
+        pattern: ^[A-Z0-9*]{3}$
+        minLength: 3
+        maxLength: 3
+        example: RAC
+      category:
+        type: string
+        description: |
+          Special Rate Category
+          Examples:
+            ASSOCIATION
+            FAMILY_PLAN
+        example: FAMILY_PLAN
+      commission:
+        title: HotelProduct_Commission
+        type: object
+        properties:
+          percentage:
+            type: string
+            description: Percentage of the commission paid to the travel seller. Value is between 0 and 100
+            pattern: ^\\d+(\\.\\d+)?$
+          amount:
+            type: string
+            description: Amount of the commission paid to the travel seller. The amount is always linked to the currency code of the offer
+            pattern: ^\\d+(\\.\\d+)?$
+          description:
+            $ref: '#/definitions/QualifiedFreeText'
+      room:
+        title: HotelProduct_RoomDetails
+        type: object
+        properties:
+          type:
+            description: |-
+              Room type code, 3 character identifier of the room.
+              The first character identifies the room type category. 
+              The second numeric character identifies the number of beds. 
+              The third character identifies the bed type. 
+              There is a special case where ROH is returned, this value stands for Run Of House.
+            type: string
+            pattern: ^[A-Z0-9*]{3}$
+          description:
+            $ref: '#/definitions/QualifiedFreeText'
+      guests:
+        $ref: '#/definitions/guests'
+      price:
+        title: HotelProduct_HotelPrice
+        description: price information
+        allOf:
+          - $ref: '#/definitions/Price'
+          - type: object
+            properties:
+              taxes:
+                type: array
+                items:
+                  title: HotelProduct_HotelTax
+                  type: object
+                  properties:
+                    currency:
+                      type: string
+                      description: Currency code of the tax
+                    amount:
+                      type: string
+                      description: Amount of the tax
+                    code:
+                      description: |-
+                        The tax code which identifies the tax.
+                          Examples:
+                          1=BED_TAX
+                          2=CITY_TAX
+                      type: string
+                    percentage:
+                      type: string
+                      description: percentage of the tax. Use together with pricingFrequency and pricingMode
+                    included:
+                      type: boolean
+                      description: Is the tax included in the base amount
+                    description:
+                      type: string
+                      description: Textual description of the tax
+                    pricingFrequency:
+                      description: |-
+                        Specifies if the tax applies per stay or per night
+                          - PER_STAY
+                          - PER_NIGHT
+                      type: string
+                    pricingMode:
+                      description: |-
+                        Specifies if the tax applies per occupant or per room
+                          - PER_OCCUPANT
+                          - PER_PRODUCT
+                      type: string
+              variations:
+                title: HotelProduct_PriceVariations
+                type: object
+                description: Daily price variations and the average daily price (when available) is shown here
+                properties:
+                  changes:
+                    description: |-
+                      The collection of price periods.
+                      Even if the daily price is not changeing during the stay, this section is filled
+                    type: array
+                    items:
+                      title: HotelProduct_PriceVariation
+                      description: Some prices may vary during a stay, thus here you can see the daily price per period of the stay
+                      allOf:
+                        - type: object
+                          properties:
+                            startDate:
+                              description: |-
+                                Begin date of the period
+                                Format: YYYY-MM-DD
+                              type: string
+                              format: date
+                            endDate:
+                              description: |-
+                                End date of the period
+                                Format: YYYY-MM-DD
+                              type: string
+                              format: date
+                          required:
+                            - startDate
+                            - endDate
+                        - $ref: '#/definitions/Price'
+      policies:
+        title: HotelProduct_PolicyDetails
+        type: object
+        description: Booking Rules
+        properties:
+          paymentType:
+            type: string
+            description: payment type. Guarantee means Pay at Check Out. Check the `methods` in `guarantee` or `deposit` or `prepay`.
+            example: DEPOSIT
+            enum:
+              - GUARANTEE
+              - DEPOSIT
+              - PREPAY
+              - HOLDTIME
+          guarantee:
+            title: HotelProduct_GuaranteePolicy
+            type: object
+            description: the guarantee policy information applicable to the offer. It includes accepted payments
+            properties:
+              description:
+                $ref: '#/definitions/QualifiedFreeText'
+              acceptedPayments:
+                $ref: '#/definitions/HotelProduct_PaymentPolicy'
+          deposit:
+            $ref: '#/definitions/HotelProduct_DepositPolicy'
+          prepay:
+            $ref: '#/definitions/HotelProduct_DepositPolicy'
+          holdTime:
+            title: HotelProduct_HoldPolicy
+            type: object
+            description: the hold policy
+            properties:
+              deadline:
+                type: string
+                format: date-time
+                description: |
+                  The date and time of the deadline in ISO 8601[https://www.w3.org/TR/NOTE-datetime]. 
+                   Example: 2010-08-14T13:00:00
+                   Please note that this value is expressed in the hotels local time zone
+            required:
+              - deadline
+          checkInOut:
+            title: HotelProduct_CheckInOutPolicy
+            type: object
+            properties:
+              checkIn:
+                type: string
+                example: '13:00:00'
+                description: Check-in From time limit in ISO-8601 format [http://www.w3.org/TR/xmlschema-2/#time]
+              checkInDescription:
+                $ref: '#/definitions/QualifiedFreeText'
+              checkOut:
+                type: string
+                example: '11:00:00'
+                description: Check-out Until time limit in ISO-8601 format [http://www.w3.org/TR/xmlschema-2/#time]
+              checkOutDescription:
+                $ref: '#/definitions/QualifiedFreeText'
+          cancellations:
+            type: array
+            items:
+              title: HotelProduct_CancellationPolicy
+              type: object
+              description: 'Cancellation policies are optional in response (whether they apply or not according to the provider response returned at pricing or sell.   '
+              properties:
+                type:
+                  type: string
+                  enum:
+                    - FULL_STAY
+                  description: '* FULL_STAY: the Penalty amount equals the `total` price.'
+                amount:
+                  type: string
+                  description: Amount of the cancellation fee.
+                  pattern: ^\\d+(\\.\\d+)?$
+                numberOfNights:
+                  type: integer
+                  format: int32
+                  minimum: 0
+                  description: Number of nights due as fee in case of cancellation.
+                percentage:
+                  type: string
+                  description: Percentage of the total stay amount to be paid in case of cancellation. Value is between 0 and 100.
+                  pattern: ^\\d+(\\.\\d+)?$
+                deadline:
+                  type: string
+                  format: date-time
+                  description: |-
+                    Represents the deadline after which the penalty applies. DateTime is in ISO 8601 [https://www.w3.org/TR/NOTE-datetime].
+                    Example: 2010-08-14T12:00:00+01:00
+                    Example: 2010-08-14T12:00:00Z
+                    Example: 2010-08-14T12:00:00-01:00
+                    The value is expressed in the hotel local time zone, with the added time zone difference. So you can compute the deadline in UTC(GMT) if desired.
+                description:
+                  $ref: '#/definitions/QualifiedFreeText'
+      rateFamilyEstimated:
+        title: HotelProduct_RateFamily
+        type: object
+        description: The estimated rate code family of the offer. Grouping various rate plan codes that belongs to the same family and indicates the type of the rate
+        properties:
+          code:
+            description: The estimated rate family (PRO,FAM,GOV)
+            type: string
+            pattern: '[A-Z0-9]{3}'
+          type:
+            description: The type of the rate (public=P, negotiated=N, conditional=C)
+            type: string
+            pattern: '[PNC]'
+    required:
+      - rateCode
+      - room
+      - price
+  Warning:
+    type: object
+    description: The Warning Definition
+    title: Warning
+    properties:
+      code:
+        type: integer
+        description: A machine-readable error code from the Canned Messages table, that will enable the API Consumers code to handle this type of error
+      title:
+        type: string
+        description: An error title from the Canned Messages table with a 1:1 correspondence to the error code. This may be localized
+      detail:
+        type: string
+        description: An easy-to-read explanation specific to this occurrence of the problem. It should give the API consumer an idea of what went wrong and how to recover from it. Like the title, this field’s value can be localized.
+      source:
+        type: object
+        description: The Warning Source Definition
+        title: Warning_Source
+        properties:
+          parameter:
+            type: string
+            description: The key of the URI path or query parameter that caused the error
+          pointer:
+            type: string
+            description: A JSON Pointer [RFC6901] to the associated entity in the request body that caused this error
+          example:
+            type: string
+            description: A sample input to guide the user when resolving this issue
+      documentation:
+        type: string
+        format: url
+        description: A link to a web page or file with further documentation to help the API consumer resolve this error
+      sources:
+        type: array
+        items:
+          $ref: '#/definitions/Warning/properties/source'
+      relationships:
+        type: object
+        description: Indicate relationships from one entity to many other entities of any kind (e.g. from one passenger to their flight segments).
+        title: Relationships
+        properties:
+          collection:
+            type: array
+            description: The details of the related items
+            items:
+              description: Relationship allows to cross reference 2 entities via Link and/or id .
+              title: Relationship
+              type: object
+              properties:
+                id:
+                  type: string
+                  description: id of the related resource
+                type:
+                  type: string
+                  description: Type of the related resource
+                  example: processed-dcs-passenger
+                ref:
+                  type: string
+                  format: uri-reference
+                  description: Local reference of the related resource
+                targetSchema:
+                  type: string
+                  description: The targetSchema would be an instance of definition to be used for building the associated API Request operation
+                targetMediaType:
+                  type: string
+                  description: Related to "targetSchema", to be specified in case the media type is different for the referenced API request
+                hrefSchema:
+                  type: string
+                  description: type ( format, type, patterns, enum) definition for each URI parameters.
+                href:
+                  type: string
+                  format: url
+                  description: URL value
+                methods:
+                  type: array
+                  description: HTTP methods supported by the sibling URI
+                  items:
+                    type: string
+                    enum:
+                      - GET
+                      - POST
+                      - PUT
+                      - PATCH
+                      - DELETE
+                      - OPTIONS
+                rel:
+                  type: string
+                  description: 'Expose the type of relation between the current entity and the describe entity : https://www.iana.org/assignments/link-relations/link-relations.xhtml'
+    required:
+      - code
+      - title
