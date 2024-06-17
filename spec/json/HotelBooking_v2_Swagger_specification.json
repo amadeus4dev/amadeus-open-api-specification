@@ -3,7 +3,7 @@
   "info": {
     "title": "Hotel Booking API",
     "description": "Before using the API you will need to get an access token. Please read our [Authorization Guide](https://developers.amadeus.com/self-service/apis-docs/guides/authorization) for more information on how to get your token.\n\nPlease also be aware that our test environment is based on a subset of the production for this API it may change dynamically. For your tests, use big cities like LON (London) or NYC (New-York).\n\n **Warning: Do not perform test booking in production.** All requests are sent and processed by hotel providers. An excessive amount of fake/canceled reservation will make you blacklisted by hotel providers.",
-    "version": "2.0.0"
+    "version": "2.0.1"
   },
   "host": "test.api.amadeus.com",
   "basePath": "/v2",
@@ -40,7 +40,126 @@
                     "$ref": "#/definitions/Warning"
                   }
                 }
-              }
+              },
+              "example": {
+                "data": {
+                    "type": "hotel-order",
+                    "id": "V0g2VFJaLzIwMjQtMDYtMDc=",
+                    "hotelBookings": [
+                        {
+                            "type": "hotel-booking",
+                            "id": "MS84OTkyMjcxMC85MDIyNDU0OQ==",
+                            "bookingStatus": "CONFIRMED",
+                            "hotelProviderInformation": [
+                                {
+                                    "hotelProviderCode": "AR",
+                                    "confirmationNumber": "89922710"
+                                }
+                            ],
+                            "roomAssociations": [
+                                {
+                                    "hotelOfferId": "******",
+                                    "guestReferences": [
+                                        {
+                                            "guestReference": "1"
+                                        }
+                                    ]
+                                }
+                            ],
+                            "hotelOffer": {
+                                "id": "******",
+                                "type": "hotel-offer",
+                                "category": "TYPE_CONDITIONAL",
+                                "checkInDate": "2024-06-07",
+                                "checkOutDate": "2024-06-08",
+                                "guests": {
+                                    "adults": 1
+                                },
+                                "policies": {
+                                    "cancellations": [
+                                        {
+                                            "amount": "215.05",
+                                            "deadline": "2024-06-06T23:59:00+02:00"
+                                        }
+                                    ],
+                                    "paymentType": "GUARANTEE"
+                                },
+                                "price": {
+                                    "base": "195.50",
+                                    "currency": "EUR",
+                                    "sellingTotal": "215.05",
+                                    "taxes": [
+                                        {
+                                            "amount": "19.55",
+                                            "code": "VALUE_ADDED_TAX",
+                                            "currency": "EUR",
+                                            "included": false,
+                                            "pricingFrequency": "PER_STAY",
+                                            "pricingMode": "PER_PRODUCT"
+                                        }
+                                    ],
+                                    "total": "215.05",
+                                    "variations": {
+                                        "changes": [
+                                            {
+                                                "endDate": "2024-06-08",
+                                                "startDate": "2024-06-07",
+                                                "base": "195.50",
+                                                "currency": "EUR"
+                                            }
+                                        ]
+                                    }
+                                },
+                                "rateCode": "S9R",
+                                "room": {
+                                    "description": {
+                                        "lang": "EN",
+                                        "text": "Marriott Senior Discount, includes"
+                                    },
+                                    "type": "XMI"
+                                },
+                                "roomQuantity": 1
+                            },
+                            "hotel": {
+                                "hotelId": "ARMADAIT",
+                                "chainCode": "AR",
+                                "name": "AC BY MARRIOTT HOTEL AITANA",
+                                "self": "https://test.travel.api.amadeus.com/v1/reference-data/locations/by-hotel/ARMADAIT"
+                            },
+                            "payment": {
+                                "method": "CREDIT_CARD",
+                                "paymentCard": {
+                                    "paymentCardInfo": {
+                                        "vendorCode": "VI",
+                                        "cardNumber": "415128XXXXXX1370",
+                                        "expiryDate": "0826",
+                                        "holderName": "BOB SMITH"
+                                    }
+                                }
+                            },
+                            "travelAgentId": "00000000"
+                        }
+                    ],
+                    "guests": [
+                        {
+                            "tid": 1,
+                            "id": 1,
+                            "title": "MR",
+                            "firstName": "BOB",
+                            "lastName": "SMITH",
+                            "phone": "+33679278416",
+                            "email": "bob.smith@email.com"
+                        }
+                    ],
+                    "associatedRecords": [
+                        {
+                            "reference": "WH6TRZ",
+                            "originSystemCode": "GDS"
+                        }
+                    ],
+                    "self": "http://test.api.amadeus.com/v2/booking/hotel-orders/V0g2VFJaLzIwMjQtMDYtMDc="
+                }
+            }
             }
           },
           "400": {
@@ -132,9 +251,20 @@
                               "guestReference": "1"
                               }
                           ],
-                          "hotelOfferId": "EUXSA6P2HI"
+                          "hotelOfferId": "4L8PRJPEN7"
                       }
-                  ]
+                  ],
+                  "payment": {
+                      "method": "CREDIT_CARD",
+                      "paymentCard": {
+                          "paymentCardInfo": {
+                              "vendorCode": "VI",
+                              "cardNumber": "4151289722471370",
+                              "expiryDate": "2026-08",
+                              "holderName": "BOB SMITH"
+                          }
+                      }
+                  }
                 }
               }
             },
@@ -221,7 +351,7 @@
     "HotelOrder": {
       "title": "HotelOrder",
       "type": "object",
-      "description": "An Hotel Order is one or several hotel bookings done for a set of guest.\nIt corresponds to one PNR in Amadeus GDS.",
+      "description": "An Hotel Order is one or several hotel bookings done for a set of guest.",
       "properties": {
         "hotelBookings": {
           "type": "array",
@@ -253,18 +383,6 @@
                 "minLength": 1,
                 "description": "As the reference is a PNR record locator, the originSystemCode is set to GDS.",
                 "example": "GDS"
-              },
-              "direction": {
-                "type": "string",
-                "description": "Indicates whether the reference results from a split operation CHILD or has originated a split operation PARENT leading to the current order",
-                "example": "CHILD",
-                "minLength": 1
-              },
-              "associationType": {
-                "type": "string",
-                "description": "Specifies the possible natures of association between two orders",
-                "example": "SPLIT",
-                "minLength": 1
               }
             },
             "required": [
@@ -322,7 +440,7 @@
         },
         "bookingStatus": {
           "type": "string",
-          "description": "Status of the booking - Possible values \n- \"CONFIRMED\" (HK in cryptic PNR)\n- \"PENDING\" for on-request (HN)\n- \"CANCELLED\" (It will be returned only in the retrieve byHistory as it repreents a DELETED resource.)\n- \"On HOLD\" for deferred payment (HO)\n- \"UNCONFIRMED\" (UC) when confirmation finaly refused by Hotel Provider\n- \"DENIED\" (NO) when an on-request booking is denied by the hotelier\n- \"GHOST\" (GK) for ghost booking\n- \"PAST\" for a confirmed booking with the check-out date in the past\n",
+          "description": "Status of the booking - Possible values \n- \"CONFIRMED\"\n- \"PENDING\" for on-request \n- \"CANCELLED\" (It will be returned only in the retrieve byHistory as it repreents a DELETED resource.)\n- \"On HOLD\" for deferred payment (HO)\n- \"UNCONFIRMED\" (UC) when confirmation finaly refused by Hotel Provider\n- \"DENIED\" (NO) when an on-request booking is denied by the hotelier\n- \"GHOST\" (GK) for ghost booking\n- \"PAST\" for a confirmed booking with the check-out date in the past\n",
           "enum": [
             "CONFIRMED",
             "PENDING",
@@ -453,7 +571,7 @@
     },
     "roomAssociation": {
       "type": "object",
-      "description": "Room Association represents a room booked in an hotel, the guests sleeping in this room, the hotel loyalty program if any, plus special request if any. \n\nIn a first phase, the application only supports single and multi-identical rooms.\n\nMinimum 1 room, maximum 9 rooms\nWhatever the enhancement in the future, it will always be expected in case of muliple rooms :\n- same hotel code (i.e. same provider and same hotel code)\n- same check-in and check-out date\n- same AVH supplier\n- same quantity as shopping time (stored in hotel offer) and booking time (number of roomAssociations).",
+      "description": "Room Association represents a room booked in an hotel, the guests sleeping in this room, the hotel loyalty program if any, plus special request if any. ",
       "minProperties": 1,
       "maxProperties": 1,
       "title": "roomAssociation",
@@ -654,7 +772,7 @@
       ]
     },
     "CreateHotelBooking": {
-      "description": "This model allows the creation of an hotel order (PNR) and its hotel segments (HHL). \nIt can also be used to add an hotel booking (HHL) in an already existing hotel order (PNR).",
+      "description": "This model allows the creation of an hotel order.",
       "type": "object",
       "title": "CreateHotelBooking",
       "properties": {
@@ -672,7 +790,7 @@
         },
         "roomAssociations": {
           "type": "array",
-          "description": "Is to correlate a room to a guest and an offer.\nIn a first phase, the application only supports multi-identical rooms.\n\nMinimum 1 room, maximum 9 rooms\n\nWhatever the enhancement in the future, it will always be expected in case of muliple rooms :\n- same hotel code (i.e. same provider and same hotel code)\n- same check-in and check-out date\n- same AVH supplier\n- same quantity as shopping time (stored in hotel offer) and booking time (number of roomAssociations).",
+          "description": "Is to correlate a room to a guest and an offer.",
           "maxItems": 9,
           "minItems": 1,
           "items": {
@@ -740,55 +858,13 @@
             "iataNumber": {
               "type": "string"
             }
-          },
-          "required": [
-            "iataNumber"
-          ]
-        },
-        "billBack": {
-          "type": "object",
-          "description": "To be used when the booking is paid with to a virtual credit card generated through an external provider like Conferma.\n\nThe Billback account number is mandatory.\nThe rest of the information is not mandatory. CAI (Travel Agwency ID) and CBI (Booker ID) can either be provided in input or can be taken from the Amadeus Office Profile.\n\nOffline activation of Hotel Billback: As soon as Conferma creates the client account and provides Amadeus with specific credentials (CAI/CBI) to identify the agency, Amadeus is able to activate Billback by updating those CAI/CBI credentials into the agency profile (PVA field).",
-          "properties": {
-            "travelAgencyId": {
-              "type": "string",
-              "description": "Travel Agency Conferma account (CAI)"
-            },
-            "bookerId": {
-              "type": "string",
-              "description": "Travel Agent conferma ID (CBI)"
-            },
-            "paymentInstructions": {
-              "type": "string",
-              "description": "optional free text.\nIt gives the user the ability to specify the payment instructions to be sent to the hotelier"
-            },
-            "billbackProviderCode": {
-              "type": "string",
-              "description": "For conferma provider, it will be CN."
-            },
-            "billbackProviderAccountNumber": {
-              "type": "string",
-              "description": "Billback Provider account number (Conferma account number)"
-            },
-            "hotelSupplierInformation": {
-              "$ref": "#/definitions/Hotel_Contact"
-            }
-          },
-          "required": [
-            "billbackProviderCode",
-            "billbackProviderAccountNumber"
-          ]
+          }
         },
         "method": {
           "type": "string",
-          "description": "Indicates the method of payment. \n- CREDIT_CARD : It allows payment through a credit card. It is expected to provide the credit card information in the creditCard section.\n- AGENCY_ACCOUNT (CREDIT LINE) : It allows payment through the credit line of the agency. Nothing more is expected\n- VCC_BILLBACK : It allows direct payment between the hotel and a corporation or travel agency, via the billback provider.\nIt is expected to provide the billback information in the billback section.\nTo benefit from the solution, a contract has to be signed with the travel agency and\nAmadeus or Conferma. A contract with a banking partner is also required to open a bank account and issue the Virtual Credit Card.\n- VCC_B2B_WALLET : This payment method is only available for Amadeus Value Hotels where it allows payment between travel agency and Amadeus Merchant using a virtual credit card.\nTo avail this functionality a Travel Agent has to sign a contract with Amadeus PaymentPlatform, which helps to generate a virtual credit card on behalf of the travel agent.\n- TRAVEL_AGENT_ID (IATA BS) : It allows payment to the provider with to the IATA booking source. Either this information is passed in the TravelAgentId section, either it is taken from the Amadeus Office Profile.\n- CREDIT_CARD_AGENCY : This form of payment is exclusively used for Amadeus Value Hotel when the booking is paid with the Travel Agency credit card.\nIt is also possible in this case to use the method CREDIT_CARD but it is then mandatory to specify that the cardOwnerType is TravelAgency\n- CREDIT_CARD_TRAVELLER : This form of payment is exclusively used for Amadeus Value Hotel when the booking is paid with the guest credit card.\nIt is also possible in this case to use the method CREDIT_CARD but it is then mandatory to specify that the cardOwnerType is Guest\n",
+          "description": "Indicates the method of payment. \n- CREDIT_CARD : It allows payment through a credit card. It is expected to provide the credit card information in the paymentCard section.",
           "enum": [
-            "CREDIT_CARD",
-            "CREDIT_CARD_AGENCY",
-            "CREDIT_CARD_TRAVELER",
-            "AGENCY_ACCOUNT",
-            "VCC_BILLBACK",
-            "VCC_B2B_WALLET",
-            "TRAVEL_AGENT_ID"
+            "CREDIT_CARD"
           ]
         },
         "paymentCard": {
@@ -835,152 +911,6 @@
                 "cardNumber",
                 "expiryDate"
               ]
-            },
-            "threeDomainSecure": {
-              "title": "Payment3dsTransactionSummary",
-              "type": "object",
-              "description": "In Payment domain, the \"Payment3dsTransactionSummary\" is a transaction summary done during 3 Domain Secure (3DS) authentication process with collection of the 3DS IDs.",
-              "properties": {
-                "version": {
-                  "type": "string",
-                  "description": "Version of the protocol used for example\n1.0.2 \n1\n1.0\n2.1.0\n2.2",
-                  "enum": [
-                    "1.0.2",
-                    "2.1.0"
-                  ],
-                  "example": "2.1.0",
-                  "minLength": 5,
-                  "maxLength": 5
-                },
-                "dsTransactionId": {
-                  "type": "string",
-                  "description": "ds = directory server , Transaction ID Value returned by the 3DS Directory Server - 3DS V2 will provide DS Transaction ID - It is a unique transaction identifier assigned by the DS to identify a single transaction",
-                  "maxLength": 36
-                },
-                "eci": {
-                  "type": "string",
-                  "description": "Indicates the Payment System-specific value provided by ACS or DS,- Mirrored from ECI - Electronic Commerce Indicator - (for Visa) is currently used\nMust be received if Version 1.0.2 and Version 2.1.0 are used.\n\nPossible Values \n\n\"07\" - Unable to authenticate (Visa)\n\"05\" - Successful authentication (Visa)\n\"06\" - Authentication attempted (Visa)\n\"00\" - Failed authentication (Visa / MasterCard)\n\"02\" - Successful authentication (MasterCard)\n\"01\" - Incomplete authentication (MasterCard)\n",
-                  "enum": [
-                    "00",
-                    "01",
-                    "02",
-                    "05",
-                    "06",
-                    "07"
-                  ],
-                  "minLength": 2,
-                  "maxLength": 2
-                },
-                "xid": {
-                  "type": "string",
-                  "description": "Identify a 3DS transaction for version < 2.0\nMust be encoded in Base64.",
-                  "maxLength": 28
-                },
-                "cryptogramValue": {
-                  "type": "string",
-                  "description": "Gives the result of the authentication verification code (CAVV for Visa authentication, AEVV for Amaerican express,  for Master Card) - As binary value,  value is Base64 encoded, a the  20-byte giving a 28-byte result ",
-                  "maxLength": 28
-                },
-                "paresStatus": {
-                  "type": "string",
-                  "description": "Gives a status on the authentication process for 3DS Version 1.x",
-                  "enum": [
-                    "Y",
-                    "N",
-                    "U",
-                    "A",
-                    "E"
-                  ],
-                  "minLength": 1,
-                  "maxLength": 1
-                },
-                "paresStatusLabel": {
-                  "type": "string",
-                  "description": "Gives a status on the authentication process for 3DS Version 1.x\n\n\"SUCCESSFUL\" - Authentication successful\n\"FAILED\" - Authentication failed\n\"UNABLE_TO_AUTHENTICATE\" - Authentication could not be performed\n\"ATTEMPTS_PROCESSING\" - Attempts processing performed\n\"ERROR\" - Error",
-                  "enum": [
-                    "SUCCESSFUL",
-                    "FAILED",
-                    "UNABLE_TO_AUTHENTICATE",
-                    "ATTEMPTS_PROCESSING",
-                    "ERROR"
-                  ]
-                },
-                "veresStatus": {
-                  "type": "string",
-                  "description": "Indicates whether the Cardholder is enrolled \nIs only set when Version 1.x is used. ",
-                  "enum": [
-                    "Y",
-                    "N",
-                    "U",
-                    "E",
-                    "A"
-                  ],
-                  "minLength": 1,
-                  "maxLength": 1
-                },
-                "veresStatusLabel": {
-                  "type": "string",
-                  "description": "Indicates whether the Cardholder is enrolled \nIs only set when Version 1.x is used. \nPossible Values\n-  \"ENROLLED\" - Cardholder enrolled to use 3DS (authentication available)\n- \"NOT_ENROLLED\" - Cardholder not enrolled to use 3DS\"\n- \"UNABLE_TO_VERIFY - verification could not be performed)\n- \"ERROR\" - Error",
-                  "enum": [
-                    "ENROLLED",
-                    "NOT_ENROLLED",
-                    "UNABLE_TO_VERIFY",
-                    "ERROR",
-                    "ATTEMPTS_PROCESSING"
-                  ]
-                },
-                "transStatus": {
-                  "type": "string",
-                  "description": "Overall state of 3ds transaction\nIs only set when Version is higher than 2.x.",
-                  "enum": [
-                    "Y",
-                    "N",
-                    "U",
-                    "A",
-                    "E",
-                    "C",
-                    "D",
-                    "R",
-                    "I"
-                  ],
-                  "minLength": 1,
-                  "maxLength": 1
-                },
-                "transStatusLabel": {
-                  "type": "string",
-                  "description": "Overall state of 3ds transaction\nIs only set when Version is higher than 2.x.\n\"SUCCESSFUL\" - Authentication successful\n\"FAILED\" - Authentication failed\n\"UNABLE_TO_AUTHENTICATE\" - Authentication could not be performed\n\"ATTEMPTS_PROCESSING\" - Attempts processing performed\n\"ERROR\" - Error\n\"CHALLENGE_REQUESTED\" - Challenge requested\n\"DECOUPLED_CHALLENGE_REQUESTED\" - Decoupled challenge requested\n\"AUTHENTICATION_REJECTED\" - Authentication rejected, do not authorize\n\"INFORMATION_ONLY\" - Information only",
-                  "enum": [
-                    "SUCCESSFUL",
-                    "FAILED",
-                    "UNABLE_TO_AUTHENTICATE",
-                    "ATTEMPTS_PROCESSING",
-                    "ERROR",
-                    "CHALLENGE_REQUESTED",
-                    "DECOUPLED_CHALLENGE_REQUESTED",
-                    "AUTHENTICATION_REJECTED",
-                    "INFORMATION_ONLY"
-                  ]
-                }
-              },
-              "required": [
-                "version",
-                "eci",
-                "cryptogramValue"
-              ]
-            },
-            "cardOwnerType": {
-              "type": "string",
-              "description": "Indicates who is the owner of the credit card, it can be either the travel agency \"TravelAgency\", the corporation \"Corporation\" or the traveller \"Guest\".\nThis field is mamdatory for Amadeus Value Hotel when the method of payment is CREDIT_CARD.\nThis field is optional in informational in all other cases.",
-              "enum": [
-                "TravelAgency",
-                "Guest",
-                "Corporation"
-              ],
-              "example": "TravelAgency"
-            },
-            "VCC": {
-              "type": "boolean",
-              "description": "If the provided card is a virtual credit card generated by an external provider, this boolean should be true.\n(It is different from  Billback and B2B wallet VCC. These ones are generated during Amadeus booking process and have a dedicated payment section.)"
             },
             "address": {
               "$ref": "#/definitions/Address"
